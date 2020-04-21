@@ -1,8 +1,8 @@
 # Meeting Protocol
 
 ### Meeting Period
-* Start: dd-mm-JJJJ hh:mm
-* End:  dd-mm-JJJJ hh:mm
+* Start: dd-MM-jjjj hh:mm
+* End:  dd-MM-jjjj hh:mm
 
 ### Meeting Location
 Online per Voice-Over-IP with Discord/Zoom
@@ -33,19 +33,31 @@ Online per Voice-Over-IP with Discord/Zoom
 
 Enter the reason why the meeting was scheduled in the first place.
 
-Example: The roles had to be split between the members of this project.
+Example: 
+* The roles had to be split between the members of this project.
 
 ### Decisions Made
 
 Enter the decisions made in the course of the meeting.
 
-Example: Role assignment to each member.
+Example: 
+1. Role assignment to each member.
+2. Dates for Future Meetings scheduled
 
 ### Results of the Meeting
 
 Enter the exact details specified in those decisions.
 
 Example: 
+#### 1. Role Assignment
 * Member1 - Leader
 * Member2 - Architect  
 * Member3 - UI Designer
+
+#### 2. Future Meetings
+* 05.05.2020 20:00
+* 20.05.2020 20:00
+
+#### Other Notes
+* note1
+* note2
