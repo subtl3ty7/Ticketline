@@ -3,12 +3,23 @@ package at.ac.tuwien.sepm.groupphase.backend.entity;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Getter
 @Setter
 @Entity
+@Table(name = "admin")
+@DiscriminatorValue("ADMIN")
 public class Admin extends AbstractUser {
+
+    @Column(name = "POINTS")
+    private Long points;
+
+    @Column(name = "IS_BLOCKED")
+    private boolean isBlocked;
 
     public Admin() {
     }
@@ -18,4 +29,12 @@ public class Admin extends AbstractUser {
         this.setPassword(password);
         this.setUserCode(usercode);
     }
+    public Admin(String email, String password, String usercode, String firstName, String lastName) {
+        this.setEmail(email);
+        this.setPassword(password);
+        this.setUserCode(usercode);
+        this.setFirstName(firstName);
+        this.setLastName(lastName);
+    }
+
 }
