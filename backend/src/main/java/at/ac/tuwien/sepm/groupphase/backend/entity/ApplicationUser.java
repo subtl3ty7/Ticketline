@@ -15,12 +15,6 @@ import javax.persistence.Table;
 @DiscriminatorValue("APPLICATION_USER")
 public class ApplicationUser extends AbstractUser {
 
-    @Column(name = "POINTS")
-    private Long points;
-
-    @Column(name = "IS_BLOCKED")
-    private boolean isBlocked;
-
     public ApplicationUser() {
     }
 
@@ -36,5 +30,7 @@ public class ApplicationUser extends AbstractUser {
         this.setFirstName(firstName);
         this.setLastName(lastName);
     }
+
+
 
 }
