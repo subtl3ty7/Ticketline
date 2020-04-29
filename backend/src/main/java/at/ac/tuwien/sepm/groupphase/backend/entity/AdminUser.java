@@ -8,18 +8,12 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@Getter
-@Setter
+
 @Entity
 @Table(name = "admin")
 @DiscriminatorValue("ADMIN_USER")
 public class AdminUser extends AbstractUser {
 
-    @Column(name = "POINTS")
-    private Long points;
-
-    @Column(name = "IS_BLOCKED")
-    private boolean isBlocked;
 
     public AdminUser() {
     }

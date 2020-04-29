@@ -8,12 +8,17 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@Getter
-@Setter
+
 @Entity
 @Table(name = "application_user")
 @DiscriminatorValue("BASIC_USER")
 public class BasicUser extends AbstractUser {
+
+    @Column(name = "POINTS")
+    private Long points;
+
+    @Column(name = "IS_BLOCKED")
+    private boolean isBlocked;
 
     public BasicUser() {
     }
@@ -31,6 +36,19 @@ public class BasicUser extends AbstractUser {
         this.setLastName(lastName);
     }
 
+    public boolean isBlocked() {
+        return isBlocked;
+    }
 
+    public void setBlocked(boolean blocked){
+        this.isBlocked = blocked;
+    }
 
+    public Long getPoints() {
+        return points;
+    }
+
+    public void setPoints(Long points) {
+        this.points = points;
+    }
 }
