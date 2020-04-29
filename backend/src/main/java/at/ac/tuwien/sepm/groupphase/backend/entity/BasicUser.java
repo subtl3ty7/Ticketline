@@ -12,18 +12,18 @@ import javax.persistence.Table;
 @Setter
 @Entity
 @Table(name = "application_user")
-@DiscriminatorValue("APPLICATION_USER")
-public class ApplicationUser extends AbstractUser {
+@DiscriminatorValue("BASIC_USER")
+public class BasicUser extends AbstractUser {
 
-    public ApplicationUser() {
+    public BasicUser() {
     }
 
-    public ApplicationUser(String email, String password, String usercode) {
+    public BasicUser(String email, String password, String usercode) {
      this.setEmail(email);
      this.setPassword(password);
      this.setUserCode(usercode);
     }
-    public ApplicationUser(String email, String password, String usercode, String firstName, String lastName) {
+    public BasicUser(String email, String password, String usercode, String firstName, String lastName) {
         this.setEmail(email);
         this.setPassword(password);
         this.setUserCode(usercode);

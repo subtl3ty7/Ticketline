@@ -1,9 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Admin;
-import at.ac.tuwien.sepm.groupphase.backend.entity.ApplicationUser;
-import at.ac.tuwien.sepm.groupphase.backend.entity.UserAttempts;
+import at.ac.tuwien.sepm.groupphase.backend.entity.AdminUser;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserAttemptsRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
@@ -43,7 +41,7 @@ public class CustomUserDetailService implements UserService {
         try {
             AbstractUser user = findUserByEmail(email);
             List<GrantedAuthority> grantedAuthorities;
-            if (user instanceof Admin)
+            if (user instanceof AdminUser)
                 grantedAuthorities = AuthorityUtils.createAuthorityList("ROLE_ADMIN", "ROLE_USER");
             else
                 grantedAuthorities = AuthorityUtils.createAuthorityList("ROLE_USER");
