@@ -5,8 +5,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
+import static javax.persistence.FetchType.LAZY;
+
+
 @Entity
 @Table(name = "user_attempt")
 public class UserAttempts {
@@ -14,10 +15,7 @@ public class UserAttempts {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "USER_CODE", referencedColumnName = "USER_CODE")
-    private AbstractUser user;
-
+    private String email;
 
     @Column(name = "attempts")
     private int attempts;
@@ -25,9 +23,32 @@ public class UserAttempts {
     public UserAttempts() {
 
     }
-    public UserAttempts(AbstractUser user, int attempts) {
-        this.user = user;
+    public UserAttempts(String email, int attempts) {
+        this.email = email;
         this.attempts = attempts;
     }
 
+    public int getAttempts() {
+        return attempts;
+    }
+
+    public void setAttempts(int attempts){
+        this.attempts = attempts;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

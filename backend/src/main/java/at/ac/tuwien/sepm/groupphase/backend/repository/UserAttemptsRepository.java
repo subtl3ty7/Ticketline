@@ -5,5 +5,5 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.UserAttempts;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserAttemptsRepository extends JpaRepository<UserAttempts, Long> {
-    UserAttempts findUserAttemptsByUser(AbstractUser user);
+    UserAttempts findUserAttemptsByEmail(String email);
 }
