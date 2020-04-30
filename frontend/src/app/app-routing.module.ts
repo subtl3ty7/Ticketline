@@ -1,14 +1,20 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {HomeComponent} from './components/home/home.component';
+import {GuestHomeComponent} from './components/guest-home/guest-home.component';
 import {LoginComponent} from './components/login/login.component';
-import {AuthGuard} from './guards/auth.guard';
+import {LoggedInGuard} from './guards/logged-in.guard';
 import {MessageComponent} from './components/message/message.component';
+import {NotLoggedInGuard} from './guards/not-logged-in.guard';
+import {AdminHomeComponent} from './components/admin-home/admin-home.component';
+import {AdminGuard} from './guards/admin.guard';
+import {CustomerHomeComponent} from './components/customer-home/customer-home.component';
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'message', canActivate: [AuthGuard], component: MessageComponent}
+  {path: '', canActivate: [NotLoggedInGuard], component: GuestHomeComponent},
+  {path: 'home', canActivate: [LoggedInGuard], component: CustomerHomeComponent},
+  {path: 'login', canActivate: [NotLoggedInGuard], component: LoginComponent},
+  {path: 'message', canActivate: [LoggedInGuard], component: MessageComponent},
+  {path: 'administrator', canActivate: [AdminGuard], component: AdminHomeComponent}
 ];
 
 @NgModule({
