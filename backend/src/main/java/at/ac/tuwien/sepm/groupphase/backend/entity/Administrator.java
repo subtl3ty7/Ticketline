@@ -10,20 +10,20 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "admin")
+@Table(name = "application_user")
 @DiscriminatorValue("ADMIN_USER")
-public class AdminUser extends AbstractUser {
+public class Administrator extends AbstractUser {
 
 
-    public AdminUser() {
+    public Administrator() {
     }
 
-    public AdminUser(String email, String password, String usercode) {
+    public Administrator(String email, String password, String usercode) {
         this.setEmail(email);
         this.setPassword(password);
         this.setUserCode(usercode);
     }
-    public AdminUser(String email, String password, String usercode, String firstName, String lastName) {
+    public Administrator(String email, String password, String usercode, String firstName, String lastName) {
         this.setEmail(email);
         this.setPassword(password);
         this.setUserCode(usercode);
