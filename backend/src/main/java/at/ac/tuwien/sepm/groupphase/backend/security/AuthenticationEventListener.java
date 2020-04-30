@@ -40,7 +40,6 @@ public class AuthenticationEventListener implements ApplicationListener<Abstract
             UserAttempts userAttempts = userAttemptsRepository.findUserAttemptsByEmail(email);
             int newAttempts = userAttempts.getAttempts() + 1;
             userAttempts.setAttempts(newAttempts);
-            System.out.println("Attempt " + userAttempts.getAttempts());
             userAttemptsRepository.save(userAttempts);
         }
     }
