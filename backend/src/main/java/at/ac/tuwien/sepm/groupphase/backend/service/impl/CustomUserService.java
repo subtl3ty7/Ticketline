@@ -1,8 +1,8 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
-import at.ac.tuwien.sepm.groupphase.backend.entity.AdminUser;
-import at.ac.tuwien.sepm.groupphase.backend.entity.BasicUser;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Administrator;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
 import at.ac.tuwien.sepm.groupphase.backend.entity.UserAttempts;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserAttemptsRepository;
@@ -22,7 +22,7 @@ import java.lang.invoke.MethodHandles;
 import java.util.List;
 
 @Service
-public class CustomUserDetailService implements UserService {
+public class CustomUserService implements UserService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final UserRepository userRepository;
@@ -30,7 +30,7 @@ public class CustomUserDetailService implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public CustomUserDetailService(UserRepository userRepository,PasswordEncoder passwordEncoder, UserAttemptsRepository userAttemptsRepository) {
+    public CustomUserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserAttemptsRepository userAttemptsRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userAttemptsRepository = userAttemptsRepository;
@@ -42,17 +42,17 @@ public class CustomUserDetailService implements UserService {
         try {
             AbstractUser user = findUserByEmail(email);
             List<GrantedAuthority> grantedAuthorities;
-            if (user instanceof AdminUser)
+            if (user instanceof Administrator)
                 grantedAuthorities = AuthorityUtils.createAuthorityList("ROLE_ADMIN", "ROLE_USER");
             else
                 grantedAuthorities = AuthorityUtils.createAuthorityList("ROLE_USER");
 
             //If user is a basic user
-            if(user instanceof BasicUser) {
+            if(user instanceof Customer) {
                 //check for login attempts
                 UserAttempts userAttempts = userAttemptsRepository.findUserAttemptsByEmail(email);
                 if (userAttempts.getAttempts() > 5) {
-                    ((BasicUser) user).setBlocked(true);
+                    ((Customer) user).setBlocked(true);
                     userRepository.save(user);
                     //return locked user
                     return new User(user.getEmail(), user.getPassword(), true, true, true, false, grantedAuthorities);

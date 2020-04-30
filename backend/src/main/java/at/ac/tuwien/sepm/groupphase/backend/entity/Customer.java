@@ -11,8 +11,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "application_user")
-@DiscriminatorValue("BASIC_USER")
-public class BasicUser extends AbstractUser {
+@DiscriminatorValue("CUSTOMER")
+public class Customer extends AbstractUser {
 
     @Column(name = "POINTS")
     private Long points;
@@ -20,15 +20,15 @@ public class BasicUser extends AbstractUser {
     @Column(name = "IS_BLOCKED")
     private boolean isBlocked;
 
-    public BasicUser() {
+    public Customer() {
     }
 
-    public BasicUser(String email, String password, String usercode) {
+    public Customer(String email, String password, String usercode) {
      this.setEmail(email);
      this.setPassword(password);
      this.setUserCode(usercode);
     }
-    public BasicUser(String email, String password, String usercode, String firstName, String lastName) {
+    public Customer(String email, String password, String usercode, String firstName, String lastName) {
         this.setEmail(email);
         this.setPassword(password);
         this.setUserCode(usercode);
