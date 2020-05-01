@@ -1,1 +1,39 @@
-<p>admin-home works!</p>
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="side" opened color="secondary">
+    <mat-nav-list>
+      <a mat-list-item [routerLink]="'/Users'"> Users </a>
+      <a mat-list-item [routerLink]="'/Events'"> Events </a>
+      <a mat-list-item [routerLink]="'/News'"> News </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div style="height: 88vh;">
+      <h2 > Users </h2>
+          <div class = 'table-responsive'>
+            <table class = 'table'>
+              <tr>
+                <th> Vorname </th>
+                <th> Nachname </th>
+                <th> E-Mail </th>
+                <th> Erstellt am </th>
+                <th> Status </th>
+                <th>   </th>
+                <th>   </th>
+              </tr>
+              <tbody>
+              <tr *ngFor="let userEntity of users">
+                <td> {{userEntity.first_name}} </td>
+                <td> {{ userEntity.last_name }}</td>
+                <td> {{ userEntity.email }}</td>
+                <td> {{ userEntity.created_at| date }}</td>
+                <td> {{ userEntity.seen_messages }} </td>
+                <button type="button" (click)="setPassword(userEntity.user_code)" class="btn btn-primary"> Password zurücksetzen </button>
+                <nav><button type="button"  class="btn btn-primary"> Sperren </button> </nav> <!--to do add click= sperren/entsperren-->
+              </tr>
+              </tbody>
+            </table>
+            </div>
+          </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

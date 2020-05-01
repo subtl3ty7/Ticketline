@@ -14,6 +14,15 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {httpInterceptorProviders} from './interceptors';
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
 import { CustomerHomeComponent } from './components/customer-home/customer-home.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatButtonModule } from '@angular/material/button';
+
+
+
 
 @NgModule({
   declarations: [
@@ -24,7 +33,7 @@ import { CustomerHomeComponent } from './components/customer-home/customer-home.
     LoginComponent,
     MessageComponent,
     AdminHomeComponent,
-    CustomerHomeComponent,
+    CustomerHomeComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +41,13 @@ import { CustomerHomeComponent } from './components/customer-home/customer-home.
     ReactiveFormsModule,
     HttpClientModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    NoopAnimationsModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
+    MatButtonModule,
+    MatIconModule
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
