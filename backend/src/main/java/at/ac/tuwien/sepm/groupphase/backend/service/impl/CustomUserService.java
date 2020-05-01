@@ -60,7 +60,6 @@ public class CustomUserService implements UserService {
                     userRepository.save(user);
                 }
             }
-
             return new User(user.getEmail(), user.getPassword(), true, true, true, !((Customer) user).isBlocked(), grantedAuthorities);
         } catch (NotFoundException e) {
             throw new UsernameNotFoundException(e.getMessage(), e);

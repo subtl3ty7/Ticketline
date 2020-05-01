@@ -26,8 +26,11 @@ public class AuthenticationEventListener implements ApplicationListener<Abstract
         String email = (String) event.getAuthentication().getPrincipal();
         if(event instanceof AuthenticationSuccessEvent) {
             AbstractUser user = userRepository.findAbstractUserByEmail(email);
+            UserAttempts userAttempts = userAttemptsRepository.findUserAttemptsByEmail(email);
             user.setLogged(true);
+            userAttempts.setAttempts(0);
             userRepository.save(user);
+            userAttemptsRepository.save(userAttempts);
         }
 
         if(event instanceof LogoutSuccessEvent) {
@@ -37,6 +40,7 @@ public class AuthenticationEventListener implements ApplicationListener<Abstract
         }
 
         if(event instanceof AuthenticationFailureBadCredentialsEvent) {
+
             UserAttempts userAttempts = userAttemptsRepository.findUserAttemptsByEmail(email);
             int newAttempts = userAttempts.getAttempts() + 1;
             userAttempts.setAttempts(newAttempts);
