@@ -1,13 +1,16 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
 
-import javax.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-import static javax.persistence.FetchType.LAZY;
+import javax.persistence.*;
 
 
 @Entity
 @Table(name = "user_attempt")
+@Getter
+@Setter
 public class UserAttempts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,29 +27,5 @@ public class UserAttempts {
     public UserAttempts(String email, int attempts) {
         this.email = email;
         this.attempts = attempts;
-    }
-
-    public int getAttempts() {
-        return attempts;
-    }
-
-    public void setAttempts(int attempts){
-        this.attempts = attempts;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 }
