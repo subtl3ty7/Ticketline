@@ -71,4 +71,9 @@ public class CustomUserService implements UserService {
         if (user != null) return user;
         throw new NotFoundException(String.format("Could not find the user with the email address %s", email));
     }
+
+    @Override
+    public Customer registerNewCustomer(Customer customer) {
+        return userRepository.save(customer);
+    }
 }
