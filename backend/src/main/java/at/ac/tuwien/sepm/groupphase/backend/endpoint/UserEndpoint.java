@@ -1,7 +1,9 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 
 
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.CustomerDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.UserMapper;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
 import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -21,12 +23,28 @@ import java.lang.invoke.MethodHandles;
 public class UserEndpoint {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final UserService userService;
-    //private final UserMapper userMapper;
+    private final UserMapper userMapper;
 
     @Autowired
-    public UserEndpoint(UserService userService/*,UserMapper userMapper*/) {
+    public UserEndpoint(UserService userService, UserMapper userMapper) {
         this.userService = userService;
-       // this.userMapper = userMapper;
+       this.userMapper = userMapper;
+    }
+
+    @PostMapping(value = "/customer")
+    @ApiOperation(
+        value = "Register new customer",
+        notes = "Register new customer in system",
+        authorizations = {@Authorization(value = "apiKey")})
+    @ApiResponses({
+        @ApiResponse(code = 201, message = "User is successfully registered"),
+        @ApiResponse(code = 400, message = "User already exists"),
+        @ApiResponse(code = 500, message = "Connection Refused"),
+    })
+    public ResponseEntity<String> registerNewCustomer(@RequestBody CustomerDto customerDto) {
+        LOGGER.info("POST " + customerDto);
+        Customer customer = userService.registerNewCustomer(userMapper.customerDtoToCustomer(customerDto));
+        return new ResponseEntity(userMapper.customerToCustomerDto(customer), HttpStatus.CREATED);
     }
 /*
     @GetMapping(value = "/all")
