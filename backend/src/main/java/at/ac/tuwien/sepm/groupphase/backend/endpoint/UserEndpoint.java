@@ -140,7 +140,7 @@ public class UserEndpoint {
         LOGGER.info("GET /api/v1/users/block/" + uc);
         String result = userService.blockUser(uc);
         return new ResponseEntity<>(result, HttpStatus.OK);
-    }
+    }*/
 
     @Secured("ROLE_ADMIN")
     @GetMapping(value = "/unblock/{uc}")
@@ -153,9 +153,11 @@ public class UserEndpoint {
         @ApiResponse(code = 404, message = "User is not found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<String> deleteUser(@PathVariable String uc) {
+    public ResponseEntity<String> unblockUser(@PathVariable String uc) {
         LOGGER.info("GET /api/v1/users/unblock/" + uc);
         String result = userService.unblockUser(uc);
         return new ResponseEntity<>(result, HttpStatus.OK);
-    }*/
+    }
+
+
 }
