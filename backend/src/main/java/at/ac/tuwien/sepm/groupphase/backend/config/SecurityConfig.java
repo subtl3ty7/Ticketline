@@ -45,8 +45,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.securityProperties = securityProperties;
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenizer = jwtTokenizer;
-
-        this.whiteListedRequests = new OrRequestMatcher(securityProperties.getWhiteList().stream()
+        List<String> whiteList = securityProperties.getWhiteList();
+        whiteList.add("/api/v1/events/top10");
+        this.whiteListedRequests = new OrRequestMatcher(whiteList.stream()
             .map(AntPathRequestMatcher::new)
             .collect(Collectors.toList()));
     }

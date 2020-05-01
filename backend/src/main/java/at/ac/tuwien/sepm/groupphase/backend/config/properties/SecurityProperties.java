@@ -73,6 +73,7 @@ public class SecurityProperties {
         private String loginUri;
         private List<String> whiteList;
 
+
         public String getHeader() {
             return header;
         }
