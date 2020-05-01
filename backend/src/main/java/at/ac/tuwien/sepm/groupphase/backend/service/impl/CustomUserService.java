@@ -4,6 +4,7 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Administrator;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
 import at.ac.tuwien.sepm.groupphase.backend.entity.UserAttempts;
+import at.ac.tuwien.sepm.groupphase.backend.exception.CustomServiceException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserAttemptsRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
@@ -11,6 +12,7 @@ import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
@@ -18,7 +20,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -54,11 +58,10 @@ public class CustomUserService implements UserService {
                 if (userAttempts.getAttempts() > 5) {
                     ((Customer) user).setBlocked(true);
                     userRepository.save(user);
-                    //return locked user
-                    return new User(user.getEmail(), user.getPassword(), true, true, true, false, grantedAuthorities);
                 }
             }
-            return new User(user.getEmail(), user.getPassword(), grantedAuthorities);
+
+            return new User(user.getEmail(), user.getPassword(), true, true, true, !((Customer) user).isBlocked(), grantedAuthorities);
         } catch (NotFoundException e) {
             throw new UsernameNotFoundException(e.getMessage(), e);
         }
@@ -70,5 +73,24 @@ public class CustomUserService implements UserService {
         AbstractUser user = userRepository.findAbstractUserByEmail(email);
         if (user != null) return user;
         throw new NotFoundException(String.format("Could not find the user with the email address %s", email));
+    }
+
+    @Override
+    public String unblockUser(String userCode) {
+        LOGGER.debug("Unblocking user with user code " + userCode);
+        AbstractUser user = userRepository.findAbstractUserByUserCode(userCode);
+
+        if (user instanceof Customer) {
+            try {
+                if (((Customer) user).isBlocked()) {
+                    ((Customer) user).setBlocked(false);
+                    userRepository.save(user);
+                }
+            } catch (CustomServiceException e) {
+                LOGGER.trace("Error while unblocking user " + user.getEmail());
+                throw new CustomServiceException("Error while unblocking user " + user.getEmail());
+            }
+        }
+        return "";
     }
 }
