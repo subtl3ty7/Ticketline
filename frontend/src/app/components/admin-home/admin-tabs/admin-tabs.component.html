@@ -1,0 +1,35 @@
+<div class="wrapper all-height">
+  <div class="administration-content-wrapper all-height">
+    <div class="administration-title-wrapper">
+      <div class="administration-line">
+        <div class="administration-title">
+          <span *ngIf="globals.getChoosenTab === 1">Users</span>
+          <span *ngIf="globals.getChoosenTab === 2">Events</span>
+          <span *ngIf="globals.getChoosenTab === 3">News</span>
+        </div>
+      </div>
+    </div>
+
+    <!--TABS-->
+    <div class="administration-wrapper">
+      <div class="administration-tabs">
+        <app-admin-side-menu></app-admin-side-menu>
+      </div>
+
+      <div class="administration-content all-height"
+           *ngIf="globals.getChoosenTab === 1">
+        <app-users-tab class="all-height"></app-users-tab>
+      </div>
+
+      <div class="administration-content"
+           *ngIf="globals.getChoosenTab === 2">
+        <app-events-tab class="all-height" [choosenTab]="globals.getChoosenTab"></app-events-tab>
+      </div>
+
+      <div class="administration-content"
+           *ngIf="globals.getChoosenTab === 3">
+        <app-news-tab class="all-height" [choosenTab]="globals.getChoosenTab"></app-news-tab>
+      </div>
+    </div>
+  </div>
+</div>

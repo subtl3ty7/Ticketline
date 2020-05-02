@@ -5,14 +5,14 @@ import {HttpClientModule} from '@angular/common/http';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {HeaderComponent} from './components/header/header.component';
-import {FooterComponent} from './components/footer/footer.component';
+import {HeaderComponent} from './sections/header/header.component';
+import {FooterComponent} from './sections/footer/footer.component';
 import {GuestHomeComponent} from './components/guest-home/guest-home.component';
 import {LoginComponent} from './components/login/login.component';
 import {MessageComponent} from './components/message/message.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {httpInterceptorProviders} from './interceptors';
-import { AdminHomeComponent } from './components/admin-home/admin-home.component';
+import { AdminHomeComponent } from './components/admin-home/root/admin-home.component';
 import { CustomerHomeComponent } from './components/customer-home/customer-home.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,9 +20,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
-
-
-
+import { AdminSideMenuComponent } from './components/admin-home/admin-side-menu/admin-side-menu.component';
+import { UsersTabComponent } from './components/admin-home/users-tab/users-tab.component';
+import { AdminTabsComponent } from './components/admin-home/admin-tabs/admin-tabs.component';
+import { ContentComponent } from './sections/content/root/content.component';
+import { EventsTabComponent } from './components/admin-home/events-tab/events-tab.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -33,7 +37,12 @@ import { MatButtonModule } from '@angular/material/button';
     LoginComponent,
     MessageComponent,
     AdminHomeComponent,
-    CustomerHomeComponent
+    CustomerHomeComponent,
+    AdminSideMenuComponent,
+    UsersTabComponent,
+    AdminTabsComponent,
+    ContentComponent,
+    EventsTabComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +56,9 @@ import { MatButtonModule } from '@angular/material/button';
     MatSidenavModule,
     MatListModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatFormFieldModule,
+    MatTableModule
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
