@@ -1,13 +1,16 @@
 package at.ac.tuwien.sepm.groupphase.backend.datagenerator;
 
+import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Message;
 import at.ac.tuwien.sepm.groupphase.backend.entity.UserAttempts;
 import at.ac.tuwien.sepm.groupphase.backend.repository.MessageRepository;
+import at.ac.tuwien.sepm.groupphase.backend.repository.UserAttemptsRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -23,12 +26,16 @@ public class UserDataGenerator {
     private static final String TEST_USER_LAST_NAME = "Last Name";
     private static final String TEST_USER_EMAIL = "E-Mail";
     private static final String TEST_USER_PASSWORD = "Password";
-    private static final String TEST_USER_CODE = "User Code";
+    private static final String TEST_USER_CODE = "U123X";
 
     private final UserRepository userRepository;
+    private final UserAttemptsRepository userAttemptsRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserDataGenerator(UserRepository userRepository) {
+    public UserDataGenerator(UserRepository userRepository, UserAttemptsRepository userAttemptsRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.userAttemptsRepository = userAttemptsRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostConstruct
@@ -38,12 +45,12 @@ public class UserDataGenerator {
         } else {
             LOGGER.debug("generating {} customers", NUMBER_OF_CUSTOMERS_TO_GENERATE);
             for (int i = 0; i < NUMBER_OF_CUSTOMERS_TO_GENERATE; i++) {
-                Customer customer = Customer.CustomerBuilder.aCustomer()
+                AbstractUser customer = Customer.CustomerBuilder.aCustomer()
                     .withFirstName(TEST_USER_FIRST_NAME + " " + i)
                     .withLastName(TEST_USER_LAST_NAME + " " + i)
                     .withEmail(TEST_USER_EMAIL + " " + i)
-                    .withPassword(TEST_USER_PASSWORD + " " + i)
-                    .withUserCode(TEST_USER_CODE + " " + i)
+                    .withPassword(passwordEncoder.encode(TEST_USER_PASSWORD + " " + i))
+                    .withUserCode(TEST_USER_CODE + i)
                     .withBirthday(LocalDateTime.now().minusMonths(i))
                     .withIsLogged(false)
                     .withCreatedAt(LocalDateTime.now())
@@ -57,6 +64,7 @@ public class UserDataGenerator {
                     .build();
                 LOGGER.debug("saving customer " + customer.getFirstName() + " with attempts " + attempts.getAttempts() );
                 userRepository.save(customer);
+                userAttemptsRepository.save(attempts);
             }
         }
     }
