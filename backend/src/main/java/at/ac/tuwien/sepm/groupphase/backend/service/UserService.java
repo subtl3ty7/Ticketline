@@ -1,6 +1,9 @@
 package at.ac.tuwien.sepm.groupphase.backend.service;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
+import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,4 +30,13 @@ public interface UserService extends UserDetailsService {
      * @return a application user
      */
     AbstractUser findUserByEmail(String email);
+
+    String unblockUser(String userCode);
+    
+    /**
+     * Save a customer in the database
+     * @param customer the customer that should be saved
+     * @return the customer that was saved
+     */
+    Customer registerNewCustomer(Customer customer);
 }

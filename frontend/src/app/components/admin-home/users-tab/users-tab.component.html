@@ -1,0 +1,75 @@
+<div class="spinner-wrapper"
+     *ngIf="showLoadingIndicator === true">
+  <div class="spinner">
+  </div>
+</div>
+
+<div class="table-container all-height" #table
+     *ngIf="showLoadingIndicator === false">
+  <div class="flex">
+    <mat-form-field class="input-wrapper">
+      <input matInput
+             name="searchUser"
+    </mat-form-field>
+
+  </div>
+
+  <div class="table">
+    <mat-table #table [dataSource]="dataSource" matSort>
+
+      <!--USERCODE-->
+      <ng-container matColumnDef="userCode">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>User Code</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="cell-padding">
+            {{element?.user_code}}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <!--FIRST NAME-->
+      <ng-container matColumnDef="firstName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Firstname</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="cell-padding">
+            {{element?.first_name}}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <!--LAST NAME-->
+      <ng-container matColumnDef="lastName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Lastname</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="cell-padding">
+           {{element?.last_name}}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <!--EMAIL-->
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>E-Mail</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="cell-padding">
+            {{element?.email}}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <!--CREATED_AT-->
+      <ng-container matColumnDef="createdAt">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>CREATED AT</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="cell-padding">
+            {{element?.created_at | date}}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row;
+             columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div>
+</div>

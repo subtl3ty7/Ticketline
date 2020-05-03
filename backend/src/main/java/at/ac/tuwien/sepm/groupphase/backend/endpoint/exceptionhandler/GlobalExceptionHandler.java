@@ -1,5 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint.exceptionhandler;
 
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.exceptionhandler.exceptionbody.ApiError;
+import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,13 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.lang.invoke.MethodHandles;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    private static HttpStatus constraintViolationStatus = HttpStatus.BAD_REQUEST;
 
     /**
      * Use the @ExceptionHandler annotation to write handler for custom exceptions
@@ -42,9 +44,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      * from e.g. Spring
      */
     @Override
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                   HttpHeaders headers,
                                                                   HttpStatus status, WebRequest request) {
+        LOGGER.info("Yea we handle method argument not valid");
         Map<String, Object> body = new LinkedHashMap<>();
         //Get all errors
         List<String> errors = ex.getBindingResult()
@@ -56,5 +60,44 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(body.toString(), headers, status);
 
+    }
+
+    /**
+     * For all Exceptions that are not overridden, this method is called.
+     * This is necessary because for all exceptions that are not overridden, the body is null.
+     * In this method, we can provide a new body.
+     * This is mainly necessary for debugging, we might want to change the body to something less revealing so we
+     * dont accidentally reveal implementation details.
+     */
+    @Override
+    protected ResponseEntity<Object> handleExceptionInternal(
+        Exception exception,
+        Object body,
+        HttpHeaders headers,
+        HttpStatus status,
+        WebRequest request) {
+        LOGGER.warn("CONTROLLER EXCEPTION: " + exception.getMessage());
+        Object newBody = new ApiError(
+            status,
+            exception.getMessage()
+        );
+        return super.handleExceptionInternal(exception, newBody, headers, status, request);
+    }
+
+    /**
+     *
+     */
+    @ExceptionHandler(value = {ServiceException.class})
+    protected ResponseEntity<Object> handleConstraintViolation(ServiceException e) {
+        LOGGER.info("Handling Service Exception");
+        Object body = new ApiError(
+            constraintViolationStatus,
+            e.getViolationMessages()
+        );
+        ResponseEntity<Object> responseEntity = new ResponseEntity(
+            body,
+            constraintViolationStatus
+        );
+        return responseEntity;
     }
 }

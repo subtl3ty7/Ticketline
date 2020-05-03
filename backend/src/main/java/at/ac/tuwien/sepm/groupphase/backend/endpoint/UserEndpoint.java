@@ -1,7 +1,9 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 
 
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.UserMapper;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
 import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 import java.lang.invoke.MethodHandles;
 
@@ -21,12 +24,27 @@ import java.lang.invoke.MethodHandles;
 public class UserEndpoint {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final UserService userService;
-    //private final UserMapper userMapper;
+    private final UserMapper userMapper;
 
     @Autowired
-    public UserEndpoint(UserService userService/*,UserMapper userMapper*/) {
+    public UserEndpoint(UserService userService, UserMapper userMapper) {
         this.userService = userService;
-       // this.userMapper = userMapper;
+       this.userMapper = userMapper;
+    }
+
+    @PostMapping(value = "/customers")
+    @ApiOperation(
+        value = "Register new customer",
+        notes = "Register new customer in system")
+    @ApiResponses({
+        @ApiResponse(code = 201, message = "User is successfully registered"),
+        @ApiResponse(code = 400, message = "User already exists"),
+        @ApiResponse(code = 500, message = "Connection Refused"),
+    })
+    public ResponseEntity<String> registerNewCustomer(@RequestBody UserDto userDto) {
+        LOGGER.info("POST " + userDto);
+        Customer customer = userService.registerNewCustomer(userMapper.userDtoToCustomer(userDto));
+        return new ResponseEntity(userMapper.customerToUserDto(customer), HttpStatus.CREATED);
     }
 /*
     @GetMapping(value = "/all")
@@ -140,7 +158,7 @@ public class UserEndpoint {
         LOGGER.info("GET /api/v1/users/block/" + uc);
         String result = userService.blockUser(uc);
         return new ResponseEntity<>(result, HttpStatus.OK);
-    }
+    }*/
 
     @Secured("ROLE_ADMIN")
     @GetMapping(value = "/unblock/{uc}")
@@ -153,9 +171,11 @@ public class UserEndpoint {
         @ApiResponse(code = 404, message = "User is not found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<String> deleteUser(@PathVariable String uc) {
+    public ResponseEntity<String> unblockUser(@PathVariable String uc) {
         LOGGER.info("GET /api/v1/users/unblock/" + uc);
         String result = userService.unblockUser(uc);
         return new ResponseEntity<>(result, HttpStatus.OK);
-    }*/
+    }
+
+
 }

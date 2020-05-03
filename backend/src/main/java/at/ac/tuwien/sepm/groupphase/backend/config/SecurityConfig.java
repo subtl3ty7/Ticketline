@@ -45,11 +45,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.securityProperties = securityProperties;
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenizer = jwtTokenizer;
+
         List<String> whiteList = securityProperties.getWhiteList();
-        whiteList.add("/api/v1/events/top10");
-        this.whiteListedRequests = new OrRequestMatcher(whiteList.stream()
+        whiteList.add("/api/v1/users/customers");
+        this.whiteListedRequests = new OrRequestMatcher(
+            whiteList.stream()
             .map(AntPathRequestMatcher::new)
-            .collect(Collectors.toList()));
+            .collect(Collectors.toList())
+        );
     }
 
     @Override
@@ -68,6 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) {
         web.ignoring().requestMatchers(whiteListedRequests);
+        //web.ignoring().antMatchers("/api/v1/users/register");
     }
 
     @Override

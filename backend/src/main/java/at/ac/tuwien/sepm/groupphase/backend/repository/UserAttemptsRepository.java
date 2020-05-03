@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserAttemptsRepository extends JpaRepository<UserAttempts, Long> {
     UserAttempts findUserAttemptsByEmail(String email);
+
 }
