@@ -1,18 +1,20 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint.dto;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
 public class UserDto {
+    private boolean isAdmin;
     private String userCode;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
-    private Date birthday;
+    private LocalDateTime birthday;
     private boolean isLogged;
-    private Date createdAt;
-    private Date updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     private Long points;
     private boolean isBlocked;
 
@@ -72,11 +74,11 @@ public class UserDto {
         this.password = password;
     }
 
-    public Date getBirthday() {
+    public LocalDateTime getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDateTime birthday) {
         this.birthday = birthday;
     }
 
@@ -88,20 +90,28 @@ public class UserDto {
         isLogged = logged;
     }
 
-    public Date getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 
     @Override
@@ -120,7 +130,8 @@ public class UserDto {
     @Override
     public String toString() {
         return "UserDto{" +
-            "userCode='" + userCode + '\'' +
+            "isAdmin=" + isAdmin +
+            ", userCode='" + userCode + '\'' +
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
             ", email='" + email + '\'' +

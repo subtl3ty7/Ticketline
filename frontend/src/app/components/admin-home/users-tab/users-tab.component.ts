@@ -81,7 +81,7 @@ private setPassword(userCode: string) { // to do
   }
 
   private getUserCode(user?: User): string {
-    return user.user_code ? user.user_code.toLowerCase() : '';
+    return user.userCode ? user.userCode.toLowerCase() : '';
   }
 
 
