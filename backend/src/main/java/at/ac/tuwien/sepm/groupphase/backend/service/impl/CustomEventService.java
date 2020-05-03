@@ -13,6 +13,7 @@ import java.lang.invoke.MethodHandles;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,7 +30,9 @@ public class CustomEventService implements EventService {
 
     @Override
     public List<Event> findTop10EventsOfMonth() {
-
-       return eventRepository.findAllByStartsAtAfter(LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),1,0,0));
+        List<Event> allEventsFromMonth = eventRepository.findAllByStartsAtAfterOrderByTicketsSoldDesc(LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),1,0,0));
+        List<Event> top10 = new ArrayList<>();
+        for(int i = 0; i < 10; i++) top10.add(allEventsFromMonth.get(i));
+        return top10;
     }
 }
