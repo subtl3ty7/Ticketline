@@ -23,10 +23,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { AdminSideMenuComponent } from './components/admin-home/admin-side-menu/admin-side-menu.component';
 import { UsersTabComponent } from './components/admin-home/users-tab/users-tab.component';
 import { AdminTabsComponent } from './components/admin-home/admin-tabs/admin-tabs.component';
-import { ContentComponent } from './sections/content/root/content.component';
 import { EventsTabComponent } from './components/admin-home/events-tab/events-tab.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTableModule} from '@angular/material/table';
+import {ContentComponent} from './sections/content/content.component';
 
 @NgModule({
   declarations: [

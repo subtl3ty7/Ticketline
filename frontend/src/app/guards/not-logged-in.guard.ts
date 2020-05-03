@@ -13,7 +13,7 @@ export class NotLoggedInGuard implements CanActivate {
   canActivate(): boolean {
     if (this.authService.isLoggedIn()) {
       if (this.authService.getUserRole() === 'ADMIN') {
-        this.router.navigate(['/administrator']);
+        this.router.navigate(['/administration']);
       } else {
         this.router.navigate(['/home']);
       }
