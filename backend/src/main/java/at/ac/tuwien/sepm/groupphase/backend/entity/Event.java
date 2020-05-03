@@ -34,6 +34,9 @@ public class Event {
     @Column(nullable = false, name = "end_datetime")
     private LocalDateTime endsAt;
 
+    @Column(nullable = false, name = "photo")
+    private String photo;
+
     @Column
     private int ticketsSold;
 

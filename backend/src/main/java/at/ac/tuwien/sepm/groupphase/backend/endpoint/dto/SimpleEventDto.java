@@ -25,6 +25,8 @@ public class SimpleEventDto {
 
     private LocalDateTime endsAt;
 
+    private String photo;
+
 
     public static final class SimpleEventDtoBuilder {
 
@@ -40,17 +42,20 @@ public class SimpleEventDto {
 
         private LocalDateTime endsAt;
 
-        private SimpleEventDtoBuilder(String eventCode, LocalDateTime startsAt, String name, String description, int startPrice, LocalDateTime endsAt) {
+        private String photo;
+
+        private SimpleEventDtoBuilder(String eventCode, LocalDateTime startsAt, String name, String description, int startPrice, LocalDateTime endsAt, String photo) {
             this.eventCode = eventCode;
             this.startsAt = startsAt;
             this.name = name;
             this.description = description;
             this.startPrice = startPrice;
             this.endsAt = endsAt;
+            this.photo = photo;
         }
 
-        public static SimpleEventDtoBuilder aSimpleEventDto(String eventCode, LocalDateTime startsAt, String name, String description, int startPrice, LocalDateTime endsAt) {
-            return new SimpleEventDtoBuilder(eventCode, startsAt, name, description, startPrice, endsAt);
+        public static SimpleEventDtoBuilder aSimpleEventDto(String eventCode, LocalDateTime startsAt, String name, String description, int startPrice, LocalDateTime endsAt, String photo) {
+            return new SimpleEventDtoBuilder(eventCode, startsAt, name, description, startPrice, endsAt, photo);
         }
 
         public SimpleEventDto build() {
@@ -61,6 +66,7 @@ public class SimpleEventDto {
             simpleEventDto.setDescription(description);
             simpleEventDto.setStartPrice(startPrice);
             simpleEventDto.setEndsAt(endsAt);
+            simpleEventDto.setPhoto(photo);
             return simpleEventDto;
         }
     }
