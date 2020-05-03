@@ -4,6 +4,7 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
 import at.ac.tuwien.sepm.groupphase.backend.exception.CustomConstraintViolationException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
+import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import org.apache.tomcat.util.bcel.Const;
 import org.slf4j.Logger;
@@ -23,6 +24,8 @@ public class ServiceValidator {
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    EventRepository eventRepository;
 
     public Constraints validateRegistration(Customer customer) {
         Constraints constraints = new Constraints();
@@ -41,6 +44,12 @@ public class ServiceValidator {
     public Constraints validateUserCode(String userCode) {
         Constraints constraints = new Constraints();
         constraints.add("userCode_unique", userRepository.findAbstractUserByUserCode(userCode) == null);
+        return constraints;
+    }
+
+    public Constraints validateEventCode(String eventCode) {
+        Constraints constraints = new Constraints();
+        constraints.add("eventCode_unique", eventRepository.findEventByEventCode(eventCode) == null);
         return constraints;
     }
 
