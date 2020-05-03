@@ -12,6 +12,8 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Table(name = "user_attempt")
+@Getter
+@Setter
 public class UserAttempts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
