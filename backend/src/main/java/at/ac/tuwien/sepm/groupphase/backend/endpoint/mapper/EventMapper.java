@@ -1,5 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper;
 
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.DetailedEventDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleEventDto;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
 import org.mapstruct.IterableMapping;
@@ -22,4 +23,8 @@ public interface EventMapper {
      **/
     @IterableMapping(qualifiedByName = "simpleEvent")
     List<SimpleEventDto> eventToSimpleEventDto(List<Event> event);
+
+    DetailedEventDto eventToDetailedEventDto(Event event);
+
+    Event detailedEventDtoToEvent(DetailedEventDto detailedEventDto);
 }
