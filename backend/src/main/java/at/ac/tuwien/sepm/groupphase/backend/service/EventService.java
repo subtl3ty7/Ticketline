@@ -7,4 +7,8 @@ import java.util.List;
 public interface EventService {
 
     List<Event> findTop10EventsOfMonth();
+
+    List<Event> findTop10EventsOfMonthByCategory(String category);
+
+    Event createNewEvent(Event event);
 }
