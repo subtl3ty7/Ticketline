@@ -1,20 +1,19 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 
 
-import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.CustomerDto;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.UserMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
 import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import io.swagger.annotations.Authorization;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 import java.lang.invoke.MethodHandles;
 
@@ -31,20 +30,19 @@ public class UserEndpoint {
        this.userMapper = userMapper;
     }
 
-    @PostMapping(value = "/customer")
+    @PostMapping(value = "/customers")
     @ApiOperation(
         value = "Register new customer",
-        notes = "Register new customer in system",
-        authorizations = {@Authorization(value = "apiKey")})
+        notes = "Register new customer in system")
     @ApiResponses({
         @ApiResponse(code = 201, message = "User is successfully registered"),
         @ApiResponse(code = 400, message = "User already exists"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<String> registerNewCustomer(@RequestBody CustomerDto customerDto) {
-        LOGGER.info("POST " + customerDto);
-        Customer customer = userService.registerNewCustomer(userMapper.customerDtoToCustomer(customerDto));
-        return new ResponseEntity(userMapper.customerToCustomerDto(customer), HttpStatus.CREATED);
+    public ResponseEntity<String> registerNewCustomer(@RequestBody UserDto userDto) {
+        LOGGER.info("POST " + userDto);
+        Customer customer = userService.registerNewCustomer(userMapper.userDtoToCustomer(userDto));
+        return new ResponseEntity(userMapper.customerToUserDto(customer), HttpStatus.CREATED);
     }
 /*
     @GetMapping(value = "/all")

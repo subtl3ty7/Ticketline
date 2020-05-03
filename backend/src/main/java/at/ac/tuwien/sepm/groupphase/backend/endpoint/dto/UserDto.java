@@ -1,18 +1,9 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Objects;
 
-public abstract class AbstractUserDto {
+public class UserDto {
     private String userCode;
     private String firstName;
     private String lastName;
@@ -22,6 +13,24 @@ public abstract class AbstractUserDto {
     private boolean isLogged;
     private Date createdAt;
     private Date updatedAt;
+    private Long points;
+    private boolean isBlocked;
+
+    public Long getPoints() {
+        return points;
+    }
+
+    public void setPoints(Long points) {
+        this.points = points;
+    }
+
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
+    }
 
     public String getUserCode() {
         return userCode;
@@ -98,8 +107,8 @@ public abstract class AbstractUserDto {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AbstractUserDto)) return false;
-        AbstractUserDto that = (AbstractUserDto) o;
+        if (!(o instanceof UserDto)) return false;
+        UserDto that = (UserDto) o;
         return userCode.equals(that.userCode);
     }
 
@@ -110,11 +119,18 @@ public abstract class AbstractUserDto {
 
     @Override
     public String toString() {
-        return "AbstractUserDto{" +
+        return "UserDto{" +
             "userCode='" + userCode + '\'' +
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
+            ", email='" + email + '\'' +
+            ", password='" + password + '\'' +
+            ", birthday=" + birthday +
+            ", isLogged=" + isLogged +
+            ", createdAt=" + createdAt +
+            ", updatedAt=" + updatedAt +
+            ", points=" + points +
+            ", isBlocked=" + isBlocked +
             '}';
     }
-
 }
