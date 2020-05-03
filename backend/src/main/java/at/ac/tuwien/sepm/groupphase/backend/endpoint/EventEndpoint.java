@@ -37,7 +37,7 @@ public class EventEndpoint {
         notes = "Get Top 10 events without details")
     @ApiResponses({
         @ApiResponse(code = 200, message = "Events are successfully retrieved"),
-        @ApiResponse(code = 404, message = "No Event is not found"),
+        @ApiResponse(code = 404, message = "No Event is found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
     public ResponseEntity<List<SimpleEventDto>> findTop10EventsOfMonth() {
