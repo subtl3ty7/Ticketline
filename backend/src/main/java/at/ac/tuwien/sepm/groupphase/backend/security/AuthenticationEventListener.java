@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.security;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
 import at.ac.tuwien.sepm.groupphase.backend.entity.UserAttempts;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserAttemptsRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
@@ -37,11 +38,14 @@ public class AuthenticationEventListener implements ApplicationListener<Abstract
             }
             if (event instanceof AuthenticationSuccessEvent) {
                 AbstractUser user = userRepository.findAbstractUserByEmail(email);
-                UserAttempts userAttempts = userAttemptsRepository.findUserAttemptsByEmail(email);
                 user.setLogged(true);
-                userAttempts.setAttempts(0);
                 userRepository.save(user);
-                userAttemptsRepository.save(userAttempts);
+
+                if(user instanceof Customer) {
+                    UserAttempts userAttempts = userAttemptsRepository.findUserAttemptsByEmail(email);
+                    userAttempts.setAttempts(0);
+                    userAttemptsRepository.save(userAttempts);
+                }
             }
 
             if (event instanceof LogoutSuccessEvent) {
@@ -51,11 +55,13 @@ public class AuthenticationEventListener implements ApplicationListener<Abstract
             }
 
             if (event instanceof AuthenticationFailureBadCredentialsEvent) {
-
-                UserAttempts userAttempts = userAttemptsRepository.findUserAttemptsByEmail(email);
-                int newAttempts = userAttempts.getAttempts() + 1;
-                userAttempts.setAttempts(newAttempts);
-                userAttemptsRepository.save(userAttempts);
+                AbstractUser user = userRepository.findAbstractUserByEmail(email);
+                if (user instanceof Customer) {
+                    UserAttempts userAttempts = userAttemptsRepository.findUserAttemptsByEmail(email);
+                    int newAttempts = userAttempts.getAttempts() + 1;
+                    userAttempts.setAttempts(newAttempts);
+                    userAttemptsRepository.save(userAttempts);
+                }
             }
         }
     }

@@ -54,21 +54,21 @@ public class CustomUserService implements UserService {
         try {
             AbstractUser user = findUserByEmail(email);
             List<GrantedAuthority> grantedAuthorities;
-            if (user instanceof Administrator)
+            if (user instanceof Administrator) {
                 grantedAuthorities = AuthorityUtils.createAuthorityList("ROLE_ADMIN", "ROLE_USER");
-            else
+                return new User(user.getEmail(),  user.getPassword(), grantedAuthorities);
+            } else {
+                //If user is a basic user
                 grantedAuthorities = AuthorityUtils.createAuthorityList("ROLE_USER");
-
-            //If user is a basic user
-            if(user instanceof Customer) {
                 //check for login attempts
                 UserAttempts userAttempts = userAttemptsRepository.findUserAttemptsByEmail(email);
-                if (userAttempts.getAttempts() > 5) {
+
+                if (userAttempts.getAttempts() == 5) {
                     ((Customer) user).setBlocked(true);
                     userRepository.save(user);
                 }
+                return new User(user.getEmail(), user.getPassword(), true, true, true, !((Customer) user).isBlocked(), grantedAuthorities);
             }
-            return new User(user.getEmail(), user.getPassword(), true, true, true, !((Customer) user).isBlocked(), grantedAuthorities);
         } catch (NotFoundException e) {
             throw new UsernameNotFoundException(e.getMessage(), e);
         }
