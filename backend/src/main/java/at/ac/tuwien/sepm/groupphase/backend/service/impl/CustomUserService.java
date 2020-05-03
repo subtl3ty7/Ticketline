@@ -99,6 +99,7 @@ public class CustomUserService implements UserService {
             }
         }
         return "";
+    }
 
     public Customer registerNewCustomer(Customer customer) throws ValidationException, DataAccessException {
         LOGGER.info("Moving Customer Entity through Service Layer: " + customer);
