@@ -3,9 +3,9 @@ package at.ac.tuwien.sepm.groupphase.backend.entity;
 import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity(name = "user")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -16,18 +16,28 @@ public abstract class AbstractUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
+    @Size(max = 6)
     @Column(nullable = false, name = "USER_CODE", length = 6)
     private String userCode;
 
+    @NotNull
+    @Size(max = 30)
     @Column(nullable = false, name = "FIRST_NAME", length = 30)
     private String firstName;
 
+    @NotNull
+    @Size(max = 30)
     @Column(nullable = false, name = "LAST_NAME", length = 30)
     private String lastName;
 
+    @NotNull
+    @Size(max = 100)
     @Column(nullable = false, name = "EMAIL", length = 100)
     private String email;
 
+    @NotNull
+    @Size(max = 100)
     @Column(nullable = false, name = "PASSWORD", length = 100)
     private String password;
 
@@ -123,4 +133,19 @@ public abstract class AbstractUser {
         this.updatedAt = updatedAt;
     }
 
+    @Override
+    public String toString() {
+        return "AbstractUser{" +
+            "id=" + id +
+            ", userCode='" + userCode + '\'' +
+            ", firstName='" + firstName + '\'' +
+            ", lastName='" + lastName + '\'' +
+            ", email='" + email + '\'' +
+            ", password='" + password + '\'' +
+            ", birthday=" + birthday +
+            ", isLogged=" + isLogged +
+            ", createdAt=" + createdAt +
+            ", updatedAt=" + updatedAt +
+            '}';
+    }
 }
