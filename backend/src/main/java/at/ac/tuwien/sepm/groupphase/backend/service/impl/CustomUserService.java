@@ -6,13 +6,18 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
 import at.ac.tuwien.sepm.groupphase.backend.entity.UserAttempts;
 import at.ac.tuwien.sepm.groupphase.backend.exception.CustomServiceException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
+import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
+import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserAttemptsRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
+import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
+import at.ac.tuwien.sepm.groupphase.backend.util.ServiceValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
@@ -32,12 +37,15 @@ public class CustomUserService implements UserService {
     private final UserRepository userRepository;
     private final UserAttemptsRepository userAttemptsRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ServiceValidator serviceValidator;
 
     @Autowired
-    public CustomUserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserAttemptsRepository userAttemptsRepository) {
+    public CustomUserService(UserRepository userRepository, PasswordEncoder passwordEncoder,
+                             UserAttemptsRepository userAttemptsRepository, ServiceValidator serviceValidator) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userAttemptsRepository = userAttemptsRepository;
+        this.serviceValidator = serviceValidator;
     }
 
     @Override
@@ -91,5 +99,27 @@ public class CustomUserService implements UserService {
             }
         }
         return "";
+
+    public Customer registerNewCustomer(Customer customer) throws ValidationException, DataAccessException {
+        LOGGER.info("Moving Customer Entity through Service Layer: " + customer);
+        customer.setUserCode(getNewUserCode());
+        serviceValidator.validateRegistration(customer).throwIfViolated();
+        return userRepository.save(customer);
+    }
+
+    private String getNewUserCode() {
+        final int maxAttempts = 1000;
+        String userCode = "";
+        int i;
+        for(i=0; i<maxAttempts; i++) {
+            userCode = CodeGenerator.generateUserCode();
+            if(!serviceValidator.validateUserCode(userCode).isViolated()) {
+                break;
+            }
+        }
+        if(i==1000) {
+            throw new ServiceException("Something went wrong while generating UserCode", null);
+        }
+        return userCode;
     }
 }

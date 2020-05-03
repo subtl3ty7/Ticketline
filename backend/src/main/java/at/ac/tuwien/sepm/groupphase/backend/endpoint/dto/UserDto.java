@@ -1,69 +1,35 @@
-package at.ac.tuwien.sepm.groupphase.backend.entity;
+package at.ac.tuwien.sepm.groupphase.backend.endpoint.dto;
 
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.UniqueElements;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.Objects;
 
-@Entity(name = "user")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn (name = "USER_TYPE", discriminatorType= DiscriminatorType.STRING)
-public abstract class AbstractUser {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @NotNull
-    @Size(max = 6)
-    @Column(nullable = false, unique = true, name = "USER_CODE", length = 6)
+public class UserDto {
     private String userCode;
-
-    @NotNull
-    @Size(max = 30)
-    @Column(nullable = false, name = "FIRST_NAME", length = 30)
     private String firstName;
-
-    @NotNull
-    @Size(max = 30)
-    @Column(nullable = false, name = "LAST_NAME", length = 30)
     private String lastName;
-
-    @NotNull
-    @Size(max = 100)
-    @Column(nullable = false, unique = true, name = "EMAIL", length = 100)
     private String email;
-
-    @NotNull
-    @Size(max = 100)
-    @Column(nullable = false, name = "PASSWORD", length = 100)
     private String password;
-
-    @Column(name = "BIRTHDAY")
     private Date birthday;
-
-    @Column(name = "IS_LOGGED")
     private boolean isLogged;
-
-    @Column(name = "CREATED_AT")
     private Date createdAt;
-
-    @Column(name = "UPDATED_AT")
     private Date updatedAt;
+    private Long points;
+    private boolean isBlocked;
 
-    public void setEmail(String email){
-        this.email = email;
+    public Long getPoints() {
+        return points;
     }
 
-    public Long getId() {
-        return id;
+    public void setPoints(Long points) {
+        this.points = points;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
     }
 
     public String getUserCode() {
@@ -92,6 +58,10 @@ public abstract class AbstractUser {
 
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -135,10 +105,22 @@ public abstract class AbstractUser {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserDto)) return false;
+        UserDto that = (UserDto) o;
+        return userCode.equals(that.userCode);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userCode);
+    }
+
+    @Override
     public String toString() {
-        return "AbstractUser{" +
-            "id=" + id +
-            ", userCode='" + userCode + '\'' +
+        return "UserDto{" +
+            "userCode='" + userCode + '\'' +
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
             ", email='" + email + '\'' +
@@ -147,6 +129,8 @@ public abstract class AbstractUser {
             ", isLogged=" + isLogged +
             ", createdAt=" + createdAt +
             ", updatedAt=" + updatedAt +
+            ", points=" + points +
+            ", isBlocked=" + isBlocked +
             '}';
     }
 }
