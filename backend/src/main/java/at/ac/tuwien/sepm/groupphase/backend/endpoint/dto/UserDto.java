@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.endpoint.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
@@ -21,7 +22,6 @@ public class UserDto {
     private LocalDateTime updatedAt;
     private Long points;
     private boolean isBlocked;
-    private boolean isAdmin;
 
 
     @Override
