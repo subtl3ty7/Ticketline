@@ -5,7 +5,6 @@ import {HttpClientModule} from '@angular/common/http';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {HeaderComponent} from './sections/header/header.component';
 import {FooterComponent} from './sections/footer/footer.component';
 import {GuestHomeComponent} from './components/guest-home/guest-home.component';
 import {LoginComponent} from './components/login/login.component';
@@ -27,11 +26,14 @@ import { EventsTabComponent } from './components/admin-home/events-tab/events-ta
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTableModule} from '@angular/material/table';
 import {ContentComponent} from './sections/content/content.component';
+import { AdminHeaderComponent } from './sections/header/admin-header/admin-header.component';
+import { CustomerHeaderComponent } from './sections/header/customer-header/customer-header.component';
+import {MatInputModule} from '@angular/material/input';
+import {MatSortModule} from '@angular/material/sort';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
     FooterComponent,
     GuestHomeComponent,
     LoginComponent,
@@ -42,7 +44,9 @@ import {ContentComponent} from './sections/content/content.component';
     UsersTabComponent,
     AdminTabsComponent,
     ContentComponent,
-    EventsTabComponent
+    EventsTabComponent,
+    AdminHeaderComponent,
+    CustomerHeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +62,9 @@ import {ContentComponent} from './sections/content/content.component';
     MatButtonModule,
     MatIconModule,
     MatFormFieldModule,
-    MatTableModule
+    MatTableModule,
+    MatInputModule,
+    MatSortModule
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]

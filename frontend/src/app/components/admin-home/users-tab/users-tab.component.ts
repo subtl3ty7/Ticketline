@@ -2,6 +2,8 @@ import {AfterContentChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild
 import {User} from '../../../dtos/user';
 import {UserService} from '../../../services/user.service';
 import {MatSort} from '@angular/material/sort';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
 import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
@@ -15,7 +17,8 @@ export class UsersTabComponent implements OnInit {
     'firstName',
     'lastName',
     'email',
-    'createdAt',
+    'password',
+    'block'
   ];
   public dataSource: any;
   public showLoadingIndicator = true;
@@ -29,7 +32,7 @@ export class UsersTabComponent implements OnInit {
   private selectedUser: User;
   constructor(private userService: UserService) {
   this.updatedUser = false;
-  this.selectedUser = new User(null, '', '', '', '', '', '', '', '', false, false, 0, '', false);
+  //this.selectedUser = new User(null, '', '', '', '', '', '', '', '', false, false, 0, '', false);
 }
 ngOnInit(): void {
   this.loadAllUsers();
@@ -84,5 +87,10 @@ private setPassword(userCode: string) { // to do
     return user.userCode ? user.userCode.toLowerCase() : '';
   }
 
+
+  searchForAllUsers($event: KeyboardEvent) {
+  }
+
+  getDateRangeState($event: any) {}
 
 }

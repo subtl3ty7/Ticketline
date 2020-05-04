@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import java.util.List;
+
 public interface UserService extends UserDetailsService {
 
     /**
@@ -32,11 +34,13 @@ public interface UserService extends UserDetailsService {
     AbstractUser findUserByEmail(String email);
 
     String unblockUser(String userCode);
-    
+
     /**
      * Save a customer in the database
      * @param customer the customer that should be saved
      * @return the customer that was saved
      */
     Customer registerNewCustomer(Customer customer);
+
+    List<AbstractUser> loadAllUsers();
 }

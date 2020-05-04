@@ -32,4 +32,10 @@ public abstract class CodeGenerator {
         char type = 'U';
         return generateCode(userCodeLength, type).toUpperCase();
     }
+
+    public static String generateEventCode() {
+        int eventCodeLength = 6;
+        char type = 'E';
+        return generateCode(eventCodeLength, type).toUpperCase();
+    }
 }
