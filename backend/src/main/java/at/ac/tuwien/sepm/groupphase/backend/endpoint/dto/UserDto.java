@@ -24,14 +24,6 @@ public class UserDto {
     private boolean isAdmin;
 
 
-    public boolean isAdmin() {
-        return isAdmin;
-    }
-
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
