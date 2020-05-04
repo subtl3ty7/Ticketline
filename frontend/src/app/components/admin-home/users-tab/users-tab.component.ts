@@ -5,6 +5,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTableDataSource} from '@angular/material/table';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-users-tab',
@@ -30,9 +31,11 @@ export class UsersTabComponent implements OnInit {
   private users: Array<User>;
   private updatedUser: boolean;
   private selectedUser: User;
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService,
+              public  router: Router,
+              private route: ActivatedRoute) {
   this.updatedUser = false;
-  //this.selectedUser = new User(null, '', '', '', '', '', '', '', '', false, false, 0, '', false);
+
 }
 ngOnInit(): void {
   this.loadAllUsers();
@@ -73,7 +76,12 @@ private defaultServiceErrorHandling(error: any) {
     this.errorMessage = error.error.message;
   }
 }
-private setPassword(userCode: string) { // to do
+
+public userDetails(user) {
+    this.router.navigate(['user-details/' + user.userCode]);
+  }
+
+private changePassword(userCode: string) { // to do
 }
 
   private initTable() {
@@ -90,7 +98,5 @@ private setPassword(userCode: string) { // to do
 
   searchForAllUsers($event: KeyboardEvent) {
   }
-
-  getDateRangeState($event: any) {}
 
 }

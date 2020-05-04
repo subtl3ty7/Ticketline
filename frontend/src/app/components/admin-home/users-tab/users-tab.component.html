@@ -13,7 +13,7 @@
       <!--USERCODE-->
       <ng-container matColumnDef="userCode">
         <mat-header-cell *matHeaderCellDef mat-sort-header>User Code</mat-header-cell>
-        <mat-cell *matCellDef="let element">
+        <mat-cell *matCellDef="let element" (click)="userDetails(element)">
           <div class="cell-padding">
             {{element?.userCode}}
           </div>
@@ -23,7 +23,7 @@
       <!--FIRST NAME-->
       <ng-container matColumnDef="firstName">
         <mat-header-cell *matHeaderCellDef mat-sort-header>First name</mat-header-cell>
-        <mat-cell *matCellDef="let element">
+        <mat-cell *matCellDef="let element" (click)="userDetails(element)">
           <div class="cell-padding">
             {{element?.firstName}}
           </div>
@@ -33,7 +33,7 @@
       <!--LAST NAME-->
       <ng-container matColumnDef="lastName">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Last name</mat-header-cell>
-        <mat-cell *matCellDef="let element">
+        <mat-cell *matCellDef="let element" (click)="userDetails(element)">
           <div class="cell-padding">
            {{element?.lastName}}
           </div>
@@ -43,7 +43,7 @@
       <!--EMAIL-->
       <ng-container matColumnDef="email">
         <mat-header-cell *matHeaderCellDef mat-sort-header>E-Mail</mat-header-cell>
-        <mat-cell *matCellDef="let element">
+        <mat-cell *matCellDef="let element" (click)="userDetails(element)">
           <div class="cell-padding">
             {{element?.email}}
           </div>
@@ -55,7 +55,7 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
         <mat-cell *matCellDef="let element">
           <div class="cell-padding">
-            <button mat-raised-button color = "primary">Password Reset</button>
+            <button mat-raised-button color = "primary"  (click)="changePassword(element)">Passwort Ändern</button>
           </div>
         </mat-cell>
       </ng-container>
@@ -65,7 +65,8 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
       <mat-cell *matCellDef="let element">
         <div class="cell-padding">
-          <button mat-raised-button color = "warn">Block</button>
+          <button mat-raised-button color = "warn" *ngIf="element?.blocked === false && element?.admin === false">Block</button>
+          <button mat-raised-button color = "green" *ngIf="element?.blocked === true && element?.admin === false">Unblock</button>
         </div>
       </mat-cell>
     </ng-container>
