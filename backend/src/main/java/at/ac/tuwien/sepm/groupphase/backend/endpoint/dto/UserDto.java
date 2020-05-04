@@ -9,19 +9,28 @@ import java.util.Objects;
 @Getter
 @Setter
 public class UserDto {
+    private boolean isAdmin;
     private String userCode;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
-    private Date birthday;
+    private LocalDateTime birthday;
     private boolean isLogged;
-    private Date createdAt;
-    private Date updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     private Long points;
     private boolean isBlocked;
     private boolean isAdmin;
 
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -39,7 +48,8 @@ public class UserDto {
     @Override
     public String toString() {
         return "UserDto{" +
-            "userCode='" + userCode + '\'' +
+            "isAdmin=" + isAdmin +
+            ", userCode='" + userCode + '\'' +
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
             ", email='" + email + '\'' +
