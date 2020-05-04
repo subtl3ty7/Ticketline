@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.security.core.userdetails.User;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ import static javax.persistence.FetchType.LAZY;
 @Table(name = "user_attempt")
 @Getter
 @Setter
+@ToString
 public class UserAttempts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +34,11 @@ public class UserAttempts {
     public UserAttempts(String email, int attempts) {
         this.email = email;
         this.attempts = attempts;
+    }
+
+    public UserAttempts(AbstractUser user) {
+        this.email = user.getEmail();
+        this.attempts = 0;
     }
 
     public static final class UserAttemptsBuilder {
