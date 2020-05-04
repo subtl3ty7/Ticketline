@@ -13,9 +13,13 @@ import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
 import at.ac.tuwien.sepm.groupphase.backend.util.ServiceValidator;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,6 +30,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,14 +44,21 @@ public class CustomUserService implements UserService {
     private final UserAttemptsRepository userAttemptsRepository;
     private final PasswordEncoder passwordEncoder;
     private final ServiceValidator serviceValidator;
+    private final EntityManagerFactory entityManagerFactory;
+
 
     @Autowired
     public CustomUserService(UserRepository userRepository, PasswordEncoder passwordEncoder,
-                             UserAttemptsRepository userAttemptsRepository, ServiceValidator serviceValidator) {
+                             UserAttemptsRepository userAttemptsRepository, ServiceValidator serviceValidator, EntityManagerFactory entityManagerFactory) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userAttemptsRepository = userAttemptsRepository;
         this.serviceValidator = serviceValidator;
+        this.entityManagerFactory = entityManagerFactory;
+    }
+
+    private Session getSession() {
+        return entityManagerFactory.unwrap(SessionFactory.class).openSession();
     }
 
     @Override
@@ -105,7 +118,18 @@ public class CustomUserService implements UserService {
         LOGGER.info("Moving Customer Entity through Service Layer: " + customer);
         customer.setUserCode(getNewUserCode());
         serviceValidator.validateRegistration(customer).throwIfViolated();
-        return userRepository.save(customer);
+
+        UserAttempts userAttempts = new UserAttempts(customer);
+
+        Session session = getSession();
+        session.beginTransaction();
+        customer = userRepository.save(customer);
+        userAttempts = userAttemptsRepository.save(userAttempts);
+        session.getTransaction().commit();
+
+        LOGGER.info("Saved Customer Entity in Database: " + customer);
+        LOGGER.info("Saved UserAttempts Entity in Database: " + userAttempts);
+        return customer;
     }
 
     private String getNewUserCode() {
