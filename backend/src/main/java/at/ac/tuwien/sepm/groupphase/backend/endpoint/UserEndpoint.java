@@ -63,7 +63,7 @@ public class UserEndpoint {
         List<UserDto> result = userMapper.abstractUserToUserDto(userService.loadAllUsers());
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-/*
+
     @GetMapping(value = "/{uc}")
     @ApiOperation(
         value = "Get user",
@@ -74,12 +74,12 @@ public class UserEndpoint {
         @ApiResponse(code = 404, message = "User is not found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<SimpleUserDto> findUserByUserCode(@PathVariable String uc) {
+    public ResponseEntity<UserDto> findUserByUserCode(@PathVariable String uc) {
         LOGGER.info("GET /api/v1/users/" + uc);
-        SimpleUserDto result = userMapper.userToSimpleUserDto(userService.findUserByUserCode(uc));
+        UserDto result = userMapper.abstractUserToUserDto(userService.findUserByUserCode(uc));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
+/*
     @GetMapping(value = "/{email}")
     @ApiOperation(
         value = "Get user",

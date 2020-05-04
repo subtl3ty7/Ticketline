@@ -96,6 +96,14 @@ public class CustomUserService implements UserService {
     }
 
     @Override
+    public AbstractUser findUserByUserCode(String userCode) {
+        LOGGER.debug("Find application user by usercode");
+        AbstractUser user = userRepository.findAbstractUserByUserCode(userCode);
+        if (user != null) return user;
+        throw new NotFoundException(String.format("Could not find the user with the user code %s", userCode));
+    }
+
+    @Override
     public String unblockUser(String userCode) {
         LOGGER.debug("Unblocking user with user code " + userCode);
         AbstractUser user = userRepository.findAbstractUserByUserCode(userCode);
