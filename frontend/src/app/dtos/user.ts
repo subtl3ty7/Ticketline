@@ -11,6 +11,7 @@ export class User {
     public updatedAt: string,
     public isBlocked: boolean,
     public isLogged: boolean,
+    public isAdmin: boolean,
     public points: number,
     public userType: string,
     public seenMessages: boolean

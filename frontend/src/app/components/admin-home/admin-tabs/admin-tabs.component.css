@@ -21,14 +21,6 @@
   border-bottom: 1px solid #888888;
 }
 
-.switch {
-  display: none;
-}
-
-img {
-  vertical-align: bottom;
-}
-
 .administration-title {
   font-family: SansSerif, sans-serif;
   font-size: 24px;
@@ -96,9 +88,6 @@ img {
     display: none;
   }
 
-  .administration-wrapper {
-    flex-direction: column;
-  }
 
   .tab {
     margin-top: 5px;
@@ -117,12 +106,5 @@ img {
     min-width: 120px;
   }
 
-  .switch {
-    display: block;
-    margin-left: 45px;
-  }
 
-  .switch-active {
-    transform: rotate(180deg);
-  }
 }

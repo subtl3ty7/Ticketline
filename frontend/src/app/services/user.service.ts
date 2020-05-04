@@ -10,7 +10,7 @@ import {catchError, tap} from 'rxjs/operators';
 })
 
 export class UserService {
-  // private messageBaseUri: string = this.globals.backendUri + '/administrator/users';
+  private userBaseUri: string = this.globals.backendUri + '/users';
   constructor(private httpClient: HttpClient, private globals: Globals) {
   }
   private handleError(err: HttpErrorResponse) {
@@ -25,7 +25,7 @@ export class UserService {
   }
   getAllUsers(): Observable<User[]> {
     console.log('Load all users.');
-    return this.httpClient.get<User[]>('/allUsers').pipe(
+    return this.httpClient.get<User[]>(this.userBaseUri + '/all').pipe(
       tap(data => console.log('All ' + JSON.stringify(data))),
       catchError(this.handleError)
     );
