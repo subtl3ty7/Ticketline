@@ -1,8 +1,13 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 import java.util.Objects;
 
+@Getter
+@Setter
 public class UserDto {
     private String userCode;
     private String firstName;
@@ -15,94 +20,8 @@ public class UserDto {
     private Date updatedAt;
     private Long points;
     private boolean isBlocked;
+    private boolean isAdmin;
 
-    public Long getPoints() {
-        return points;
-    }
-
-    public void setPoints(Long points) {
-        this.points = points;
-    }
-
-    public boolean isBlocked() {
-        return isBlocked;
-    }
-
-    public void setBlocked(boolean blocked) {
-        isBlocked = blocked;
-    }
-
-    public String getUserCode() {
-        return userCode;
-    }
-
-    public void setUserCode(String userCode) {
-        this.userCode = userCode;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
-    public boolean isLogged() {
-        return isLogged;
-    }
-
-    public void setLogged(boolean logged) {
-        isLogged = logged;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -131,6 +50,7 @@ public class UserDto {
             ", updatedAt=" + updatedAt +
             ", points=" + points +
             ", isBlocked=" + isBlocked +
+            ", isAdmin=" + isAdmin +
             '}';
     }
 }
