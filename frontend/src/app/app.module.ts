@@ -30,6 +30,9 @@ import { AdminHeaderComponent } from './sections/header/admin-header/admin-heade
 import { CustomerHeaderComponent } from './sections/header/customer-header/customer-header.component';
 import {MatInputModule} from '@angular/material/input';
 import {MatSortModule} from '@angular/material/sort';
+import { UserDetailsContainerComponent } from './components/admin-home/user-details-container/root/user-details-container.component';
+import { UserDetailsComponent } from './components/admin-home/user-details-container/user-details/user-details.component';
+import { UserInfoComponent } from './components/admin-home/user-details-container/user-details/user-info/user-info.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +49,10 @@ import {MatSortModule} from '@angular/material/sort';
     ContentComponent,
     EventsTabComponent,
     AdminHeaderComponent,
-    CustomerHeaderComponent
+    CustomerHeaderComponent,
+    UserDetailsContainerComponent,
+    UserDetailsComponent,
+    UserInfoComponent
   ],
   imports: [
     BrowserModule,
