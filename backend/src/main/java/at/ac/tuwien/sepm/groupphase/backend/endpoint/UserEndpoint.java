@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.UserMapper;
+import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
 import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
 import io.swagger.annotations.ApiOperation;
@@ -18,6 +19,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 import java.lang.invoke.MethodHandles;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1/users")
@@ -43,25 +45,25 @@ public class UserEndpoint {
     })
     public ResponseEntity<String> registerNewCustomer(@RequestBody UserDto userDto) {
         LOGGER.info("POST " + userDto);
-        Customer customer = userService.registerNewCustomer(userMapper.userDtoToCustomer(userDto));
-        return new ResponseEntity(userMapper.customerToUserDto(customer), HttpStatus.CREATED);
+        AbstractUser customer = userService.registerNewCustomer(userMapper.userDtoToCustomer(userDto));
+        return new ResponseEntity(userMapper.abstractUserToUserDto(customer), HttpStatus.CREATED);
     }
-/*
+
     @GetMapping(value = "/all")
     @ApiOperation(
-        value = "Get list of users with userCode, email, firstname, lastname, isBlocked",
+        value = "Get list of users.",
         authorizations = {@Authorization(value = "apiKey")})
     @ApiResponses({
         @ApiResponse(code = 200, message = "Users are successfully retrieved"),
         @ApiResponse(code = 404, message = "No Users are found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<List<SimpleUserDto>> requestAllUsers() {
+    public ResponseEntity<List<UserDto>> requestAllUsers() {
         LOGGER.info("GET /api/v1/users/all");
-        List<SimpleUserDto> result = userMapper.userToSimpleUserDto(userService.requestAllUsers());
+        List<UserDto> result = userMapper.abstractUserToUserDto(userService.loadAllUsers());
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
+/*
     @GetMapping(value = "/{uc}")
     @ApiOperation(
         value = "Get user",
