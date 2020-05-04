@@ -100,7 +100,7 @@ public class CustomUserService implements UserService {
         }
         return "";
     }
-
+    @Override
     public Customer registerNewCustomer(Customer customer) throws ValidationException, DataAccessException {
         LOGGER.info("Moving Customer Entity through Service Layer: " + customer);
         customer.setUserCode(getNewUserCode());
@@ -122,5 +122,10 @@ public class CustomUserService implements UserService {
             throw new ServiceException("Something went wrong while generating UserCode", null);
         }
         return userCode;
+    }
+
+    @Override
+    public List<AbstractUser> loadAllUsers(){
+        return userRepository.findAll();
     }
 }
