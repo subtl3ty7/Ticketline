@@ -81,6 +81,7 @@ public class UserDataGenerator {
             session.beginTransaction();
             LOGGER.info("BEGAN");
             userRepository.save(customer);
+            userAttemptsRepository.save(attempts);
             LOGGER.info("SAVED");
             session.getTransaction().commit();
             LOGGER.info("COMMITTED");
