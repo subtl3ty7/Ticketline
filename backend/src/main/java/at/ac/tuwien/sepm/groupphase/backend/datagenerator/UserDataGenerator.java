@@ -79,12 +79,9 @@ public class UserDataGenerator {
             LOGGER.debug("saving customer " + customer.getEmail() + " with attempts " + attempts.getAttempts() );
             Session session = getSession();
             session.beginTransaction();
-            LOGGER.info("BEGAN");
             userRepository.save(customer);
             userAttemptsRepository.save(attempts);
-            LOGGER.info("SAVED");
             session.getTransaction().commit();
-            LOGGER.info("COMMITTED");
         }
     }
 
@@ -103,7 +100,6 @@ public class UserDataGenerator {
                 .withUpdatedAt(LocalDateTime.now())
                 .build();
             LOGGER.debug("saving customer " + administrator.getEmail() );
-            LOGGER.info("Saving admin");
             userRepository.save(administrator);
         }
     }
