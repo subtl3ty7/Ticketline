@@ -37,13 +37,13 @@
           <div class="form-group">
             <div class="col-5">
               <label for="password">Passwort</label>
-              <input [(ngModel)]="user.password" id="password" name="password" class="form-control" required  #nameField="ngModel"/>
+              <input type="password" [(ngModel)]="user.password" id="password" name="password" class="form-control" required  #nameField="ngModel"/>
             </div>
           </div>
           <div class="form-group">
             <div class="col-5">
               <label for="passwordConfirm">Passwort bestätigen</label>
-              <input [(ngModel)]="user.password" id="passwordConfirm" name="passwordConfirm" class="form-control" required  #passwordbField="ngModel"/>
+              <input type="password" [(ngModel)]="user.password" id="passwordConfirm" name="passwordConfirm" class="form-control" required  #passwordbField="ngModel"/>
               <div [hidden]="passwordbField.valid || passwordbField.untouched"
                    class="alert alert-danger"> Passwort muss eingegeben werden. </div>
             </div>
