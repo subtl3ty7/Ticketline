@@ -33,6 +33,9 @@ import {MatSortModule} from '@angular/material/sort';
 import { UserDetailsContainerComponent } from './components/admin-home/user-details-container/root/user-details-container.component';
 import { UserDetailsComponent } from './components/admin-home/user-details-container/user-details/user-details.component';
 import { UserInfoComponent } from './components/admin-home/user-details-container/user-details/user-info/user-info.component';
+import { CreateUserContainerComponent } from './components/admin-home/create-user-container/create-user-container.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { ResetPasswordComponent } from './components/admin-home/user-details-container/user-details/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +55,9 @@ import { UserInfoComponent } from './components/admin-home/user-details-containe
     CustomerHeaderComponent,
     UserDetailsContainerComponent,
     UserDetailsComponent,
-    UserInfoComponent
+    UserInfoComponent,
+    CreateUserContainerComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +75,8 @@ import { UserInfoComponent } from './components/admin-home/user-details-containe
     MatFormFieldModule,
     MatTableModule,
     MatInputModule,
-    MatSortModule
+    MatSortModule,
+    MatCheckboxModule
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]

@@ -29,7 +29,7 @@
 }
 
 .info-label {
-  font-family: A1Sans-Regular;
+  font-family: SansSerif, sans-serif;
   font-size: 14px;
   font-weight: normal;
   font-style: normal;
@@ -48,7 +48,7 @@
 }
 
 .info-field {
-  font-family: A1Sans-Regular;
+  font-family: SansSerif, sans-serif;
   font-size: 18px;
   font-weight: normal;
   font-style: normal;

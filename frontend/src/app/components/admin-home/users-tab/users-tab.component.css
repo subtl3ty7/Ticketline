@@ -68,19 +68,19 @@
 }
 
 .mat-column-firstName {
-  flex: 0 0 16%;
+  flex: 0 0 15%;
 }
 
 .mat-column-lastName {
-  flex: 0 0 16%;
+  flex: 0 0 15%;
 }
 
 .mat-column-email {
-  flex: 0 0 30%;
+  flex: 0 0 27%;
 }
 
 .mat-column-password {
-  flex: 0 0 16%;
+  flex: 0 0 21%;
   align-content: center;
 }
 

@@ -2,12 +2,12 @@ import {User} from '../../../../dtos/user';
 
 export enum State {
   READY,
-  EDIT,
+  PASSWORD,
   PROCESSING
 }
 
 export class UserDetailsWrapper {
-  private _model: User = new User(null, '', '', '', '', '', null, '', '', false, false, false, 0,'',true);
+  private _model: User = new User(null, '', '', '', '', '', null, '', '', false, false, false, 0, '', true);
   _state: State;
 
   get model(): User {

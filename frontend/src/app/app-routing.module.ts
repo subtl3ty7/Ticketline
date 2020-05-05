@@ -17,7 +17,8 @@ const routes: Routes = [
   {path: 'message', canActivate: [LoggedInGuard], component: MessageComponent},
   {path: 'administration', canActivate: [AdminGuard], component: AdminHomeComponent},
   {path: 'administration/:tabId', canActivate: [AdminGuard], component: AdminHomeComponent},
-  {path: 'user-details/:uc', canActivate: [AdminGuard], component: UserDetailsContainerComponent}
+  {path: 'user-details/:uc', canActivate: [AdminGuard], component: UserDetailsContainerComponent},
+  {path: 'user-details/:uc/reset-password', canActivate: [AdminGuard], component: UserDetailsContainerComponent}
 ];
 
 @NgModule({
