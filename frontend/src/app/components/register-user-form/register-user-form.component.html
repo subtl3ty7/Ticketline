@@ -1,4 +1,10 @@
 <div class = "container">
+  <div *ngIf="postError" class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Bitte alle Felder ausfüllen!</strong> {{ errorMessage }}
+    <button type="button" (click)="vanishError()" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
 <div class="pt-5">
   <div class="row">
     <div class="col-md-6 mx-auto">
@@ -9,11 +15,15 @@
           <h3 class="mb-0">Registrieren</h3>
         </div>
 
-        <form #form="ngForm" (ngSubmit)="registerUser(form)">
+        <form #form="ngForm" [mustMatch] = "['password', 'passwordConfirm']">
           <div class="form-group">
             <div class="col-5">
-              <label for="firstName">Vorame</label>
-              <input [(ngModel)]="user.firstName" id="firstName" name="firstName" class="form-control" required/>
+              <label for="firstName">Vorname</label>
+              <input [(ngModel)]="user.firstName" type="text" id="firstName" name="firstName" class="form-control" #firstName="ngModel"/>
+                <div [hidden]="firstName.valid || firstName.untouched" class="alert alert-danger" >
+                  Vorname ist nicht eingegeben
+                </div>
+
             </div>
           </div>
           <div class="form-group">
@@ -25,36 +35,41 @@
           <div class="form-group">
             <div class="col-5">
               <label for="birthday">Geburtsdatum</label>
-              <input [(ngModel)]="user.birthday" type="datetime-local" id="birthday"  name="birthday" class="form-control"/>
+              <input [(ngModel)]="user.birthday" type="datetime-local" id="birthday"  name="birthday" class="form-control"
+                     value="2018-06-12T19:30" min="2018-06-07T00:00" max="2018-06-14T00:00"/>
             </div>
           </div>
           <div class="form-group">
             <div class="col-5">
               <label for="email">E-Mail</label>
-              <input [(ngModel)]="user.email" id="email" name="email"  class="form-control"/>
+              <input [(ngModel)]="user.email" id="email" name="email"  class="form-control" #email="ngModel"/>
+              <div *ngIf="submitted && email.invalid" class="error">
+                <small class="form-text text-warning" *ngIf="email.errors.required">Your username is
+                  required!
+                </small>
+              </div>
             </div>
           </div>
           <div class="form-group">
             <div class="col-5">
               <label for="password">Passwort</label>
-              <input type="password" [(ngModel)]="user.password" id="password" name="password" class="form-control" required  #nameField="ngModel"/>
+              <input type="password" [(ngModel)]="user.password" id="password" name="password" class="form-control" required  #password="ngModel"/>
             </div>
           </div>
           <div class="form-group">
             <div class="col-5">
               <label for="passwordConfirm">Passwort bestätigen</label>
-              <input type="password" [(ngModel)]="user.password" id="passwordConfirm" name="passwordConfirm" class="form-control" required  #passwordbField="ngModel"/>
-              <div [hidden]="passwordbField.valid || passwordbField.untouched"
-                   class="alert alert-danger"> Passwort muss eingegeben werden. </div>
+              <input type="password" [(ngModel)]="passwordConfirm" id="passwordConfirm" name="passwordConfirm" class="form-control"
+                     required  #passwordConfirmm="ngModel"/>
+              <div [hidden]="passwordConfirmm.valid || passwordConfirmm.untouched"
+                   class="alert alert-danger"> Passworter sind nicht gleich </div>
             </div>
           </div>
           <div class="form-group">
             <div class="col-5">
-              <nav>
-                <button type="button" (click)="registerUser(form)" class="btn btn-primary" *ngIf="!postError && !isNotValid"  routerLink="/login">
+                <button type="button" class="btn btn-primary" (click)="registerUser(form) && form.form.valid">
                   Save
                 </button>
-              </nav>
             </div>
             </div>
         </form>

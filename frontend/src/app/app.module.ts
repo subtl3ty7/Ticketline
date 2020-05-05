@@ -37,6 +37,9 @@ import { CreateUserContainerComponent } from './components/admin-home/create-use
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { ResetPasswordComponent } from './components/admin-home/user-details-container/user-details/reset-password/reset-password.component';
 import { RegisterUserFormComponent } from './components/register-user-form/register-user-form.component';
+import { MustMatchDirective } from './utils/must-match.directive';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,6 +56,8 @@ import { RegisterUserFormComponent } from './components/register-user-form/regis
     EventsTabComponent,
     AdminHeaderComponent,
     CustomerHeaderComponent,
+    RegisterUserFormComponent,
+    MustMatchDirective
     UserDetailsContainerComponent,
     UserDetailsComponent,
     UserInfoComponent,

@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {AuthRequest} from '../../dtos/auth-request';
 import {UserService} from '../../services/user.service';
 import {User} from '../../dtos/user';
+import * as bcrypt from 'bcryptjs';
 
 @Component({
   selector: 'app-register-user-form',
@@ -15,12 +16,12 @@ export class RegisterUserFormComponent implements OnInit {
   postError = false;
   postErrorMessage = '';
   isNotValid = false;
-  registrationForm: FormGroup;
   user: User;
   firstName = '';
   lastName = '';
   birthday = '';
   password = '';
+  passwordConfirm = '';
   email = '';
   // After first submission attempt, form validation will start
   submitted: boolean = false;
@@ -31,16 +32,23 @@ export class RegisterUserFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user = new User(null, 'US12X2', this.firstName, this.lastName, this.email,
+    this.user = new User(null, '', this.firstName, this.lastName, this.email,
       this.password, this.birthday, '', '', false, false,
       false, 0, 'CUSTOMER', false);
   }
   registerUser(form) {
-    console.log(this.user);
+    console.log(this.user.password);
+    this.submitted = true;
+    const salt = bcrypt.genSaltSync(10);
+    const pwd = bcrypt.hashSync(this.user.password, salt);
     if (form.valid) {
       console.log('in onSubmit ', form.valid);
+      this.user.password = pwd;
       this.userService.save(this.user).subscribe(
-        result => console.log('success: ', result),
+        result => {
+          console.log('success: ', result),
+            this.router.navigate(['/login']);
+        },
         error => this.onHttpError(error)
       );
     } else {
@@ -53,5 +61,7 @@ export class RegisterUserFormComponent implements OnInit {
     this.postErrorMessage = errorResponse.error.errorMessage;
     this.postError = true;
   }
-
+  vanishError() {
+    this.postError = false;
+  }
 }
