@@ -30,6 +30,7 @@ import { AdminHeaderComponent } from './sections/header/admin-header/admin-heade
 import { CustomerHeaderComponent } from './sections/header/customer-header/customer-header.component';
 import {MatInputModule} from '@angular/material/input';
 import {MatSortModule} from '@angular/material/sort';
+import { RegisterUserFormComponent } from './components/register-user-form/register-user-form.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import {MatSortModule} from '@angular/material/sort';
     ContentComponent,
     EventsTabComponent,
     AdminHeaderComponent,
-    CustomerHeaderComponent
+    CustomerHeaderComponent,
+    RegisterUserFormComponent
   ],
   imports: [
     BrowserModule,
