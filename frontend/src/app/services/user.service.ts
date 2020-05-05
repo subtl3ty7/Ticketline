@@ -35,7 +35,11 @@ export class UserService {
     );
   }
   getUserByUserCode(userCode: string): Observable<User> {
-    return null; // to do !!
+    console.log('Load user by UserCode');
+    return this.httpClient.get<User>(this.userBaseUri + '/' + userCode).pipe(
+      tap(data => console.log('User ' + JSON.stringify(data))),
+      catchError(this.handleError)
+    );
   }
   save(user: User): Observable<User> {
     console.log(user.userCode);
