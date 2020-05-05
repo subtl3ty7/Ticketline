@@ -19,7 +19,7 @@ const routes: Routes = [
   {path: 'administration', canActivate: [AdminGuard], component: AdminHomeComponent},
   {path: 'administration/:tabId', canActivate: [AdminGuard], component: AdminHomeComponent},
   {path: 'user-details/:uc', canActivate: [AdminGuard], component: UserDetailsContainerComponent},
-  {path: 'user-details/:uc/reset-password', canActivate: [AdminGuard], component: UserDetailsContainerComponent}
+  {path: 'user-details/:uc/reset-password', canActivate: [AdminGuard], component: UserDetailsContainerComponent},
   {path: 'register', canActivate: [NotLoggedInGuard], component: RegisterUserFormComponent}
 ];
 
