@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.endpoint.exceptionhandler;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.exceptionhandler.exceptionbody.ApiError;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -77,11 +78,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         HttpStatus status,
         WebRequest request) {
         LOGGER.warn("CONTROLLER EXCEPTION: " + exception.getMessage());
-        Object newBody = new ApiError(
-            status,
-            exception.getMessage()
-        );
-        return super.handleExceptionInternal(exception, newBody, headers, status, request);
+        return super.handleExceptionInternal(exception, new ApiError(List.of(exception.getMessage()), status), headers, status, request);
     }
 
     /**
@@ -89,15 +86,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @ExceptionHandler(value = {ServiceException.class})
     protected ResponseEntity<Object> handleConstraintViolation(ServiceException e) {
-        LOGGER.info("Handling Service Exception");
-        Object body = new ApiError(
-            constraintViolationStatus,
-            e.getViolationMessages()
-        );
-        ResponseEntity<Object> responseEntity = new ResponseEntity(
-            body,
+        LOGGER.debug("Handling Service Exception");
+        ResponseEntity<Object> response = new ResponseEntity(
+            new ApiError( e.getViolationMessages(), constraintViolationStatus ),
             constraintViolationStatus
         );
-        return responseEntity;
+        LOGGER.info("Sending API Response: [" + response.getBody() + ", " + response.getStatusCode() + "]");
+        return response;
     }
 }

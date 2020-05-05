@@ -36,7 +36,7 @@ import { UserInfoComponent } from './components/admin-home/user-details-containe
 import { CreateUserContainerComponent } from './components/admin-home/create-user-container/create-user-container.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { ResetPasswordComponent } from './components/admin-home/user-details-container/user-details/reset-password/reset-password.component';
-
+import { RegisterUserFormComponent } from './components/register-user-form/register-user-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,7 +57,8 @@ import { ResetPasswordComponent } from './components/admin-home/user-details-con
     UserDetailsComponent,
     UserInfoComponent,
     CreateUserContainerComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    RegisterUserFormComponent
   ],
   imports: [
     BrowserModule,

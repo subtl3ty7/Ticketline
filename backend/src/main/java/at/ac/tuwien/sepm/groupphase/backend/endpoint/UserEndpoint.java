@@ -46,7 +46,10 @@ public class UserEndpoint {
     public ResponseEntity<String> registerNewCustomer(@RequestBody UserDto userDto) {
         LOGGER.info("POST " + userDto);
         AbstractUser customer = userService.registerNewCustomer(userMapper.userDtoToCustomer(userDto));
-        return new ResponseEntity(userMapper.abstractUserToUserDto(customer), HttpStatus.CREATED);
+
+        ResponseEntity response = new ResponseEntity(userMapper.abstractUserToUserDto(customer), HttpStatus.CREATED);
+        LOGGER.info("Sending API Response: [" + response.getBody() + ", " + response.getStatusCode() + "]");
+        return response;
     }
 
     @GetMapping(value = "/all")

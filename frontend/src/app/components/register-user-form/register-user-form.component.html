@@ -1,0 +1,66 @@
+<div class = "container">
+<div class="pt-5">
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <span class="anchor" id="formLogin"></span>
+
+      <div class="card rounded-0">
+        <div class="card-header">
+          <h3 class="mb-0">Registrieren</h3>
+        </div>
+
+        <form #form="ngForm" (ngSubmit)="registerUser(form)">
+          <div class="form-group">
+            <div class="col-5">
+              <label for="firstName">Vorame</label>
+              <input [(ngModel)]="user.firstName" id="firstName" name="firstName" class="form-control" required/>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-5">
+              <label for="lastName">Nachname</label>
+              <input [(ngModel)]="user.lastName" id="lastName" name="lastName" class="form-control"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-5">
+              <label for="birthday">Geburtsdatum</label>
+              <input [(ngModel)]="user.birthday" type="datetime-local" id="birthday"  name="birthday" class="form-control"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-5">
+              <label for="email">E-Mail</label>
+              <input [(ngModel)]="user.email" id="email" name="email"  class="form-control"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-5">
+              <label for="password">Passwort</label>
+              <input type="password" [(ngModel)]="user.password" id="password" name="password" class="form-control" required  #nameField="ngModel"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-5">
+              <label for="passwordConfirm">Passwort bestätigen</label>
+              <input type="password" [(ngModel)]="user.password" id="passwordConfirm" name="passwordConfirm" class="form-control" required  #passwordbField="ngModel"/>
+              <div [hidden]="passwordbField.valid || passwordbField.untouched"
+                   class="alert alert-danger"> Passwort muss eingegeben werden. </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-5">
+              <nav>
+                <button type="button" (click)="registerUser(form)" class="btn btn-primary" *ngIf="!postError && !isNotValid"  routerLink="/login">
+                  Save
+                </button>
+              </nav>
+            </div>
+            </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+</div>
