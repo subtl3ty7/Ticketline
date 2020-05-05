@@ -1,12 +1,11 @@
-package at.ac.tuwien.sepm.groupphase.backend.util;
+package at.ac.tuwien.sepm.groupphase.backend.util.Validation.impl;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
-import at.ac.tuwien.sepm.groupphase.backend.exception.CustomConstraintViolationException;
-import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
-import org.apache.tomcat.util.bcel.Const;
+import at.ac.tuwien.sepm.groupphase.backend.util.Constraints;
+import at.ac.tuwien.sepm.groupphase.backend.util.Validation.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,36 +13,54 @@ import org.springframework.stereotype.Component;
 
 import javax.validation.*;
 import java.lang.invoke.MethodHandles;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 @Component
-public class ServiceValidator {
+public class ValidatorImpl implements Validator {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
+    private final UserRepository userRepository;
+    private final EventRepository eventRepository;
+
     @Autowired
-    UserRepository userRepository;
-    @Autowired
-    EventRepository eventRepository;
+    public ValidatorImpl(EventRepository eventRepository, UserRepository userRepository) {
+        this.eventRepository = eventRepository;
+        this.userRepository = userRepository;
+    }
 
     public Constraints validateRegistration(Customer customer) {
         Constraints constraints = new Constraints();
-        constraints.addViolated(validate(customer));
+        constraints.add(validate(customer));
         constraints.add("isLogged_false", customer.isLogged()==false);
+        constraints.add("isBlocked_false", customer.isBlocked()==false);
+        constraints.add("points_zero", customer.getPoints()==0);
+        if(customer.getBirthday() != null) {
+            constraints.add("birthday_16yo", ChronoUnit.YEARS.between(customer.getBirthday(), LocalDateTime.now()) > 16);
+        }
+        constraints.add(validatePasswordEncoded(customer.getPassword()));
         return constraints;
     }
 
-    public Constraints validate(AbstractUser user) {
+    private Constraints validate(AbstractUser user) {
         Constraints constraints = new Constraints();
-        constraints.addViolated(validateUnique(user));
-        constraints.addViolated(validateJavaxConstraints(user));
+        constraints.add(validateUnique(user));
+        constraints.add(validateJavaxConstraints(user));
         return constraints;
     }
 
     public Constraints validateUserCode(String userCode) {
         Constraints constraints = new Constraints();
         constraints.add("userCode_unique", userRepository.findAbstractUserByUserCode(userCode) == null);
+        return constraints;
+    }
+
+    private Constraints validatePasswordEncoded(String password) {
+        Pattern bCryptPattern = Pattern.compile("\\A\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}");
+        Constraints constraints = new Constraints();
+        constraints.add("password_encoded", bCryptPattern.matcher(password).matches());
         return constraints;
     }
 
@@ -61,15 +78,13 @@ public class ServiceValidator {
     }
 
 
-    private Constraints validateJavaxConstraints(Object object) {
+    private static Constraints validateJavaxConstraints(Object object) {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
+        javax.validation.Validator validator = factory.getValidator();
         Set<ConstraintViolation<Object>> violations = validator.validate(object);
 
         Constraints constraints = new Constraints();
-        for(ConstraintViolation<Object> v: violations) {
-            constraints.addViolated(v.getPropertyPath().toString());
-        }
+        constraints.add(violations);
 
         return constraints;
     }
