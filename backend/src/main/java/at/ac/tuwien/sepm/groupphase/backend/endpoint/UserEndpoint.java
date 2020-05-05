@@ -34,6 +34,7 @@ public class UserEndpoint {
        this.userMapper = userMapper;
     }
 
+    @CrossOrigin(maxAge = 3600)
     @PostMapping(value = "/customers")
     @ApiOperation(
         value = "Register new customer",
