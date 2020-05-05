@@ -22,7 +22,7 @@ public class ServiceAdvice {
         throwing = "e"
     )
     public void handleDataAccess(DataAccessException e) throws ServiceException {
-        LOGGER.info("Handling Data Integrity Violation Exception");
+        LOGGER.debug("Handling Data Integrity Violation Exception");
         throw new ServiceException(ValidationMessage.defaultDataAccessMessage, e);
     }
 
@@ -31,7 +31,7 @@ public class ServiceAdvice {
         throwing = "e"
     )
     public void handleValidation(ValidationException e) throws ServiceException {
-        LOGGER.info("Handling Validation Exception");
+        LOGGER.debug("Handling Validation Exception");
         throw new ServiceException(e.getValidationMessage().getMessages(), e);
     }
 

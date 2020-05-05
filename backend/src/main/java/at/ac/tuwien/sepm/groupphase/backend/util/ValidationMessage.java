@@ -17,17 +17,29 @@ public class ValidationMessage {
 
     public static final String defaultDataAccessMessage = "Something went wrong while accessing the database.";
     private static final String defaultConstraintMessage = "Input violates an(other) unknown constraint.";
-    private static final Map<String, FriendlyHint> constraintHintMap = new HashMap<>() {
+    /**
+     * maps constraint name to  a user-friendly hint on wrong input (should not reveal any implementation details)
+     */
+    private static final Map<String, String> constraintHintMap = new HashMap<>() {
         {
-            put("id", new FriendlyHint("ID", "Id has to be unique and not null."));
-            put("userCode", new FriendlyHint("User Code", "User Code has to be given and cannot be longer than 6 characters."));
-            put("userCode_unique", new FriendlyHint("User Code", "User Code is already present in database."));
-            put("email", new FriendlyHint("Email", "Email has to be given and cannot be longer than 100 characters."));
-            put("email_unique", new FriendlyHint("Email", "Email is already present in database."));
-            put("firstName", new FriendlyHint("First Name", "First name has to be given and cannot be longer than 30 characters."));
-            put("lastName", new FriendlyHint("Last Name", "Last name has to be given and cannot be longer than 30 characters."));
-            put("password", new FriendlyHint("Password", "Password has to be given and cannot be longer than 30 characters."));
-            put("isLogged_false", new FriendlyHint("Logged in", "Logged-In field cannot be true here."));
+            put("id", "Id has to be unique and not null.");
+            put("userCode", "User Code had to be 6 characters long.");
+            put("userCode_unique", "User Code is already present in database.");
+            put("email","Email cannot be empty or longer than 100 characters.");
+            put("email_unique", "Email is already present in database.");
+            put("firstName",  "First name cannot be empty or longer than 30 characters.");
+            put("lastName","Last name cannot be empty or longer than 30 characters.");
+            put("password", "Password has to be between 8 and 30 characters.");
+            put("isLogged_false", "Logged-In field cannot be true on Registration.");
+            put("isBlocked_false", "Is-Blocked field cannot be true on Registration.");
+            put("createdAt", "Created-At field cannot be empty.");
+            put("updatedAt", "Updated-At field cannot be empty.");
+            put("birthday","Birthday field cannot be empty.");
+            put("eventCode_unique", "Event Code is already present in database.");
+            put("points_zero", "Points have to be zero on Registration.");
+            put("password_encoded", "Password has to be bCrypt encoded.");
+            put("birthday_16yo", "Needs to be at least 16 years old.");
+
         }
     };
 
@@ -50,7 +62,7 @@ public class ValidationMessage {
 
     private String mapConstraintToAdvice(String constraint) {
         if(constraintHintMap.get(constraint)!=null) {
-            return constraintHintMap.get(constraint).getHint();
+            return constraintHintMap.get(constraint);
         } else {
             return defaultConstraintMessage;
         }
