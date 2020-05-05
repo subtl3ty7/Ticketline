@@ -1,5 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +14,8 @@ import java.util.List;
 @Table(name = "event")
 @Getter
 @Setter
+@AllArgsConstructor
+@Builder
 public class Event implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,7 +45,7 @@ public class Event implements Serializable {
     @Column(nullable = false, name = "photo")
     private String photo;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="event_code", referencedColumnName="event_code")
     private List<Show> shows;
 
