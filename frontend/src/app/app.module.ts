@@ -31,6 +31,7 @@ import { CustomerHeaderComponent } from './sections/header/customer-header/custo
 import {MatInputModule} from '@angular/material/input';
 import {MatSortModule} from '@angular/material/sort';
 import { RegisterUserFormComponent } from './components/register-user-form/register-user-form.component';
+import { MustMatchDirective } from './utils/must-match.directive';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { RegisterUserFormComponent } from './components/register-user-form/regis
     EventsTabComponent,
     AdminHeaderComponent,
     CustomerHeaderComponent,
-    RegisterUserFormComponent
+    RegisterUserFormComponent,
+    MustMatchDirective
   ],
   imports: [
     BrowserModule,
