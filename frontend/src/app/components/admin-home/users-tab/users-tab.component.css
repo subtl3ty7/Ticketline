@@ -64,7 +64,7 @@
 
 
 .mat-column-userCode {
-  flex: 0 0 13%;
+  flex: 0 0 12%;
 }
 
 .mat-column-firstName {
@@ -76,15 +76,17 @@
 }
 
 .mat-column-email {
-  flex: 0 0 25%;
+  flex: 0 0 27%;
 }
 
 .mat-column-password {
-  flex: 0 0 18%;
+  flex: 0 0 21%;
+  align-content: center;
 }
 
 .mat-column-block {
-  flex: 0 0 12%;
+  flex: 0 0 10%;
+  align-content: center;
 }
 
 
