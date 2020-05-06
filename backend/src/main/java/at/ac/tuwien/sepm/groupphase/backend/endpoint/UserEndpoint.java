@@ -151,7 +151,7 @@ public class UserEndpoint {
         AbstractUser customer = userService.updateCustomer(userMapper.userDtoToCustomer(userDto), usercode);
         return new ResponseEntity(userMapper.abstractUserToUserDto(customer), HttpStatus.OK);
     }
-/*
+
     @Secured("ROLE_ADMIN")
     @GetMapping(value = "/block/{uc}")
     @ApiOperation(
@@ -163,11 +163,11 @@ public class UserEndpoint {
         @ApiResponse(code = 404, message = "User is not found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<String> deleteUser(@PathVariable String uc) {
+    public ResponseEntity<String> blockUser(@PathVariable String uc) {
         LOGGER.info("GET /api/v1/users/block/" + uc);
-        String result = userService.blockUser(uc);
+        String result = userService.blockCustomer(uc);
         return new ResponseEntity<>(result, HttpStatus.OK);
-    }*/
+    }
 
     @Secured("ROLE_ADMIN")
     @GetMapping(value = "/unblock/{uc}")
