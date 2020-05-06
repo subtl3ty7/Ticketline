@@ -33,6 +33,8 @@ public interface UserService extends UserDetailsService {
      */
     AbstractUser findUserByEmail(String email);
 
+    AbstractUser findUserByUserCode(String email);
+
     String unblockUser(String userCode);
 
     /**

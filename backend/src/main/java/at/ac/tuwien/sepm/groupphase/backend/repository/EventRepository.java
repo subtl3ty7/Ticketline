@@ -16,6 +16,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     List<Event> findAllByStartsAtAfterOrderByTotalTicketsSoldDesc(LocalDateTime time);
     List<Event> findAllByStartsAtAfterAndCategoryOrderByTotalTicketsSoldDesc(LocalDateTime time, String category);
     Event findEventByEventCode(String eventCode);
-
-
+    Event findEventById(Long id);
+    void deleteById(Long id);
 }

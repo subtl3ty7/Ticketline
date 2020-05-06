@@ -1,4 +1,5 @@
 export class User {
+
   constructor(
     public id: number,
     public userCode: string,
@@ -6,7 +7,7 @@ export class User {
     public lastName: string,
     public email: string,
     public password: string,
-    public birthday: string,
+    public birthday: Date,
     public createdAt: string,
     public updatedAt: string,
     public isBlocked: boolean,

@@ -19,40 +19,43 @@ public abstract class AbstractUser {
     private Long id;
 
     @NotNull
-    @Size(max = 6)
+    @Size(min = 6, max = 6)
     @Column(nullable = false, unique = true, name = "USER_CODE", length = 6)
     private String userCode;
 
     @NotNull
-    @Size(max = 30)
+    @Size(min = 1, max = 30)
     @Column(nullable = false, name = "FIRST_NAME", length = 30)
     private String firstName;
 
     @NotNull
-    @Size(max = 30)
+    @Size(min = 1, max = 30)
     @Column(nullable = false, name = "LAST_NAME", length = 30)
     private String lastName;
 
     @NotNull
-    @Size(max = 100)
+    @Size(min = 1, max = 100)
     @Column(nullable = false, unique = true, name = "EMAIL", length = 100)
     private String email;
 
     @NotNull
-    @Size(max = 100)
+    @Size(min = 8, max = 100)
     @Column(nullable = false, name = "PASSWORD", length = 100)
     private String password;
 
-    @Column(name = "BIRTHDAY")
+    @NotNull
+    @Column(nullable = false, name = "BIRTHDAY")
     private LocalDateTime birthday;
 
     @Column(name = "IS_LOGGED")
     private boolean isLogged;
 
-    @Column(name = "CREATED_AT")
+    @NotNull
+    @Column(nullable = false, name = "CREATED_AT")
     private LocalDateTime createdAt;
 
-    @Column(name = "UPDATED_AT")
+    @NotNull
+    @Column(nullable = false, name = "UPDATED_AT")
     private LocalDateTime updatedAt;
 
     public void setEmail(String email){

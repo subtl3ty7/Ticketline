@@ -13,14 +13,14 @@
 
       <div class="card rounded-0">
         <div class="card-header">
-          <h3 class="mb-0">Login</h3>
+          <h3 class="mb-0">Einloggen</h3>
         </div>
 
         <div class="card-body">
           <form class="form" [formGroup]="loginForm" (ngSubmit)="loginUser()">
 
             <div class="form-group">
-              <label for="inputUsername">Username</label>
+              <label for="inputUsername">E-Mail</label>
               <input type="text" name="username" formControlName="username" class="form-control" id="inputUsername"
                      aria-describedby="usernameHelp" placeholder="Enter username">
               <div *ngIf="submitted && loginForm.controls.username.errors" class="error">
@@ -31,7 +31,7 @@
             </div>
 
             <div class="form-group">
-              <label for="password">Password</label>
+              <label for="password">Passwort</label>
               <input type="password" name="password" formControlName="password" class="form-control" id="password"
                      placeholder="Password">
               <div *ngIf="submitted && loginForm.controls.password.errors" class="error">
@@ -45,7 +45,8 @@
               </div>
             </div>
 
-            <button type="button" (click)="loginUser()" class="btn btn-success float-right">Login</button>
+            <button type="button" (click)="loginUser()" class="btn btn-success float-right">Einloggen</button>
+            <nav><button type="button" routerLink="/register" class="btn btn-success float-right">Registrieren</button></nav>
 
           </form>
         </div>
