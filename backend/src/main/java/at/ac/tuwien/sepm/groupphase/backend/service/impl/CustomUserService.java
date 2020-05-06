@@ -14,10 +14,12 @@ import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
 import at.ac.tuwien.sepm.groupphase.backend.util.ServiceValidator;
 import org.aspectj.weaver.ast.Not;
+import at.ac.tuwien.sepm.groupphase.backend.util.Validation.Validator;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -27,6 +29,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManagerFactory;
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -39,15 +42,22 @@ public class CustomUserService implements UserService {
     private final UserRepository userRepository;
     private final UserAttemptsRepository userAttemptsRepository;
     private final PasswordEncoder passwordEncoder;
-    private final ServiceValidator serviceValidator;
+    private final Validator validator;
+    private final EntityManagerFactory entityManagerFactory;
+
 
     @Autowired
     public CustomUserService(UserRepository userRepository, PasswordEncoder passwordEncoder,
-                             UserAttemptsRepository userAttemptsRepository, ServiceValidator serviceValidator) {
+                             UserAttemptsRepository userAttemptsRepository, Validator validator, EntityManagerFactory entityManagerFactory) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userAttemptsRepository = userAttemptsRepository;
-        this.serviceValidator = serviceValidator;
+        this.validator = validator;
+        this.entityManagerFactory = entityManagerFactory;
+    }
+
+    private Session getSession() {
+        return entityManagerFactory.unwrap(SessionFactory.class).openSession();
     }
 
     @Override
@@ -85,6 +95,14 @@ public class CustomUserService implements UserService {
     }
 
     @Override
+    public AbstractUser findUserByUserCode(String userCode) {
+        LOGGER.debug("Find application user by usercode");
+        AbstractUser user = userRepository.findAbstractUserByUserCode(userCode);
+        if (user != null) return user;
+        throw new NotFoundException(String.format("Could not find the user with the user code %s", userCode));
+    }
+
+    @Override
     public String unblockUser(String userCode) {
         LOGGER.debug("Unblocking user with user code " + userCode);
         AbstractUser user = userRepository.findAbstractUserByUserCode(userCode);
@@ -104,10 +122,24 @@ public class CustomUserService implements UserService {
     }
     @Override
     public Customer registerNewCustomer(Customer customer) throws ValidationException, DataAccessException {
-        LOGGER.info("Moving Customer Entity through Service Layer: " + customer);
+        LOGGER.info("Validating Customer Entity: " + customer);
         customer.setUserCode(getNewUserCode());
-        serviceValidator.validateRegistration(customer).throwIfViolated();
-        return userRepository.save(customer);
+        LocalDateTime now = LocalDateTime.now();
+        customer.setCreatedAt(now);
+        customer.setUpdatedAt(now);
+        validator.validateRegistration(customer).throwIfViolated();
+
+        UserAttempts userAttempts = new UserAttempts(customer);
+
+        Session session = getSession();
+        session.beginTransaction();
+        customer = userRepository.save(customer);
+        userAttempts = userAttemptsRepository.save(userAttempts);
+        session.getTransaction().commit();
+
+        LOGGER.info("Saved Customer Entity in Database: " + customer);
+        LOGGER.info("Saved UserAttempts Entity in Database: " + userAttempts);
+        return customer;
     }
 
     private String getNewUserCode() {
@@ -116,7 +148,7 @@ public class CustomUserService implements UserService {
         int i;
         for(i=0; i<maxAttempts; i++) {
             userCode = CodeGenerator.generateUserCode();
-            if(!serviceValidator.validateUserCode(userCode).isViolated()) {
+            if(!validator.validateUserCode(userCode).isViolated()) {
                 break;
             }
         }

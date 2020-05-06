@@ -5,6 +5,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTableDataSource} from '@angular/material/table';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-users-tab',
@@ -17,64 +18,41 @@ export class UsersTabComponent implements OnInit {
     'firstName',
     'lastName',
     'email',
-    'password',
-    'block'
+    'block',
+    'password'
   ];
   public dataSource: any;
-  public showLoadingIndicator = true;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('scrollBlock') scrollBlock: ElementRef;
   error = false;
   errorMessage = '';
   private user: User;
   private users: Array<User>;
-  private updatedUser: boolean;
-  private selectedUser: User;
-  constructor(private userService: UserService) {
-  this.updatedUser = false;
-  //this.selectedUser = new User(null, '', '', '', '', '', '', '', '', false, false, 0, '', false);
-}
-ngOnInit(): void {
-  this.loadAllUsers();
-}
+  private searchUsers: Array<User>;
+  private searchParam = '';
+  private showBlocked = false;
 
-  private loadUser(userCode: string) {
-  this.userService.getUserByUserCode(userCode).subscribe(
-    (user: User) => {
-      this.user = user;
-    },
-    error => {
-      this.defaultServiceErrorHandling(error);
-    }
-  );
-}
-private loadAllUsers() {
-  this.userService.getAllUsers().subscribe(
-    (user: User[]) => {
-      this.users = user;
-      this.initTable();
-      this.showLoadingIndicator = false;
-    },
-    error => {
-      this.defaultServiceErrorHandling(error);
-    }
-  );
-}
-private defaultServiceErrorHandling(error: any) {
-  console.log(error);
-  this.error = true;
-  if (error.status === 0) {
-    // If status is 0, the backend is probably down
-    this.errorMessage = 'The backend seems not to be reachable';
-  } else if (error.error.message === 'No message available') {
-    // If no detailed error message is provided, fall back to the simple error name
-    this.errorMessage = error.error.error;
-  } else {
-    this.errorMessage = error.error.message;
+  constructor(private userService: UserService,
+              public  router: Router,
+              private route: ActivatedRoute) {
+
   }
-}
-private setPassword(userCode: string) { // to do
-}
+
+  ngOnInit(): void {
+    this.loadAllUsers();
+  }
+
+  private loadAllUsers() {
+    this.userService.getAllUsers().subscribe(
+      (user: User[]) => {
+        this.users = user;
+        this.initTable();
+      },
+      error => {
+        this.defaultServiceErrorHandling(error);
+      }
+    );
+  }
 
   private initTable() {
     if (this.users) {
@@ -83,14 +61,74 @@ private setPassword(userCode: string) { // to do
     }
   }
 
-  private getUserCode(user?: User): string {
-    return user.userCode ? user.userCode.toLowerCase() : '';
+  public userDetails(user) {
+    this.router.navigate(['user-details/' + user.userCode]);
   }
 
-
-  searchForAllUsers($event: KeyboardEvent) {
+  private changePassword(user) {
+    this.router.navigate(['user-details/' + user.userCode + '/reset-password']);
   }
 
-  getDateRangeState($event: any) {}
+  private blockUser(element) {
+    this.userService.getUserByUserCode(element.userCode).subscribe(
+      error => {
+        this.defaultServiceErrorHandling(error);
+      }
+    );
+    this.loadAllUsers();
+  }
 
+  private unblockUser(element) {
+    this.userService.getUserByUserCode(element.userCode).subscribe(
+      error => {
+        this.defaultServiceErrorHandling(error);
+      }
+    );
+    this.loadAllUsers();
+  }
+
+  public searchForAllUsers(searchData?) {
+    this.searchParam = searchData.target.value;
+    this.applySearch(this.users);
+  }
+
+  private applySearch(users: Array<User>) {
+    if (!this.searchParam) {
+      if (this.showBlocked) {
+        this.searchUsers = users.filter(param => param.blocked === true);
+        this.initSearchTable();
+      } else {
+        this.initTable();
+      }
+    } else {
+      this.searchUsers = users.filter((param) => (
+        (param.userCode.toLowerCase() + ' ' + param.firstName.toLowerCase() + ' ' + param.lastName.toLowerCase() + ' ' + param.email)
+          .indexOf(this.searchParam.toLowerCase()) > -1));
+      if (this.showBlocked) {
+        this.searchUsers = this.searchUsers.filter((param) => (param.blocked === true));
+      }
+      this.initSearchTable();
+    }
+  }
+
+  private initSearchTable() {
+    if (this.searchUsers) {
+      this.dataSource = new MatTableDataSource(this.searchUsers);
+      this.dataSource.sort = this.sort;
+    }
+  }
+
+  private defaultServiceErrorHandling(error: any) {
+    console.log(error);
+    this.error = true;
+    if (error.status === 0) {
+      // If status is 0, the backend is probably down
+      this.errorMessage = 'The backend seems not to be reachable';
+    } else if (error.error.message === 'No message available') {
+      // If no detailed error message is provided, fall back to the simple error name
+      this.errorMessage = error.error.error;
+    } else {
+      this.errorMessage = error.error.message;
+    }
+  }
 }

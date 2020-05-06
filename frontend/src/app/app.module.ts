@@ -30,6 +30,15 @@ import { AdminHeaderComponent } from './sections/header/admin-header/admin-heade
 import { CustomerHeaderComponent } from './sections/header/customer-header/customer-header.component';
 import {MatInputModule} from '@angular/material/input';
 import {MatSortModule} from '@angular/material/sort';
+import { UserDetailsContainerComponent } from './components/admin-home/user-details-container/root/user-details-container.component';
+import { UserDetailsComponent } from './components/admin-home/user-details-container/user-details/user-details.component';
+import { UserInfoComponent } from './components/admin-home/user-details-container/user-details/user-info/user-info.component';
+import { CreateUserContainerComponent } from './components/admin-home/create-user-container/create-user-container.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { ResetPasswordComponent } from './components/admin-home/user-details-container/user-details/reset-password/reset-password.component';
+import { RegisterUserFormComponent } from './components/register-user-form/register-user-form.component';
+import { MustMatchDirective } from './utils/must-match.directive';
+
 
 @NgModule({
   declarations: [
@@ -46,7 +55,15 @@ import {MatSortModule} from '@angular/material/sort';
     ContentComponent,
     EventsTabComponent,
     AdminHeaderComponent,
-    CustomerHeaderComponent
+    CustomerHeaderComponent,
+    RegisterUserFormComponent,
+    MustMatchDirective
+    UserDetailsContainerComponent,
+    UserDetailsComponent,
+    UserInfoComponent,
+    CreateUserContainerComponent,
+    ResetPasswordComponent,
+    RegisterUserFormComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +81,8 @@ import {MatSortModule} from '@angular/material/sort';
     MatFormFieldModule,
     MatTableModule,
     MatInputModule,
-    MatSortModule
+    MatSortModule,
+    MatCheckboxModule
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]

@@ -34,6 +34,7 @@ public class UserEndpoint {
        this.userMapper = userMapper;
     }
 
+    @CrossOrigin(maxAge = 3600)
     @PostMapping(value = "/customers")
     @ApiOperation(
         value = "Register new customer",
@@ -46,7 +47,10 @@ public class UserEndpoint {
     public ResponseEntity<String> registerNewCustomer(@RequestBody UserDto userDto) {
         LOGGER.info("POST " + userDto);
         AbstractUser customer = userService.registerNewCustomer(userMapper.userDtoToCustomer(userDto));
-        return new ResponseEntity(userMapper.abstractUserToUserDto(customer), HttpStatus.CREATED);
+
+        ResponseEntity response = new ResponseEntity(userMapper.abstractUserToUserDto(customer), HttpStatus.CREATED);
+        LOGGER.info("Sending API Response: [" + response.getBody() + ", " + response.getStatusCode() + "]");
+        return response;
     }
 
     @GetMapping(value = "/all")
@@ -63,7 +67,7 @@ public class UserEndpoint {
         List<UserDto> result = userMapper.abstractUserToUserDto(userService.loadAllUsers());
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-/*
+
     @GetMapping(value = "/{uc}")
     @ApiOperation(
         value = "Get user",
@@ -74,12 +78,12 @@ public class UserEndpoint {
         @ApiResponse(code = 404, message = "User is not found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<SimpleUserDto> findUserByUserCode(@PathVariable String uc) {
+    public ResponseEntity<UserDto> findUserByUserCode(@PathVariable String uc) {
         LOGGER.info("GET /api/v1/users/" + uc);
-        SimpleUserDto result = userMapper.userToSimpleUserDto(userService.findUserByUserCode(uc));
+        UserDto result = userMapper.abstractUserToUserDto(userService.findUserByUserCode(uc));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
+/*
     @GetMapping(value = "/{email}")
     @ApiOperation(
         value = "Get user",
