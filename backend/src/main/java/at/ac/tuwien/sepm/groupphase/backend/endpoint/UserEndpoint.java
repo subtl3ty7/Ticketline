@@ -133,19 +133,19 @@ public class UserEndpoint {
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 */
-    @DeleteMapping(value = "/delete/{email}")
+    @DeleteMapping(value = "/delete/{usercode}")
     @ApiOperation(
         value = "Delete user",
-        notes = "Delete user by email",
+        notes = "Delete user by usercode",
         authorizations = {@Authorization(value = "apiKey")})
     @ApiResponses({
         @ApiResponse(code = 200, message = "User is successfully deleted"),
         @ApiResponse(code = 404, message = "User is not found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<Void> deleteUser(@PathVariable String email) {
-        LOGGER.info("GET /api/v1/users/delete/" + email);
-        userService.deleteUserByEmail(email);
+    public ResponseEntity<Void> deleteUser(@PathVariable String usercode) {
+        LOGGER.info("GET /api/v1/users/delete/" + usercode);
+        userService.deleteUserByUsercode(usercode);
         return ResponseEntity.noContent().build();
     }
 
