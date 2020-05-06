@@ -15,6 +15,8 @@ public interface TestData {
 
     String BASE_URI = "/api/v1";
     String MESSAGE_BASE_URI = BASE_URI + "/messages";
+    String USER_BASE_URI = BASE_URI + "/users";
+    String CUSTOMER_BASE_URI = USER_BASE_URI + "/customers";
 
     String ADMIN_USER = "admin@email.com";
     List<String> ADMIN_ROLES = new ArrayList<>() {
@@ -23,11 +25,19 @@ public interface TestData {
             add("ROLE_USER");
         }
     };
-    String DEFAULT_USER = "admin@email.com";
+
+    String DEFAULT_USER = "e0@customer.com";
     List<String> USER_ROLES = new ArrayList<>() {
         {
             add("ROLE_USER");
         }
     };
-
+    String USER_CODE = "code";
+    String FNAME = "name";
+    String LNAME = "lastname";
+    String PASS = "Password0";
+    LocalDateTime BIRTHDAY = LocalDateTime.of(1998, 5,15,12,0);
+    LocalDateTime CRE = LocalDateTime.now();
+    LocalDateTime UPD = LocalDateTime.now();
+    Long POINTS = 1L;
 }
