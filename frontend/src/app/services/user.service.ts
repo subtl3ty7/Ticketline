@@ -4,8 +4,8 @@ import {Globals} from '../global/globals';
 import {Observable, throwError} from 'rxjs';
 import {User} from '../dtos/user';
 import {catchError, tap} from 'rxjs/operators';
-import {FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
+import {ChangePassword} from '../dtos/change-password';
 
 @Injectable({
   providedIn: 'root'
@@ -42,8 +42,35 @@ export class UserService {
     );
   }
   save(user: User): Observable<User> {
-    console.log(user.userCode);
+    if (user.admin) {
+      return this.httpClient.post<User>(this.userBaseUri + '/administrators', user).pipe(
+        tap(data => console.log('All ' + JSON.stringify(data))),
+        catchError(this.handleError)
+      );
+    }
+    console.log(user);
     return this.httpClient.post<User>(this.userBaseUri + '/customers', user).pipe(
+      tap(data => console.log('All ' + JSON.stringify(data))),
+      catchError(this.handleError)
+    );
+  }
+  blockUser(userCode: string) {
+    console.log('Block user by UserCode');
+    return this.httpClient.get<User>(this.userBaseUri + '/block/' + userCode).pipe(
+      catchError(this.handleError)
+    );
+  }
+  unblockUser(userCode: string) {
+    console.log('Unblock user by UserCode');
+    return this.httpClient.get<User>(this.userBaseUri + '/unblock/' + userCode).pipe(
+      catchError(this.handleError)
+    );
+  }
+  resetPassword(userCode: string, oldPassword: string, newPassword: string) {
+    console.log('Reset password for ' + userCode);
+    // encoding
+    return this.httpClient.post<ChangePassword>(this.userBaseUri + '/reset-password',
+      new ChangePassword(userCode, oldPassword, newPassword)).pipe(
       tap(data => console.log('All ' + JSON.stringify(data))),
       catchError(this.handleError)
     );

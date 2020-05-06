@@ -2,8 +2,6 @@ import {AfterContentChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild
 import {User} from '../../../dtos/user';
 import {UserService} from '../../../services/user.service';
 import {MatSort} from '@angular/material/sort';
-import {MatInputModule} from '@angular/material/input';
-import {MatButtonModule} from '@angular/material/button';
 import {MatTableDataSource} from '@angular/material/table';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -70,7 +68,7 @@ export class UsersTabComponent implements OnInit {
   }
 
   private blockUser(element) {
-    this.userService.getUserByUserCode(element.userCode).subscribe(
+    this.userService.blockUser(element.userCode).subscribe(
       error => {
         this.defaultServiceErrorHandling(error);
       }
@@ -79,12 +77,16 @@ export class UsersTabComponent implements OnInit {
   }
 
   private unblockUser(element) {
-    this.userService.getUserByUserCode(element.userCode).subscribe(
+    this.userService.unblockUser(element.userCode).subscribe(
       error => {
         this.defaultServiceErrorHandling(error);
       }
     );
     this.loadAllUsers();
+  }
+
+  private createNewUser() {
+    this.router.navigate(['create-user']);
   }
 
   public searchForAllUsers(searchData?) {

@@ -19,7 +19,7 @@ export class RegisterUserFormComponent implements OnInit {
   user: User;
   firstName = '';
   lastName = '';
-  birthday = '';
+  birthday: Date;
   password = '';
   passwordConfirm = '';
   email = '';
@@ -32,9 +32,7 @@ export class RegisterUserFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user = new User(null, '', this.firstName, this.lastName, this.email,
-      this.password, this.birthday, '', '', false, false,
-      false, 0, 'CUSTOMER', false);
+    this.user = new User();
   }
   registerUser(form) {
     console.log(this.user.password);
