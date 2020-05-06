@@ -119,6 +119,29 @@ public class CustomUserService implements UserService {
         }
         return "";
     }
+
+    @Override
+    public String blockCustomer(String usercode) {
+        LOGGER.info("Blocking customer with user code " + usercode );
+        AbstractUser user = userRepository.findAbstractUserByUserCode(usercode);
+
+        try {
+            if (user instanceof Customer) {
+                if (!((Customer) user).isBlocked()) {
+                    ((Customer) user).setBlocked(true);
+                    userRepository.save(user);
+                } else {
+                    throw new ServiceException("User is already blocked!", null);
+                }
+            }else {
+                throw new ServiceException("Administrator can not be blocked!", null);
+            }
+        } catch (CustomServiceException e) {
+            LOGGER.trace("Error while blocking user: " + user.getUserCode());
+            throw new CustomServiceException("Error while blocking user " + user.getUserCode());
+        }
+        return "";
+    }
     @Override
     public Customer registerNewCustomer(Customer customer) throws ValidationException, DataAccessException {
         LOGGER.info("Validating Customer Entity: " + customer);
