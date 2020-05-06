@@ -1,10 +1,8 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint.dto;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
@@ -19,5 +17,5 @@ public class ShowDto {
     private LocalDateTime endsAt;
     private int ticketsSold;
     private int ticketsAvailable;
-    private DetailedEventLocationDto eventLocation;
+    private EventLocationDto eventLocation;
 }

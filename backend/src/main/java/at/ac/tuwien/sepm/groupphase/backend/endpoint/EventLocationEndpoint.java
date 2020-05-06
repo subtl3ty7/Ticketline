@@ -1,7 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.EventLocationDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleEventDto;
-import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleEventLocationDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EventLocationMapper;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EventMapper;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventLocationService;
@@ -48,8 +48,8 @@ public class EventLocationEndpoint {
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
     public ResponseEntity<List<SimpleEventDto>> requestAllEventLocations() {
-        LOGGER.info("GET /api/v1/events/top10");
-        List<SimpleEventLocationDto> result = eventLocationMapper.eventLocationToSimpleEventLocationDto(eventLocationService.getAllEventLocations());
+        LOGGER.info("GET /api/v1/eventLocations/all");
+        List<EventLocationDto> result = eventLocationMapper.eventLocationToEventLocationDto(eventLocationService.getAllEventLocations());
         return new ResponseEntity(result, HttpStatus.OK);
     }
 

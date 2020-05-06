@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.AssertTrue;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -38,7 +39,7 @@ public class Show implements Serializable {
     @Column
     private int ticketsAvailable;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "SHOW_ID", referencedColumnName = "ID")
     private List<EventLocation> eventLocation;
 

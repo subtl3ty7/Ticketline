@@ -16,5 +16,5 @@ public class SectionDto {
     private Long eventLocationId;
     private String name;
     private String description;
-    private List<Seat> seats;
+    private List<SeatDto> seats;
 }

@@ -7,16 +7,14 @@ import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManagerFactory;
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Profile("generateData")
 @Component
@@ -53,10 +51,27 @@ public class EventDataGenerator {
         if(seatRepository.findAll().size() > 0) {
             LOGGER.debug("Event Test Data already generated");
         } else {
+            Session session = getSession();
+            session.beginTransaction();
             List<Event> events = generateEvents();
+            session.getTransaction().commit();
+            // run this to test if an event updates properly
+            updateEvent(events.get(0));
             // run this to test if the events and all their children (shows, eventlocations, sections, seats) get deleted
             // deleteEvents(events);
         }
+    }
+
+    private void updateEvent(Event event) {
+        Session session = getSession();
+        session.beginTransaction();
+        Event eventNew = eventRepository.findEventById(event.getId());
+        eventNew.getShows().remove(2);
+        eventNew.getShows().remove(1);
+        eventNew.getShows().add(Show.builder().startsAt(LocalDateTime.now()).endsAt(LocalDateTime.now()).build());
+        eventRepository.save(eventNew);
+        session.getTransaction().commit();
+        int i=0;
     }
 
     private void deleteEvents(List<Event> events) {
@@ -83,7 +98,7 @@ public class EventDataGenerator {
                 .prices(List.of(1,2,3))
                 .totalTicketsSold(5)
                 .type("Of the cool type")
-                .shows(generateShows())
+                .shows(generateShows((long) i))
                 .build();
             event = eventRepository.save(event);
             events.add(event);
@@ -92,7 +107,7 @@ public class EventDataGenerator {
         return events;
     }
 
-    private List<Show> generateShows() {
+    private List<Show> generateShows(Long eventIndex) {
         LOGGER.info("Generating Show Test Data");
         int numberOfShows = 3;
 
@@ -103,7 +118,7 @@ public class EventDataGenerator {
                 .endsAt(LocalDateTime.now())
                 .ticketsAvailable(1000)
                 .ticketsSold(300)
-                .eventLocation(List.of(generateEventLocation()))
+                .eventLocation(List.of(generateEventLocation(eventIndex)))
                 .build();
             shows.add(show);
         }
@@ -111,11 +126,11 @@ public class EventDataGenerator {
         return shows;
     }
 
-    private EventLocation generateEventLocation() {
+    private EventLocation generateEventLocation(Long eventIndex) {
         LOGGER.info("Generating Event Location Test Data");
 
         EventLocation eventLocation = EventLocation.builder()
-            .name("Stephansplatz")
+            .name("Stephansplatz from event " + eventIndex)
             .city("Vienna")
             .country("Austria")
             .plz("1010")
