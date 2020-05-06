@@ -48,5 +48,5 @@ public interface UserService extends UserDetailsService {
 
     void deleteUserByUsercode(String usercode);
 
-    AbstractUser updateCustomer(AbstractUser user, String email);
+    AbstractUser updateCustomer(AbstractUser user, String usercode);
 }

@@ -184,10 +184,10 @@ public class CustomUserService implements UserService {
     }
 
     @Override
-    public AbstractUser updateCustomer(AbstractUser user, String email) {
-        LOGGER.info("Updating customer with the email: " + email);
+    public AbstractUser updateCustomer(AbstractUser user, String usercode) {
+        LOGGER.info("Updating customer with the usercode: " + usercode);
 
-        AbstractUser helpUser = userRepository.findAbstractUserByEmail(email);
+        AbstractUser helpUser = userRepository.findAbstractUserByUserCode(usercode);
 
         try {
             if (helpUser instanceof Customer) {
@@ -216,8 +216,8 @@ public class CustomUserService implements UserService {
                 throw new ServiceException("You cannot update an admin!", null);
             }
         } catch (CustomServiceException e) {
-            LOGGER.trace("Error while updating customer with the email " + email);
-            throw new CustomServiceException("Error while updating customer with the email " + email);
+            LOGGER.trace("Error while updating customer with the usercode " + usercode);
+            throw new CustomServiceException("Error while updating customer with the usercode " + usercode);
         }
     }
 }
