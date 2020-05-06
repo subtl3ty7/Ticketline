@@ -132,23 +132,40 @@ public class UserEndpoint {
         String result = userService.registerNewUser(basicUser);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
-
-    @DeleteMapping(value = "/delete/{uc}")
+*/
+    @DeleteMapping(value = "/delete/{email}")
     @ApiOperation(
         value = "Delete user",
-        notes = "Delete user by usercode",
+        notes = "Delete user by email",
         authorizations = {@Authorization(value = "apiKey")})
     @ApiResponses({
         @ApiResponse(code = 200, message = "User is successfully deleted"),
         @ApiResponse(code = 404, message = "User is not found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<String> deleteUser(@PathVariable String uc) {
-        LOGGER.info("GET /api/v1/users/delete/" + uc);
-        String result = userService.deleteUser(uc);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+    public ResponseEntity<Void> deleteUser(@PathVariable String email) {
+        LOGGER.info("GET /api/v1/users/delete/" + email);
+        userService.deleteUserByEmail(email);
+        return ResponseEntity.noContent().build();
     }
 
+    @PutMapping(value = "/{email}")
+    @ApiOperation(
+        value = "Update user",
+        notes = "Update user by email",
+        authorizations = {@Authorization(value = "apiKey")})
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "User is successfully updated"),
+        @ApiResponse(code = 404, message = "User is not found"),
+        @ApiResponse(code = 500, message = "Connection Refused"),
+    })
+    public ResponseEntity<String> updateUser(@RequestBody UserDto userDto, @PathVariable String email) {
+        LOGGER.info("PUT /api/v1/users/customers" + "/{}", email);
+
+        AbstractUser customer = userService.updateCustomer(userMapper.userDtoToCustomer(userDto), email);
+        return new ResponseEntity(userMapper.abstractUserToUserDto(customer), HttpStatus.OK);
+    }
+/*
     @Secured("ROLE_ADMIN")
     @GetMapping(value = "/block/{uc}")
     @ApiOperation(
