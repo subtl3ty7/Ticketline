@@ -99,9 +99,9 @@ public class UserEndpoint {
         SimpleUserDto result = userMapper.userToSimpleUserDto(userService.findUserByEmail(email));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
+*/
     @Secured("ROLE_ADMIN")
-    @PostMapping(value = "/admin")
+    @PostMapping(value = "/administrators")
     @ApiOperation(
         value = "Register new admin",
         notes = "Register new admin in system",
@@ -111,28 +111,14 @@ public class UserEndpoint {
         @ApiResponse(code = 400, message = "User already exists"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<String> registerNewAdminUser(@RequestBody AdminUserDto adminUser) {
-        LOGGER.info("POST /api/v1/users/admin");
-        String result = userService.registerNewUser(adminUser);
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
+    public ResponseEntity<UserDto> registerNewAdminUser(@RequestBody UserDto userDto) {
+        LOGGER.info("POST " + userDto);
+        AbstractUser admin = userService.registerNewAdmin(userMapper.userDtoToAdministrator(userDto));
+        ResponseEntity response = new ResponseEntity(userMapper.abstractUserToUserDto(admin), HttpStatus.CREATED);
+        LOGGER.info("Sending API Response: [" + response.getBody() + ", " + response.getStatusCode() + "]");
+        return response;
     }
 
-    @PostMapping(value = "/customer")
-    @ApiOperation(
-        value = "Register new customer",
-        notes = "Register new customer in system",
-        authorizations = {@Authorization(value = "apiKey")})
-    @ApiResponses({
-        @ApiResponse(code = 201, message = "User is successfully registered"),
-        @ApiResponse(code = 400, message = "User already exists"),
-        @ApiResponse(code = 500, message = "Connection Refused"),
-    })
-    public ResponseEntity<String> registerNewBasicUser(@RequestBody BasicUserDto basicUser) {
-        LOGGER.info("GET /api/v1/users/customer");
-        String result = userService.registerNewUser(basicUser);
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
-    }
-*/
     @DeleteMapping(value = "/delete/{usercode}")
     @ApiOperation(
         value = "Delete user",

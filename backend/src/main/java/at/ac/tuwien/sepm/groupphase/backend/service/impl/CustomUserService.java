@@ -140,6 +140,22 @@ public class CustomUserService implements UserService {
         LOGGER.info("Saved UserAttempts Entity in Database: " + userAttempts);
         return customer;
     }
+    @Override
+    public Administrator registerNewAdmin(Administrator admin) throws ValidationException, DataAccessException {
+        LOGGER.info("Validating Admin Entity: " + admin);
+        admin.setUserCode(getNewUserCode());
+        LocalDateTime now = LocalDateTime.now();
+        admin.setCreatedAt(now);
+        admin.setUpdatedAt(now);
+        validator.validateRegistration(admin).throwIfViolated();
+        Session session = getSession();
+        session.beginTransaction();
+        admin = userRepository.save(admin);
+        session.getTransaction().commit();
+
+        LOGGER.info("Saved Admin Entity in Database: " + admin);
+        return admin;
+    }
 
     private String getNewUserCode() {
         final int maxAttempts = 1000;

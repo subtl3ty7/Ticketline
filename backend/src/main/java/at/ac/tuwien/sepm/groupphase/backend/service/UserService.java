@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.service;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Administrator;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -43,6 +44,13 @@ public interface UserService extends UserDetailsService {
      * @return the customer that was saved
      */
     Customer registerNewCustomer(Customer customer);
+
+    /**
+     * Save a admin in the database
+     * @param admin the admin that should be saved
+     * @return the admin that was saved
+     */
+    Administrator registerNewAdmin(Administrator admin);
 
     List<AbstractUser> loadAllUsers();
 
