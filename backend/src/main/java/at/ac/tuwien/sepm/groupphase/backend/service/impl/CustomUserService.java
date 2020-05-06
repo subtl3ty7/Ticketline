@@ -12,7 +12,6 @@ import at.ac.tuwien.sepm.groupphase.backend.repository.UserAttemptsRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
-import at.ac.tuwien.sepm.groupphase.backend.util.ServiceValidator;
 import org.aspectj.weaver.ast.Not;
 import at.ac.tuwien.sepm.groupphase.backend.util.Validation.Validator;
 import org.hibernate.Session;
@@ -164,9 +163,9 @@ public class CustomUserService implements UserService {
     }
 
     @Override
-    public void deleteUserByEmail(String email) {
+    public void deleteUserByUsercode(String usercode) {
         LOGGER.info("Deleting Customer Entity in Service Layer");
-        AbstractUser user = userRepository.findAbstractUserByEmail(email);
+        AbstractUser user = userRepository.findAbstractUserByUserCode(usercode);
 
         try {
             if (user instanceof Customer) {
@@ -179,8 +178,8 @@ public class CustomUserService implements UserService {
                 throw new ServiceException("You cannot delete an admin!", null);
             }
         } catch (CustomServiceException e) {
-            LOGGER.trace("Error while deleting user: " + user.getEmail());
-            throw new CustomServiceException("Error while deleting user " + user.getEmail());
+            LOGGER.trace("Error while deleting user: " + user.getUserCode());
+            throw new CustomServiceException("Error while deleting user " + user.getUserCode());
         }
     }
 
@@ -207,8 +206,6 @@ public class CustomUserService implements UserService {
                     if (user.getLastName() != null) {
                         helpUser.setLastName(user.getLastName());
                     }
-
-                    serviceValidator.validate(helpUser);
 
                 return userRepository.save(helpUser);
 
