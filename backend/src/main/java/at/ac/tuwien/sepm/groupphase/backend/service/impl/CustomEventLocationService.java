@@ -30,4 +30,10 @@ public class CustomEventLocationService implements EventLocationService {
         }
         return seats;
     }
+
+    @Override
+    public List<EventLocation> getAllEventLocations() {
+        List<EventLocation> eventLocations = eventLocationRepository.findAllByShowIdIsNull();
+        return eventLocations;
+    }
 }
