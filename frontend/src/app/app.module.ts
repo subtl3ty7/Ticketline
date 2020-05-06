@@ -42,6 +42,10 @@ import { CreateUserComponent } from './components/admin-home/create-user-contain
 import { CreateUserFormComponent } from './components/admin-home/create-user-container/create-user/create-user-form/create-user-form.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
+import { MustMatchDirective } from './utils/must-match.directive';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,6 +62,8 @@ import {MatNativeDateModule} from '@angular/material/core';
     EventsTabComponent,
     AdminHeaderComponent,
     CustomerHeaderComponent,
+    RegisterUserFormComponent,
+    MustMatchDirective
     UserDetailsContainerComponent,
     UserDetailsComponent,
     UserInfoComponent,

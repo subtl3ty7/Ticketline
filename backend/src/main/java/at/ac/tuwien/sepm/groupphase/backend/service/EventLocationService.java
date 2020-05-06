@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface EventLocationService {
     List<Seat> getAllSeatsByEventLocationId(Long id);
+    List<EventLocation> getAllEventLocations();
 }

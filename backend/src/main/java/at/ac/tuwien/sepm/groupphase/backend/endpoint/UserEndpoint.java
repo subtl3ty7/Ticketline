@@ -34,6 +34,7 @@ public class UserEndpoint {
        this.userMapper = userMapper;
     }
 
+    @CrossOrigin(maxAge = 3600)
     @PostMapping(value = "/customers")
     @ApiOperation(
         value = "Register new customer",
@@ -131,8 +132,8 @@ public class UserEndpoint {
         String result = userService.registerNewUser(basicUser);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
-
-    @DeleteMapping(value = "/delete/{uc}")
+*/
+    @DeleteMapping(value = "/delete/{usercode}")
     @ApiOperation(
         value = "Delete user",
         notes = "Delete user by usercode",
@@ -142,12 +143,29 @@ public class UserEndpoint {
         @ApiResponse(code = 404, message = "User is not found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<String> deleteUser(@PathVariable String uc) {
-        LOGGER.info("GET /api/v1/users/delete/" + uc);
-        String result = userService.deleteUser(uc);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+    public ResponseEntity<Void> deleteUser(@PathVariable String usercode) {
+        LOGGER.info("GET /api/v1/users/delete/" + usercode);
+        userService.deleteUserByUsercode(usercode);
+        return ResponseEntity.noContent().build();
     }
 
+    @PutMapping(value = "/{usercode}")
+    @ApiOperation(
+        value = "Update user",
+        notes = "Update user by usercode",
+        authorizations = {@Authorization(value = "apiKey")})
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "User is successfully updated"),
+        @ApiResponse(code = 404, message = "User is not found"),
+        @ApiResponse(code = 500, message = "Connection Refused"),
+    })
+    public ResponseEntity<String> updateUser(@RequestBody UserDto userDto, @PathVariable String usercode) {
+        LOGGER.info("PUT /api/v1/users" + "/{}", usercode);
+
+        AbstractUser customer = userService.updateCustomer(userMapper.userDtoToCustomer(userDto), usercode);
+        return new ResponseEntity(userMapper.abstractUserToUserDto(customer), HttpStatus.OK);
+    }
+/*
     @Secured("ROLE_ADMIN")
     @GetMapping(value = "/block/{uc}")
     @ApiOperation(

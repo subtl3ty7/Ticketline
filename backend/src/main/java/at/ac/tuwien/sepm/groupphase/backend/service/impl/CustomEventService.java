@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDateTime;
@@ -34,7 +36,7 @@ public class CustomEventService implements EventService {
     public List<Event> findTop10EventsOfMonth() {
         List<Event> allEventsFromMonth = eventRepository.findAllByStartsAtAfterOrderByTotalTicketsSoldDesc(LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),1,0,0));
         List<Event> top10 = new ArrayList<>();
-        for(int i = 0; i < 10; i++) top10.add(allEventsFromMonth.get(i));
+        for(int i = 0; i < Math.min(10, allEventsFromMonth.size()); i++) top10.add(allEventsFromMonth.get(i));
         return top10;
     }
 
@@ -42,7 +44,7 @@ public class CustomEventService implements EventService {
     public List<Event> findTop10EventsOfMonthByCategory(String category) {
         List<Event> allEventsFromMonth = eventRepository.findAllByStartsAtAfterAndCategoryOrderByTotalTicketsSoldDesc(LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),1,0,0), category);
         List<Event> top10 = new ArrayList<>();
-        for(int i = 0; i < 10; i++) top10.add(allEventsFromMonth.get(i));
+        for(int i = 0; i < Math.min(10, allEventsFromMonth.size()); i++) top10.add(allEventsFromMonth.get(i));
         return top10;
     }
 
@@ -67,5 +69,13 @@ public class CustomEventService implements EventService {
             throw new ServiceException("Something went wrong while generating EventCode", null);
         }
         return eventCode;
+    }
+
+    @Override
+    public Event findByEventCode(String eventCode) {
+        Event event = eventRepository.findEventByEventCode(eventCode);
+        event.getPrices();
+        event.getArtists();
+        return event;
     }
 }
