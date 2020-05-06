@@ -19,7 +19,7 @@ export class RegisterUserFormComponent implements OnInit {
   user: User;
   firstName = '';
   lastName = '';
-  birthday = '';
+  birthday: Date;
   password = '';
   email = '';
   // After first submission attempt, form validation will start
@@ -31,9 +31,7 @@ export class RegisterUserFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user = new User(null, 'US12X2', this.firstName, this.lastName, this.email,
-      this.password, this.birthday, '', '', false, false,
-      false, 0, 'CUSTOMER', false);
+    this.user = new User();
   }
   registerUser(form) {
     console.log(this.user);
