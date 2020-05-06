@@ -43,4 +43,8 @@ public interface UserService extends UserDetailsService {
     Customer registerNewCustomer(Customer customer);
 
     List<AbstractUser> loadAllUsers();
+
+    void deleteUserByEmail(String email);
+
+    AbstractUser updateCustomer(AbstractUser user, String email);
 }

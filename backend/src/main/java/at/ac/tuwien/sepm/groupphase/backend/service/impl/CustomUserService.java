@@ -13,6 +13,7 @@ import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
 import at.ac.tuwien.sepm.groupphase.backend.util.ServiceValidator;
+import org.aspectj.weaver.ast.Not;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -127,5 +129,66 @@ public class CustomUserService implements UserService {
     @Override
     public List<AbstractUser> loadAllUsers(){
         return userRepository.findAll();
+    }
+
+    @Override
+    public void deleteUserByEmail(String email) {
+        LOGGER.info("Deleting Customer Entity in Service Layer");
+        AbstractUser user = userRepository.findAbstractUserByEmail(email);
+
+        try {
+            if (user instanceof Customer) {
+                if (user.isLogged()) {
+                    userRepository.delete(user);
+                } else {
+                    throw new ServiceException("You must be logged-in in order to delete!", null);
+                }
+            }else {
+                throw new ServiceException("You cannot delete an admin!", null);
+            }
+        } catch (CustomServiceException e) {
+            LOGGER.trace("Error while deleting user: " + user.getEmail());
+            throw new CustomServiceException("Error while deleting user " + user.getEmail());
+        }
+    }
+
+    @Override
+    public AbstractUser updateCustomer(AbstractUser user, String email) {
+        LOGGER.info("Updating customer with the email: " + email);
+
+        AbstractUser helpUser = userRepository.findAbstractUserByEmail(email);
+
+        try {
+            if (helpUser instanceof Customer) {
+                if (helpUser.isLogged()) {
+
+                    helpUser.setUpdatedAt(LocalDateTime.now());
+
+                    if (user.getEmail() != null) {
+                        helpUser.setEmail(user.getEmail());
+                    }
+
+                    if (user.getFirstName() != null) {
+                        helpUser.setFirstName(user.getFirstName());
+                    }
+
+                    if (user.getLastName() != null) {
+                        helpUser.setLastName(user.getLastName());
+                    }
+
+                    serviceValidator.validate(helpUser);
+
+                return userRepository.save(helpUser);
+
+                } else {
+                    throw new ServiceException("You must be logged-in in order to update!", null);
+                }
+            } else {
+                throw new ServiceException("You cannot update an admin!", null);
+            }
+        } catch (CustomServiceException e) {
+            LOGGER.trace("Error while updating customer with the email " + email);
+            throw new CustomServiceException("Error while updating customer with the email " + email);
+        }
     }
 }
