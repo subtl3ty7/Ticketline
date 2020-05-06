@@ -1,0 +1,42 @@
+<div class="user-wrapper">
+  <div class="user-line">
+    <div class="link opacity" (click)="usersNavigate()">
+      <span class="bread-crumps">Users</span>
+    </div>
+
+    <div class="bread-crumps user-padding">
+      > {{firstName}}
+      {{lastName}}
+    </div>
+  </div>
+</div>
+
+
+<div class="flex" *ngIf="wrapper.state !== state.PROCESSING">
+  <div class="administration-tabs">
+    <app-admin-side-menu></app-admin-side-menu>
+  </div>
+  <div class="center-block">
+    <div *ngIf="wrapper.state === state.READY">
+      <app-user-info [user]="wrapper.model">
+      </app-user-info>
+  </div>
+  </div>
+</div>
+
+<div *ngIf="wrapper.state === state.PASSWORD">
+  <app-reset-password>
+    <div class="buttons-wrapper">
+      <button id="user-password-save-button"
+              class="save-button"
+              (click)="savePassword()">
+        <span class="save-button-label">Save</span>
+      </button>
+      <button id="user-password-cancel-button"
+              class="cancel-button"
+              (click)="cancelResetPasswordMode()">
+        <span class="cancel-button-label">Cancel</span>
+      </button>
+    </div>
+  </app-reset-password>
+</div>
