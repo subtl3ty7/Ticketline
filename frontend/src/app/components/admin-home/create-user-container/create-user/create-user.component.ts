@@ -27,7 +27,6 @@ export class CreateUserComponent implements OnInit {
     this.usersNavigate();
   }
   saveUser() {
-    console.log(this.wrapper.model);
     if (this.wrapper.valid()) {
     this.userService.save(this.wrapper.model).subscribe(
       error => {

@@ -5,7 +5,6 @@ import {Router} from '@angular/router';
 import {AuthRequest} from '../../dtos/auth-request';
 import {UserService} from '../../services/user.service';
 import {User} from '../../dtos/user';
-import * as bcrypt from 'bcryptjs';
 
 @Component({
   selector: 'app-register-user-form',
@@ -35,13 +34,10 @@ export class RegisterUserFormComponent implements OnInit {
     this.user = new User();
   }
   registerUser(form) {
-    console.log(this.user.password);
+    console.log(this.user.email);
     this.submitted = true;
-    const salt = bcrypt.genSaltSync(10);
-    const pwd = bcrypt.hashSync(this.user.password, salt);
     if (form.valid) {
       console.log('in onSubmit ', form.valid);
-      this.user.password = pwd;
       this.userService.save(this.user).subscribe(
         result => {
           console.log('success: ', result),

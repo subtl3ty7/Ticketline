@@ -6,6 +6,7 @@ import {User} from '../dtos/user';
 import {catchError, tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {ChangePassword} from '../dtos/change-password';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable({
   providedIn: 'root'
@@ -42,15 +43,16 @@ export class UserService {
     );
   }
   save(user: User): Observable<User> {
+    const salt = bcrypt.genSaltSync(10);
+    const pwd = bcrypt.hashSync(user.password, salt);
+    user.password = pwd;
     if (user.admin) {
       return this.httpClient.post<User>(this.userBaseUri + '/administrators', user).pipe(
-        tap(data => console.log('All ' + JSON.stringify(data))),
         catchError(this.handleError)
       );
     }
-    console.log(user);
+    console.log('saving user in the database');
     return this.httpClient.post<User>(this.userBaseUri + '/customers', user).pipe(
-      tap(data => console.log('All ' + JSON.stringify(data))),
       catchError(this.handleError)
     );
   }
