@@ -63,7 +63,7 @@ import { MustMatchDirective } from './utils/must-match.directive';
     AdminHeaderComponent,
     CustomerHeaderComponent,
     RegisterUserFormComponent,
-    MustMatchDirective
+    MustMatchDirective,
     UserDetailsContainerComponent,
     UserDetailsComponent,
     UserInfoComponent,
