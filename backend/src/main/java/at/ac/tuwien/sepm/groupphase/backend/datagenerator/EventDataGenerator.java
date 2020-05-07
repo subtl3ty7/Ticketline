@@ -124,14 +124,14 @@ public class EventDataGenerator {
 
         List<Show> shows = new ArrayList<>();
         for(int i=0; i<numberOfShows; i++) {
-            List<EventLocation> location = new ArrayList<>();
-            location.add(new EventLocation(eventLocation));
+            //List<EventLocation> location = new ArrayList<>();
+            //location.add(new EventLocation(eventLocation));
             Show show = Show.builder()
                 .startsAt(LocalDateTime.now())
                 .endsAt(LocalDateTime.now())
                 .ticketsAvailable(1000)
                 .ticketsSold(300)
-                .eventLocation(location)
+                .eventLocation(List.of(eventLocation))
                 .build();
             shows.add(show);
         }

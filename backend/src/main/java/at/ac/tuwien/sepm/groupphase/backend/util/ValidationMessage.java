@@ -72,6 +72,8 @@ public class ValidationMessage {
             put("eventLocation_given", "Event Location has to be given.");
             put("eventLocation_onlyOne", "Only one Event Location allowed in list.");
             put("eventLocation_exists", "Event Location does not exist in database.");
+            put("eventLocation_unassigned", "Event Location is already assigned to a show.");
+            put("show_idNull", "Show ID should be null.");
 
             //event
             put("event_eventCode", "Event Code cannot be empty and has to be 6 characters long.");

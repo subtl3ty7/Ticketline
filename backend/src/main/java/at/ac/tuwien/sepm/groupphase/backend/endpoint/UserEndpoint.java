@@ -135,7 +135,7 @@ public class UserEndpoint {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping(value = "/update")
+    @PutMapping(value= "/customers")
     @ApiOperation(
         value = "Update user",
         notes = "Update user by usercode",
@@ -146,7 +146,7 @@ public class UserEndpoint {
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
     public ResponseEntity<String> updateUser(@RequestBody UserDto userDto) {
-        LOGGER.info("PUT /api/v1/users/update" + userDto);
+        LOGGER.info("PUT /api/v1/users/" + userDto);
 
         AbstractUser customer = userService.updateCustomer(userMapper.userDtoToCustomer(userDto));
         return new ResponseEntity(userMapper.abstractUserToUserDto(customer), HttpStatus.OK);

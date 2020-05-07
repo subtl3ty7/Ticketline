@@ -62,8 +62,7 @@ public class CustomEventService implements EventService {
         //Give shows new EventLocation Entities (copies of existing ones) to make sure they all can have different seating assignments
         for(Show show: event.getShows()) {
             EventLocation eventLocation = eventLocationRepository.findEventLocationById(show.getEventLocation().get(0).getId());
-            show.getEventLocation().remove(0);
-            show.getEventLocation().set(0, new EventLocation(eventLocation));
+            show.setEventLocation(List.of(new EventLocation(eventLocation)));
         }
 
         return eventRepository.save(event);

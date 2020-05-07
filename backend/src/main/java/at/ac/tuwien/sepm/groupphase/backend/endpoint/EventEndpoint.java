@@ -90,9 +90,25 @@ public class EventEndpoint {
         @ApiResponse(code = 404, message = "No Event is found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<List<SimpleEventDto>> findByEventCode(@PathVariable String eventCode) {
+    public ResponseEntity<DetailedEventDto> findByEventCode(@PathVariable String eventCode) {
         LOGGER.info("GET /api/v1/events/" + eventCode);
         DetailedEventDto result = eventMapper.eventToDetailedEventDto(eventService.findByEventCode(eventCode));
+        return new ResponseEntity(result, HttpStatus.OK);
+    }
+
+
+    @DeleteMapping(value = "/{eventCode}")
+    @ApiOperation(
+        value = "Get event by its Code",
+        notes = "Get event by its Code")
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "Events are successfully retrieved"),
+        @ApiResponse(code = 404, message = "No Event is found"),
+        @ApiResponse(code = 500, message = "Connection Refused"),
+    })
+    public ResponseEntity<SimpleEventDto> deleteByEventCode(@PathVariable String eventCode) {
+        LOGGER.info("GET /api/v1/events/" + eventCode);
+        SimpleEventDto result = eventMapper.eventToSimpleEventDto(eventService.deletebyEventCode(eventCode));
         return new ResponseEntity(result, HttpStatus.OK);
     }
 

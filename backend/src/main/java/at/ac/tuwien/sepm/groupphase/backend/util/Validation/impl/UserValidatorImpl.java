@@ -68,10 +68,10 @@ public class UserValidatorImpl implements UserValidator {
     @Override
     public Constraints validateUpdate(Customer customer) {
         Constraints constraints = new Constraints();
+        constraints.add(AccesoryValidator.validateJavaxConstraints(customer));
         AbstractUser userFromDataBase = userRepository.findAbstractUserByUserCode(customer.getUserCode());
         constraints.add("user_exists", userFromDataBase!=null);
-        constraints.add("user_isLogged", userFromDataBase != null && customer.isLogged());
-        constraints.add(validate(customer));
+        constraints.add("user_isLogged", userFromDataBase != null && userFromDataBase.isLogged());
         return constraints;
     }
 
