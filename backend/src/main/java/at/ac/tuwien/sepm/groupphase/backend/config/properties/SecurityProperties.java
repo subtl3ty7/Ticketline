@@ -5,6 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -72,6 +73,7 @@ public class SecurityProperties {
         private String prefix;
         private String loginUri;
         private List<String> whiteList;
+
 
         public String getHeader() {
             return header;

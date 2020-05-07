@@ -1,4 +1,77 @@
 /* You can add global styles to this file, and also import other style files */
+.all-height {
+  height: 100%;
+}
+
+.mat-header-row {
+  min-height: 25px !important;
+  border: 1px solid #c8c8c8;
+  border-left: 0;
+  border-right: 0;
+  padding: 0 !important;
+}
+
+
+.mat-header-cell {
+  border-left: 1px solid #c8c8c8;
+  box-sizing: border-box;
+}
+
+.mat-row {
+  padding: 0 !important;
+  border-bottom-color: white;
+  min-height: 54px !important;
+}
+
+.mat-cell {
+  cursor: pointer;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  border-left: 1px solid white;
+  box-sizing: border-box;
+}
+
+.mat-row:hover {
+  background-blend-mode: multiply;
+  background-image: linear-gradient(to bottom, #d4d4d4, #d4d4d4);
+}
+
+mat-cell:first-child {
+  border-left: 0;
+}
+
+mat-row:nth-child(even) {
+  background-color: #f6f6f6;
+}
+
+.administration-tabs {
+  width: 12%;
+  padding-top: 20px;
+}
+
+.administration-content {
+  width: 88%;
+}
+
+.content-section {
+  scrollbar-width: none;
+}
+@media screen and (max-width: 1400px) {
+  .administration-tabs {
+    width: 20%;
+  }
+
+  .administration-content {
+    width: 80%;
+  }
+}
+
 body {
   background-color: whitesmoke;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+

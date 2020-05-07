@@ -1,0 +1,110 @@
+:host {
+  display: block;
+}
+
+.administration-content-wrapper {
+  padding-left: 31px;
+}
+
+.administration-wrapper {
+  height: 95%;
+  display: flex;
+}
+
+.administration-title-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.administration-line {
+  width: 85%;
+  border-bottom: 1px solid #888888;
+}
+
+.administration-title {
+  font-family: SansSerif, sans-serif;
+  font-size: 24px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.2px;
+  color: #000000;
+}
+
+.tab {
+  cursor: pointer;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.select-tab {
+  background: #ececec;
+}
+
+.select-tab-label {
+  color: #ff1f20 !important;
+}
+
+.tab-label {
+  padding-left: 5px;
+  font-family: Verdana;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.2px;
+  color: #808080;
+  width: 7%;
+}
+
+@media screen and (min-width: 1080px) and (max-width: 1280px) {
+  .administration-line {
+    width: 82%;
+  }
+}
+
+@media screen and (max-width: 1080px) {
+  .administration-line {
+    width: 100%;
+  }
+
+  .administration-tabs {
+    width: 20%;
+  }
+
+  .administration-content {
+    width: 85%;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .administration-content-wrapper {
+    padding: 0 20px;
+  }
+
+  .administration-tabs {
+    display: none;
+  }
+
+
+  .tab {
+    margin-top: 5px;
+  }
+
+  .administration-content {
+    width: 100%;
+  }
+
+  .administration-line {
+    display: flex;
+    width: 100%;
+  }
+
+  .administration-title {
+    min-width: 120px;
+  }
+
+
+}

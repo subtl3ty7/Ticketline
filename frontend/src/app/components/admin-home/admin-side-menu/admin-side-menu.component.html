@@ -1,0 +1,32 @@
+
+<div id="administration-users-tab"
+     class="tab"
+     [routerLink]="['/administration', 1]"
+     routerLinkActive="select-tab">
+  <img src="assets/resources/images/administration/tabs/users.svg">
+  <span class="tab-label"> Users</span>
+</div>
+
+<div id="administration-events-tab"
+     class="tab"
+     [routerLink]="['/administration', 2]"
+     routerLinkActive="select-tab">
+  <img src="assets/resources/images/administration/tabs/events.svg">
+  <span class="tab-label"
+        [ngClass]="{'select-tab-label': globals.getChoosenTab === 2}">
+        Events
+      </span>
+</div>
+
+<div id="administration-news-tab"
+     class="tab"
+     [routerLink]="['/administration', 3]"
+     routerLinkActive="select-tab">
+  <img src="assets/resources/images/administration/tabs/news.svg">
+  <span class="tab-label"
+        [ngClass]="{'select-tab-label': globals.getChoosenTab === 3}">
+        News
+      </span>
+</div>
+
+
