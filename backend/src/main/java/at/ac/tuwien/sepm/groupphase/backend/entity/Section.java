@@ -21,18 +21,22 @@ public class Section {
     @Column(name = "EVENT_LOCATION_ID")
     private Long eventLocationId;
 
-    @Size(max = 100)
     @NotNull
+    @Size(max = 100)
     @Column(nullable = false, length = 100)
-    private String name;
+    private String sectionName;
 
     @Size(max = 1000)
     @Column(length = 1000)
-    private String description;
+    private String sectionDescription;
 
+    @NotNull
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "SECTION_ID", referencedColumnName = "ID")
     private List<Seat> seats;
+
+    @Column
+    private int capacity;
 
     public Section() {}
 }

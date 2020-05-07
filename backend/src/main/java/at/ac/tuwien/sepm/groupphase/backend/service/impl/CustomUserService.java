@@ -12,8 +12,8 @@ import at.ac.tuwien.sepm.groupphase.backend.repository.UserAttemptsRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
-import org.aspectj.weaver.ast.Not;
-import at.ac.tuwien.sepm.groupphase.backend.util.Validation.Validator;
+import at.ac.tuwien.sepm.groupphase.backend.util.Validation.EventValidator;
+import at.ac.tuwien.sepm.groupphase.backend.util.Validation.UserValidator;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -31,7 +31,6 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManagerFactory;
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,13 +40,13 @@ public class CustomUserService implements UserService {
     private final UserRepository userRepository;
     private final UserAttemptsRepository userAttemptsRepository;
     private final PasswordEncoder passwordEncoder;
-    private final Validator validator;
+    private final UserValidator validator;
     private final EntityManagerFactory entityManagerFactory;
 
 
     @Autowired
     public CustomUserService(UserRepository userRepository, PasswordEncoder passwordEncoder,
-                             UserAttemptsRepository userAttemptsRepository, Validator validator, EntityManagerFactory entityManagerFactory) {
+                             UserAttemptsRepository userAttemptsRepository, UserValidator validator, EntityManagerFactory entityManagerFactory) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userAttemptsRepository = userAttemptsRepository;

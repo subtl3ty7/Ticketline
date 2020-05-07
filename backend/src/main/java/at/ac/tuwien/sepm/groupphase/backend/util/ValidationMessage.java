@@ -22,6 +22,7 @@ public class ValidationMessage {
      */
     private static final Map<String, String> constraintHintMap = new HashMap<>() {
         {
+            //user
             put("id", "Id has to be unique and not null.");
             put("userCode", "User Code had to be 6 characters long.");
             put("userCode_unique", "User Code is already present in database.");
@@ -35,11 +36,26 @@ public class ValidationMessage {
             put("createdAt", "Created-At field cannot be empty.");
             put("updatedAt", "Updated-At field cannot be empty.");
             put("birthday","Birthday field cannot be empty.");
-            put("eventCode_unique", "Event Code is already present in database.");
             put("points_zero", "Points have to be zero on Registration.");
             put("password_encoded", "Password has to be bCrypt encoded.");
             put("birthday_16yo", "Needs to be at least 16 years old.");
 
+
+            //seat
+            put("seatRow", "Row cannot be empty.");
+            put("seatColumn", "Column cannot be empty.");
+
+            //section
+            put("sectionName", "Name cannot be empty or longer than 100 characters.");
+            put("sectionDescription", "Description cannot be empty or longer than 1000 characters.");
+            put("section_capacity", "Section capacity cannot be smaller than the number of section seats.");
+            put("seats", "List of seats cannot be null.");
+
+            //eventLocation
+            put("eventLocationName", "Name cannot be empty or longer than 100 characters.");
+            put("eventLocationDescription", "Description cannot be empty or longer than 1000 characters.");
+            put("eventLocation_capacity", "Event Location capacity cannot be smaller than the capacity sum of its sections.");
+            put("sections", "List of sections cannot be null.");
         }
     };
 

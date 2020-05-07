@@ -5,13 +5,11 @@ import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
-import at.ac.tuwien.sepm.groupphase.backend.util.Validation.Validator;
+import at.ac.tuwien.sepm.groupphase.backend.util.Validation.EventValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDateTime;
@@ -23,11 +21,11 @@ public class CustomEventService implements EventService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final EventRepository eventRepository;
-    private final Validator validator;
+    private final EventValidator validator;
 
 
     @Autowired
-    public CustomEventService(EventRepository eventRepository, Validator validator) {
+    public CustomEventService(EventRepository eventRepository, EventValidator validator) {
         this.eventRepository = eventRepository;
         this.validator = validator;
     }

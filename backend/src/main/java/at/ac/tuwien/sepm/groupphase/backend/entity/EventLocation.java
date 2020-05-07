@@ -22,10 +22,14 @@ public class EventLocation {
     @Column(name = "SHOW_ID")
     private Long showId;
 
-    @Size(max = 100)
     @NotNull
+    @Size(max = 100)
     @Column(nullable = false, length = 100)
-    private String name;
+    private String eventLocationName;
+
+    @Size(max = 1000)
+    @Column(length = 1000)
+    private String eventLocationDescription;
 
     @Size(max = 1000)
     @Column(length = 1000)
@@ -43,9 +47,13 @@ public class EventLocation {
     @Column(length = 100)
     private String country;
 
+    @NotNull
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST, orphanRemoval = true)
     @JoinColumn(name = "EVENT_LOCATION_ID", referencedColumnName = "ID")
     private List<Section> sections;
+
+    @Column
+    private int capacity;
 
     public EventLocation() {}
 }

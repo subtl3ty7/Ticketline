@@ -2,32 +2,21 @@ package at.ac.tuwien.sepm.groupphase.backend.util.Validation.impl;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
-import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.util.Constraints;
-import at.ac.tuwien.sepm.groupphase.backend.util.Validation.Validator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import at.ac.tuwien.sepm.groupphase.backend.util.Validation.UserValidator;
 import org.springframework.stereotype.Component;
 
-import javax.validation.*;
-import java.lang.invoke.MethodHandles;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Set;
 import java.util.regex.Pattern;
 
 @Component
-public class ValidatorImpl implements Validator {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+public class UserValidatorImpl implements UserValidator {
 
     private final UserRepository userRepository;
-    private final EventRepository eventRepository;
 
-    @Autowired
-    public ValidatorImpl(EventRepository eventRepository, UserRepository userRepository) {
-        this.eventRepository = eventRepository;
+    public UserValidatorImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -46,10 +35,10 @@ public class ValidatorImpl implements Validator {
         return constraints;
     }
 
-    private Constraints validate(AbstractUser user) {
+    public Constraints validate(AbstractUser user) {
         Constraints constraints = new Constraints();
         constraints.add(validateUnique(user));
-        constraints.add(validateJavaxConstraints(user));
+        constraints.add(AccesoryValidator.validateJavaxConstraints(user));
         return constraints;
     }
 
@@ -59,6 +48,7 @@ public class ValidatorImpl implements Validator {
         return constraints;
     }
 
+
     private Constraints validatePasswordEncoded(String password) {
         Pattern bCryptPattern = Pattern.compile("\\A\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}");
         Constraints constraints = new Constraints();
@@ -66,28 +56,10 @@ public class ValidatorImpl implements Validator {
         return constraints;
     }
 
-    public Constraints validateEventCode(String eventCode) {
-        Constraints constraints = new Constraints();
-        constraints.add("eventCode_unique", eventRepository.findEventByEventCode(eventCode) == null);
-        return constraints;
-    }
-
     private Constraints validateUnique(AbstractUser user) {
         Constraints constraints = new Constraints();
         constraints.add("userCode_unique", userRepository.findAbstractUserByUserCode(user.getUserCode()) == null);
         constraints.add("email_unique", userRepository.findAbstractUserByEmail(user.getEmail()) == null);
-        return constraints;
-    }
-
-
-    private static Constraints validateJavaxConstraints(Object object) {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        javax.validation.Validator validator = factory.getValidator();
-        Set<ConstraintViolation<Object>> violations = validator.validate(object);
-
-        Constraints constraints = new Constraints();
-        constraints.add(violations);
-
         return constraints;
     }
 }
