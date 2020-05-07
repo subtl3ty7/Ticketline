@@ -7,6 +7,10 @@ import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.util.Constraints;
 import at.ac.tuwien.sepm.groupphase.backend.util.Validation.UserValidator;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -27,11 +31,11 @@ public class UserValidatorImpl implements UserValidator {
         Constraints constraints = new Constraints();
         constraints.add(validate(user));
         constraints.add("isLogged_false", !user.isLogged());
-        if(user instanceof Customer) {
+        if (user instanceof Customer) {
             constraints.add("isBlocked_false", !((Customer) user).isBlocked());
             constraints.add("points_zero", ((Customer) user).getPoints() == 0);
         }
-        if(user.getBirthday() != null) {
+        if (user.getBirthday() != null) {
             constraints.add("birthday_16yo", ChronoUnit.YEARS.between(user.getBirthday(), LocalDateTime.now()) > 16);
         }
         constraints.add(validatePasswordEncoded(user.getPassword()));
@@ -57,8 +61,9 @@ public class UserValidatorImpl implements UserValidator {
     public Constraints validateDelete(String userCode) {
         Constraints constraints = new Constraints();
         AbstractUser user = userRepository.findAbstractUserByUserCode(userCode);
-        constraints.add("user_exists", user!=null);
-        if(user!=null) {
+        constraints.add("user_exists", user != null);
+        if (user != null) {
+            constraints.add("user_isNotSelf", validateUserIdentityWithGivenEmail(user.getEmail()));
             constraints.add("user_notAdmin", !(user instanceof Administrator));
             constraints.add("user_isLogged", user.isLogged());
         }
@@ -70,8 +75,9 @@ public class UserValidatorImpl implements UserValidator {
         Constraints constraints = new Constraints();
         constraints.add(AccesoryValidator.validateJavaxConstraints(customer));
         AbstractUser userFromDataBase = userRepository.findAbstractUserByUserCode(customer.getUserCode());
-        constraints.add("user_exists", userFromDataBase!=null);
+        constraints.add("user_exists", userFromDataBase != null);
         constraints.add("user_isLogged", userFromDataBase != null && userFromDataBase.isLogged());
+        constraints.add("user_isNotSelf", userFromDataBase != null && validateUserIdentityWithGivenEmail(userFromDataBase.getEmail()));
         return constraints;
     }
 
@@ -80,7 +86,7 @@ public class UserValidatorImpl implements UserValidator {
         Constraints constraints = new Constraints();
         AbstractUser user = userRepository.findAbstractUserByUserCode(userCode);
         constraints.add("user_isCustomer", user instanceof Customer);
-        constraints.add("user_isUnblocked", user instanceof Customer && !((Customer) user).isBlocked() );
+        constraints.add("user_isUnblocked", user instanceof Customer && !((Customer) user).isBlocked());
         return constraints;
     }
 
@@ -89,7 +95,7 @@ public class UserValidatorImpl implements UserValidator {
         Constraints constraints = new Constraints();
         AbstractUser user = userRepository.findAbstractUserByUserCode(userCode);
         constraints.add("user_isCustomer", user instanceof Customer);
-        constraints.add("user_isBlocked", user instanceof Customer && !((Customer) user).isBlocked() );
+        constraints.add("user_isBlocked", user instanceof Customer && !((Customer) user).isBlocked());
         return constraints;
     }
 
@@ -105,5 +111,22 @@ public class UserValidatorImpl implements UserValidator {
         constraints.add("userCode_unique", userRepository.findAbstractUserByUserCode(user.getUserCode()) == null);
         constraints.add("email_unique", userRepository.findAbstractUserByEmail(user.getEmail()) == null);
         return constraints;
+    }
+
+    @Override
+    public boolean validateUserIdentityWithGivenEmail(String email) {
+        String emailOfAuthenticatedUser = "";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object principal = authentication.getPrincipal();
+        if (principal != null) {
+            if (principal instanceof User) {
+                User user = (User) principal;
+                emailOfAuthenticatedUser = user.getUsername();
+            }
+            if (principal instanceof String) {
+                emailOfAuthenticatedUser = (String) principal;
+            }
+        }
+        return email.compareTo(emailOfAuthenticatedUser) == 0;
     }
 }

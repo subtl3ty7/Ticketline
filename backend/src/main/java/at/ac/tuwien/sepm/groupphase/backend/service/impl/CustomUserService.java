@@ -182,8 +182,12 @@ public class CustomUserService implements UserService {
     public void deleteUserByUsercode(String userCode) {
         LOGGER.info("Deleting Customer Entity in Service Layer");
         validator.validateDelete(userCode).throwIfViolated();
-
+        AbstractUser user = findUserByUserCode(userCode);
+        Session session = getSession();
+        session.beginTransaction();
         userRepository.deleteByUserCode(userCode);
+        userAttemptsRepository.deleteByEmail(user.getEmail());
+        session.getTransaction().commit();
     }
 
     @Override
