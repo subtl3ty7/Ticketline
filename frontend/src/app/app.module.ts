@@ -43,6 +43,7 @@ import { CreateUserFormComponent } from './components/admin-home/create-user-con
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import { MustMatchDirective } from './utils/must-match.directive';
+import { GuestHeaderComponent } from './sections/header/guest-header/guest-header.component';
 
 
 
@@ -71,7 +72,8 @@ import { MustMatchDirective } from './utils/must-match.directive';
     ResetPasswordComponent,
     RegisterUserFormComponent,
     CreateUserComponent,
-    CreateUserFormComponent
+    CreateUserFormComponent,
+    GuestHeaderComponent
   ],
   imports: [
     BrowserModule,
