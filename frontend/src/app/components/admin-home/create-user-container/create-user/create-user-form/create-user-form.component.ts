@@ -15,6 +15,7 @@ export class CreateUserFormComponent implements OnInit {
   maxDate: Date;
   matDatePicker: MatDatepicker<any>;
   adminFlag = false;
+  password: string;
   constructor() {
     const currentDate = new Date();
     this.maxDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDay());
@@ -28,5 +29,8 @@ export class CreateUserFormComponent implements OnInit {
   }
   addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
     this.user.birthday = event.value;
+  }
+  passwordChange(){
+    this.user.password = this.password;
   }
 }
