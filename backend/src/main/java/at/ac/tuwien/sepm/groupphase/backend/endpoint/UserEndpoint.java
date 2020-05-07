@@ -99,9 +99,9 @@ public class UserEndpoint {
         SimpleUserDto result = userMapper.userToSimpleUserDto(userService.findUserByEmail(email));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
+*/
     @Secured("ROLE_ADMIN")
-    @PostMapping(value = "/admin")
+    @PostMapping(value = "/administrators")
     @ApiOperation(
         value = "Register new admin",
         notes = "Register new admin in system",
@@ -111,29 +111,15 @@ public class UserEndpoint {
         @ApiResponse(code = 400, message = "User already exists"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<String> registerNewAdminUser(@RequestBody AdminUserDto adminUser) {
-        LOGGER.info("POST /api/v1/users/admin");
-        String result = userService.registerNewUser(adminUser);
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
+    public ResponseEntity<UserDto> registerNewAdminUser(@RequestBody UserDto userDto) {
+        LOGGER.info("POST " + userDto);
+        AbstractUser admin = userService.registerNewAdmin(userMapper.userDtoToAdministrator(userDto));
+        ResponseEntity response = new ResponseEntity(userMapper.abstractUserToUserDto(admin), HttpStatus.CREATED);
+        LOGGER.info("Sending API Response: [" + response.getBody() + ", " + response.getStatusCode() + "]");
+        return response;
     }
 
-    @PostMapping(value = "/customer")
-    @ApiOperation(
-        value = "Register new customer",
-        notes = "Register new customer in system",
-        authorizations = {@Authorization(value = "apiKey")})
-    @ApiResponses({
-        @ApiResponse(code = 201, message = "User is successfully registered"),
-        @ApiResponse(code = 400, message = "User already exists"),
-        @ApiResponse(code = 500, message = "Connection Refused"),
-    })
-    public ResponseEntity<String> registerNewBasicUser(@RequestBody BasicUserDto basicUser) {
-        LOGGER.info("GET /api/v1/users/customer");
-        String result = userService.registerNewUser(basicUser);
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
-    }
-
-    @DeleteMapping(value = "/delete/{uc}")
+    @DeleteMapping(value = "/delete/{usercode}")
     @ApiOperation(
         value = "Delete user",
         notes = "Delete user by usercode",
@@ -143,10 +129,27 @@ public class UserEndpoint {
         @ApiResponse(code = 404, message = "User is not found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<String> deleteUser(@PathVariable String uc) {
-        LOGGER.info("GET /api/v1/users/delete/" + uc);
-        String result = userService.deleteUser(uc);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+    public ResponseEntity<Void> deleteUser(@PathVariable String usercode) {
+        LOGGER.info("GET /api/v1/users/delete/" + usercode);
+        userService.deleteUserByUsercode(usercode);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping(value = "/{usercode}")
+    @ApiOperation(
+        value = "Update user",
+        notes = "Update user by usercode",
+        authorizations = {@Authorization(value = "apiKey")})
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "User is successfully updated"),
+        @ApiResponse(code = 404, message = "User is not found"),
+        @ApiResponse(code = 500, message = "Connection Refused"),
+    })
+    public ResponseEntity<String> updateUser(@RequestBody UserDto userDto, @PathVariable String usercode) {
+        LOGGER.info("PUT /api/v1/users" + "/{}", usercode);
+
+        AbstractUser customer = userService.updateCustomer(userMapper.userDtoToCustomer(userDto), usercode);
+        return new ResponseEntity(userMapper.abstractUserToUserDto(customer), HttpStatus.OK);
     }
 
     @Secured("ROLE_ADMIN")
@@ -160,11 +163,11 @@ public class UserEndpoint {
         @ApiResponse(code = 404, message = "User is not found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<String> deleteUser(@PathVariable String uc) {
+    public ResponseEntity<String> blockUser(@PathVariable String uc) {
         LOGGER.info("GET /api/v1/users/block/" + uc);
-        String result = userService.blockUser(uc);
+        String result = userService.blockCustomer(uc);
         return new ResponseEntity<>(result, HttpStatus.OK);
-    }*/
+    }
 
     @Secured("ROLE_ADMIN")
     @GetMapping(value = "/unblock/{uc}")

@@ -33,11 +33,17 @@ import {MatSortModule} from '@angular/material/sort';
 import { UserDetailsContainerComponent } from './components/admin-home/user-details-container/root/user-details-container.component';
 import { UserDetailsComponent } from './components/admin-home/user-details-container/user-details/user-details.component';
 import { UserInfoComponent } from './components/admin-home/user-details-container/user-details/user-info/user-info.component';
-import { CreateUserContainerComponent } from './components/admin-home/create-user-container/create-user-container.component';
+import { CreateUserContainerComponent } from './components/admin-home/create-user-container/root/create-user-container.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+// tslint:disable-next-line:max-line-length
 import { ResetPasswordComponent } from './components/admin-home/user-details-container/user-details/reset-password/reset-password.component';
 import { RegisterUserFormComponent } from './components/register-user-form/register-user-form.component';
+import { CreateUserComponent } from './components/admin-home/create-user-container/create-user/create-user.component';
+import { CreateUserFormComponent } from './components/admin-home/create-user-container/create-user/create-user-form/create-user-form.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 import { MustMatchDirective } from './utils/must-match.directive';
+
 
 
 @NgModule({
@@ -57,13 +63,15 @@ import { MustMatchDirective } from './utils/must-match.directive';
     AdminHeaderComponent,
     CustomerHeaderComponent,
     RegisterUserFormComponent,
-    MustMatchDirective
+    MustMatchDirective,
     UserDetailsContainerComponent,
     UserDetailsComponent,
     UserInfoComponent,
     CreateUserContainerComponent,
     ResetPasswordComponent,
-    RegisterUserFormComponent
+    RegisterUserFormComponent,
+    CreateUserComponent,
+    CreateUserFormComponent
   ],
   imports: [
     BrowserModule,
@@ -82,9 +90,11 @@ import { MustMatchDirective } from './utils/must-match.directive';
     MatTableModule,
     MatInputModule,
     MatSortModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
-  providers: [httpInterceptorProviders],
+  providers: [httpInterceptorProviders, MatDatepickerModule, MatNativeDateModule],
   bootstrap: [AppComponent]
 })
 export class AppModule {

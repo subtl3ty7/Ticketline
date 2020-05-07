@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.List;
 
 public interface Validator {
-    Constraints validateRegistration(Customer customer);
+    Constraints validateRegistration(AbstractUser user);
     Constraints validateUserCode(String userCode);
     Constraints validateEventCode(String eventCode);
 }

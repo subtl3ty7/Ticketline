@@ -1,0 +1,100 @@
+<div class="center-block">
+  <!--User Type-->
+  <div class="info-wrapper">
+    <img src="assets/resources/images/administration/users/person.svg" alt="">
+    <div class="info">
+      <div class="info-label">User Type</div>
+      <div class="info-field status-label" *ngIf="user.admin">Administrator</div>
+      <div class="info-field status-label" *ngIf="!user.admin">Customer</div>
+    </div>
+  </div>
+  <mat-checkbox color = "primary" labelPosition = 'before' [(ngModel)]='adminFlag' (change)='changeUserType()' style="margin-left: 7%">Is Admin?</mat-checkbox>
+  <!--FIRST NAME-->
+  <div class="info-wrapper">
+    <img src="assets/resources/images/administration/users/person.svg" alt="">
+    <div class="info">
+      <div class="info-label">First Name</div>
+    </div>
+  </div>
+  <mat-form-field class="mat-form-field" >
+    <input
+      id="userInfoForm_inputFirstName"
+      matInput
+      name="firstName"
+      required
+      maxlength="255"
+      [(ngModel)]="user.firstName">
+    <mat-error *ngIf="!user.firstName">First Name Required!</mat-error>
+  </mat-form-field>
+
+  <!--LAST NAME-->
+  <div class="info-wrapper">
+    <img src="assets/resources/images/administration/users/person.svg" alt="">
+    <div class="info">
+      <div class="info-label">Last Name</div>
+    </div>
+  </div>
+  <mat-form-field class="mat-form-field" >
+    <input
+      id="userInfoForm_inputLastName"
+      matInput
+      name="lastName"
+      required
+      maxlength="255"
+      [(ngModel)]="user.lastName">
+    <mat-error *ngIf="!user.lastName">Last Name Required!</mat-error>
+  </mat-form-field>
+
+  <!--EMAIL-->
+  <div class="info-wrapper">
+    <img src="assets/resources/images/administration/users/email.svg" alt="">
+    <div class="info">
+      <div class="info-label">E-Mail</div>
+    </div>
+  </div>
+  <mat-form-field class="mat-form-field" >
+    <input
+      id="userInfoForm_inputEmail"
+      matInput
+      name="lastName"
+      required
+      maxlength="255"
+      [(ngModel)]="user.email">
+    <mat-error *ngIf="!user.email">E-Mail Required!</mat-error>
+  </mat-form-field>
+
+  <!--PASSWORD-->
+  <div class="info-wrapper">
+    <img src="assets/resources/images/administration/users/loupe.svg" alt="">
+    <div class="info">
+      <div class="info-label">Password</div>
+    </div>
+  </div>
+  <mat-form-field class="mat-form-field" >
+    <input
+      id="userInfoForm_inputPassword"
+      matInput
+      name="password"
+      required
+      maxlength="255"
+      [(ngModel)]="user.password" type="password">
+    <mat-error *ngIf="!user.password">Password Required!</mat-error>
+  </mat-form-field>
+
+  <!--BIRTHDATE-->
+  <div class="info-wrapper">
+    <img src="assets/resources/images/administration/users/birth.svg" alt="">
+    <div class="info">
+      <div class="info-label">Birthdate</div>
+    </div>
+  </div>
+  <mat-form-field>
+    <mat-label>Choose a date</mat-label>
+    <input required matInput [matDatepicker]="picker" [max]="maxDate" (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error *ngIf="!user.birthday">Birthday Required!</mat-error>
+  </mat-form-field>
+
+  <ng-content></ng-content>
+</div>

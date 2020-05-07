@@ -31,16 +31,18 @@ public class ValidatorImpl implements Validator {
         this.userRepository = userRepository;
     }
 
-    public Constraints validateRegistration(Customer customer) {
+    public Constraints validateRegistration(AbstractUser user) {
         Constraints constraints = new Constraints();
-        constraints.add(validate(customer));
-        constraints.add("isLogged_false", customer.isLogged()==false);
-        constraints.add("isBlocked_false", customer.isBlocked()==false);
-        constraints.add("points_zero", customer.getPoints()==0);
-        if(customer.getBirthday() != null) {
-            constraints.add("birthday_16yo", ChronoUnit.YEARS.between(customer.getBirthday(), LocalDateTime.now()) > 16);
+        constraints.add(validate(user));
+        constraints.add("isLogged_false", !user.isLogged());
+        if(user instanceof Customer) {
+            constraints.add("isBlocked_false", !((Customer) user).isBlocked());
+            constraints.add("points_zero", ((Customer) user).getPoints() == 0);
         }
-        constraints.add(validatePasswordEncoded(customer.getPassword()));
+        if(user.getBirthday() != null) {
+            constraints.add("birthday_16yo", ChronoUnit.YEARS.between(user.getBirthday(), LocalDateTime.now()) > 16);
+        }
+        constraints.add(validatePasswordEncoded(user.getPassword()));
         return constraints;
     }
 

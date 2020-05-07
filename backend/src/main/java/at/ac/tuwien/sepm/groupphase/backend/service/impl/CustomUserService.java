@@ -12,6 +12,7 @@ import at.ac.tuwien.sepm.groupphase.backend.repository.UserAttemptsRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
+import org.aspectj.weaver.ast.Not;
 import at.ac.tuwien.sepm.groupphase.backend.util.Validation.Validator;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -30,6 +31,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManagerFactory;
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -117,6 +119,29 @@ public class CustomUserService implements UserService {
         }
         return "";
     }
+
+    @Override
+    public String blockCustomer(String usercode) {
+        LOGGER.info("Blocking customer with user code " + usercode );
+        AbstractUser user = userRepository.findAbstractUserByUserCode(usercode);
+
+        try {
+            if (user instanceof Customer) {
+                if (!((Customer) user).isBlocked()) {
+                    ((Customer) user).setBlocked(true);
+                    userRepository.save(user);
+                } else {
+                    throw new ServiceException("User is already blocked!", null);
+                }
+            }else {
+                throw new ServiceException("Administrator can not be blocked!", null);
+            }
+        } catch (CustomServiceException e) {
+            LOGGER.trace("Error while blocking user: " + user.getUserCode());
+            throw new CustomServiceException("Error while blocking user " + user.getUserCode());
+        }
+        return "";
+    }
     @Override
     public Customer registerNewCustomer(Customer customer) throws ValidationException, DataAccessException {
         LOGGER.info("Validating Customer Entity: " + customer);
@@ -138,6 +163,22 @@ public class CustomUserService implements UserService {
         LOGGER.info("Saved UserAttempts Entity in Database: " + userAttempts);
         return customer;
     }
+    @Override
+    public Administrator registerNewAdmin(Administrator admin) throws ValidationException, DataAccessException {
+        LOGGER.info("Validating Admin Entity: " + admin);
+        admin.setUserCode(getNewUserCode());
+        LocalDateTime now = LocalDateTime.now();
+        admin.setCreatedAt(now);
+        admin.setUpdatedAt(now);
+        validator.validateRegistration(admin).throwIfViolated();
+        Session session = getSession();
+        session.beginTransaction();
+        admin = userRepository.save(admin);
+        session.getTransaction().commit();
+
+        LOGGER.info("Saved Admin Entity in Database: " + admin);
+        return admin;
+    }
 
     private String getNewUserCode() {
         final int maxAttempts = 1000;
@@ -158,5 +199,64 @@ public class CustomUserService implements UserService {
     @Override
     public List<AbstractUser> loadAllUsers(){
         return userRepository.findAll();
+    }
+
+    @Override
+    public void deleteUserByUsercode(String usercode) {
+        LOGGER.info("Deleting Customer Entity in Service Layer");
+        AbstractUser user = userRepository.findAbstractUserByUserCode(usercode);
+
+        try {
+            if (user instanceof Customer) {
+                if (user.isLogged()) {
+                    userRepository.delete(user);
+                } else {
+                    throw new ServiceException("You must be logged-in in order to delete!", null);
+                }
+            }else {
+                throw new ServiceException("You cannot delete an admin!", null);
+            }
+        } catch (CustomServiceException e) {
+            LOGGER.trace("Error while deleting user: " + user.getUserCode());
+            throw new CustomServiceException("Error while deleting user " + user.getUserCode());
+        }
+    }
+
+    @Override
+    public AbstractUser updateCustomer(AbstractUser user, String usercode) {
+        LOGGER.info("Updating customer with the usercode: " + usercode);
+
+        AbstractUser helpUser = userRepository.findAbstractUserByUserCode(usercode);
+
+        try {
+            if (helpUser instanceof Customer) {
+                if (helpUser.isLogged()) {
+
+                    helpUser.setUpdatedAt(LocalDateTime.now());
+
+                    if (user.getEmail() != null) {
+                        helpUser.setEmail(user.getEmail());
+                    }
+
+                    if (user.getFirstName() != null) {
+                        helpUser.setFirstName(user.getFirstName());
+                    }
+
+                    if (user.getLastName() != null) {
+                        helpUser.setLastName(user.getLastName());
+                    }
+
+                return userRepository.save(helpUser);
+
+                } else {
+                    throw new ServiceException("You must be logged-in in order to update!", null);
+                }
+            } else {
+                throw new ServiceException("You cannot update an admin!", null);
+            }
+        } catch (CustomServiceException e) {
+            LOGGER.trace("Error while updating customer with the usercode " + usercode);
+            throw new CustomServiceException("Error while updating customer with the usercode " + usercode);
+        }
     }
 }
