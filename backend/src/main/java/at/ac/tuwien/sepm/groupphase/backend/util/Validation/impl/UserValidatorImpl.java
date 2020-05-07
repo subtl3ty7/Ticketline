@@ -95,7 +95,7 @@ public class UserValidatorImpl implements UserValidator {
         Constraints constraints = new Constraints();
         AbstractUser user = userRepository.findAbstractUserByUserCode(userCode);
         constraints.add("user_isCustomer", user instanceof Customer);
-        constraints.add("user_isBlocked", user instanceof Customer && !((Customer) user).isBlocked());
+        constraints.add("user_isBlocked", user instanceof Customer && ((Customer) user).isBlocked());
         return constraints;
     }
 

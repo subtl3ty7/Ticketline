@@ -105,9 +105,14 @@ public class CustomUserService implements UserService {
         LOGGER.debug("Unblocking user with user code " + userCode);
         AbstractUser user = userRepository.findAbstractUserByUserCode(userCode);
         validator.validateUnblock(userCode).throwIfViolated();
-
         ((Customer) user).setBlocked(false);
+        UserAttempts userAttempts = userAttemptsRepository.findUserAttemptsByEmail(user.getEmail());
+        userAttempts.setAttempts(0);
+        Session session = getSession();
+        session.beginTransaction();
         userRepository.save(user);
+        userAttemptsRepository.save(userAttempts);
+        session.getTransaction().commit();
         return "Successfully unblocked user.";
     }
 
