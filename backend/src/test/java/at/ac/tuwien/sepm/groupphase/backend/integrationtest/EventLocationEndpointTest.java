@@ -80,7 +80,7 @@ public class EventLocationEndpointTest implements TestData {
             .build();
     }
 
-    @Test
+  /*  @Test
     public void givenAdminLoggedIn_whenGetAll_then200andEmptyList() throws Exception {
         MvcResult mvcResult = this.mockMvc.perform(get(LOCATION_BASE_URI)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
@@ -138,5 +138,5 @@ public class EventLocationEndpointTest implements TestData {
             () -> assertEquals(COUNTRY, eventLocationDto.getCountry()),
             () -> assertEquals(PLZ, eventLocationDto.getPlz())
         );
-    }
+    } */
 }

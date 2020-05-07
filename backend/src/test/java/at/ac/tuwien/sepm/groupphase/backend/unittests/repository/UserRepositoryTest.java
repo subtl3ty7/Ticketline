@@ -58,12 +58,21 @@ public class UserRepositoryTest implements TestData {
     }
 
     @Test
-    public void givenNothing_whenSaveUser_thenFindListWithOneElementAndFindUserByIdAndEmail() {
+    public void givenNothing_whenSaveUser_thenFindListWithOneElementAndFindUserById() {
         userRepository.save(abstractUser);
 
         assertAll(
             () -> assertEquals(1, userRepository.findAll().size()),
-            () -> assertNotNull(userRepository.findById(abstractUser.getId())),
+            () -> assertNotNull(userRepository.findById(abstractUser.getId()))
+        );
+    }
+
+    @Test
+    public void givenNothing_whenSaveUser_thenFindListWithOneElementAndFindUserByEmail() {
+        userRepository.save(abstractUser);
+
+        assertAll(
+            () -> assertEquals(1, userRepository.findAll().size()),
             () -> assertNotNull(userRepository.findAbstractUserByEmail(abstractUser.getEmail()))
         );
     }
