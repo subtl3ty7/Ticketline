@@ -1,10 +1,15 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
+import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
+import at.ac.tuwien.sepm.groupphase.backend.repository.EventLocationRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
+import at.ac.tuwien.sepm.groupphase.backend.util.Constraints;
 import at.ac.tuwien.sepm.groupphase.backend.util.Validation.EventValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,13 +26,15 @@ public class CustomEventService implements EventService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final EventRepository eventRepository;
+    private final EventLocationRepository eventLocationRepository;
     private final EventValidator validator;
 
 
     @Autowired
-    public CustomEventService(EventRepository eventRepository, EventValidator validator) {
+    public CustomEventService(EventRepository eventRepository, EventValidator validator, EventLocationRepository eventLocationRepository) {
         this.eventRepository = eventRepository;
         this.validator = validator;
+        this.eventLocationRepository = eventLocationRepository;
     }
 
     @Override
@@ -50,7 +57,14 @@ public class CustomEventService implements EventService {
     public Event createNewEvent(Event event){
         LOGGER.info("Moving Event Entity through Service Layer: " + event);
         event.setEventCode(getNewEventCode());
-        //validator.validate(event).throwIfViolated();
+        validator.validate(event).throwIfViolated();
+
+        //Give shows new EventLocation Entities (copies of existing ones) to make sure they all can have different seating assignments
+        for(Show show: event.getShows()) {
+            EventLocation eventLocation = eventLocationRepository.findEventLocationById(show.getEventLocation().get(0).getId());
+            show.getEventLocation().remove(0);
+            show.getEventLocation().set(0, new EventLocation(eventLocation));
+        }
 
         return eventRepository.save(event);
     }
@@ -73,14 +87,14 @@ public class CustomEventService implements EventService {
 
     @Override
     public Event findByEventCode(String eventCode) {
+        validator.validateExists(eventCode).throwIfViolated();
         Event event = eventRepository.findEventByEventCode(eventCode);
-        event.getPrices();
-        event.getArtists();
         return event;
     }
 
     @Override
     public Event deletebyEventCode(String eventCode) {
+        validator.validateExists(eventCode).throwIfViolated();
         return eventRepository.deleteEventByEventCode(eventCode);
     }
 }

@@ -11,5 +11,6 @@ import java.util.List;
 public interface EventValidator {
     Constraints validateEventCode(String eventCode);
     Constraints validate(EventLocation eventLocation);
+    Constraints validateExists(String eventCode);
     Constraints validate(Event event);
 }

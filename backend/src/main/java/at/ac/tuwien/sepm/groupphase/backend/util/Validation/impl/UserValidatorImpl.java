@@ -1,10 +1,12 @@
 package at.ac.tuwien.sepm.groupphase.backend.util.Validation.impl;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Administrator;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.util.Constraints;
 import at.ac.tuwien.sepm.groupphase.backend.util.Validation.UserValidator;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -20,6 +22,7 @@ public class UserValidatorImpl implements UserValidator {
         this.userRepository = userRepository;
     }
 
+    @Override
     public Constraints validateRegistration(AbstractUser user) {
         Constraints constraints = new Constraints();
         constraints.add(validate(user));
@@ -35,6 +38,7 @@ public class UserValidatorImpl implements UserValidator {
         return constraints;
     }
 
+    @Override
     public Constraints validate(AbstractUser user) {
         Constraints constraints = new Constraints();
         constraints.add(validateUnique(user));
@@ -42,12 +46,52 @@ public class UserValidatorImpl implements UserValidator {
         return constraints;
     }
 
+    @Override
     public Constraints validateUserCode(String userCode) {
         Constraints constraints = new Constraints();
         constraints.add("userCode_unique", userRepository.findAbstractUserByUserCode(userCode) == null);
         return constraints;
     }
 
+    @Override
+    public Constraints validateDelete(String userCode) {
+        Constraints constraints = new Constraints();
+        AbstractUser user = userRepository.findAbstractUserByUserCode(userCode);
+        constraints.add("user_exists", user!=null);
+        if(user!=null) {
+            constraints.add("user_notAdmin", !(user instanceof Administrator));
+            constraints.add("user_isLogged", user.isLogged());
+        }
+        return constraints;
+    }
+
+    @Override
+    public Constraints validateUpdate(Customer customer) {
+        Constraints constraints = new Constraints();
+        AbstractUser userFromDataBase = userRepository.findAbstractUserByUserCode(customer.getUserCode());
+        constraints.add("user_exists", userFromDataBase!=null);
+        constraints.add("user_isLogged", userFromDataBase != null && customer.isLogged());
+        constraints.add(validate(customer));
+        return constraints;
+    }
+
+    @Override
+    public Constraints validateBlock(String userCode) {
+        Constraints constraints = new Constraints();
+        AbstractUser user = userRepository.findAbstractUserByUserCode(userCode);
+        constraints.add("user_isCustomer", user instanceof Customer);
+        constraints.add("user_isUnblocked", user instanceof Customer && !((Customer) user).isBlocked() );
+        return constraints;
+    }
+
+    @Override
+    public Constraints validateUnblock(String userCode) {
+        Constraints constraints = new Constraints();
+        AbstractUser user = userRepository.findAbstractUserByUserCode(userCode);
+        constraints.add("user_isCustomer", user instanceof Customer);
+        constraints.add("user_isBlocked", user instanceof Customer && !((Customer) user).isBlocked() );
+        return constraints;
+    }
 
     private Constraints validatePasswordEncoded(String password) {
         Pattern bCryptPattern = Pattern.compile("\\A\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}");

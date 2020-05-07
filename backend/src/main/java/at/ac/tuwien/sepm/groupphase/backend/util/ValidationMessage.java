@@ -39,6 +39,14 @@ public class ValidationMessage {
             put("isLogged_false", "Logged-In field cannot be true on Registration.");
             put("isBlocked_false", "Is-Blocked field cannot be true on Registration.");
             put("email_unique", "Email is already present in database.");
+            put("user_isLogged", "Needs to be logged in.");
+            put("user_exists", "User does not exist.");
+            put("user_notAdmin", "User can't be an Admin.");
+            put("user_keepsRole", "Can't change role.");
+            put("user_isCustomer", "Need to be a Customer.");
+            put("user_isUnblocked", "Needs to be unblocked to get blocked.");
+            put("user_iBlocked", "Needs to be blocked to get unblocked.");
+
 
 
             //seat
@@ -78,6 +86,7 @@ public class ValidationMessage {
             put("event_artists", "Artist list cannot be null.");
             put("event_prices", "Prices list cannot be null.");
             put("eventCode_unique", "Event Code is already present in database.");
+            put("event_exists", "Event was not found in the database.");
         }
     };
 

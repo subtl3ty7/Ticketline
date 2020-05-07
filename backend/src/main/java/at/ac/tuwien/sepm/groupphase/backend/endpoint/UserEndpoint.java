@@ -135,7 +135,7 @@ public class UserEndpoint {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping(value = "/{usercode}")
+    @PutMapping(value = "/update")
     @ApiOperation(
         value = "Update user",
         notes = "Update user by usercode",
@@ -145,10 +145,10 @@ public class UserEndpoint {
         @ApiResponse(code = 404, message = "User is not found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<String> updateUser(@RequestBody UserDto userDto, @PathVariable String usercode) {
-        LOGGER.info("PUT /api/v1/users" + "/{}", usercode);
+    public ResponseEntity<String> updateUser(@RequestBody UserDto userDto) {
+        LOGGER.info("PUT /api/v1/users/update" + userDto);
 
-        AbstractUser customer = userService.updateCustomer(userMapper.userDtoToCustomer(userDto), usercode);
+        AbstractUser customer = userService.updateCustomer(userMapper.userDtoToCustomer(userDto));
         return new ResponseEntity(userMapper.abstractUserToUserDto(customer), HttpStatus.OK);
     }
 

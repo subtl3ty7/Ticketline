@@ -104,42 +104,22 @@ public class CustomUserService implements UserService {
     public String unblockUser(String userCode) {
         LOGGER.debug("Unblocking user with user code " + userCode);
         AbstractUser user = userRepository.findAbstractUserByUserCode(userCode);
+        validator.validateUnblock(userCode).throwIfViolated();
 
-        if (user instanceof Customer) {
-            try {
-                if (((Customer) user).isBlocked()) {
-                    ((Customer) user).setBlocked(false);
-                    userRepository.save(user);
-                }
-            } catch (CustomServiceException e) {
-                LOGGER.trace("Error while unblocking user " + user.getEmail());
-                throw new CustomServiceException("Error while unblocking user " + user.getEmail());
-            }
-        }
-        return "";
+        ((Customer) user).setBlocked(false);
+        userRepository.save(user);
+        return "Successfully unblocked user.";
     }
 
     @Override
-    public String blockCustomer(String usercode) {
-        LOGGER.info("Blocking customer with user code " + usercode );
-        AbstractUser user = userRepository.findAbstractUserByUserCode(usercode);
+    public String blockCustomer(String userCode) {
+        LOGGER.info("Blocking customer with user code " + userCode );
+        AbstractUser user = userRepository.findAbstractUserByUserCode(userCode);
+        validator.validateBlock(userCode).throwIfViolated();
 
-        try {
-            if (user instanceof Customer) {
-                if (!((Customer) user).isBlocked()) {
-                    ((Customer) user).setBlocked(true);
-                    userRepository.save(user);
-                } else {
-                    throw new ServiceException("User is already blocked!", null);
-                }
-            }else {
-                throw new ServiceException("Administrator can not be blocked!", null);
-            }
-        } catch (CustomServiceException e) {
-            LOGGER.trace("Error while blocking user: " + user.getUserCode());
-            throw new CustomServiceException("Error while blocking user " + user.getUserCode());
-        }
-        return "";
+        ((Customer) user).setBlocked(true);
+        userRepository.save(user);
+        return "Successfully blocked user.";
     }
     @Override
     public Customer registerNewCustomer(Customer customer) throws ValidationException, DataAccessException {
@@ -170,10 +150,8 @@ public class CustomUserService implements UserService {
         admin.setCreatedAt(now);
         admin.setUpdatedAt(now);
         validator.validateRegistration(admin).throwIfViolated();
-        Session session = getSession();
-        session.beginTransaction();
+
         admin = userRepository.save(admin);
-        session.getTransaction().commit();
 
         LOGGER.info("Saved Admin Entity in Database: " + admin);
         return admin;
@@ -201,61 +179,26 @@ public class CustomUserService implements UserService {
     }
 
     @Override
-    public void deleteUserByUsercode(String usercode) {
+    public void deleteUserByUsercode(String userCode) {
         LOGGER.info("Deleting Customer Entity in Service Layer");
-        AbstractUser user = userRepository.findAbstractUserByUserCode(usercode);
+        validator.validateDelete(userCode).throwIfViolated();
 
-        try {
-            if (user instanceof Customer) {
-                if (user.isLogged()) {
-                    userRepository.delete(user);
-                } else {
-                    throw new ServiceException("You must be logged-in in order to delete!", null);
-                }
-            }else {
-                throw new ServiceException("You cannot delete an admin!", null);
-            }
-        } catch (CustomServiceException e) {
-            LOGGER.trace("Error while deleting user: " + user.getUserCode());
-            throw new CustomServiceException("Error while deleting user " + user.getUserCode());
-        }
+        userRepository.deleteByUserCode(userCode);
     }
 
     @Override
-    public AbstractUser updateCustomer(AbstractUser user, String usercode) {
-        LOGGER.info("Updating customer with the usercode: " + usercode);
+    public AbstractUser updateCustomer(Customer customer) {
+        LOGGER.info("Updating customer with the usercode " + customer.getUserCode());
+        validator.validateUpdate(customer).throwIfViolated();
+        AbstractUser userFromDatabase = userRepository.findAbstractUserByUserCode(customer.getUserCode());
 
-        AbstractUser helpUser = userRepository.findAbstractUserByUserCode(usercode);
+        LocalDateTime now = LocalDateTime.now();
+        userFromDatabase.setUpdatedAt(now);
+        userFromDatabase.setBirthday(customer.getBirthday());
+        userFromDatabase.setEmail(customer.getEmail());
+        userFromDatabase.setFirstName(customer.getFirstName());
+        userFromDatabase.setLastName(customer.getLastName());
 
-        try {
-            if (helpUser instanceof Customer) {
-                if (helpUser.isLogged()) {
-
-                    helpUser.setUpdatedAt(LocalDateTime.now());
-
-                    if (user.getEmail() != null) {
-                        helpUser.setEmail(user.getEmail());
-                    }
-
-                    if (user.getFirstName() != null) {
-                        helpUser.setFirstName(user.getFirstName());
-                    }
-
-                    if (user.getLastName() != null) {
-                        helpUser.setLastName(user.getLastName());
-                    }
-
-                return userRepository.save(helpUser);
-
-                } else {
-                    throw new ServiceException("You must be logged-in in order to update!", null);
-                }
-            } else {
-                throw new ServiceException("You cannot update an admin!", null);
-            }
-        } catch (CustomServiceException e) {
-            LOGGER.trace("Error while updating customer with the usercode " + usercode);
-            throw new CustomServiceException("Error while updating customer with the usercode " + usercode);
-        }
+        return userRepository.save(customer);
     }
 }

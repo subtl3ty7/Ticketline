@@ -37,6 +37,13 @@ public class EventValidatorImpl implements EventValidator {
         return constraints;
     }
 
+    @Override
+    public Constraints validateExists(String eventCode) {
+        Constraints constraints = new Constraints();
+        constraints.add("event_exists", eventRepository.findEventByEventCode(eventCode) != null);
+        return constraints;
+    }
+
     public Constraints validateEventCode(String eventCode) {
         Constraints constraints = new Constraints();
         constraints.add("eventCode_unique", eventRepository.findEventByEventCode(eventCode) == null);
