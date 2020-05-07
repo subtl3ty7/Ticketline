@@ -23,9 +23,9 @@ export class UserDetailsComponent implements OnInit {
               private userService: UserService) {}
 
   ngOnInit(): void {
-    if(this.route.toString().includes('reset-password')){
+    if (this.route.toString().includes('reset-password')) {
       this.wrapper.state = this.state.PASSWORD;
-    } else { this.wrapper.state = this.state.READY;}
+    } else { this.wrapper.state = this.state.READY; }
     this.loadUser();
   }
   private loadUser() {
@@ -57,7 +57,7 @@ export class UserDetailsComponent implements OnInit {
   }
   public savePassword() {
     if (this.wrapper.model && this.resetPassword.password) {
-      //this.userService.resetPassword(this.wrapper.model.userCode, this.wrapper.model.password, this.resetPassword.password);
+      this.userService.resetPassword(this.wrapper.model.userCode, this.wrapper.model.password, this.resetPassword.password);
       this.wrapper.state = this.state.READY;
       this.usersNavigate();
     }

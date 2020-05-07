@@ -7,7 +7,7 @@ export enum State {
 }
 
 export class UserDetailsWrapper {
-  private _model: User = new User(null, '', '', '', '', '', null, '', '', false, false, false, 0, '', true);
+  private _model: User = new User();
   _state: State;
 
   get model(): User {
