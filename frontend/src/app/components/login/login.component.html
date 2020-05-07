@@ -1,4 +1,4 @@
-<app-customer-header></app-customer-header>
+<app-guest-header></app-guest-header>
 <div *ngIf="error" class="alert alert-warning alert-dismissible fade show" role="alert">
   <strong>Authentication problems!</strong> {{ errorMessage }}
   <button type="button" (click)="vanishError()" class="close" data-dismiss="alert" aria-label="Close">
@@ -46,7 +46,6 @@
             </div>
 
             <button type="button" (click)="loginUser()" class="btn btn-success float-right">Einloggen</button>
-            <nav><button type="button" routerLink="/register" class="btn btn-success float-right">Registrieren</button></nav>
 
           </form>
         </div>
