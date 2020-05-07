@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.basetest;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Section;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -36,16 +37,17 @@ public interface TestData {
             add("ROLE_USER");
         }
     };
-    String USER_CODE = "code";
+    String USER_CODE = "code11";
     String FNAME = "name";
     String LNAME = "lastname";
-    String PASS = "Password0";
+    String PASS = new BCryptPasswordEncoder().encode("Password0");
     LocalDateTime BIRTHDAY = LocalDateTime.of(1998, 5,15,12,0);
     LocalDateTime CRE = LocalDateTime.now();
     LocalDateTime UPD = LocalDateTime.now();
-    Long POINTS = 1L;
+    Long POINTS = 0L;
 
-
+    String EVENT_BASE_URI = BASE_URI + "/events";
+    String EVENT_TOP10 = EVENT_BASE_URI + "/top10";
     String NAME = "event";
     String DESC = "description";
     String CAT = "concert";
@@ -73,7 +75,7 @@ public interface TestData {
     };
     int TOTAL = 500;
 
-
+    String LOCATION_BASE_URI = BASE_URI + "/eventsLocations/all";
     String STREET = "street";
     String COUNTRY = "country";
     String CITY = "city";

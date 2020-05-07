@@ -92,7 +92,7 @@ public class UserMappingTest implements TestData {
         assertAll(
             () -> assertFalse(userMapper.setAdmin(abstractUser)),
             () -> assertFalse(userMapper.setBlocked(abstractUser)),
-            () -> assertEquals(1L, userMapper.setPoints(abstractUser))
+            () -> assertEquals(0L, userMapper.setPoints(abstractUser))
         );
     }
 

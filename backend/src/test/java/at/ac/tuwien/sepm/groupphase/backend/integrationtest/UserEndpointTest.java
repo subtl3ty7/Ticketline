@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.integrationtest;
 
 import at.ac.tuwien.sepm.groupphase.backend.basetest.TestData;
+import at.ac.tuwien.sepm.groupphase.backend.config.EncoderConfig;
 import at.ac.tuwien.sepm.groupphase.backend.config.properties.SecurityProperties;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.UserMapper;
@@ -18,6 +19,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -183,13 +186,12 @@ public class UserEndpointTest implements TestData {
 
         UserDto userDto1 = objectMapper.readValue(response.getContentAsString(), UserDto.class);
         assertAll(
+            () -> assertEquals(USER_CODE, userDto.getUserCode()),
             () -> assertEquals(FNAME, userDto1.getFirstName()),
             () -> assertEquals(LNAME, userDto1.getLastName()),
             () -> assertEquals(DEFAULT_USER, userDto1.getEmail()),
             () -> assertEquals(PASS, userDto1.getPassword()),
             () -> assertEquals(BIRTHDAY, userDto1.getBirthday()),
-            () -> assertEquals(CRE, userDto1.getCreatedAt()),
-            () -> assertEquals(UPD, userDto1.getUpdatedAt()),
             () -> assertFalse(userDto1.isBlocked()),
             () -> assertFalse(userDto1.isLogged()),
             () -> assertEquals(POINTS, userDto1.getPoints())
