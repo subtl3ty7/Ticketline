@@ -56,7 +56,7 @@ public interface UserService extends UserDetailsService {
 
     void deleteUserByUsercode(String usercode);
 
-    AbstractUser updateCustomer(AbstractUser user, String usercode);
+    AbstractUser updateCustomer(Customer customer);
 
     String blockCustomer(String usercode);
 }

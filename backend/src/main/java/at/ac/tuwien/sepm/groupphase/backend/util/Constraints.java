@@ -4,15 +4,22 @@ package at.ac.tuwien.sepm.groupphase.backend.util;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
 
 import javax.validation.ConstraintViolation;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Constraints {
-    List<String> violatedConstraints;
+    //maps an added violated constraint to the amount of times it was added
+    Map<String, Integer> violatedConstraints;
 
     public Constraints() {
-        this.violatedConstraints = new ArrayList<>();
+        this.violatedConstraints = new HashMap<>();
+    }
+
+    private void add(String constraintName, Integer numberOfTimesUsed) {
+        if(this.violatedConstraints.get(constraintName) != null) {
+            numberOfTimesUsed += this.violatedConstraints.get(constraintName);
+        }
+
+        this.violatedConstraints.put(constraintName, numberOfTimesUsed);
     }
 
     /**
@@ -22,23 +29,23 @@ public class Constraints {
      */
     public void add(String constraintName, boolean constraintValue) {
         if(!constraintValue) {
-            violatedConstraints.add(constraintName);
+            add(constraintName, 1);
         }
     }
 
     public void add(Constraints constraints) {
-        for(String c: constraints.getViolated()) {
-            violatedConstraints.add(c);
+        for(Map.Entry<String, Integer> entry: constraints.getViolated().entrySet()) {
+            add(entry.getKey(), entry.getValue());
         }
     }
 
     public void add(Set<ConstraintViolation<Object>> violations) {
-        for(ConstraintViolation<Object> v: violations) {
-            violatedConstraints.add(v.getPropertyPath().toString());
+        for(ConstraintViolation<Object> violation: violations) {
+            add(violation.getPropertyPath().toString(), 1);
         }
     }
 
-    public List<String> getViolated() {
+    public Map<String, Integer> getViolated() {
         return violatedConstraints;
     }
 
@@ -50,5 +57,17 @@ public class Constraints {
 
     public boolean isViolated() {
         return !this.violatedConstraints.isEmpty();
+    }
+
+    /**
+     * Adds a prefix to the names of all constraints
+     * @param namePrefix is the prefix to add
+     */
+    public void addNamePrefix(String namePrefix) {
+        Map<String, Integer> newMap = new HashMap<>();
+        for(Map.Entry<String, Integer> entry: violatedConstraints.entrySet()) {
+            newMap.put(namePrefix + entry.getKey(), entry.getValue());
+        }
+        violatedConstraints = newMap;
     }
 }

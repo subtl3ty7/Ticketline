@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.SerializationUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,7 +13,7 @@ import java.io.Serializable;
 @Setter
 @Getter
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 @Entity
 public class Seat implements Serializable {
     @Id
@@ -39,4 +40,11 @@ public class Seat implements Serializable {
         this.seatColumn = seatColumn;
         this.seatRow = seatRow;
     }
+
+    public Seat(Seat seat) {
+        this.seatRow = seat.getSeatRow();
+        this.seatColumn = seat.getSeatColumn();
+        this.isFree = seat.isFree();
+    }
+
 }

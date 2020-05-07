@@ -5,6 +5,7 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.Seat;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Section;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventLocationRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventLocationService;
+import at.ac.tuwien.sepm.groupphase.backend.util.Validation.EventValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +16,12 @@ import java.util.List;
 public class CustomEventLocationService implements EventLocationService {
 
     private final EventLocationRepository eventLocationRepository;
+    private final EventValidator eventValidator;
 
     @Autowired
-    public CustomEventLocationService(EventLocationRepository eventLocationRepository) {
+    public CustomEventLocationService(EventLocationRepository eventLocationRepository, EventValidator eventValidator) {
         this.eventLocationRepository = eventLocationRepository;
+        this.eventValidator = eventValidator;
     }
 
     @Override
@@ -35,5 +38,11 @@ public class CustomEventLocationService implements EventLocationService {
     public List<EventLocation> getAllEventLocations() {
         List<EventLocation> eventLocations = eventLocationRepository.findAllByShowIdIsNull();
         return eventLocations;
+    }
+
+    @Override
+    public EventLocation save(EventLocation eventLocation) {
+        eventValidator.validate(eventLocation).throwIfViolated();
+        return eventLocationRepository.save(eventLocation);
     }
 }

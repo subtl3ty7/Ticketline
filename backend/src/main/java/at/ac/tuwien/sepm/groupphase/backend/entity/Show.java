@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,12 +25,14 @@ public class Show implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 6, name = "event_code")
+    @Column(name = "event_code")
     private String eventCode;
 
+    @NotNull
     @Column(nullable = false, name = "start_datetime")
     private LocalDateTime startsAt;
 
+    @NotNull
     @Column(nullable = false, name = "end_datetime")
     private LocalDateTime endsAt;
 
@@ -38,6 +41,7 @@ public class Show implements Serializable {
 
     @Column
     private int ticketsAvailable;
+
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "SHOW_ID", referencedColumnName = "ID")
