@@ -59,7 +59,10 @@ public class EventLocationEndpointTest implements TestData {
 
     private EventLocation eventLocation = EventLocation.builder()
         .id(ID)
-        .name(NAME)
+        .eventLocationName(FNAME)
+        .eventLocationDescription(DESC)
+        .showId(ID)
+        .capacity(TOTAL)
         .street(STREET)
         .city(CITY)
         .country(COUNTRY)
@@ -72,7 +75,10 @@ public class EventLocationEndpointTest implements TestData {
         eventLocationRepository.deleteAll();
         eventLocation = EventLocation.builder()
             .id(ID)
-            .name(NAME)
+            .eventLocationName(FNAME)
+            .eventLocationDescription(DESC)
+            .showId(ID)
+            .capacity(TOTAL)
             .street(STREET)
             .city(CITY)
             .country(COUNTRY)

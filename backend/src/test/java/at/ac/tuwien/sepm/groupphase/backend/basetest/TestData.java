@@ -83,13 +83,14 @@ public interface TestData {
     List<Section> SECTIONS = new ArrayList<>() {
         {
             add(Section.builder()
-                .id(ID).name(NAME).description(DESC).eventLocationId(ID).build());
+                .id(ID).sectionName(FNAME).eventLocationId(ID).sectionDescription(DESC).capacity(TOTAL).build());
         }
     };
 
     List<EventLocation> LOCATIONS = new ArrayList<>() {
         {
-            add(EventLocation.builder().id(ID).showId(ID).name(NAME).street(STREET).city(CITY).country(COUNTRY).plz(PLZ).sections(SECTIONS).build());
+            add(EventLocation.builder()
+                .id(ID).showId(ID).eventLocationName(FNAME).eventLocationDescription(DESC).street(STREET).city(CITY).country(COUNTRY).plz(PLZ).sections(SECTIONS).capacity(TOTAL).build());
         }
     };
 

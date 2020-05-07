@@ -24,7 +24,9 @@ public class EventLocationRepositoryTest implements TestData {
 
     private EventLocation eventLocation = EventLocation.builder()
         .id(ID)
-        .name(NAME)
+        .eventLocationName(FNAME)
+        .eventLocationDescription(DESC)
+        .capacity(TOTAL)
         .street(STREET)
         .city(CITY)
         .country(COUNTRY)
@@ -37,7 +39,9 @@ public class EventLocationRepositoryTest implements TestData {
         eventLocationRepository.deleteAll();
         eventLocation = EventLocation.builder()
             .id(ID)
-            .name(NAME)
+            .eventLocationName(FNAME)
+            .eventLocationDescription(DESC)
+            .capacity(TOTAL)
             .street(STREET)
             .city(CITY)
             .country(COUNTRY)
