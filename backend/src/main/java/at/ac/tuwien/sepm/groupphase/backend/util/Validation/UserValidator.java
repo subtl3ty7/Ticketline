@@ -13,5 +13,6 @@ public interface UserValidator {
     Constraints validateBlock(String userCode);
     Constraints validateUnblock(String userCode);
     Constraints validate(AbstractUser user);
+    boolean validateUserIdentityWithGivenEmail(String email);
 
 }
