@@ -77,8 +77,8 @@
       name="password"
       required
       maxlength="255"
-      [(ngModel)]="user.password" type="password">
-    <mat-error *ngIf="!user.password">Password Required!</mat-error>
+      [(ngModel)]="password" type="password" (change)="passwordChange()">
+    <mat-error *ngIf="!password">Password Required!</mat-error>
   </mat-form-field>
 
   <!--BIRTHDATE-->
