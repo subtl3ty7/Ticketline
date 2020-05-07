@@ -1,9 +1,9 @@
 package at.ac.tuwien.sepm.groupphase.backend.util.Validation.impl;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Seat;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Section;
+import at.ac.tuwien.sepm.groupphase.backend.entity.*;
+import at.ac.tuwien.sepm.groupphase.backend.repository.EventLocationRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
+import at.ac.tuwien.sepm.groupphase.backend.service.EventLocationService;
 import at.ac.tuwien.sepm.groupphase.backend.util.Constraints;
 import at.ac.tuwien.sepm.groupphase.backend.util.Validation.EventValidator;
 import org.slf4j.Logger;
@@ -19,15 +19,50 @@ public class EventValidatorImpl implements EventValidator {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private final EventRepository eventRepository;
+    private final EventLocationRepository eventLocationRepository;
 
     @Autowired
-    public EventValidatorImpl(EventRepository eventRepository) {
+    public EventValidatorImpl(EventRepository eventRepository, EventLocationRepository eventLocationRepository) {
         this.eventRepository = eventRepository;
+        this.eventLocationRepository = eventLocationRepository;
+    }
+
+
+    @Override
+    public Constraints validate(Event event) {
+        Constraints constraints = new Constraints();
+        constraints.add(AccesoryValidator.validateJavaxConstraints(event));
+        constraints.add(validateEventCode(event.getEventCode()));
+        constraints.add(validateShows(event.getShows()));
+        return constraints;
     }
 
     public Constraints validateEventCode(String eventCode) {
         Constraints constraints = new Constraints();
         constraints.add("eventCode_unique", eventRepository.findEventByEventCode(eventCode) == null);
+        return constraints;
+    }
+
+    private Constraints validateShows(List<Show> shows) {
+        Constraints constraints = new Constraints();
+        for(Show show: shows) {
+            constraints.add(validate(show));
+        }
+        return constraints;
+    }
+
+    private Constraints validate(Show show) {
+        Constraints constraints = new Constraints();
+        constraints.add(AccesoryValidator.validateJavaxConstraints(show));
+        if(show.getEventLocation() != null) {
+            constraints.add("eventLocation_given", show.getEventLocation().size() > 0);
+            constraints.add("eventLocation_onlyOne", show.getEventLocation().size() <= 1);
+            constraints.add("eventLocation_exists",
+                show.getEventLocation().size() == 1 &&
+                    show.getEventLocation().get(0) != null &&
+                    show.getEventLocation().get(0).getId() != null &&
+                    eventLocationRepository.findEventLocationById(show.getEventLocation().get(0).getId()) != null);
+        }
         return constraints;
     }
 
@@ -45,7 +80,6 @@ public class EventValidatorImpl implements EventValidator {
     private Constraints validateSections(List<Section> sections) {
         Constraints constraints = new Constraints();
         for(Section section: sections) {
-            constraints.add(AccesoryValidator.validateJavaxConstraints(section));
             constraints.add(validate(section));
         }
         return constraints;
@@ -62,7 +96,6 @@ public class EventValidatorImpl implements EventValidator {
     private Constraints validateSeats(List<Seat> seats) {
         Constraints constraints = new Constraints();
         for(Seat seat: seats) {
-            constraints.add(AccesoryValidator.validateJavaxConstraints(seat));
             constraints.add(validate(seat));
         }
         return constraints;

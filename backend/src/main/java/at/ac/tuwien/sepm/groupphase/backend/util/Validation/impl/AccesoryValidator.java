@@ -21,6 +21,7 @@ public class AccesoryValidator {
 
         Constraints constraints = new Constraints();
         constraints.add(violations);
+        constraints.addNamePrefix(object.getClass().getSimpleName().toLowerCase() + "_");
 
         return constraints;
     }

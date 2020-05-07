@@ -1,11 +1,14 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
 import lombok.*;
+import org.apache.commons.lang3.SerializationUtils;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -14,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 @Entity
-public class EventLocation {
+public class EventLocation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,7 +26,7 @@ public class EventLocation {
     private Long showId;
 
     @NotNull
-    @Size(max = 100)
+    @Size(min=1, max = 100)
     @Column(nullable = false, length = 100)
     private String eventLocationName;
 
@@ -47,8 +50,8 @@ public class EventLocation {
     @Column(length = 100)
     private String country;
 
-    @NotNull
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST, orphanRemoval = true)
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,  orphanRemoval = true)
     @JoinColumn(name = "EVENT_LOCATION_ID", referencedColumnName = "ID")
     private List<Section> sections;
 
@@ -56,4 +59,18 @@ public class EventLocation {
     private int capacity;
 
     public EventLocation() {}
+
+    public EventLocation(EventLocation eventLocation) {
+        this.city = eventLocation.getCity();
+        this.country = eventLocation.getCountry();
+        this.capacity = eventLocation.getCapacity();
+        this.plz = eventLocation.getPlz();
+        this.eventLocationDescription = eventLocation.getEventLocationDescription();
+        this.eventLocationName = eventLocation.getEventLocationName();
+        this.street = eventLocation.getStreet();
+        this.sections = new ArrayList<>();
+        for(Section section: eventLocation.getSections()) {
+            this.sections.add(new Section(section));
+        }
+    }
 }

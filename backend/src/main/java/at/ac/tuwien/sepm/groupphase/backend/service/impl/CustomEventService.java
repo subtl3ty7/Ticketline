@@ -50,6 +50,8 @@ public class CustomEventService implements EventService {
     public Event createNewEvent(Event event){
         LOGGER.info("Moving Event Entity through Service Layer: " + event);
         event.setEventCode(getNewEventCode());
+        //validator.validate(event).throwIfViolated();
+
         return eventRepository.save(event);
     }
 
@@ -75,5 +77,10 @@ public class CustomEventService implements EventService {
         event.getPrices();
         event.getArtists();
         return event;
+    }
+
+    @Override
+    public Event deletebyEventCode(String eventCode) {
+        return eventRepository.deleteEventByEventCode(eventCode);
     }
 }

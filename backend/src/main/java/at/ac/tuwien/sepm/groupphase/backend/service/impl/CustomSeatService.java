@@ -15,7 +15,6 @@ public class CustomSeatService implements SeatService {
 
     @Override
     public Seat saveSeat(Seat seat) {
-
         return this.seatRepository.save(seat);
     }
 }
