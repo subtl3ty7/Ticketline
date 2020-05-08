@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Renderer2} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
 import {AuthRequest} from '../../dtos/auth-request';
+import {DOCUMENT} from '@angular/common';
 
 
 @Component({
@@ -24,6 +25,13 @@ export class LoginComponent implements OnInit {
       username: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8)]]
     });
+    document.body.style.background = '#DEDEDE';
+    document.body.style.backgroundImage = 'url("img_1.png")';
+    document.body.style.backgroundSize = '100%';
+    document.body.style.backgroundRepeat = 'no-repeat';
+    document.body.style.backgroundPosition = 'center';
+    document.body.style.backgroundSize = 'cover';
+
   }
 
   /**
