@@ -1,11 +1,11 @@
 logging:
   file.name: ./log/backend-test.log
   level:
-    root: DEBUG
+    root: INFO
 
 spring:
   datasource:
     url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
