@@ -1,0 +1,108 @@
+/* Modify the background color */
+
+.navbar-custom {
+  background-color: #2771BB;
+}
+/* Modify brand and text color */
+
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link {
+  text-align: center;
+}
+
+a {
+  color: #FBFBFB;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+a:hover {
+  color: #0E2E62;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.navbar-brand {
+  font-size: 40px;
+}
+
+.nav-link {
+  font-size: 20px;
+}
+
+.navbar-custom {
+  min-height: 160px;
+  box-shadow: 0px 3px 6px #00000029;
+}
+
+.btn {
+  border: 2px solid black;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  border-radius: 0px;
+}
+
+/* Green */
+.success {
+  border-color: #43B581;
+  color: green;
+}
+
+.success:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+
+/* Blue */
+.info {
+  border-color: #2196F3;
+  color: dodgerblue
+}
+
+.info:hover {
+  background: #2196F3;
+  color: white;
+}
+
+/* Orange */
+.warning {
+  border-color: #ff9800;
+  color: orange;
+}
+
+.warning:hover {
+  background: #ff9800;
+  color: white;
+}
+
+/* Red */
+.danger {
+  border-color: #f44336;
+  color: red
+}
+
+.danger:hover {
+  background: #f44336;
+  color: white;
+}
+
+/* Gray */
+.default {
+  border-color: #FBFBFB;
+  color: #FBFBFB;
+  background-color: transparent;
+}
+
+.default:hover {
+  background: #0E2E62;
+}
+
+.divider {
+  border-color: #FBFBFB;
+  border-style: solid;
+  border-width: 0.5px;
+  height: 46px;
+}
+
+
