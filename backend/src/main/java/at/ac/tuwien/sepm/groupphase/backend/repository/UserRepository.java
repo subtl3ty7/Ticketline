@@ -13,5 +13,5 @@ public interface UserRepository extends JpaRepository<AbstractUser, Long> {
 
     AbstractUser findAbstractUserByUserCode(String usercode);
     AbstractUser findAbstractUserByEmail(String email);
-
+    AbstractUser deleteByUserCode(String userCode);
 }

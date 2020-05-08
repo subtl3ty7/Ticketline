@@ -1,98 +1,81 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Table(name = "event")
-@Getter
 @Setter
+@Getter
+@NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
+@ToString
 public class Event implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 6,name = "event_code", unique=true)
+    @NotNull
+    @Size(min=6, max=6)
+    @Column(nullable = false, length = 6, name = "event_code", unique = true)
     private String eventCode;
 
+    @NotNull
+    @Size(min=1, max=100)
     @Column(nullable = false, length = 100)
     private String name;
 
+    @NotNull
+    @Size(min=1, max=1000)
     @Column(nullable = false, length = 10000)
     private String description;
 
+    @NotNull
+    @Size(min=1, max=100)
     @Column(nullable = false, length = 100)
     private String category;
 
+    @NotNull
+    @Size(min=1, max=100)
     @Column(nullable = false, length = 100)
     private String type;
 
+    @NotNull
     @Column(nullable = false, name = "start_datetime")
     private LocalDateTime startsAt;
 
+    @NotNull
     @Column(nullable = false, name = "end_datetime")
     private LocalDateTime endsAt;
 
+    @NotNull
     @Column(nullable = false, name = "photo")
     private String photo;
 
+    @NotNull
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name="event_code", referencedColumnName="event_code")
+    @JoinColumn(name = "event_code", referencedColumnName = "event_code")
     private List<Show> shows;
 
     @Column
     private int totalTicketsSold;
 
-    @ElementCollection
+    @NotNull
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SELECT)
     private List<String> artists;
 
-    @ElementCollection
+    @NotNull
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SELECT) //only way to fetch more than two collections with type eager ...
     private List<Integer> prices;
-
-
-    public Event() {
-    }
-
-    public Event(String eventCode, String name, String description, String photo, List<Show> shows, List<String> artists, LocalDateTime startsAt, LocalDateTime endsAt, String type, String category, List<Integer> prices, int totalTicketsSold) {
-        this.eventCode = eventCode;
-        this.name = name;
-        this.description = description;
-        this.photo = photo;
-        this.shows = shows;
-        this.artists = artists;
-        this.startsAt = startsAt;
-        this.endsAt = endsAt;
-        this.type = type;
-        this.category = category;
-        this.prices = prices;
-        this.totalTicketsSold = totalTicketsSold;
-    }
-
-    @Override
-    public String toString() {
-        return "Event{" +
-            "id=" + id +
-            ", eventCode='" + eventCode + '\'' +
-            ", name='" + name + '\'' +
-            ", description='" + description + '\'' +
-            ", category='" + category + '\'' +
-            ", type='" + type + '\'' +
-            ", startsAt=" + startsAt +
-            ", endsAt=" + endsAt +
-            ", photo='" + photo + '\'' +
-            ", shows=" + shows.toString() +
-            ", totalTicketsSold=" + totalTicketsSold +
-            ", artists=" + artists.toString() +
-            ", prices=" + prices.toString() +
-            '}';
-    }
 }

@@ -1,5 +1,5 @@
-<app-customer-header></app-customer-header>
-<div *ngIf="error" class="alert alert-warning alert-dismissible fade show container-fullwidth" role="alert">
+<app-guest-header></app-guest-header>
+<div *ngIf="error" class="alert alert-warning alert-dismissible fade show" role="alert">
   <strong>Authentication problems!</strong> {{ errorMessage }}
   <button type="button" (click)="vanishError()" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
@@ -20,12 +20,11 @@
           <form class="form" [formGroup]="loginForm" (ngSubmit)="loginUser()" style="padding-left: 40px; padding-right: 40px; border-bottom-left-radius: 20px;">
 
             <div class="form-group" >
-              <label for="inputUsername">E-Mail</label>
-              <input type="text" name="username" formControlName="username" class="form-control" id="inputUsername"
-                     aria-describedby="usernameHelp" placeholder="Enter username" style="height: 50px;">
+              <label for="inputE-Mail">E-Mail</label>
+              <input type="text" name="email" formControlName="e-mail" class="form-control" id="inputE-Mail"
+                     aria-describedby="emailHelp" placeholder="E-Mail eingeben" style="height: 50px;">
               <div *ngIf="submitted && loginForm.controls.username.errors" class="error">
-                <small class="form-text text-warning" *ngIf="loginForm.controls.username.errors.required">Your username is
-                  required!
+                <small class="form-text text-warning" *ngIf="loginForm.controls.username.errors.required">Bitte E-Mail Adresse eingeben!
                 </small>
               </div>
             </div>
@@ -59,7 +58,7 @@
         </div>
 
       </div>
-
+      <p style="color: crimson; padding-left: 2%">You have in total 5 login attempts. If your account gets locked, please contact us.</p>
     </div>
   </div>
 </div>

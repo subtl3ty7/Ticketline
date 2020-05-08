@@ -8,6 +8,8 @@ import {NotLoggedInGuard} from './guards/not-logged-in.guard';
 import {AdminHomeComponent} from './components/admin-home/root/admin-home.component';
 import {AdminGuard} from './guards/admin.guard';
 import {CustomerHomeComponent} from './components/customer-home/customer-home.component';
+import {UserDetailsContainerComponent} from './components/admin-home/user-details-container/root/user-details-container.component';
+import {CreateUserContainerComponent} from './components/admin-home/create-user-container/root/create-user-container.component';
 
 const routes: Routes = [
   {path: '', canActivate: [NotLoggedInGuard], component: GuestHomeComponent},
@@ -16,6 +18,9 @@ const routes: Routes = [
   {path: 'message', canActivate: [LoggedInGuard], component: MessageComponent},
   {path: 'administration', canActivate: [AdminGuard], component: AdminHomeComponent},
   {path: 'administration/:tabId', canActivate: [AdminGuard], component: AdminHomeComponent},
+  {path: 'user-details/:uc', canActivate: [AdminGuard], component: UserDetailsContainerComponent},
+  {path: 'user-details/:uc/reset-password', canActivate: [AdminGuard], component: UserDetailsContainerComponent},
+  {path: 'create-user', canActivate: [AdminGuard], component: CreateUserContainerComponent}
 ];
 
 @NgModule({
