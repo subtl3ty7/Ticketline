@@ -37,6 +37,7 @@ export class AuthService {
 
   logoutUser() {
     console.log('Logout');
+    this.httpClient.get(this.globals.backendUri + '/users/logout').subscribe();
     localStorage.removeItem('authToken');
   }
 
