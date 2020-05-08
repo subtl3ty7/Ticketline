@@ -22,8 +22,7 @@
       <li><a class="nav-link font-weight-lighter" routerLink="/faq">FAQ</a></li>
     </ul>
     <div style="padding-right: 50px;">
-      <button class="btn default font-weight-bolder" *ngIf="!authService.isLoggedIn()" routerLink="/login" routerLinkActive="active" style="font-size: 20px;">Login</button>
-      <a class="nav-link" *ngIf="authService.isLoggedIn()" routerLink="/" (click)="authService.logoutUser()">Logout</a>
+      <a class="nav-link" routerLink="/" (click)="authService.logoutUser()">Logout</a>
     </div>
   </div>
 </nav>

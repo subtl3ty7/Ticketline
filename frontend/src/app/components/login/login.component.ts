@@ -29,6 +29,8 @@ export class LoginComponent implements OnInit {
     document.body.style.backgroundImage = 'url("img_1.png")';
     document.body.style.backgroundSize = '100%';
     document.body.style.backgroundRepeat = 'no-repeat';
+    document.body.style.backgroundPosition = 'center';
+    document.body.style.backgroundSize = 'cover';
 
   }
 
