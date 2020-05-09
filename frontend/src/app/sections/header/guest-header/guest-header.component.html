@@ -6,13 +6,7 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <a class="navbar-brand ml-lg-5" href="">Ticketline</a>
-
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" *ngIf="authService.isLoggedIn()" routerLink="/message" routerLinkActive="active">Message</a>
-      </li>
-    </ul>
-    <ul class="navbar-nav mr-3  align-items-center " style="padding-right: 40px;">
+    <ul class="navbar-nav ml-auto  align-items-center " style="padding-right: 40px;">
       <li><a class="nav-link font-weight-lighter" href="/events" routerLink="/events">Events</a></li>
       <li class="divider"></li>
       <li><a class="nav-link font-weight-lighter" href="/events" routerLink="/news">News</a></li>
