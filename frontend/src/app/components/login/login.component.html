@@ -20,11 +20,11 @@
           <form class="form" [formGroup]="loginForm" (ngSubmit)="loginUser()" style="padding-left: 40px; padding-right: 40px; border-bottom-left-radius: 20px;">
 
             <div class="form-group" >
-              <label for="inputE-Mail">E-Mail</label>
-              <input type="text" name="email" formControlName="e-mail" class="form-control" id="inputE-Mail"
-                     aria-describedby="emailHelp" placeholder="E-Mail eingeben" style="height: 50px;">
-              <div *ngIf="submitted && loginForm.controls.username.errors" class="error">
-                <small class="form-text text-warning" *ngIf="loginForm.controls.username.errors.required">Bitte E-Mail Adresse eingeben!
+              <label for="inputEmail">E-Mail</label>
+              <input type="text" name="email" formControlName="email" class="form-control" id="inputEmail"
+                     aria-describedby="emailHelp" placeholder="E-Mail eingeben" style="margin-bottom: 5px; height: 50px;">
+              <div *ngIf="submitted && loginForm.controls.email.errors" class="error">
+                <small class="form-text text-warning" *ngIf="loginForm.controls.email.errors.required">Bitte E-Mail Adresse eingeben!
                 </small>
               </div>
             </div>

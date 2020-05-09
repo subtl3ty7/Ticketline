@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.formBuilder.group({
-      username: ['', [Validators.required]],
+      email: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8)]]
     });
     document.body.style.background = '#DEDEDE';
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
   loginUser() {
     this.submitted = true;
     if (this.loginForm.valid) {
-      const authRequest: AuthRequest = new AuthRequest(this.loginForm.controls.username.value, this.loginForm.controls.password.value);
+      const authRequest: AuthRequest = new AuthRequest(this.loginForm.controls.email.value, this.loginForm.controls.password.value);
       this.authenticateUser(authRequest);
     } else {
       console.log('Invalid input');
