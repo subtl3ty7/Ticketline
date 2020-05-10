@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserAttemptsRepository extends JpaRepository<UserAttempts, Long> {
     UserAttempts findUserAttemptsByEmail(String email);
+    UserAttempts deleteByEmail(String email);
 
 }

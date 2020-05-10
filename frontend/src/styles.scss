@@ -68,10 +68,14 @@ mat-row:nth-child(even) {
 }
 
 body {
-  background-color: whitesmoke;
+  background-color: #DEDEDE;
+}
+
+label {
+  font-size: 20px;
 }
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body, h1, h2, h3, h4, h5, h6, p, a, label { margin: 0; font-family: Segue UI, Roboto, "Helvetica Neue", sans-serif; }
 
 

@@ -73,7 +73,7 @@ export class UsersTabComponent implements OnInit {
         this.defaultServiceErrorHandling(error);
       }
     );
-    this.loadAllUsers();
+    window.location.reload();
   }
 
   private unblockUser(element) {
@@ -82,7 +82,7 @@ export class UsersTabComponent implements OnInit {
         this.defaultServiceErrorHandling(error);
       }
     );
-    this.loadAllUsers();
+    window.location.reload();
   }
 
   private createNewUser() {

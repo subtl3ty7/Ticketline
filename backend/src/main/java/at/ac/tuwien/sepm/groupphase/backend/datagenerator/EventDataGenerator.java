@@ -1,14 +1,18 @@
 package at.ac.tuwien.sepm.groupphase.backend.datagenerator;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.*;
+import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.*;
+import at.ac.tuwien.sepm.groupphase.backend.service.EventLocationService;
+import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
+import org.apache.commons.lang3.SerializationUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManagerFactory;
@@ -24,21 +28,25 @@ public class EventDataGenerator {
     private final SectionRepository sectionRepository;
     private final ShowRepository showRepository;
     private final SeatRepository seatRepository;
-    private final EventRepository eventRepository;
-    private final EventLocationRepository eventLocationRepository;
+    private final EventService eventService;
+    private final EventLocationService eventLocationService;
     private final EntityManagerFactory entityManagerFactory;
+
+
+    private final static int numberOfEventLocations = 5;
+    private static final int numberOfEvents = 5;
 
     public EventDataGenerator(SectionRepository sectionRepository,
                               SeatRepository seatRepository, ShowRepository showRepository,
-                              EventRepository eventRepository,
-                              EventLocationRepository eventLocationRepository,
+                              EventService eventService,
+                              EventLocationService eventLocationService,
                               EntityManagerFactory entityManagerFactory
     ) {
         this.sectionRepository = sectionRepository;
         this.showRepository = showRepository;
         this.seatRepository = seatRepository;
-        this.eventRepository = eventRepository;
-        this.eventLocationRepository = eventLocationRepository;
+        this.eventService = eventService;
+        this.eventLocationService = eventLocationService;
         this.entityManagerFactory = entityManagerFactory;
     }
 
@@ -51,41 +59,44 @@ public class EventDataGenerator {
         if(seatRepository.findAll().size() > 0) {
             LOGGER.debug("Event Test Data already generated");
         } else {
-            Session session = getSession();
-            session.beginTransaction();
-            List<Event> events = generateEvents();
-            session.getTransaction().commit();
-            // run this to test if an event updates properly
-            updateEvent(events.get(0));
-            // run this to test if the events and all their children (shows, eventlocations, sections, seats) get deleted
-            // deleteEvents(events);
+            generateEventLocations(true);
+            List<EventLocation> eventLocations = eventLocationService.getAllEventLocations();
+            generateEvents(eventLocations);
         }
     }
 
     private void updateEvent(Event event) {
         Session session = getSession();
         session.beginTransaction();
-        Event eventNew = eventRepository.findEventById(event.getId());
+        Event eventNew = eventService.findByEventCode(event.getEventCode());
         eventNew.getShows().remove(2);
         eventNew.getShows().remove(1);
         eventNew.getShows().add(Show.builder().startsAt(LocalDateTime.now()).endsAt(LocalDateTime.now()).build());
-        eventRepository.save(eventNew);
+        eventService.createNewEvent(eventNew);
         session.getTransaction().commit();
         int i=0;
     }
 
     private void deleteEvents(List<Event> events) {
         for(Event event: events) {
-            eventRepository.deleteById(event.getId());
+            eventService.deletebyEventCode(event.getEventCode());
         }
     }
 
-    private List<Event> generateEvents() {
+    private List<Event> generateEvents(List <EventLocation> eventLocations) {
         LOGGER.info("Generating Event Test Data");
-        int numberOfEvents = 3;
+
+        if(eventLocations.isEmpty()) {
+            throw new NotFoundException("No Event Locations in argument list. Needs to contain at least one.");
+        }
 
         List<Event> events = new ArrayList<>();
         for(int i=0; i<numberOfEvents; i++) {
+            int eventLocationIndex = i;
+            if(eventLocationIndex >= eventLocations.size()) {
+                eventLocationIndex = eventLocations.size()-1;
+            }
+
             Event event = Event.builder()
                 .artists(List.of("Artist1", "Artist2", "Artist3"))
                 .category("Talk")
@@ -98,27 +109,29 @@ public class EventDataGenerator {
                 .prices(List.of(1,2,3))
                 .totalTicketsSold(5)
                 .type("Of the cool type")
-                .shows(generateShows((long) i))
+                .shows(generateShows(eventLocations.get(eventLocationIndex)))
                 .build();
-            event = eventRepository.save(event);
+            event = eventService.createNewEvent(event);
             events.add(event);
         }
 
         return events;
     }
 
-    private List<Show> generateShows(Long eventIndex) {
+    private List<Show> generateShows(EventLocation eventLocation) {
         LOGGER.info("Generating Show Test Data");
-        int numberOfShows = 3;
+        int numberOfShows = 2;
 
         List<Show> shows = new ArrayList<>();
         for(int i=0; i<numberOfShows; i++) {
+            //List<EventLocation> location = new ArrayList<>();
+            //location.add(new EventLocation(eventLocation));
             Show show = Show.builder()
                 .startsAt(LocalDateTime.now())
                 .endsAt(LocalDateTime.now())
                 .ticketsAvailable(1000)
                 .ticketsSold(300)
-                .eventLocation(List.of(generateEventLocation(eventIndex)))
+                .eventLocation(List.of(eventLocation))
                 .build();
             shows.add(show);
         }
@@ -126,33 +139,43 @@ public class EventDataGenerator {
         return shows;
     }
 
-    private EventLocation generateEventLocation(Long eventIndex) {
+
+    private List<EventLocation> generateEventLocations(boolean doSave) {
         LOGGER.info("Generating Event Location Test Data");
 
-        EventLocation eventLocation = EventLocation.builder()
-            .name("Stephansplatz from event " + eventIndex)
-            .city("Vienna")
-            .country("Austria")
-            .plz("1010")
-            .street("Stephansplatz 1")
-            .sections(generateSections())
-            .build();
-
-        EventLocation eventLocationPass = eventLocation.toBuilder().sections(generateSections()).build();
-        eventLocationRepository.save(eventLocation);
-        return eventLocationPass;
+        List<EventLocation> eventLocations = new ArrayList<>();
+        for(int i=0; i<numberOfEventLocations; i++) {
+            List<Section> sections = generateSections();
+            EventLocation eventLocation = EventLocation.builder()
+                .eventLocationName("Stephansplatz " + i)
+                .city("Vienna")
+                .country("Austria")
+                .plz("1010")
+                .street("Stephansplatz " + i)
+                .sections(sections)
+                .capacity(getCapacitySum(sections))
+                .build();
+            eventLocations.add(eventLocation);
+            if (doSave) {
+                eventLocationService.save(eventLocation);
+            }
+        }
+        return eventLocations;
     }
+
 
     private List<Section> generateSections() {
         LOGGER.info("Generating Section Test Data");
-        int numberOfSections = 2;
+        int numberOfSections = 4;
 
         List<Section> sections = new ArrayList<>();
         for(int i=0; i<numberOfSections; i++) {
+            List<Seat> seats = generateSeats();
             Section section = Section.builder()
-                .name("Section Bla")
-                .description("BlaDescription")
-                .seats(generateSeats())
+                .sectionName("Section Bla" + i)
+                .sectionDescription("BlaDescription")
+                .seats(seats)
+                .capacity(seats.size()+i)
                 .build();
 
             sections.add(section);
@@ -187,5 +210,13 @@ public class EventDataGenerator {
         }
 
         return seats;
+    }
+
+    private int getCapacitySum(List<Section> sections) {
+        int sum = 0;
+        for(Section section: sections) {
+            sum += section.getCapacity();
+        }
+        return sum;
     }
 }

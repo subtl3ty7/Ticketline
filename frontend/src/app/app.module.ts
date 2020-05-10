@@ -37,12 +37,12 @@ import { CreateUserContainerComponent } from './components/admin-home/create-use
 import {MatCheckboxModule} from '@angular/material/checkbox';
 // tslint:disable-next-line:max-line-length
 import { ResetPasswordComponent } from './components/admin-home/user-details-container/user-details/reset-password/reset-password.component';
-import { RegisterUserFormComponent } from './components/register-user-form/register-user-form.component';
 import { CreateUserComponent } from './components/admin-home/create-user-container/create-user/create-user.component';
 import { CreateUserFormComponent } from './components/admin-home/create-user-container/create-user/create-user-form/create-user-form.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import { MustMatchDirective } from './utils/must-match.directive';
+import { GuestHeaderComponent } from './sections/header/guest-header/guest-header.component';
 
 
 
@@ -62,16 +62,15 @@ import { MustMatchDirective } from './utils/must-match.directive';
     EventsTabComponent,
     AdminHeaderComponent,
     CustomerHeaderComponent,
-    RegisterUserFormComponent,
     MustMatchDirective,
     UserDetailsContainerComponent,
     UserDetailsComponent,
     UserInfoComponent,
     CreateUserContainerComponent,
     ResetPasswordComponent,
-    RegisterUserFormComponent,
     CreateUserComponent,
-    CreateUserFormComponent
+    CreateUserFormComponent,
+    GuestHeaderComponent
   ],
   imports: [
     BrowserModule,

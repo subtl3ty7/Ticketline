@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public interface UserService extends UserDetailsService {
@@ -56,7 +58,8 @@ public interface UserService extends UserDetailsService {
 
     void deleteUserByUsercode(String usercode);
 
-    AbstractUser updateCustomer(AbstractUser user, String usercode);
+    AbstractUser updateCustomer(Customer customer);
 
     String blockCustomer(String usercode);
+
 }

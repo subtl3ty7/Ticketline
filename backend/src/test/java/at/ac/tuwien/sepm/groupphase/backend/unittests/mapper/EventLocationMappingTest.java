@@ -25,8 +25,10 @@ public class EventLocationMappingTest implements TestData {
 
     private final EventLocation eventLocation = EventLocation.builder()
         .id(ID)
+        .eventLocationName(FNAME)
+        .eventLocationDescription(DESC)
         .showId(ID)
-        .name(NAME)
+        .capacity(TOTAL)
         .street(STREET)
         .city(CITY)
         .country(COUNTRY)
@@ -43,7 +45,6 @@ public class EventLocationMappingTest implements TestData {
         assertAll(
             () -> assertEquals(ID, eventLocationDto.getId()),
             () -> assertEquals(ID, eventLocationDto.getShowId()),
-            () -> assertEquals(NAME, eventLocationDto.getName()),
             () -> assertEquals(STREET, eventLocationDto.getStreet()),
             () -> assertEquals(CITY, eventLocationDto.getCity()),
             () -> assertEquals(COUNTRY, eventLocationDto.getCountry()),
@@ -62,7 +63,6 @@ public class EventLocationMappingTest implements TestData {
         assertAll(
             () -> assertEquals(ID, eventLocationDto.getId()),
             () -> assertEquals(ID, eventLocationDto.getShowId()),
-            () -> assertEquals(NAME, eventLocationDto.getName()),
             () -> assertEquals(STREET, eventLocationDto.getStreet()),
             () -> assertEquals(CITY, eventLocationDto.getCity()),
             () -> assertEquals(COUNTRY, eventLocationDto.getCountry()),

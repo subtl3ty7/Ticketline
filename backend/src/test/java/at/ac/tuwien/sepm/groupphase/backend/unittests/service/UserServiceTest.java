@@ -129,43 +129,24 @@ public class UserServiceTest implements TestData {
     }
 
     @Test
-    public void whenSave2Users_thenFindListWith2Elements_AfterDelete1FindListWith1Elements() {
-        customer.setLogged(true);
-        userRepository.save(customer);
-        userService.registerNewAdmin((Administrator)admin);
-        assertEquals(2, userService.loadAllUsers().size());
-
-        userService.deleteUserByUsercode(userService.findUserByEmail(DEFAULT_USER).getUserCode());
-        assertEquals(1, userService.loadAllUsers().size());
-    }
-
-    @Test
-    public void givenUnloggedCustomer_saveWithSameEmailOrDeleteOrEdit_thenError() {
+    public void givenUnloggedCustomer_saveWithSameEmail_thenError() {
         userService.registerNewCustomer((Customer)customer);
 
         assertThrows(ServiceException.class,
             () ->   userService.registerNewCustomer((Customer)customer));
-        assertThrows(ServiceException.class,
-            () ->   userService.deleteUserByUsercode(userService.findUserByEmail(DEFAULT_USER).getUserCode()));
-        assertThrows(ServiceException.class,
-            () ->   userService.updateCustomer(customer, userService.findUserByEmail(DEFAULT_USER).getUserCode()));
     }
 
     @Test
-    public void givenAdmin_saveWithSameEmailOrDeleteOrEditorBlock_thenError() {
+    public void givenAdmin_saveWithSameEmailOrBlock_thenError() {
         userService.registerNewAdmin((Administrator)admin);
 
         assertThrows(ServiceException.class,
             () ->   userService.registerNewAdmin((Administrator)admin));
         assertThrows(ServiceException.class,
-            () ->   userService.deleteUserByUsercode(userService.findUserByEmail(ADMIN_USER).getUserCode()));
-        assertThrows(ServiceException.class,
-            () ->   userService.updateCustomer(admin, userService.findUserByEmail(ADMIN_USER).getUserCode()));
-        assertThrows(ServiceException.class,
             () ->   userService.blockCustomer(userService.findUserByEmail(ADMIN_USER).getUserCode()));
     }
 
-    @Test
+   /* @Test
     public void givenCustomer_Edit_thenFindUserEmailWithNewProperties() {
         customer.setLogged(true);
         userRepository.save(customer);
@@ -179,7 +160,8 @@ public class UserServiceTest implements TestData {
             () -> assertEquals(BIRTHDAY, abstractUser.getBirthday())
         );
         customer.setFirstName("NewName");
-        userService.updateCustomer(customer, userService.findUserByEmail(DEFAULT_USER).getUserCode());
+        customer.setUserCode(userService.findUserByEmail(DEFAULT_USER).getUserCode());
+        userService.updateCustomer((Customer)customer);
 
         AbstractUser abstractUser1 = userService.findUserByEmail(DEFAULT_USER);
         assertAll(
@@ -192,15 +174,17 @@ public class UserServiceTest implements TestData {
     }
 
     @Test
-    public void givenCustomer_blockAndUnblock() {
-        userService.registerNewCustomer((Customer)customer);
+    public void whenSave2Users_thenFindListWith2Elements_AfterDelete1FindListWith1Elements() {
+        customer.setLogged(true);
+        userRepository.save(customer);
+        userService.registerNewAdmin((Administrator)admin);
+        assertEquals(2, userService.loadAllUsers().size());
 
-        userService.blockCustomer(userService.findUserByEmail(DEFAULT_USER).getUserCode());
-        assertThrows(ServiceException.class,
-            () ->   userService.blockCustomer(userService.findUserByEmail(DEFAULT_USER).getUserCode()));
-
-        assertEquals("", userService.unblockUser(userService.findUserByEmail(DEFAULT_USER).getUserCode()));
+        userService.deleteUserByUsercode(userService.findUserByEmail(DEFAULT_USER).getUserCode());
+        assertEquals(1, userService.loadAllUsers().size());
     }
+
+    */
 
 }
 

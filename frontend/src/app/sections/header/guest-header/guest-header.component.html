@@ -13,18 +13,17 @@
       </li>
     </ul>
     <ul class="navbar-nav mr-3  align-items-center " style="padding-right: 40px;">
-      <li><a class="nav-link font-weight-lighter" routerLink="/events">Events</a></li>
+      <li><a class="nav-link font-weight-lighter" href="/events" routerLink="/events">Events</a></li>
       <li class="divider"></li>
-      <li><a class="nav-link font-weight-lighter" routerLink="/news">News</a></li>
+      <li><a class="nav-link font-weight-lighter" href="/events" routerLink="/news">News</a></li>
       <li class="divider"></li>
-      <li><a class="nav-link font-weight-lighter" routerLink="/merch-shop">Merch</a></li>
+      <li><a class="nav-link font-weight-lighter" href="/events" routerLink="/merch-shop">Merch</a></li>
       <li class="divider"></li>
-      <li><a class="nav-link font-weight-lighter" routerLink="/faq">FAQ</a></li>
-      <li class="divider"></li>
-      <li><a class="nav-link font-weight-lighter" routerLink="/account-settings">Konto</a></li>
+      <li><a class="nav-link font-weight-lighter" href="/events" routerLink="/faq">FAQ</a></li>
     </ul>
     <div style="padding-right: 50px;">
-      <a class="nav-link" routerLink="/" (click)="authService.logoutUser()">Logout</a>
+      <button class="btn default font-weight-bolder" routerLink="/login" routerLinkActive="active" style="font-size: 20px;" >Login</button>
+
     </div>
   </div>
 </nav>
