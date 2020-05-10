@@ -14,10 +14,12 @@ import java.util.List;
 public class EventLocationDto {
     private Long id;
     private Long showId;
-    private String name;
+    private String eventLocationName;
+    private String eventLocationDescription;
     private String street;
     private String plz;
     private String city;
     private String country;
     private List<SectionDto> sections;
+    private int capacity;
 }

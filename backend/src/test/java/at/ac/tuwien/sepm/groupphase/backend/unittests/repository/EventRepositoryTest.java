@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.unittests.repository;
 
 import at.ac.tuwien.sepm.groupphase.backend.basetest.TestData;
+import at.ac.tuwien.sepm.groupphase.backend.datagenerator.EventDataGenerator;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -60,7 +61,7 @@ public class EventRepositoryTest implements TestData {
             .build();
     }
 
-  /*  @Test
+ /*   @Test
     public void givenNothing_whenSaveEvent_thenFindListWithOneElementAndFindEventByIdAndCode() {
         eventRepository.save(event);
 

@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.basetest;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Section;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
+import org.hibernate.mapping.Table;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDateTime;
@@ -23,6 +24,7 @@ public interface TestData {
 
     String USER_BASE_URI = BASE_URI + "/users";
     String CUSTOMER_BASE_URI = USER_BASE_URI + "/customers";
+    String ADMIN_BASE_URI = USER_BASE_URI + "/administrators";
     String ADMIN_USER = "admin@email.com";
     List<String> ADMIN_ROLES = new ArrayList<>() {
         {
@@ -57,25 +59,17 @@ public interface TestData {
         LocalDateTime.of(2020, 11, 13, 12, 15, 0, 0);
     LocalDateTime END =
         LocalDateTime.of(2020, 11, 13, 18, 15, 0, 0);
-    List<Integer> PRICES = new ArrayList<>() {
-        {
-            add(30);
-        }
-    };
-    List<String> ARTISTS = new ArrayList<>() {
-        {
-            add("artist");
-        }
-    };
+    List<Integer> PRICES = List.of(30, 40);
+    List<String> ARTISTS = List.of("Artist1", "Artist2");
     List<Show> SHOWS = new ArrayList<>() {
         {
             add(Show.builder()
-                .id(ID).eventCode(USER_CODE).startsAt(START).endsAt(END).ticketsSold(TOTAL).ticketsAvailable(TOTAL).build());
+                .eventCode(USER_CODE).startsAt(START).endsAt(END).ticketsSold(TOTAL).ticketsAvailable(TOTAL).eventLocation(LOCATIONS).build());
         }
     };
     int TOTAL = 500;
 
-    String LOCATION_BASE_URI = BASE_URI + "/eventsLocations/all";
+    String LOCATION_BASE_URI = BASE_URI + "/eventLocations/all";
     String STREET = "street";
     String COUNTRY = "country";
     String CITY = "city";
