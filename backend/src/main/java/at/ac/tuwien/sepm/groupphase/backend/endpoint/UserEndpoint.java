@@ -145,7 +145,7 @@ public class UserEndpoint {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping(value= "/customers")
+    @PutMapping(value= "/update")
     @ApiOperation(
         value = "Update user",
         notes = "Update user by usercode",
@@ -211,5 +211,21 @@ public class UserEndpoint {
         new CookieClearingLogoutHandler(AbstractRememberMeServices.SPRING_SECURITY_REMEMBER_ME_COOKIE_KEY).logout(request, response, auth);
         this.applicationEventPublisher.publishEvent(new LogoutSuccessEvent(auth));
         return new ResponseEntity<>(true, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/my-profile")
+    @ApiOperation(
+        value = "Return the current user",
+        notes = "Return the information about current authenticated user",
+        authorizations = {@Authorization(value = "apiKey")})
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "Successfully retrieved user info"),
+        @ApiResponse(code = 404, message = "User is not found"),
+        @ApiResponse(code = 500, message = "Connection Refused"),
+    })
+    public ResponseEntity<UserDto> getAuthenticatedUser(Authentication auth) {
+        LOGGER.info("GET /api/v1/users/my-profile");
+        UserDto result = userMapper.abstractUserToUserDto(userService.getAuthenticatedUser(auth));
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

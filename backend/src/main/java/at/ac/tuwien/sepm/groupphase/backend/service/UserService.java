@@ -5,6 +5,7 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.Administrator;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -62,4 +63,5 @@ public interface UserService extends UserDetailsService {
 
     String blockCustomer(String usercode);
 
+    AbstractUser getAuthenticatedUser(Authentication auth);
 }
