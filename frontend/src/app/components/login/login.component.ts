@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(8)]]
     });
     document.body.style.backgroundImage = 'url("img_1.png")';
+    document.body.style.backgroundColor = '#0c0d0f';
   }
 
   /**
@@ -50,7 +51,7 @@ export class LoginComponent implements OnInit {
     this.authService.loginUser(authRequest).subscribe(
       () => {
         console.log('Successfully logged in user: ' + authRequest.email);
-        this.router.navigate(['/message']);
+        this.router.navigate(['/home']);
         document.body.style.backgroundImage = null;
       },
       error => {

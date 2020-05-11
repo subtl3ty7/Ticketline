@@ -46,6 +46,7 @@ import { GuestHeaderComponent } from './sections/header/guest-header/guest-heade
 import { RegistrationComponent } from './components/registration/registration.component';
 
 
+import { EventSearchComponent } from './components/event-search/event-search.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,9 @@ import { RegistrationComponent } from './components/registration/registration.co
     CreateUserComponent,
     CreateUserFormComponent,
     GuestHeaderComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    GuestHeaderComponent,
+    EventSearchComponent,
   ],
   imports: [
     BrowserModule,

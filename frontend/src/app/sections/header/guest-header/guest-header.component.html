@@ -1,22 +1,22 @@
 <nav class="navbar-custom navbar-expand-lg d-flex">
   <button class="navbar-toggler ml-5" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" style="z-axis: 999; color: black;">
+    <span class="navbar-toggler-icon fas fa-bars"><i class=""></i></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngbCollapse]="isCollapsed">
     <a class="navbar-brand ml-lg-5" href="">Ticketline</a>
-    <ul class="navbar-nav ml-auto  align-items-center " style="padding-right: 40px;">
-      <li><a class="nav-link font-weight-lighter" href="/events" routerLink="/events">Events</a></li>
-      <li class="divider"></li>
-      <li><a class="nav-link font-weight-lighter" href="/events" routerLink="/news">News</a></li>
-      <li class="divider"></li>
-      <li><a class="nav-link font-weight-lighter" href="/events" routerLink="/merch-shop">Merch</a></li>
-      <li class="divider"></li>
-      <li><a class="nav-link font-weight-lighter" href="/events" routerLink="/faq">FAQ</a></li>
+    <ul class="navbar-nav ml-auto  align-items-center" style="padding-right: 40px;">
+      <li><a class="nav-link font-weight-lighter" routerLink="/event-search">Events</a></li>
+      <li class="divider" *ngIf="!isMobileLayout"></li>
+      <li><a class="nav-link font-weight-lighter" routerLink="/news">News</a></li>
+      <li class="divider" *ngIf="!isMobileLayout"></li>
+      <li><a class="nav-link font-weight-lighter" routerLink="/merch-shop">Merch</a></li>
+      <li class="divider" *ngIf="!isMobileLayout"></li>
+      <li><a class="nav-link font-weight-lighter" routerLink="/faq">FAQ</a></li>
     </ul>
     <div style="padding-right: 50px;">
-      <button class="btn default font-weight-bolder" routerLink="/login" routerLinkActive="active" style="font-size: 20px;" >Login</button>
+      <button class="btn default font-weight-bold" routerLink="/login" routerLinkActive="active" style="font-size: 18px; vertical-align: middle" >Login</button>
 
     </div>
   </div>

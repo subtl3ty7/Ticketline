@@ -11,6 +11,7 @@ import {CustomerHomeComponent} from './components/customer-home/customer-home.co
 import {UserDetailsContainerComponent} from './components/admin-home/user-details-container/root/user-details-container.component';
 import {CreateUserContainerComponent} from './components/admin-home/create-user-container/root/create-user-container.component';
 import {RegistrationComponent} from './components/registration/registration.component';
+import {EventSearchComponent} from './components/event-search/event-search.component';
 
 const routes: Routes = [
   {path: '', canActivate: [NotLoggedInGuard], component: GuestHomeComponent},
@@ -22,7 +23,9 @@ const routes: Routes = [
   {path: 'user-details/:uc', canActivate: [AdminGuard], component: UserDetailsContainerComponent},
   {path: 'user-details/:uc/reset-password', canActivate: [AdminGuard], component: UserDetailsContainerComponent},
   {path: 'create-user', canActivate: [AdminGuard], component: CreateUserContainerComponent},
-  {path: 'registration', canActivate: [NotLoggedInGuard], component: RegistrationComponent}
+  {path: 'registration', canActivate: [NotLoggedInGuard], component: RegistrationComponent},
+  {path: 'create-user', canActivate: [AdminGuard], component: CreateUserContainerComponent},
+  {path: 'event-search', canActivate: [NotLoggedInGuard], component: EventSearchComponent}
 ];
 
 @NgModule({
