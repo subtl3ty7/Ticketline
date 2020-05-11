@@ -3,6 +3,8 @@ package at.ac.tuwien.sepm.groupphase.backend.unittests.repository;
 import at.ac.tuwien.sepm.groupphase.backend.basetest.TestData;
 import at.ac.tuwien.sepm.groupphase.backend.datagenerator.EventDataGenerator;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +15,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -63,21 +66,24 @@ public class EventRepositoryTest implements TestData {
 
     @Test
     public void givenNothing_whenSaveEvent_thenFindListWithOneElementAndFindEventByIdAndCode() {
-        eventRepository.save(event);
+        Event loadedEvent = eventRepository.save(this.event);
 
         assertAll(
             () -> assertEquals(1, eventRepository.findAll().size()),
-            () -> assertNotNull(eventRepository.findById(event.getId())),
-            () -> assertNotNull(eventRepository.findEventByEventCode(event.getEventCode()))
+            () -> assertNotNull(eventRepository.findById(loadedEvent.getId())),
+            () -> assertNotNull(eventRepository.findEventByEventCode(loadedEvent.getEventCode())),
+            () -> assertNotNull(eventRepository.findEventByEventCode(loadedEvent.getEventCode()).getShows()),
+            () -> assertNotNull(eventRepository.findEventByEventCode(loadedEvent.getEventCode()).getPrices()),
+            () -> assertNotNull(eventRepository.findEventByEventCode(loadedEvent.getEventCode()).getArtists())
         );
     }
 
     @Test
     public void givenNothing_whenSave3Events_thenFindListWith3Elements_Delete1_thenFind2Elements() {
         eventRepository.save(event);
-        event.setEventCode("code1");
+        event.setEventCode("_code1");
         eventRepository.save(event);
-        event.setEventCode("code2");
+        event.setEventCode("_code2");
         eventRepository.save(event);
 
         assertEquals(3, eventRepository.findAll().size());
@@ -88,10 +94,10 @@ public class EventRepositoryTest implements TestData {
     @Test
     public void givenNothing_whenSave3Events_thenFindListByStartsAt() {
         eventRepository.save(event);
-        event.setEventCode("code1");
+        event.setEventCode("_code1");
         event.setStartsAt(LocalDateTime.of(2021, 11, 13, 12, 15, 0, 0));
         eventRepository.save(event);
-        event.setEventCode("code2");
+        event.setEventCode("_code2");
         eventRepository.save(event);
 
         assertEquals(3, eventRepository.findAll().size());
