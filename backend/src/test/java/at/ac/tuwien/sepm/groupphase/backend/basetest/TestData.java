@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.basetest;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Seat;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Section;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
 import org.hibernate.mapping.Table;
@@ -64,7 +65,7 @@ public interface TestData {
     List<Show> SHOWS = new ArrayList<>() {
         {
             add(Show.builder()
-                .eventCode(USER_CODE).startsAt(START).endsAt(END).ticketsSold(TOTAL).ticketsAvailable(TOTAL).eventLocation(LOCATIONS).build());
+                .id(ID).eventCode(USER_CODE).startsAt(START).endsAt(END).ticketsSold(TOTAL).ticketsAvailable(TOTAL).eventLocation(LOCATIONS).build());
         }
     };
     int TOTAL = 500;
@@ -77,7 +78,7 @@ public interface TestData {
     List<Section> SECTIONS = new ArrayList<>() {
         {
             add(Section.builder()
-                .id(ID).sectionName(FNAME).eventLocationId(ID).sectionDescription(DESC).capacity(TOTAL).build());
+                .id(ID).sectionName(FNAME).eventLocationId(ID).sectionDescription(DESC).capacity(TOTAL).seats(SEATS).build());
         }
     };
 
@@ -85,6 +86,12 @@ public interface TestData {
         {
             add(EventLocation.builder()
                 .id(ID).showId(ID).eventLocationName(FNAME).eventLocationDescription(DESC).street(STREET).city(CITY).country(COUNTRY).plz(PLZ).sections(SECTIONS).capacity(TOTAL).build());
+        }
+    };
+
+    List<Seat> SEATS = new ArrayList<>() {
+        {
+            add(Seat.builder().id(ID).sectionId(ID).isFree(true).seatColumn('A').seatRow('1').build());
         }
     };
 

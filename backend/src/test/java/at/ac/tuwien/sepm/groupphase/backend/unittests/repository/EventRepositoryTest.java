@@ -61,7 +61,7 @@ public class EventRepositoryTest implements TestData {
             .build();
     }
 
- /*   @Test
+    @Test
     public void givenNothing_whenSaveEvent_thenFindListWithOneElementAndFindEventByIdAndCode() {
         eventRepository.save(event);
 
@@ -97,5 +97,5 @@ public class EventRepositoryTest implements TestData {
         assertEquals(3, eventRepository.findAll().size());
         assertEquals(2, eventRepository.findAllByStartsAtAfterOrderByTotalTicketsSoldDesc(START).size());
 
-    } */
+    }
 }
