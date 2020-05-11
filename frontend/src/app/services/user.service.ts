@@ -6,7 +6,6 @@ import {User} from '../dtos/user';
 import {catchError, tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {ChangePassword} from '../dtos/change-password';
-import * as bcrypt from 'bcryptjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,10 +15,10 @@ export class UserService {
   error: boolean = false;
   errorMessage: string = '';
   private userBaseUri: string = this.globals.backendUri + '/users';
-  constructor(private httpClient: HttpClient, private globals: Globals, private router: Router) {
+  constructor(private httpClient: HttpClient, private globals: Globals) {
   }
   private handleError(err: HttpErrorResponse) {
-    let errorMessage = '';
+    let errorMessage;
     if (err.error instanceof ErrorEvent) {
       errorMessage = `An error occured : ${err.error.message} `;
     } else {
@@ -43,9 +42,6 @@ export class UserService {
     );
   }
   save(user: User): Observable<User> {
-    const salt = bcrypt.genSaltSync(10);
-    const pwd = bcrypt.hashSync(user.password, salt);
-    user.password = pwd;
     if (user.admin) {
       return this.httpClient.post<User>(this.userBaseUri + '/administrators', user).pipe(
         catchError(this.handleError)
