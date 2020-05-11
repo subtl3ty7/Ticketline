@@ -11,7 +11,7 @@ import lombok.*;
 public class SeatDto {
     private Long id;
     private Long sectionId;
-    private char seatRow;
-    private char seatColumn;
+    private String seatRow;
+    private String seatColumn;
     private boolean isFree;
 }

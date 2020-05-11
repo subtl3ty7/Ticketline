@@ -15,9 +15,11 @@ public class EventLocationDto {
     private Long id;
     private Long showId;
     private String name;
+    private String description;
     private String street;
     private String plz;
     private String city;
     private String country;
     private List<SectionDto> sections;
+    private int capacity;
 }

@@ -12,8 +12,9 @@ import {UserDetailsContainerComponent} from './components/admin-home/user-detail
 import {CreateUserContainerComponent} from './components/admin-home/create-user-container/root/create-user-container.component';
 
 const routes: Routes = [
-  {path: '', canActivate: [NotLoggedInGuard], component: GuestHomeComponent},
-  {path: 'home', canActivate: [LoggedInGuard], component: CustomerHomeComponent},
+  {path: '', redirectTo: 'guest-home', pathMatch: 'full'},
+  {path: 'guest-home', canActivate: [NotLoggedInGuard], component: GuestHomeComponent},
+  {path: 'customer-home', canActivate: [LoggedInGuard], component: CustomerHomeComponent},
   {path: 'login', canActivate: [NotLoggedInGuard], component: LoginComponent},
   {path: 'message', canActivate: [LoggedInGuard], component: MessageComponent},
   {path: 'administration', canActivate: [AdminGuard], component: AdminHomeComponent},
