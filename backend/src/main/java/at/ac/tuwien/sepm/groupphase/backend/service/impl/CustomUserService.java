@@ -211,11 +211,28 @@ public class CustomUserService implements UserService {
         LocalDateTime now = LocalDateTime.now();
         userFromDatabase.setUpdatedAt(now);
         userFromDatabase.setBirthday(customer.getBirthday());
-        userFromDatabase.setEmail(customer.getEmail());
         userFromDatabase.setFirstName(customer.getFirstName());
         userFromDatabase.setLastName(customer.getLastName());
+        userFromDatabase.setEmail(customer.getEmail());
 
-        return userRepository.save(customer);
+        return userRepository.save(userFromDatabase);
     }
 
+    @Override
+    public AbstractUser getAuthenticatedUser(Authentication auth) {
+        String email = "";
+        Object principal = auth.getPrincipal();
+        if (principal != null) {
+            if (principal instanceof User) {
+                User user = (User) principal;
+                email = user.getUsername();
+            }
+            if (principal instanceof String) {
+                email = (String) principal;
+            }
+            LOGGER.info("Getting user information for " + email);
+            return findUserByEmail(email);
+        }
+        return null;
+    }
 }

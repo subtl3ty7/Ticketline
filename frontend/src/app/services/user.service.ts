@@ -41,6 +41,13 @@ export class UserService {
       catchError(this.handleError)
     );
   }
+  getCurrentUser(): Observable<User> {
+    console.log('Load user by UserCode');
+    return this.httpClient.get<User>(this.userBaseUri + '/my-profile').pipe(
+      tap(data => console.log('User ' + JSON.stringify(data))),
+      catchError(this.handleError)
+    );
+  }
   save(user: User): Observable<User> {
     if (user.admin) {
       return this.httpClient.post<User>(this.userBaseUri + '/administrators', user).pipe(
@@ -49,6 +56,18 @@ export class UserService {
     }
     console.log('saving user in the database');
     return this.httpClient.post<User>(this.userBaseUri + '/customers', user).pipe(
+      catchError(this.handleError)
+    );
+  }
+  update(user: User) {
+    console.log('Updating user ' + user.userCode + ' in the database');
+      return this.httpClient.put(this.userBaseUri + '/update', user).pipe(
+        catchError(this.handleError)
+      );
+  }
+  delete(user: User) {
+    console.log('Deleting user ' + user.userCode + ' in the database');
+    return this.httpClient.get(this.userBaseUri + '/delete/' + user.userCode).pipe(
       catchError(this.handleError)
     );
   }

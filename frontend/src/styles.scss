@@ -48,12 +48,13 @@ mat-row:nth-child(even) {
   background-color: #f6f6f6;
 }
 
-.administration-tabs {
+.administration-tabs, .profile-tabs {
   width: 12%;
   padding-top: 20px;
 }
 
-.administration-content {
+
+.administration-content, .profile-content {
   width: 88%;
 }
 
@@ -61,11 +62,11 @@ mat-row:nth-child(even) {
   scrollbar-width: none;
 }
 @media screen and (max-width: 1400px) {
-  .administration-tabs {
+  .administration-tabs, .profile-tabs {
     width: 20%;
   }
 
-  .administration-content {
+  .administration-content, .profile-content {
     width: 80%;
   }
 }
