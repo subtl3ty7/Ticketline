@@ -1,3 +1,5 @@
+import {EventLocation} from './event-location';
+
 export class Show {
   private id: number;
   private eventCode: string;
@@ -5,5 +7,5 @@ export class Show {
   private endsAt: string;
   private ticketsSold: number;
   private ticketsAvailable: number;
-  private EventLocationDto eventLocation;
+  private eventLocation: EventLocation[];
 }

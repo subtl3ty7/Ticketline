@@ -1,3 +1,5 @@
+import {Section} from './section';
+
 export class EventLocation {
   private id: number;
   private showId: string;
@@ -6,5 +8,5 @@ export class EventLocation {
   private plz: string;
   private city: string;
   private country: string;
-  private List<SectionDto> sections;
+  private sections: Section[];
 }

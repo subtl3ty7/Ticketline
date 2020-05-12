@@ -37,6 +37,7 @@ public class EventEndpoint {
         this.eventMapper = eventMapper;
     }
 
+    @CrossOrigin(maxAge = 3600)
     @GetMapping(value = "/top10")
     @ApiOperation(
         value = "Get Top 10 events",
