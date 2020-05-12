@@ -21,8 +21,12 @@
         <div class="row">
 
           <!--The three Events inside a Carousel Item-->
-          <div class="col-md-4"
+          <div
                *ngFor="let event of threeEvents"
+               [class.col-md-6]="events[0] === threeEvents && event === threeEvents[0]"
+               [class.col-md-3]="events[0] === threeEvents && event !== threeEvents[0]"
+               [class.col-md-3]="events[0] === threeEvents && event !== threeEvents[0]"
+               [class.col-md-4]="events[0] !== threeEvents"
                [class.clearfix]="event !== threeEvents[0]"
                [class.d-none]="event !== threeEvents[0]"
                [class.d-md-block]="event !== threeEvents[0]"
