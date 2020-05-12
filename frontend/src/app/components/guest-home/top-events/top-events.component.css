@@ -1,0 +1,76 @@
+.item img {
+  width: 100%;
+  height: auto
+}
+
+ol.carousel-indicators {
+  position: absolute;
+  bottom: -50px;
+  margin: 0;
+  left: 0;
+  right: 0;
+}
+
+.carousel-indicators li {
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  background-color: #444444;
+}
+
+.carousel-indicators li:not(:last-child) {
+  margin-right: 20px;
+}
+
+.carousel-button-left {
+  left: -24px;
+}
+
+.carousel-button-right {
+  right: -24px;
+}
+
+.carousel-button-left,
+.carousel-button-right {
+  width: 48px;
+  opacity: 0.8;
+}
+
+.carousel-button-left:hover,
+.carousel-button-right:hover {
+  opacity: 1;
+}
+
+.btn {
+  width: 48px;
+  height: 48px;
+  background: #444444;
+  color: white;
+  box-shadow: 0px 3px 6px #00000029;
+  border-radius: 10px;
+}
+
+
+.custom-headline {
+  font-size: 40px;
+  color: #3B3B3B;
+  font-family: Semibold, "Segoe UI", serif;
+  font-weight: bold;
+}
+
+.card,
+.card-body {
+  background-color: #202020!important;
+}
+
+.card-body {
+  padding-bottom: 10px;
+  padding-top: 20px;
+}
+
+.card-title {
+  color: white;
+  font-family: Calibri, "Segoe UI", serif;
+  font-size: 20px;
+  margin-left: 10px;
+}

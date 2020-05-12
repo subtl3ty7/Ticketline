@@ -19,8 +19,6 @@ export class GuestHomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    document.body.style.backgroundImage = null;
-    document.body.style.backgroundColor = '#DEDEDE';
   }
 
 }

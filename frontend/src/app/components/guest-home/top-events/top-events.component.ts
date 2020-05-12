@@ -23,6 +23,10 @@ export class TopEventsComponent implements OnInit {
     this.eventService.getTop10Events().subscribe(
       (events: SimpleEvent[]) => {
         this.events = [];
+
+        if (events.length <= 3) {
+          this.events.push(events.slice(0, events.length));
+        }
         if (events.length >= 3) {
           this.events.push(events.slice(0, 3));
         }
