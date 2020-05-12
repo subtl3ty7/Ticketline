@@ -17,7 +17,7 @@
         </div>
 
         <div class="card-body">
-          <form class="form" [formGroup]="registrationForm" (ngSubmit)="registerUser()" style="padding-left: 40px; padding-right: 40px; border-bottom-left-radius: 20px;">
+          <form class="form" (keyup.enter)="registerUser()" [formGroup]="registrationForm" (ngSubmit)="registerUser()" style="padding-left: 40px; padding-right: 40px; border-bottom-left-radius: 20px;">
             <div class="form-group" >
               <label for="firstName">Vorname</label>
               <input type="text" name="firstName" formControlName="firstName" class="form-control" id="firstName"
