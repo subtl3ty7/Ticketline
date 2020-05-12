@@ -11,14 +11,19 @@ import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManagerFactory;
+import java.io.*;
 import java.lang.invoke.MethodHandles;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Profile("generateData")
 @Component
@@ -31,16 +36,18 @@ public class EventDataGenerator {
     private final EventService eventService;
     private final EventLocationService eventLocationService;
     private final EntityManagerFactory entityManagerFactory;
+    private final ResourceLoader resourceLoader;
 
 
     private final static int numberOfEventLocations = 5;
-    private static final int numberOfEvents = 5;
+    private static final int numberOfEvents = 15;
 
     public EventDataGenerator(SectionRepository sectionRepository,
                               SeatRepository seatRepository, ShowRepository showRepository,
                               EventService eventService,
                               EventLocationService eventLocationService,
-                              EntityManagerFactory entityManagerFactory
+                              EntityManagerFactory entityManagerFactory,
+                              ResourceLoader resourceLoader
     ) {
         this.sectionRepository = sectionRepository;
         this.showRepository = showRepository;
@@ -48,6 +55,7 @@ public class EventDataGenerator {
         this.eventService = eventService;
         this.eventLocationService = eventLocationService;
         this.entityManagerFactory = entityManagerFactory;
+        this.resourceLoader = resourceLoader;
     }
 
     private Session getSession() {
@@ -105,7 +113,7 @@ public class EventDataGenerator {
                 .endsAt(LocalDateTime.now())
                 .eventCode("E1234" + i)
                 .name("Talk Event")
-                .photo("no")
+                .photo(getImage())
                 .prices(List.of(1,2,3))
                 .totalTicketsSold(5)
                 .type("Of the cool type")
@@ -186,20 +194,20 @@ public class EventDataGenerator {
 
     private List<Seat> generateSeats() {
         LOGGER.info("Generating Seat Test Data");
-        char[] columns = new char[]{
-            '1',
-            '2',
-            '3'
+        String[] columns = new String[]{
+            "1",
+            "2",
+            "3"
         };
-        char[] rows = new char[] {
-            'A',
-            'B',
-            'C'
+        String[] rows = new String[] {
+            "A",
+            "B",
+            "C"
         };
 
         List<Seat> seats = new ArrayList<>();
-        for(char i: rows) {
-            for(char j: columns) {
+        for(String i: rows) {
+            for(String j: columns) {
                 Seat seat = Seat.builder()
                     .seatRow(i)
                     .seatColumn(j)
@@ -218,5 +226,27 @@ public class EventDataGenerator {
             sum += section.getCapacity();
         }
         return sum;
+    }
+
+    private String getImage() {
+        /*
+        try {
+            String img = new String(Files.readAllBytes(Paths.get("Luffy.txt")));
+            return img;
+        } catch (IOException e) {
+            throw new RuntimeException("Couldn't load Image File for EventDataGenerator.", e);
+        }
+        */
+        try {
+            InputStream inputStream = resourceLoader.getResource("classpath:Luffy.txt").getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            String contents = reader.lines()
+                .collect(Collectors.joining(System.lineSeparator()));
+            return contents;
+        } catch (IOException e) {
+            throw new RuntimeException("Couldn't load Image File for EventDataGenerator.", e);
+        } catch (NullPointerException e) {
+            throw new RuntimeException("Couldn't load Image File for EventDataGenerator.", e);
+        }
     }
 }

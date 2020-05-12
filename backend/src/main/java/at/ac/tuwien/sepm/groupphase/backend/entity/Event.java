@@ -57,10 +57,6 @@ public class Event implements Serializable {
     @Column(nullable = false, name = "end_datetime")
     private LocalDateTime endsAt;
 
-    @NotNull
-    @Column(nullable = false, name = "photo")
-    private String photo;
-
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "event_code", referencedColumnName = "event_code")
     private List<Show> shows;
@@ -75,4 +71,9 @@ public class Event implements Serializable {
     @ElementCollection(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT) //only way to fetch more than two collections with type eager ...
     private List<Integer> prices;
+
+    @NotNull
+    @Lob
+    @Column(nullable = false, name = "photo")
+    private String photo;
 }

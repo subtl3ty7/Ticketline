@@ -43,6 +43,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import { MustMatchDirective } from './utils/must-match.directive';
 import { GuestHeaderComponent } from './sections/header/guest-header/guest-header.component';
+import { TopEventsComponent } from './components/guest-home/top-events/top-events.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 
 
@@ -73,6 +74,7 @@ import { EventSearchComponent } from './components/event-search/event-search.com
     CreateUserComponent,
     CreateUserFormComponent,
     GuestHeaderComponent,
+    TopEventsComponent
     RegistrationComponent,
     GuestHeaderComponent,
     EventSearchComponent,

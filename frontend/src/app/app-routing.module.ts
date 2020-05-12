@@ -14,8 +14,9 @@ import {RegistrationComponent} from './components/registration/registration.comp
 import {EventSearchComponent} from './components/event-search/event-search.component';
 
 const routes: Routes = [
-  {path: '', canActivate: [NotLoggedInGuard], component: GuestHomeComponent},
-  {path: 'home', canActivate: [LoggedInGuard], component: CustomerHomeComponent},
+  {path: '', redirectTo: 'guest-home', pathMatch: 'full'},
+  {path: 'guest-home', canActivate: [NotLoggedInGuard], component: GuestHomeComponent},
+  {path: 'customer-home', canActivate: [LoggedInGuard], component: CustomerHomeComponent},
   {path: 'login', canActivate: [NotLoggedInGuard], component: LoginComponent},
   {path: 'message', canActivate: [LoggedInGuard], component: MessageComponent},
   {path: 'administration', canActivate: [AdminGuard], component: AdminHomeComponent},
