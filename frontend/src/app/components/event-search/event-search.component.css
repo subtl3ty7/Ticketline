@@ -1,5 +1,9 @@
+.h3 {
+  background-color: red;
+}
+
 .h-divider{
-  margin-top:80px;
+  margin-top:160px;
   margin-bottom:40px;
   height:1px;
   width:100%;
@@ -8,19 +12,17 @@
   color: #707070;
 }
 
-.card ,
-.card-body {
-  background-color: #FBFBFB;
-  border-radius: 0px 0px 20px 20px;
+label {
+  font-size: 20px;
 }
 
 .bg {
-  /* The image used */
-  background-image: url("img_1.png");
-  /* Full height */
+  /* The image used /
+
+  / Full height /
   height: 100%;
 
-  /* Center and scale the image nicely */
+  / Center and scale the image nicely */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
