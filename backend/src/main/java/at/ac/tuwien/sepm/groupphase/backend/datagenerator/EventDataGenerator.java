@@ -5,7 +5,6 @@ import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.*;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventLocationService;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
-import org.apache.commons.lang3.SerializationUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -13,14 +12,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManagerFactory;
 import java.io.*;
 import java.lang.invoke.MethodHandles;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -106,10 +102,13 @@ public class EventDataGenerator {
             }
 
             String imgName = "";
-            if(i<4) {
-                imgName = "Luffy.txt";
-            } else {
-                imgName = "Gigi.txt";
+            if(i<2) {
+                imgName = "Event_Img1_Luffy.txt";
+            } else if (i < 4) {
+                imgName = "Event_Img2_Wide.txt";
+            }
+            else {
+                imgName = "Event_Img3_Gigi.txt";
             }
 
             Event event = Event.builder()

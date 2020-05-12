@@ -1,11 +1,6 @@
-.item img {
-  width: 100%;
-  height: auto
-}
-
 ol.carousel-indicators {
   position: absolute;
-  bottom: -50px;
+  bottom: 0px;
   margin: 0;
   left: 0;
   right: 0;
@@ -23,55 +18,111 @@ ol.carousel-indicators {
 }
 
 .carousel-button-left {
-  left: -24px;
+  left: -50px;
 }
 
 .carousel-button-right {
-  right: -24px;
+  right: -50px;
 }
 
 .carousel-button-left,
 .carousel-button-right {
-  width: 48px;
-  opacity: 0.8;
+  width: 130px;
+  z-index: 112;
+  transition: .2s;
 }
 
 .carousel-button-left:hover,
 .carousel-button-right:hover {
   opacity: 1;
+  transform: scale(1.5);
 }
 
-.btn {
+.carousel-item {
+  padding: 30px 50px;
+}
+
+.carousel {
+  background: -moz-linear-gradient(left, rgba(130,130,130,0) 0%, rgba(130,130,130,0) 0%, rgba(130,130,130,0.2) 12%, rgba(130,130,130,0.4) 51%, rgba(130,130,130,0.2) 86%, rgba(130,130,130,0) 100%);
+  padding-bottom: 20px;
+}
+
+
+.carousel-visual-button {
   width: 48px;
   height: 48px;
-  background: #444444;
+  background: black;
   color: white;
-  box-shadow: 0px 3px 6px #00000029;
   border-radius: 10px;
 }
 
-
-.custom-headline {
-  font-size: 40px;
-  color: #3B3B3B;
-  font-family: Semibold, "Segoe UI", serif;
-  font-weight: bold;
-  margin-left: -20px;
-}
-
-.card,
 .card-body {
-  background-color: #202020!important;
+  background-color: #202020;
+  border-radius: 0px 0px 10px 10px;
+  border-width: 10px;
+  opacity: 0.9;
 }
 
-.card-body {
-  padding-bottom: 10px;
-  padding-top: 20px;
+
+.card {
+  box-shadow: 2px 2px 5px 3px rgba(0,0,0,0.30);
+  border-radius: 10px 10px 10px 10px;
+  transition: .2s;
+  opacity: 1;
 }
+
+.card:hover {
+  cursor: pointer;
+}
+
+.card:hover .card-img-top {
+  opacity: 1;
+}
+.card:hover .card-body {
+  opacity: 1;
+}
+
 
 .card-title {
   color: white;
   font-family: Calibri, "Segoe UI", serif;
   font-size: 20px;
   margin-left: 10px;
+}
+
+
+.zoom {
+  transition: transform .2s; /* Animation */
+}
+
+.zoom:hover
+{
+  transform: scale(1.1);
+  z-index: 111;
+}
+
+.image-crop-big {
+  object-fit: cover; /* scale the image */
+  object-position: center; /* Center the image within the element */
+  height: 320px;
+  width: 600px;
+}
+.image-crop-small {
+  object-fit: cover; /* scale the image */
+  object-position: center; /* Center the image within the element */
+  height: 320px;
+  min-width: 200px;
+}
+
+.card-img-top {
+  opacity: 0.8;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.event-button {
+  border: 2px solid white;
+  background-color: transparent;
+  color: white;
+  cursor: pointer;
+  border-radius: 0px;
 }

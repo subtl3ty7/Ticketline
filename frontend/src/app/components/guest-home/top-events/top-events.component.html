@@ -1,5 +1,5 @@
 <div class="container" *ngIf="events && events.length > 0">
-  <div class="custom-headline mb-5">Top-Veranstaltungen</div>
+  <h1 class="mb-4">Top-Veranstaltungen</h1>
 
   <!--Carousel Wrapper-->
   <div id="multi-item-example" class="my-slider carousel slide carousel-multi-item" data-ride="carousel">
@@ -21,21 +21,26 @@
         <div class="row">
 
           <!--The three Events inside a Carousel Item-->
-          <div
+          <div class="zoom"
                *ngFor="let event of threeEvents"
-               [class.col-md-6]="events[0] === threeEvents && event === threeEvents[0]"
-               [class.col-md-3]="events[0] === threeEvents && event !== threeEvents[0]"
-               [class.col-md-3]="events[0] === threeEvents && event !== threeEvents[0]"
-               [class.col-md-4]="events[0] !== threeEvents"
+               [class.col-md-6]="event === threeEvents[0]"
+               [class.col-md-3]="event !== threeEvents[0]"
                [class.clearfix]="event !== threeEvents[0]"
                [class.d-none]="event !== threeEvents[0]"
                [class.d-md-block]="event !== threeEvents[0]"
-               style="padding: 7px">
-            <div class="card bg-dark">
-              <img class="card-img-top" src="{{event.photo}}"
-                   alt="Card image cap">
+               style="padding: 10px">
+            <div class="card">
+              <img class="card-img-top img-fluid"
+                   [class.image-crop-big]="event === threeEvents[0]"
+                   [class.image-crop-small]="event !== threeEvents[0]"
+                   src="{{event.photo}}">
               <div class="card-body">
-                <h4 class="card-title">{{event.name}}</h4>
+                <div class = "card-title row">
+                  <h4>{{event.name}}</h4>
+                  <div *ngIf="event === threeEvents[0]">
+                    <button class="btn default font-weight-bold event-button" routerLinkActive="active" style="font-size: 18px" ><h3>Tickets ab €30,-</h3></button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -47,20 +52,27 @@
 
     <!--Controls-->
     <a class="carousel-button-left left carousel-control-prev" href="#multi-item-example" data-slide="prev">
-      <a class="btn">
-        <div  style="padding-top: 4px">
-          <span class="fa fa-chevron-left"></span>
-        </div>
-      </a>
+      <div class="col-12 text-right">
+        <a class="btn carousel-visual-button">
+          <div  style="padding-top: 4px">
+            <span class="fa fa-chevron-left"></span>
+          </div>
+        </a>
+      </div>
     </a>
     <a class="carousel-button-right right carousel-control-next" href="#multi-item-example" data-slide="next">
-      <a class="btn">
-        <div  style="padding-top: 4px">
-          <span class="fa fa-chevron-right"></span>
-        </div>
-      </a>
+      <div class="col-12 text-left">
+        <a class="btn carousel-visual-button">
+          <div  style="padding-top: 4px">
+            <span class="fa fa-chevron-right"></span>
+          </div>
+        </a>
+      </div>
     </a>
 
 
   </div>
 </div>
+
+<!--<img class="image-crop" src="https://www.mch-group.com/-/media/mch-group/Images/Content/News/Blog/2017/2017-04/mch-group-live-marketing-aktivierung.jpg" />-->
+
