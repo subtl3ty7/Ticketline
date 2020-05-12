@@ -8,7 +8,7 @@ import {SimpleEvent} from '../../../dtos/simple-event';
   styleUrls: ['./top-events.component.css']
 })
 export class TopEventsComponent implements OnInit {
-  events: SimpleEvent[];
+  events: SimpleEvent[][];
 
   constructor(private eventService: EventService) { }
 
@@ -22,9 +22,15 @@ export class TopEventsComponent implements OnInit {
   public getTop10Events() {
     this.eventService.getTop10Events().subscribe(
       (events: SimpleEvent[]) => {
-        this.events = events;
-        for (const e of this.events) {
-          console.log(e.name);
+        this.events = [];
+        if (events.length >= 3) {
+          this.events.push(events.slice(0, 3));
+        }
+        if (events.length >= 6) {
+          this.events.push(events.slice(3, 6));
+        }
+        if (events.length >= 9) {
+          this.events.push(events.slice(6, 9));
         }
       },
       error => {
