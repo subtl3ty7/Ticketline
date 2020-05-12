@@ -74,7 +74,7 @@ import { EventSearchComponent } from './components/event-search/event-search.com
     CreateUserComponent,
     CreateUserFormComponent,
     GuestHeaderComponent,
-    TopEventsComponent
+    TopEventsComponent,
     RegistrationComponent,
     GuestHeaderComponent,
     EventSearchComponent,
