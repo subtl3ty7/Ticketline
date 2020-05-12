@@ -46,7 +46,7 @@ public class ValidationMessage {
             put("user_isCustomer", "Need to be a Customer.");
             put("user_isUnblocked", "Needs to be unblocked to get blocked.");
             put("user_iBlocked", "Needs to be blocked to get unblocked.");
-
+            put("user_isSelf", "User is not the self");
 
 
             //seat
