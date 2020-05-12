@@ -1,0 +1,36 @@
+<div class="wrapper all-height">
+  <div class="profile-content-wrapper all-height">
+    <div class="profile-title-wrapper">
+      <div class="profile-line">
+        <div class="profile-title">
+          <span *ngIf="globals.getProfileChoosenTab === 1">My Info</span>
+          <span *ngIf="globals.getProfileChoosenTab === 2">My Tickets</span>
+          <span *ngIf="globals.getProfileChoosenTab === 3">My Invoices</span>
+        </div>
+      </div>
+    </div>
+
+    <!--TABS-->
+    <div class="profile-wrapper">
+      <div class="profile-tabs">
+        <app-my-profile-side-menu></app-my-profile-side-menu>
+      </div>
+
+      <div class="profile-content all-height"
+           *ngIf="globals.getProfileChoosenTab === 1">
+        <app-my-info-tab class="all-height"></app-my-info-tab>
+      </div>
+
+      <div class="profile-content"
+           *ngIf="globals.getProfileChoosenTab === 2">
+        <app-my-tickets-tab class="all-height" [choosenTab]="globals.getProfileChoosenTab"></app-my-tickets-tab>
+      </div>
+
+      <div class="profile-content"
+           *ngIf="globals.getProfileChoosenTab === 3">
+        <app-my-invoices-tab class="all-height" [choosenTab]="globals.getProfileChoosenTab"></app-my-invoices-tab>
+      </div>
+
+    </div>
+  </div>
+</div>

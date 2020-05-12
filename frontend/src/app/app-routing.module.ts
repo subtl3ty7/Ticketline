@@ -10,6 +10,7 @@ import {AdminGuard} from './guards/admin.guard';
 import {CustomerHomeComponent} from './components/customer-home/customer-home.component';
 import {UserDetailsContainerComponent} from './components/admin-home/user-details-container/root/user-details-container.component';
 import {CreateUserContainerComponent} from './components/admin-home/create-user-container/root/create-user-container.component';
+import {MyProfileContainerComponent} from './components/my-profile/root/my-profile-container.component';
 import {RegistrationComponent} from './components/registration/registration.component';
 import {EventSearchComponent} from './components/event-search/event-search.component';
 
@@ -24,6 +25,8 @@ const routes: Routes = [
   {path: 'user-details/:uc', canActivate: [AdminGuard], component: UserDetailsContainerComponent},
   {path: 'user-details/:uc/reset-password', canActivate: [AdminGuard], component: UserDetailsContainerComponent},
   {path: 'create-user', canActivate: [AdminGuard], component: CreateUserContainerComponent},
+  {path: 'my-profile', canActivate: [LoggedInGuard], component: MyProfileContainerComponent},
+  {path: 'my-profile/:tabId', canActivate: [LoggedInGuard], component: MyProfileContainerComponent},
   {path: 'registration', canActivate: [NotLoggedInGuard], component: RegistrationComponent},
   {path: 'create-user', canActivate: [AdminGuard], component: CreateUserContainerComponent},
   {path: 'event-search', canActivate: [], component: EventSearchComponent}
