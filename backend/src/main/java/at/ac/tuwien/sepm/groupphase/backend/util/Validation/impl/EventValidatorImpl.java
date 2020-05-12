@@ -33,7 +33,12 @@ public class EventValidatorImpl implements EventValidator {
         Constraints constraints = new Constraints();
         constraints.add(AccesoryValidator.validateJavaxConstraints(event));
         constraints.add(validateEventCode(event.getEventCode()));
-        constraints.add(validateShows(event.getShows()));
+        constraints.add("artists_notNull", event.getArtists() != null);
+        constraints.add("prices_exist", event.getPrices() != null && event.getPrices().size()>0);
+        constraints.add("shows_exist", event.getShows() != null && event.getShows().size()>0);
+        if(event.getShows() != null) {
+            constraints.add(validateShows(event.getShows()));
+        }
         return constraints;
     }
 
@@ -52,7 +57,7 @@ public class EventValidatorImpl implements EventValidator {
 
     private Constraints validateShows(List<Show> shows) {
         Constraints constraints = new Constraints();
-        for(Show show: shows) {
+        for (Show show : shows) {
             constraints.add(validate(show));
         }
         return constraints;
@@ -99,7 +104,9 @@ public class EventValidatorImpl implements EventValidator {
         Constraints constraints = new Constraints();
         constraints.add(AccesoryValidator.validateJavaxConstraints(section));
         constraints.add("section_capacity", section.getCapacity() >= section.getSeats().size());
-        constraints.add(validateSeats(section.getSeats()));
+        if(section.getSeats() != null) {
+            constraints.add(validateSeats(section.getSeats()));
+        }
         return constraints;
     }
 

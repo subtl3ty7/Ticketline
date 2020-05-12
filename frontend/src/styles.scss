@@ -1,4 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~@fortawesome/fontawesome-free/css/all.min.css';
+@import '~@fortawesome/fontawesome-free/css/all.css';
+
 .all-height {
   height: 100%;
 }
@@ -68,15 +71,131 @@ mat-row:nth-child(even) {
   }
 }
 
-body {
-  background-color: #DEDEDE;
-}
-
 label {
   font-size: 20px;
 }
 
 html, body { height: 100%; }
 body, h1, h2, h3, h4, h5, h6, p, a, label { margin: 0; font-family: Segue UI, Roboto, "Helvetica Neue", sans-serif; }
+body {
+  background: #DEDEDE no-repeat center;
+  background-size: cover;
+}
 
+label {
+  font-size: 20px;
+}
 
+//Page Title
+h1 {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+//Card Body Title
+h2 {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+//General Text
+p {
+  font-size: 18px;
+  font-weight: lighter;
+}
+
+//Button Styles
+.btn {
+  cursor: pointer;
+  border-radius: 0px;
+  font-size: 18px; height: 42px;
+}
+
+/* Green */
+.success {
+  border-color: #43B581;
+  color: green;
+}
+
+.success:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+
+/* Blue */
+.info {
+  border-color: #2196F3;
+  color: dodgerblue
+}
+
+.info:hover {
+  background: #2196F3;
+  color: white;
+}
+
+/* Orange */
+.warning {
+  border-color: #ff9800;
+  color: orange;
+}
+
+.warning:hover {
+  background: #ff9800;
+  color: white;
+}
+
+/* Red */
+.danger {
+  border-color: #f44336;
+  color: red
+}
+
+.danger:hover {
+  background: #f44336;
+  color: white;
+}
+
+/* Gray */
+.default {
+  border: 0.5px solid #707070;
+  background-color: #43B581;
+  color: #FBFBFB;
+}
+
+.default:hover {
+  background: #317d59;
+}
+
+.divider {
+  border-color: #FBFBFB;
+  border-style: solid;
+  border-width: 0.5px;
+  height: 46px;
+}
+
+//Page Title
+.card-header {
+  border-radius: 20px 20px 0px 0px !important;
+  background-color: #0E2E62;
+  z-index:9999;
+  color: #FBFBFB;
+  height: 90px;
+}
+
+//Page Content
+.card ,
+.card-body {
+  background-color: #FBFBFB;
+  border-radius: 20px 20px 20px 20px;
+}
+
+.card {
+  box-shadow: 0px 6px 12px #00000029;
+  border-radius: 20px 20px 20px 20px;
+  border: 0px;
+}
+
+//Warning Messages
+.alert {
+  margin-bottom: 0px;
+}

@@ -11,10 +11,13 @@ import {CustomerHomeComponent} from './components/customer-home/customer-home.co
 import {UserDetailsContainerComponent} from './components/admin-home/user-details-container/root/user-details-container.component';
 import {CreateUserContainerComponent} from './components/admin-home/create-user-container/root/create-user-container.component';
 import {MyProfileContainerComponent} from './components/my-profile/root/my-profile-container.component';
+import {RegistrationComponent} from './components/registration/registration.component';
+import {EventSearchComponent} from './components/event-search/event-search.component';
 
 const routes: Routes = [
-  {path: '', canActivate: [NotLoggedInGuard], component: GuestHomeComponent},
-  {path: 'home', canActivate: [LoggedInGuard], component: CustomerHomeComponent},
+  {path: '', redirectTo: 'guest-home', pathMatch: 'full'},
+  {path: 'guest-home', canActivate: [NotLoggedInGuard], component: GuestHomeComponent},
+  {path: 'customer-home', canActivate: [LoggedInGuard], component: CustomerHomeComponent},
   {path: 'login', canActivate: [NotLoggedInGuard], component: LoginComponent},
   {path: 'message', canActivate: [LoggedInGuard], component: MessageComponent},
   {path: 'administration', canActivate: [AdminGuard], component: AdminHomeComponent},
@@ -23,7 +26,10 @@ const routes: Routes = [
   {path: 'user-details/:uc/reset-password', canActivate: [AdminGuard], component: UserDetailsContainerComponent},
   {path: 'create-user', canActivate: [AdminGuard], component: CreateUserContainerComponent},
   {path: 'my-profile', canActivate: [LoggedInGuard], component: MyProfileContainerComponent},
-  {path: 'my-profile/:tabId', canActivate: [LoggedInGuard], component: MyProfileContainerComponent}
+  {path: 'my-profile/:tabId', canActivate: [LoggedInGuard], component: MyProfileContainerComponent},
+  {path: 'registration', canActivate: [NotLoggedInGuard], component: RegistrationComponent},
+  {path: 'create-user', canActivate: [AdminGuard], component: CreateUserContainerComponent},
+  {path: 'event-search', canActivate: [], component: EventSearchComponent}
 ];
 
 @NgModule({

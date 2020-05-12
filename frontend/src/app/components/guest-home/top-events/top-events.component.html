@@ -1,0 +1,62 @@
+<div class="container" *ngIf="events && events.length > 0">
+  <div class="custom-headline mb-5">Top-Veranstaltungen</div>
+
+  <!--Carousel Wrapper-->
+  <div id="multi-item-example" class="my-slider carousel slide carousel-multi-item" data-ride="carousel">
+
+    <!--Indicators-->
+    <ol class="carousel-indicators">
+      <li data-target="#multi-item-example" data-slide-to="0" class="active"></li>
+      <li data-target="#multi-item-example" data-slide-to="1"></li>
+      <li data-target="#multi-item-example" data-slide-to="2"></li>
+    </ol>
+
+    <!--Inner Carousel-->
+    <div class="carousel-inner" role="listbox">
+
+      <!--Carousel Items-->
+      <div class="carousel-item"
+           *ngFor="let threeEvents of events"
+           [class.active]="threeEvents === events[0]">
+        <div class="row">
+
+          <!--The three Events inside a Carousel Item-->
+          <div class="col-md-4"
+               *ngFor="let event of threeEvents"
+               [class.clearfix]="event !== threeEvents[0]"
+               [class.d-none]="event !== threeEvents[0]"
+               [class.d-md-block]="event !== threeEvents[0]"
+               style="padding: 7px">
+            <div class="card bg-dark">
+              <img class="card-img-top" src="{{event.photo}}"
+                   alt="Card image cap">
+              <div class="card-body">
+                <h4 class="card-title">{{event.name}}</h4>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!--/Inner Carousel-->
+
+    <!--Controls-->
+    <a class="carousel-button-left left carousel-control-prev" href="#multi-item-example" data-slide="prev">
+      <a class="btn">
+        <div  style="padding-top: 4px">
+          <span class="fa fa-chevron-left"></span>
+        </div>
+      </a>
+    </a>
+    <a class="carousel-button-right right carousel-control-next" href="#multi-item-example" data-slide="next">
+      <a class="btn">
+        <div  style="padding-top: 4px">
+          <span class="fa fa-chevron-right"></span>
+        </div>
+      </a>
+    </a>
+
+
+  </div>
+</div>

@@ -26,6 +26,10 @@ a:hover {
   font-size: 40px;
 }
 
+.navbar-brand:hover {
+  color: #FBFBFB;
+}
+
 .nav-link {
   font-size: 20px;
 }
@@ -105,4 +109,10 @@ a:hover {
   height: 46px;
 }
 
-
+.form-inline {
+  margin-left: 100px;
+  width: 930px;
+}
+.form-control {
+  width: 930px;
+}

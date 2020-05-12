@@ -70,7 +70,9 @@ public interface TestData {
     List<Show> SHOWS = new ArrayList<>() {
         {
             add(Show.builder()
-                .id(ID).eventCode(USER_CODE).startsAt(START).endsAt(END).ticketsSold(TOTAL).ticketsAvailable(TOTAL).build());
+                .id(ID).eventCode(USER_CODE).startsAt(START).endsAt(END).ticketsSold(TOTAL).ticketsAvailable(TOTAL)
+                .eventLocation(LOCATIONS)
+                .build());
         }
     };
     int TOTAL = 500;
