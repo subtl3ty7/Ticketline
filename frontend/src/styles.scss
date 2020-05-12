@@ -210,7 +210,21 @@ p {
   border: 0px;
 }
 
+.card-body {
+  margin: 0px 40px 40px 40px;
+}
+
 //Warning Messages
 .alert {
   margin-bottom: 0px;
+}
+
+label {
+  margin-bottom: 5px;
+}
+
+.main-body {
+  top: -20px;
+  max-width: 1320px;
+  padding-bottom: 10px;
 }
