@@ -105,6 +105,13 @@ public class EventDataGenerator {
                 eventLocationIndex = eventLocations.size()-1;
             }
 
+            String imgName = "";
+            if(i<4) {
+                imgName = "Luffy.txt";
+            } else {
+                imgName = "Gigi.txt";
+            }
+
             Event event = Event.builder()
                 .artists(List.of("Artist1", "Artist2", "Artist3"))
                 .category("Talk")
@@ -113,7 +120,7 @@ public class EventDataGenerator {
                 .endsAt(LocalDateTime.now())
                 .eventCode("E1234" + i)
                 .name("Talk Event")
-                .photo(getImage())
+                .photo(getImage(imgName))
                 .prices(List.of(1,2,3))
                 .totalTicketsSold(5)
                 .type("Of the cool type")
@@ -228,17 +235,9 @@ public class EventDataGenerator {
         return sum;
     }
 
-    private String getImage() {
-        /*
+    private String getImage(String imgName) {
         try {
-            String img = new String(Files.readAllBytes(Paths.get("Luffy.txt")));
-            return img;
-        } catch (IOException e) {
-            throw new RuntimeException("Couldn't load Image File for EventDataGenerator.", e);
-        }
-        */
-        try {
-            InputStream inputStream = resourceLoader.getResource("classpath:Luffy.txt").getInputStream();
+            InputStream inputStream = resourceLoader.getResource("classpath:" + imgName).getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             String contents = reader.lines()
                 .collect(Collectors.joining(System.lineSeparator()));

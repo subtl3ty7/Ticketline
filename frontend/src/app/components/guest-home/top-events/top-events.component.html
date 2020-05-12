@@ -18,25 +18,20 @@
     </ol>
     <!--/.Indicators-->
 
-    <!--Slides-->
     <div class="carousel-inner" role="listbox">
 
-      <!--First slide-->
-      <div class="carousel-item active">
+      <!--Carousel Items-->
+      <div class="carousel-item"
+           *ngFor="let threeEvents of events"
+           [class.active]="threeEvents === events[0]">
         <div class="row">
-          <div class="col-md-4">
-            <div class="card mb-2">
-              <img class="card-img-top" src="{{events[0][0].photo}}"
-                   alt="Card image cap">
-              <div class="card-body">
-                <h4 class="card-title">{{events[0][0].name}}</h4>
-                <p class="card-text">{{events[0][0].description}}</p>
-                <a class="btn btn-dark text-white" >View Event</a>
-              </div>
-            </div>
-          </div>
 
-          <div class="col-md-4 clearfix d-none d-md-block" *ngFor="let event of events[0].slice(1,3)">
+          <!--The three Events inside a Carousel Item-->
+          <div class="col-md-4 clearfix d-none d-md-block"
+               *ngFor="let event of threeEvents"
+               [class.clearfix]="event !== threeEvents[0]"
+               [class.d-none]="event !== threeEvents[0]"
+               [class.d-md-block]="event !== threeEvents[0]">
             <div class="card mb-2">
               <img class="card-img-top" src="{{event.photo}}"
                    alt="Card image cap">
@@ -47,35 +42,7 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <!--Second and Third slide-->
-      <div class="carousel-item" *ngFor="let threeEvents of events">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="card mb-2">
-              <img class="card-img-top" src="{{threeEvents[0].photo}}"
-                   alt="Card image cap">
-              <div class="card-body">
-                <h4 class="card-title">{{threeEvents[0].name}}</h4>
-                <p class="card-text">{{threeEvents[0].description}}</p>
-                <a class="btn btn-dark text-white" >View Event</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-4 clearfix d-none d-md-block" *ngFor="let event of threeEvents.slice(1,3)">
-            <div class="card mb-2">
-              <img class="card-img-top" src="{{event.photo}}"
-                   alt="Card image cap">
-              <div class="card-body">
-                <h4 class="card-title">{{event.name}}</h4>
-                <p class="card-text">{{event.description}}</p>
-                <a class="btn btn-dark text-white" >View Event</a>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
