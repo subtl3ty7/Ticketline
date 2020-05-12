@@ -1,0 +1,53 @@
+<div class="center-block">
+  <ng-content></ng-content>
+
+  <!--NAME-->
+  <div class="info-wrapper">
+    <img src="assets/images/user/person.svg" alt="">
+    <div class="info">
+      <div class="info-label"></div>
+      <div class="info-field">
+        {{currentUser?.firstName}}
+        {{currentUser?.lastName}}
+      </div>
+    </div>
+  </div>
+
+  <!--USER CODE-->
+  <div class="info-wrapper">
+    <img src="assets/images/user/loupe.svg" alt="">
+    <div class="info">
+      <div class="info-label">User Code</div>
+      <div class="info-field code-field">
+        {{currentUser?.userCode}}
+      </div>
+    </div>
+  </div>
+
+  <!--EMAIL-->
+  <div class="info-wrapper">
+    <img src="assets/images/user/email.svg" alt="">
+    <div class="info">
+      <div class="info-label">E-Mail</div>
+      <div class="info-field">{{currentUser?.email}}</div>
+    </div>
+  </div>
+
+  <!--BIRTHDATE-->
+  <div class="info-wrapper">
+    <img src="assets/images/user/birth.svg" alt="">
+    <div class="info">
+      <div class="info-label">Birthdate</div>
+      <div class="info-field">{{currentUser?.birthday | date}}</div>
+    </div>
+  </div>
+
+  <!--POINTS-->
+  <div class="info-wrapper">
+    <img src="assets/images/user/points.svg" alt="">
+    <div class="info">
+      <div class="info-label">Points</div>
+      <div class="info-field status-label">{{currentUser?.points}}</div>
+    </div>
+  </div>
+</div>
