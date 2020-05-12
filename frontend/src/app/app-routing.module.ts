@@ -25,7 +25,7 @@ const routes: Routes = [
   {path: 'create-user', canActivate: [AdminGuard], component: CreateUserContainerComponent},
   {path: 'registration', canActivate: [NotLoggedInGuard], component: RegistrationComponent},
   {path: 'create-user', canActivate: [AdminGuard], component: CreateUserContainerComponent},
-  {path: 'event-search', canActivate: [NotLoggedInGuard], component: EventSearchComponent}
+  {path: 'event-search', canActivate: [], component: EventSearchComponent}
 ];
 
 @NgModule({

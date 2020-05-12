@@ -1,0 +1,29 @@
+.h3 {
+  background-color: red;
+}
+
+.h-divider{
+  margin-top:160px;
+  margin-bottom:40px;
+  height:1px;
+  width:100%;
+  border-top:1px solid;
+  border-color: #707070;
+  color: #707070;
+}
+
+label {
+  font-size: 20px;
+}
+
+.bg {
+  /* The image used /
+
+  / Full height /
+  height: 100%;
+
+  / Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

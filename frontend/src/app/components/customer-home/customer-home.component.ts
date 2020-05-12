@@ -10,7 +10,8 @@ export class CustomerHomeComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    document.body.style.backgroundImage = '';
+    document.body.style.backgroundImage = null;
+    document.body.style.backgroundColor = '#DEDEDE';
   }
 
 }
