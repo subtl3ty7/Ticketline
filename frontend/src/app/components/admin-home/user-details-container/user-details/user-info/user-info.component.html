@@ -3,7 +3,7 @@
 
   <!--NAME-->
   <div class="info-wrapper">
-    <img src="assets/resources/images/administration/users/person.svg" alt="">
+    <img src="assets/resources/images/user/person.svg" alt="">
     <div class="info">
       <div class="info-label"></div>
       <div class="info-field">
@@ -15,7 +15,7 @@
 
   <!--USER CODE-->
   <div class="info-wrapper">
-    <img src="assets/resources/images/administration/users/loupe.svg" alt="">
+    <img src="assets/resources/images/user/loupe.svg" alt="">
     <div class="info">
       <div class="info-label">User Code</div>
       <div class="info-field code-field">
@@ -26,7 +26,7 @@
 
   <!--EMAIL-->
   <div class="info-wrapper">
-    <img src="assets/resources/images/administration/users/email.svg" alt="">
+    <img src="assets/resources/images/user/email.svg" alt="">
     <div class="info">
       <div class="info-label">E-Mail</div>
       <div class="info-field">{{user?.email}}</div>
@@ -35,7 +35,7 @@
 
   <!--BIRTHDATE-->
   <div class="info-wrapper">
-    <img src="assets/resources/images/administration/users/birth.svg" alt="">
+    <img src="assets/resources/images/user/birth.svg" alt="">
     <div class="info">
       <div class="info-label">Birthdate</div>
       <div class="info-field">{{user?.birthday | date}}</div>
@@ -59,7 +59,7 @@
   </div>
 
   <div class="info-wrapper">
-    <img src="assets/resources/images/administration/users/history.svg" alt="">
+    <img src="assets/resources/images/user/history.svg" alt="">
     <div class="info">
       <div class="info-label">Created At</div>
       <div class="info-field status-label">{{user?.createdAt | date}}</div>
@@ -67,7 +67,7 @@
   </div>
 
   <div class="info-wrapper">
-    <img src="assets/resources/images/administration/users/history.svg" alt="">
+    <img src="assets/resources/images/user/history.svg" alt="">
     <div class="info">
       <div class="info-label">Updated At</div>
       <div class="info-field status-label">{{user?.updatedAt | date}}</div>
@@ -84,8 +84,8 @@
 
     <!--BLOCKED STATUS-->
     <div class="info-wrapper">
-      <img src="assets/resources/images/administration/users/block.svg" alt="" *ngIf="user?.blocked">
-      <img src="assets/resources/images/administration/users/not-block.svg" alt="" *ngIf="user?.blocked === false">
+      <img src="assets/resources/images/user/block.svg" alt="" *ngIf="user?.blocked">
+      <img src="assets/resources/images/user/not-block.svg" alt="" *ngIf="user?.blocked === false">
       <div class="info">
         <div class="info-label">Is Blocked</div>
         <div class="info-field status-label">{{user?.blocked}}</div>
@@ -94,7 +94,7 @@
 
     <!--POINTS-->
     <div class="info-wrapper">
-      <img src="assets/resources/images/administration/users/points.svg" alt="">
+      <img src="assets/resources/images/user/points.svg" alt="">
       <div class="info">
         <div class="info-label">Points</div>
         <div class="info-field status-label">{{user?.points}}</div>
