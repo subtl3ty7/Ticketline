@@ -23,7 +23,7 @@ export class DeleteAccountComponent {
   }
 
   public deleteAccount() {
-    this.userService.delete(this.data.model);
+    this.userService.delete(this.data.model).subscribe();
     this.closeModal();
     this.authService.logoutUser();
     this.router.navigate(['/']);
