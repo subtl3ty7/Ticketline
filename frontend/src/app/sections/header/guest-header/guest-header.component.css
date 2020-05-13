@@ -16,22 +16,6 @@ a {
   margin-right: 5px;
 }
 
-@media screen and (max-width: 999px) {
-  a.nav-link:hover {
-    background-color: #0E2E62;
-    margin-left: 5px;
-    margin-right: 5px;
-  }
-}
-
-@media screen and (min-width: 1000px) {
-  a.nav-link:hover {
-    color: #0E2E62;
-    margin-left: 5px;
-    margin-right: 5px;
-  }
-}
-
 li {
   width: 100%;
 }
@@ -77,6 +61,17 @@ li {
   height: 46px;
 }
 
+.header-row {
+  padding: 0px 20px 15px 20px;
+}
+
+.search-row {
+  padding: 0px 20px 20px 20px;
+}
+
+.navbar-header {
+  width: 100%;
+}
 
 .left {
   height: 75px;
@@ -94,4 +89,110 @@ li {
 .container-fluid {
   padding-left: 5%;
   padding-right: 5%;
+}
+
+.navbar-toggler {
+  margin-top: 35px;
+  padding: 0;
+}
+
+.navbar-toggler-icon {
+  color: white;
+  width: 100%;
+  height: 18px;
+}
+
+.login-button {
+  font-size: 18px;
+  margin-top: 33px;
+}
+
+.form-control {
+  background-color: white;
+  text-indent: 10px;
+  border-radius: 0px;
+  margin: 0px;
+  font-size: 20px;
+  font-weight: lighter;
+  height: 75px;
+}
+
+.btn-sm {
+  font-size: 18px;
+  color: white;
+  background-color: #43B581;
+  border: 0px;
+  margin: 0px;
+  padding: 0px;
+}
+
+.fa-search {
+  color: white;
+}
+
+/*Mobile screen*/
+@media screen and (max-width: 992px) {
+  a.nav-link:hover {
+    background-color: #0E2E62;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .form-inline {
+    max-width: 1000px;
+    width: 100%;
+    max-height: 75px;
+    margin-bottom: 20px;
+  }
+
+  .input-group {
+    min-width: 100px;
+    max-width: 1000px;
+    width: 100%;
+    max-height: 75px;
+  }
+
+  .navbar-brand {
+    padding-top: 45px;
+  }
+
+  .navbar-nav {
+    padding-top: 5px;
+    padding-bottom: 0px;
+  }
+}
+
+/*Bigger screens*/
+@media screen and (min-width: 993px) {
+  a {
+    color: #FBFBFB;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  a.nav-link:hover {
+    color: #0E2E62;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .form-inline {
+    padding-left: 75px;
+    max-width: 1000px;
+    width: 50%;
+    padding-right: 25px;
+    height: 75px;
+  }
+
+  .input-group {
+    min-width: 100px;
+    max-width: 1000px;
+    width: 100%;
+    height: 75px;
+  }
+
+  .navbar-nav {
+    padding-bottom: 0px;
+    padding-right: 40px;
+  }
 }
