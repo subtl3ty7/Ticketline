@@ -13,6 +13,7 @@ import {CreateUserContainerComponent} from './components/admin-home/create-user-
 import {MyProfileContainerComponent} from './components/my-profile/root/my-profile-container.component';
 import {RegistrationComponent} from './components/registration/registration.component';
 import {EventSearchComponent} from './components/event-search/event-search.component';
+import {FaqComponent} from './components/faq/faq.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'guest-home', pathMatch: 'full'},
@@ -29,7 +30,8 @@ const routes: Routes = [
   {path: 'my-profile/:tabId', canActivate: [LoggedInGuard], component: MyProfileContainerComponent},
   {path: 'registration', canActivate: [NotLoggedInGuard], component: RegistrationComponent},
   {path: 'create-user', canActivate: [AdminGuard], component: CreateUserContainerComponent},
-  {path: 'event-search', canActivate: [], component: EventSearchComponent}
+  {path: 'event-search', canActivate: [], component: EventSearchComponent},
+  {path: 'faq', canActivate: [], component: FaqComponent}
 ];
 
 @NgModule({
