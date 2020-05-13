@@ -9,6 +9,7 @@ import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EventMapper;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.UserMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.security.JwtTokenizer;
@@ -30,10 +31,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @ExtendWith(SpringExtension.class)
@@ -131,7 +130,75 @@ public class EventEndpointTest implements TestData {
         assertEquals(HttpStatus.FORBIDDEN.value(), response.getStatus());
     }
 
-  /*  @Test
+    @Test
+    public void givenEvent_whenGetTop10_then200andListWith1Element() throws Exception {
+        eventRepository.save(event);
+
+        MvcResult mvcResult = this.mockMvc.perform(get(EVENT_TOP10)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
+            .andDo(print())
+            .andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        assertAll(
+            () -> assertEquals(HttpStatus.OK.value(), response.getStatus()),
+            () -> assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType())
+        );
+
+        List<SimpleEventDto> simpleEventDtos = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
+            SimpleEventDto[].class));
+
+        assertEquals(1, simpleEventDtos.size());
+    }
+
+    @Test
+    public void givenEvent_whenGetTop10ByCategory_then200andListWith1Element() throws Exception {
+        eventRepository.save(event);
+
+        MvcResult mvcResult = this.mockMvc.perform(get(EVENT_TOP10 + "/" + CAT)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
+            .andDo(print())
+            .andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        assertAll(
+            () -> assertEquals(HttpStatus.OK.value(), response.getStatus()),
+            () -> assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType())
+        );
+
+        List<SimpleEventDto> simpleEventDtos = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
+            SimpleEventDto[].class));
+
+        assertEquals(1, simpleEventDtos.size());
+    }
+
+    @Test
+    public void givenEvent_whenGetEventByCode_then200AndEventWithAllProperties() throws Exception {
+        eventRepository.save(event);
+
+        MvcResult mvcResult = this.mockMvc.perform(get(EVENT_BASE_URI + "/" + event.getEventCode())
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
+            .andDo(print())
+            .andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        assertAll(
+            () -> assertEquals(HttpStatus.OK.value(), response.getStatus()),
+            () -> assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType())
+        );
+
+        SimpleEventDto simpleEventDto = (objectMapper.readValue(response.getContentAsString(), SimpleEventDto.class));
+        assertAll(
+            () -> assertEquals(USER_CODE, simpleEventDto.getEventCode()),
+            () -> assertEquals(NAME, simpleEventDto.getName()),
+            () -> assertEquals(DESC, simpleEventDto.getDescription()),
+            () -> assertEquals(START, simpleEventDto.getStartsAt()),
+            () -> assertEquals(END, simpleEventDto.getEndsAt()),
+            () -> assertEquals(PRICES.get(0), simpleEventDto.getStartPrice())
+        );
+    }
+
+   /* @Test
     public void givenNothing_whenPost_thenEventWithAllSetProperties() throws Exception {
         DetailedEventDto detailedEventDto = eventMapper.eventToDetailedEventDto(event);
         String body = objectMapper.writeValueAsString(detailedEventDto);
@@ -165,26 +232,23 @@ public class EventEndpointTest implements TestData {
     }
 
     @Test
-    public void givenEvent_whenGetTop10_then200andListWith1Element() throws Exception {
+    public void givenEvent_whenDeleteEventByCode_then200AndEmptyList() throws Exception {
         eventRepository.save(event);
 
-        MvcResult mvcResult = this.mockMvc.perform(get(EVENT_TOP10)
-            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
+        MvcResult mvcResult = this.mockMvc.perform(delete(EVENT_BASE_URI + "/"
+            + eventRepository.findAll().get(0).getEventCode())
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
             .andDo(print())
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
 
         assertAll(
             () -> assertEquals(HttpStatus.OK.value(), response.getStatus()),
-            () -> assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType())
+            () -> assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType()),
+            () -> assertEquals(0, eventRepository.findAll().size())
         );
 
-        List<SimpleEventDto> simpleEventDtos = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
-            SimpleEventDto[].class));
-
-        assertEquals(1, simpleEventDtos.size());
     } */
-
 
 
 }

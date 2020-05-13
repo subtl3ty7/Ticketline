@@ -319,9 +319,10 @@ public class UserEndpointTest implements TestData {
     }
 
 
-  /*  @Test
+    /*@Test
     public void givenLoggedUser_whenDelete_then200AndNoUser() throws Exception {
         abstractUser.setLogged(true);
+        userRepository.save(abstractUser);
 
         MvcResult mvcResult = this.mockMvc.perform(delete(USER_BASE_URI + "/delete/" + abstractUser.getUserCode())
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
@@ -331,23 +332,6 @@ public class UserEndpointTest implements TestData {
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         assertNull(userRepository.findAbstractUserByEmail(DEFAULT_USER));
-    }
-
-    @Test
-    public void givenNothing_whenDeleteOrGet_then400or404() throws Exception {
-        MvcResult mvcResult = this.mockMvc.perform(delete(USER_BASE_URI + "/delete/" + abstractUser.getUserCode())
-            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
-            .andDo(print())
-            .andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-        assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatus());
-
-        mvcResult = this.mockMvc.perform(get(USER_BASE_URI + "/" + abstractUser.getUserCode())
-            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
-            .andDo(print())
-            .andReturn();
-        response = mvcResult.getResponse();
-        assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
     }
 
     @Test
