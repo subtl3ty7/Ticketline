@@ -55,6 +55,7 @@ import { RegistrationComponent } from './components/registration/registration.co
 
 
 import { EventSearchComponent } from './components/event-search/event-search.component';
+import { FaqComponent } from './components/faq/faq.component';
 import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
@@ -93,7 +94,8 @@ import { HomeComponent } from './components/home/home.component';
     RegistrationComponent,
     GuestHeaderComponent,
     EventSearchComponent,
-    HomeComponent,
+    FaqComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
