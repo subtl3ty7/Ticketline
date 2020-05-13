@@ -36,10 +36,12 @@
                    src="{{event.photo}}">
               <div class="card-body">
                 <div class = "card-title row">
-                  <h4>{{event.name}}</h4>
-                  <div *ngIf="event === threeEvents[0]">
-                    <button class="btn default font-weight-bold event-button" routerLinkActive="active" style="font-size: 18px" ><h3>Tickets ab €30,-</h3></button>
-                  </div>
+                  <h4 class="col-sm" style="padding-top: 10px">{{event.name}}</h4>
+                  <button *ngIf="event === threeEvents[0]"
+                          class="btn default font-weight-bold event-button col-sm"
+                          routerLinkActive="active" style="margin-right: 20px">
+                    <h3>Tickets ab €{{event.startPrice}},-</h3>
+                  </button>
                 </div>
               </div>
             </div>

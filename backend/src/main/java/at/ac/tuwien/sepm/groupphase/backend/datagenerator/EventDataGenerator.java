@@ -19,7 +19,6 @@ import java.io.*;
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Profile("generateData")
 @Component
@@ -101,15 +100,7 @@ public class EventDataGenerator {
                 eventLocationIndex = eventLocations.size()-1;
             }
 
-            String imgName = "";
-            if(i<2) {
-                imgName = "Event_Img1_Luffy.txt";
-            } else if (i < 4) {
-                imgName = "Event_Img2_Wide.txt";
-            }
-            else {
-                imgName = "Event_Img3_Gigi.txt";
-            }
+            String imgName = "event_img" + i + ".jpg";
 
             Event event = Event.builder()
                 .artists(List.of("Artist1", "Artist2", "Artist3"))
@@ -237,14 +228,25 @@ public class EventDataGenerator {
     private String getImage(String imgName) {
         try {
             InputStream inputStream = resourceLoader.getResource("classpath:" + imgName).getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            String contents = reader.lines()
-                .collect(Collectors.joining(System.lineSeparator()));
-            return contents;
+            //BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            String encodedString = Base64.getEncoder().encodeToString(inputStream.readAllBytes());
+            //String contents = reader.lines()
+             //   .collect(Collectors.joining(System.lineSeparator()));
+            encodedString = "data:image/" + getFileExtension(imgName) + ";base64," + encodedString;
+            return encodedString;
         } catch (IOException e) {
             throw new RuntimeException("Couldn't load Image File for EventDataGenerator.", e);
         } catch (NullPointerException e) {
             throw new RuntimeException("Couldn't load Image File for EventDataGenerator.", e);
         }
+    }
+
+    private String getFileExtension(String imgName) {
+        if(!imgName.contains(".")) {
+            throw new RuntimeException("Could not retrieve file extension of filename ." + imgName);
+        }
+        int dotIndex = imgName.indexOf('.');
+        String fileExtension = imgName.substring(dotIndex+1);
+        return fileExtension;
     }
 }
