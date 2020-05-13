@@ -14,8 +14,8 @@ import java.util.List;
 public class EventLocationDto {
     private Long id;
     private Long showId;
-    private String name;
-    private String description;
+    private String eventLocationName;
+    private String eventLocationDescription;
     private String street;
     private String plz;
     private String city;

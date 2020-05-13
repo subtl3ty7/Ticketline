@@ -146,45 +146,15 @@ public class UserServiceTest implements TestData {
             () ->   userService.blockCustomer(userService.findUserByEmail(ADMIN_USER).getUserCode()));
     }
 
-   /* @Test
-    public void givenCustomer_Edit_thenFindUserEmailWithNewProperties() {
-        customer.setLogged(true);
-        userRepository.save(customer);
-
-        AbstractUser abstractUser = userService.findUserByEmail(DEFAULT_USER);
-        assertAll(
-            () -> assertEquals(FNAME, abstractUser.getFirstName()),
-            () -> assertEquals(LNAME, abstractUser.getLastName()),
-            () -> assertEquals(DEFAULT_USER, abstractUser.getEmail()),
-            () -> assertEquals(PASS, abstractUser.getPassword()),
-            () -> assertEquals(BIRTHDAY, abstractUser.getBirthday())
-        );
-        customer.setFirstName("NewName");
-        customer.setUserCode(userService.findUserByEmail(DEFAULT_USER).getUserCode());
-        userService.updateCustomer((Customer)customer);
-
-        AbstractUser abstractUser1 = userService.findUserByEmail(DEFAULT_USER);
-        assertAll(
-            () -> assertEquals("NewName", abstractUser1.getFirstName()),
-            () -> assertEquals(LNAME, abstractUser1.getLastName()),
-            () -> assertEquals(DEFAULT_USER, abstractUser1.getEmail()),
-            () -> assertEquals(PASS, abstractUser1.getPassword()),
-            () -> assertEquals(BIRTHDAY, abstractUser1.getBirthday())
-        );
-    }
-
     @Test
-    public void whenSave2Users_thenFindListWith2Elements_AfterDelete1FindListWith1Elements() {
-        customer.setLogged(true);
-        userRepository.save(customer);
-        userService.registerNewAdmin((Administrator)admin);
-        assertEquals(2, userService.loadAllUsers().size());
+    public void givenCustomer_whenBlock_thenBlocked() {
+        userService.registerNewCustomer((Customer)customer);
+        assertFalse(((Customer)userService.findUserByEmail(DEFAULT_USER)).isBlocked());
 
-        userService.deleteUserByUsercode(userService.findUserByEmail(DEFAULT_USER).getUserCode());
-        assertEquals(1, userService.loadAllUsers().size());
+        userService.blockCustomer(userService.findUserByEmail(DEFAULT_USER).getUserCode());
+        assertTrue(((Customer)userService.findUserByEmail(DEFAULT_USER)).isBlocked());
     }
 
-    */
 
 }
 

@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.unittests.mapper;
 import at.ac.tuwien.sepm.groupphase.backend.basetest.TestData;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.ShowMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,5 +24,6 @@ public class ShowMappingTest implements TestData {
         .ticketsSold(TOTAL)
         .eventLocation(LOCATIONS)
         .build();
+
 
 }
