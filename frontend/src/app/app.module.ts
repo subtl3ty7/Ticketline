@@ -52,8 +52,6 @@ import { EditProfileComponent } from './components/my-profile/my-info-tab/edit-p
 import { DeleteAccountComponent } from './components/my-profile/my-info-tab/delete-account/delete-account.component';
 import { TopEventsComponent } from './components/guest-home/top-events/top-events.component';
 import { RegistrationComponent } from './components/registration/registration.component';
-
-
 import { EventSearchComponent } from './components/event-search/event-search.component';
 
 @NgModule({

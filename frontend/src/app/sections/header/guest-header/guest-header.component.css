@@ -16,10 +16,24 @@ a {
   margin-right: 5px;
 }
 
-a.nav-link:hover {
-  color: #0E2E62;
-  margin-left: 5px;
-  margin-right: 5px;
+@media screen and (max-width: 999px) {
+  a.nav-link:hover {
+    background-color: #0E2E62;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  a.nav-link:hover {
+    color: #0E2E62;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+}
+
+li {
+  width: 100%;
 }
 
 .navbar-brand {
@@ -28,6 +42,8 @@ a.nav-link:hover {
 
 .nav-link {
   font-size: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .navbar-custom {
@@ -63,7 +79,7 @@ a.nav-link:hover {
 
 
 .left {
-  min-height: 75px;
+  height: 75px;
   width: 100%;
   border: 0px;
 }
@@ -72,5 +88,10 @@ a.nav-link:hover {
   float: right;
   width: 75px;
   height: 75px;
+  border: 0px;
 }
 
+.container-fluid {
+  padding-left: 5%;
+  padding-right: 5%;
+}
