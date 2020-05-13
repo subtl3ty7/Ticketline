@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
     this.authService.loginUser(authRequest).subscribe(
       () => {
         console.log('Successfully logged in user: ' + authRequest.email);
-        this.router.navigate(['/customer-home']);
+        this.router.navigate(['/home']);
         document.body.style.backgroundImage = null;
       },
       error => {

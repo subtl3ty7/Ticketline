@@ -132,10 +132,44 @@ ol.carousel-indicators {
   cursor: pointer;
   border-radius: 0px;
 }
-.default {
-  background-color: transparent;
-}
 
 .event-button:hover {
   background: black;
+}
+
+.title-button {
+  transition: .1s;
+  background-color: transparent;
+  color: black;
+  border: none;
+  border-radius: 50px 50px 50px 50px;
+  padding: 30px 20px 20px 20px;
+}
+
+.title-button:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+  color: black;
+  transition: all 0.2s ease-in-out;
+}
+
+.title-headline {
+  transition: .1s;
+}
+
+.title-button:hover .title-headline {
+  padding-left: 50px;
+  transition: all 0.2s ease-in-out;
+}
+
+.title-button:hover .title-hover {
+  transition: all 0.2s ease-in-out;
+  visibility: visible;
+  opacity: 1;
+}
+
+.title-hover {
+  padding-left: 20px;
+  visibility: hidden;
+  opacity: 0;
 }

@@ -6,13 +6,11 @@ import {HttpClientModule} from '@angular/common/http';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {FooterComponent} from './sections/footer/footer.component';
-import {GuestHomeComponent} from './components/guest-home/guest-home.component';
 import {LoginComponent} from './components/login/login.component';
 import {MessageComponent} from './components/message/message.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {httpInterceptorProviders} from './interceptors';
 import { AdminHomeComponent } from './components/admin-home/root/admin-home.component';
-import { CustomerHomeComponent } from './components/customer-home/customer-home.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -57,16 +55,17 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { EventSearchComponent } from './components/event-search/event-search.component';
 import { FaqComponent } from './components/faq/faq.component';
 import { HomeComponent } from './components/home/home.component';
+import { TopTenEventsComponent } from './components/top-ten-events/top-ten-events.component';
+import { HeaderComponent } from './sections/header/header.component';
+import { CurrentNewsComponent } from './components/home/current-news/current-news.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FooterComponent,
-    GuestHomeComponent,
     LoginComponent,
     MessageComponent,
     AdminHomeComponent,
-    CustomerHomeComponent,
     AdminSideMenuComponent,
     UsersTabComponent,
     AdminTabsComponent,
@@ -95,7 +94,10 @@ import { HomeComponent } from './components/home/home.component';
     GuestHeaderComponent,
     EventSearchComponent,
     FaqComponent,
-    HomeComponent
+    HomeComponent,
+    TopTenEventsComponent,
+    HeaderComponent,
+    CurrentNewsComponent
   ],
   imports: [
     BrowserModule,
