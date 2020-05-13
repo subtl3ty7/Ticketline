@@ -50,6 +50,9 @@ public class UserEndpointTest implements TestData {
     private UserRepository userRepository;
 
     @Autowired
+    private UserAttemptsRepository userAttemptsRepository;
+
+    @Autowired
     private ObjectMapper objectMapper;
 
     @Autowired
@@ -318,56 +321,6 @@ public class UserEndpointTest implements TestData {
         assertEquals(HttpStatus.FORBIDDEN.value(), response.getStatus());
     }
 
-
-    /*@Test
-    public void givenLoggedUser_whenDelete_then200AndNoUser() throws Exception {
-        abstractUser.setLogged(true);
-        userRepository.save(abstractUser);
-
-        MvcResult mvcResult = this.mockMvc.perform(delete(USER_BASE_URI + "/delete/" + abstractUser.getUserCode())
-            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
-            .andDo(print())
-            .andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-
-        assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertNull(userRepository.findAbstractUserByEmail(DEFAULT_USER));
-    }
-
-    @Test
-    public void givenLoggedUser_whenEdit_thenUserWithAllNewProperties() throws Exception {
-        abstractUser.setLogged(true);
-        userRepository.save(abstractUser);
-        abstractUser.setFirstName("NewName");
-        abstractUser.setLastName("NewLName");
-        UserDto userDto = userMapper.abstractUserToUserDto(abstractUser);
-        String body = objectMapper.writeValueAsString(userDto);
-
-        MvcResult mvcResult = this.mockMvc.perform(put(CUSTOMER_BASE_URI)
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(body)
-            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
-            .andDo(print())
-            .andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-
-        assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType());
-
-        UserDto userDto1 = objectMapper.readValue(response.getContentAsString(), UserDto.class);
-        assertAll(
-            () -> assertEquals(USER_CODE, userDto.getUserCode()),
-            () -> assertEquals("NewName", userDto1.getFirstName()),
-            () -> assertEquals("NewLName", userDto1.getLastName()),
-            () -> assertEquals(DEFAULT_USER, userDto1.getEmail()),
-            () -> assertEquals(PASS, userDto1.getPassword()),
-            () -> assertEquals(BIRTHDAY, userDto1.getBirthday()),
-            () -> assertFalse(userDto1.isBlocked()),
-            () -> assertFalse(userDto1.isLogged()),
-            () -> assertEquals(POINTS, userDto1.getPoints())
-        );
-    }  */
-
     @Test
     public void givenUnblockedUser_whenBlockAsAdmin_then200() throws Exception {
         userRepository.save(abstractUser);
@@ -386,6 +339,7 @@ public class UserEndpointTest implements TestData {
     public void givenBlockedUser_whenUnblockAsAdmin_then200() throws Exception {
         ((Customer)abstractUser).setBlocked(true);
         userRepository.save(abstractUser);
+        userAttemptsRepository.save(UserAttempts.UserAttemptsBuilder.aAttempts().withId(ID).withEmail(DEFAULT_USER).withAttempts(5).build());
 
         MvcResult mvcResult = this.mockMvc.perform(get(USER_BASE_URI + "/unblock/" + USER_CODE)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
@@ -424,6 +378,21 @@ public class UserEndpointTest implements TestData {
 
         assertEquals(HttpStatus.FORBIDDEN.value(), response.getStatus());
         assertTrue(((Customer)userRepository.findAbstractUserByEmail(DEFAULT_USER)).isBlocked());
+    }
+
+    @Test
+    public void givenLoggedUser_whenDelete_then204AndNoUser() throws Exception {
+        abstractUser.setLogged(true);
+        userRepository.save(abstractUser);
+
+        MvcResult mvcResult = this.mockMvc.perform(delete(USER_BASE_URI + "/delete/" + abstractUser.getUserCode())
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
+            .andDo(print())
+            .andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatus());
+        assertNull(userRepository.findAbstractUserByEmail(DEFAULT_USER));
     }
 
     @Test

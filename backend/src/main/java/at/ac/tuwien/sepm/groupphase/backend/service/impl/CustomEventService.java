@@ -92,8 +92,9 @@ public class CustomEventService implements EventService {
     }
 
     @Override
-    public Event deletebyEventCode(String eventCode) {
+    public void deletebyEventCode(String eventCode) {
         validator.validateExists(eventCode).throwIfViolated();
-        return eventRepository.deleteEventByEventCode(eventCode);
+        Event event = eventRepository.findEventByEventCode(eventCode);
+        eventRepository.delete(event);
     }
 }

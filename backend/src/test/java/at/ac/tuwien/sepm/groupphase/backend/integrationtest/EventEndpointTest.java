@@ -198,41 +198,8 @@ public class EventEndpointTest implements TestData {
         );
     }
 
-   /* @Test
-    public void givenNothing_whenPost_thenEventWithAllSetProperties() throws Exception {
-        DetailedEventDto detailedEventDto = eventMapper.eventToDetailedEventDto(event);
-        String body = objectMapper.writeValueAsString(detailedEventDto);
-
-        MvcResult mvcResult = this.mockMvc.perform(post(EVENT_BASE_URI)
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(body)
-            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
-            .andDo(print())
-            .andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-
-        assertEquals(HttpStatus.CREATED.value(), response.getStatus());
-        assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType());
-
-        DetailedEventDto detailedEventDto1 = objectMapper.readValue(response.getContentAsString(), DetailedEventDto.class);
-        assertAll(
-            () -> assertEquals(USER_CODE, detailedEventDto1.getEventCode()),
-            () -> assertEquals(NAME, detailedEventDto1.getName()),
-            () -> assertEquals(DESC, detailedEventDto1.getDescription()),
-            () -> assertEquals(TYP, detailedEventDto1.getType()),
-            () -> assertEquals(CAT, detailedEventDto1.getCategory()),
-            () -> assertEquals(START, detailedEventDto1.getStartsAt()),
-            () -> assertEquals(END, detailedEventDto1.getEndsAt()),
-            () -> assertEquals(PRICES, detailedEventDto1.getPrices()),
-            () -> assertEquals(PRICES.get(0), detailedEventDto1.getStartPrice()),
-            () -> assertEquals(TOTAL, detailedEventDto1.getTotalTicketsSold()),
-            () -> assertEquals(ARTISTS, detailedEventDto1.getArtists()),
-            () -> assertEquals(SHOWS, detailedEventDto1.getShows())
-        );
-    }
-
     @Test
-    public void givenEvent_whenDeleteEventByCode_then200AndEmptyList() throws Exception {
+    public void givenEvent_whenDeleteEventByCode_then204AndEmptyList() throws Exception {
         eventRepository.save(event);
 
         MvcResult mvcResult = this.mockMvc.perform(delete(EVENT_BASE_URI + "/"
@@ -243,12 +210,10 @@ public class EventEndpointTest implements TestData {
         MockHttpServletResponse response = mvcResult.getResponse();
 
         assertAll(
-            () -> assertEquals(HttpStatus.OK.value(), response.getStatus()),
-            () -> assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType()),
+            () -> assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatus()),
             () -> assertEquals(0, eventRepository.findAll().size())
         );
 
-    } */
-
+    }
 
 }

@@ -135,7 +135,7 @@ public class UserEndpoint {
         notes = "Delete user by usercode",
         authorizations = {@Authorization(value = "apiKey")})
     @ApiResponses({
-        @ApiResponse(code = 200, message = "User is successfully deleted"),
+        @ApiResponse(code = 204, message = "User is successfully deleted"),
         @ApiResponse(code = 404, message = "User is not found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })

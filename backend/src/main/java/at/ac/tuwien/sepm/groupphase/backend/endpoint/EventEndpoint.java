@@ -102,14 +102,14 @@ public class EventEndpoint {
         value = "Get event by its Code",
         notes = "Get event by its Code")
     @ApiResponses({
-        @ApiResponse(code = 200, message = "Events are successfully retrieved"),
+        @ApiResponse(code = 204, message = "Events are successfully retrieved"),
         @ApiResponse(code = 404, message = "No Event is found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<SimpleEventDto> deleteByEventCode(@PathVariable String eventCode) {
-        LOGGER.info("GET /api/v1/events/" + eventCode);
-        SimpleEventDto result = eventMapper.eventToSimpleEventDto(eventService.deletebyEventCode(eventCode));
-        return new ResponseEntity(result, HttpStatus.OK);
+    public ResponseEntity<Void> deleteByEventCode(@PathVariable String eventCode) {
+        LOGGER.info("DELETE /api/v1/events/" + eventCode);
+        eventService.deletebyEventCode(eventCode);
+        return ResponseEntity.noContent().build();
     }
 
 }
