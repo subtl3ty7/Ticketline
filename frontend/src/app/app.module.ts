@@ -55,6 +55,7 @@ import { RegistrationComponent } from './components/registration/registration.co
 
 
 import { EventSearchComponent } from './components/event-search/event-search.component';
+import { EventDetailsComponent } from './components/event-details/event-details.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +93,7 @@ import { EventSearchComponent } from './components/event-search/event-search.com
     RegistrationComponent,
     GuestHeaderComponent,
     EventSearchComponent,
+    EventDetailsComponent,
   ],
   imports: [
     BrowserModule,

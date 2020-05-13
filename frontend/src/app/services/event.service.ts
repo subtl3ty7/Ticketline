@@ -34,4 +34,16 @@ export class EventService {
       catchError(this.handleError)
     );
   }
+
+  getEventByEventCode(eventCode: string): Observable<SimpleEvent> {
+    console.log('Load event details for Event with code ' + eventCode);
+    return this.httpClient.get<SimpleEvent>(this.userBaseUri + '/' + eventCode).pipe(
+      tap(data => console.log('User ' + JSON.stringify(data))),
+      catchError(this.handleError)
+    );
+  }
+
+
+
+
 }
