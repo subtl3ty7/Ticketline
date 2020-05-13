@@ -5,7 +5,6 @@ import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.*;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventLocationService;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
-import org.apache.commons.lang3.SerializationUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -13,17 +12,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManagerFactory;
 import java.io.*;
 import java.lang.invoke.MethodHandles;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Profile("generateData")
 @Component
@@ -105,12 +100,7 @@ public class EventDataGenerator {
                 eventLocationIndex = eventLocations.size()-1;
             }
 
-            String imgName = "";
-            if(i<4) {
-                imgName = "Luffy.txt";
-            } else {
-                imgName = "Gigi.txt";
-            }
+            String imgName = "event_img" + i + ".jpg";
 
             Event event = Event.builder()
                 .artists(List.of("Artist1", "Artist2", "Artist3"))
@@ -238,14 +228,25 @@ public class EventDataGenerator {
     private String getImage(String imgName) {
         try {
             InputStream inputStream = resourceLoader.getResource("classpath:" + imgName).getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            String contents = reader.lines()
-                .collect(Collectors.joining(System.lineSeparator()));
-            return contents;
+            //BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            String encodedString = Base64.getEncoder().encodeToString(inputStream.readAllBytes());
+            //String contents = reader.lines()
+             //   .collect(Collectors.joining(System.lineSeparator()));
+            encodedString = "data:image/" + getFileExtension(imgName) + ";base64," + encodedString;
+            return encodedString;
         } catch (IOException e) {
             throw new RuntimeException("Couldn't load Image File for EventDataGenerator.", e);
         } catch (NullPointerException e) {
             throw new RuntimeException("Couldn't load Image File for EventDataGenerator.", e);
         }
+    }
+
+    private String getFileExtension(String imgName) {
+        if(!imgName.contains(".")) {
+            throw new RuntimeException("Could not retrieve file extension of filename ." + imgName);
+        }
+        int dotIndex = imgName.indexOf('.');
+        String fileExtension = imgName.substring(dotIndex+1);
+        return fileExtension;
     }
 }

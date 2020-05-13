@@ -50,11 +50,12 @@ import { MyProfileTabsComponent } from './components/my-profile/my-profile-tabs/
 import { MyInfoTabComponent } from './components/my-profile/my-info-tab/my-info-tab.component';
 import { EditProfileComponent } from './components/my-profile/my-info-tab/edit-profile/edit-profile.component';
 import { DeleteAccountComponent } from './components/my-profile/my-info-tab/delete-account/delete-account.component';
-import { TopEventsComponent } from './components/guest-home/top-events/top-events.component';
+import { TopEventsComponent } from './components/home/top-events/top-events.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 
 
 import { EventSearchComponent } from './components/event-search/event-search.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +93,7 @@ import { EventSearchComponent } from './components/event-search/event-search.com
     RegistrationComponent,
     GuestHeaderComponent,
     EventSearchComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
