@@ -62,3 +62,15 @@ a.nav-link:hover {
 }
 
 
+.left {
+  min-height: 75px;
+  width: 100%;
+  border: 0px;
+}
+
+.right {
+  float: right;
+  width: 75px;
+  height: 75px;
+}
+

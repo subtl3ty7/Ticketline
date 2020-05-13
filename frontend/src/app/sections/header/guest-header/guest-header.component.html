@@ -1,11 +1,19 @@
 <nav class="navbar-custom navbar-expand-lg d-flex">
   <button class="navbar-toggler ml-5" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" style="z-axis: 999; color: black;">
-    <span class="navbar-toggler-icon fas fa-bars"><i class=""></i></span>
+    <span class="navbar-toggler-icon fas fa-bars" style="color: white;"><i class=""></i></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngbCollapse]="isCollapsed">
     <a class="navbar-brand ml-lg-5" routerLink="/guest-home">Ticketline</a>
+    <form class="form-inline my-2 my-xl-0" style="padding-left: 100px; max-width: 1000px;width: 50%;">
+      <div class="input-group" style="min-width: 100px; max-width: 1000px; width: 100%;" >
+        <input class="form-control left" type="text" placeholder="Veranstaltung suchen..." aria-label="Search" style="background-color: white; text-indent: 10px; border-radius: 0px; margin-left: 0px; font-size: 20px; font-weight: lighter;">
+        <div class="input-group-append">
+        <button class="btn btn-sm right" type="submit" style="background-color: #43B581; border: 0px; margin: 0px; padding: 0px;"><i class="fas fa-search" style="color: white; "></i></button>
+        </div>
+      </div>
+    </form>
     <ul class="navbar-nav ml-auto  align-items-center" style="padding-right: 40px;">
       <li><a class="nav-link font-weight-lighter" routerLink="/event-search">Events</a></li>
       <li class="divider" *ngIf="!isMobileLayout"></li>
