@@ -6,7 +6,6 @@ import {User} from '../dtos/user';
 import {catchError, tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {ChangePassword} from '../dtos/change-password';
-import * as bcrypt from 'bcryptjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,10 +15,10 @@ export class UserService {
   error: boolean = false;
   errorMessage: string = '';
   private userBaseUri: string = this.globals.backendUri + '/users';
-  constructor(private httpClient: HttpClient, private globals: Globals, private router: Router) {
+  constructor(private httpClient: HttpClient, private globals: Globals) {
   }
   private handleError(err: HttpErrorResponse) {
-    let errorMessage = '';
+    let errorMessage;
     if (err.error instanceof ErrorEvent) {
       errorMessage = `An error occured : ${err.error.message} `;
     } else {
@@ -42,10 +41,14 @@ export class UserService {
       catchError(this.handleError)
     );
   }
+  getCurrentUser(): Observable<User> {
+    console.log('Load user by UserCode');
+    return this.httpClient.get<User>(this.userBaseUri + '/my-profile').pipe(
+      tap(data => console.log('User ' + JSON.stringify(data))),
+      catchError(this.handleError)
+    );
+  }
   save(user: User): Observable<User> {
-    const salt = bcrypt.genSaltSync(10);
-    const pwd = bcrypt.hashSync(user.password, salt);
-    user.password = pwd;
     if (user.admin) {
       return this.httpClient.post<User>(this.userBaseUri + '/administrators', user).pipe(
         catchError(this.handleError)
@@ -53,6 +56,18 @@ export class UserService {
     }
     console.log('saving user in the database');
     return this.httpClient.post<User>(this.userBaseUri + '/customers', user).pipe(
+      catchError(this.handleError)
+    );
+  }
+  update(user: User) {
+    console.log('Updating user ' + user.userCode + ' in the database');
+      return this.httpClient.put(this.userBaseUri + '/update', user).pipe(
+        catchError(this.handleError)
+      );
+  }
+  delete(user: User) {
+    console.log('Deleting user ' + user.userCode + ' in the database');
+    return this.httpClient.get(this.userBaseUri + '/delete/' + user.userCode).pipe(
       catchError(this.handleError)
     );
   }

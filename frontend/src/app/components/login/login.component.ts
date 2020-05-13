@@ -25,13 +25,8 @@ export class LoginComponent implements OnInit {
       email: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8)]]
     });
-    document.body.style.background = '#DEDEDE';
     document.body.style.backgroundImage = 'url("img_1.png")';
-    document.body.style.backgroundSize = '100%';
-    document.body.style.backgroundRepeat = 'no-repeat';
-    document.body.style.backgroundPosition = 'center';
-    document.body.style.backgroundSize = 'cover';
-
+    document.body.style.backgroundColor = '#0c0d0f';
   }
 
   /**
@@ -56,7 +51,8 @@ export class LoginComponent implements OnInit {
     this.authService.loginUser(authRequest).subscribe(
       () => {
         console.log('Successfully logged in user: ' + authRequest.email);
-        this.router.navigate(['/message']);
+        this.router.navigate(['/customer-home']);
+        document.body.style.backgroundImage = null;
       },
       error => {
         console.log('Could not log in due to:');

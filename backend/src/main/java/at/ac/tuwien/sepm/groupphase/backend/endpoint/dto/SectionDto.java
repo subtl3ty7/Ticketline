@@ -17,4 +17,5 @@ public class SectionDto {
     private String name;
     private String description;
     private List<SeatDto> seats;
+    private int capacity;
 }

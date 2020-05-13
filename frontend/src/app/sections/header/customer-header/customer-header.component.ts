@@ -9,8 +9,10 @@ import {AuthService} from '../../../services/auth.service';
 export class CustomerHeaderComponent implements OnInit {
 
   constructor(public authService: AuthService) { }
-
+  public isMobileLayout = false;
   ngOnInit(): void {
+    this.isMobileLayout = window.innerWidth <= 1000;
+    window.onresize = () => this.isMobileLayout = window.innerWidth <= 1000;
   }
 
 }

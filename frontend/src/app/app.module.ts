@@ -43,8 +43,20 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import { MustMatchDirective } from './utils/must-match.directive';
 import { GuestHeaderComponent } from './sections/header/guest-header/guest-header.component';
+import { MyProfileContainerComponent } from './components/my-profile/root/my-profile-container.component';
+import { MyProfileSideMenuComponent } from './components/my-profile/my-profile-side-menu/my-profile-side-menu.component';
+import { ProfileInfoComponent } from './components/my-profile/my-info-tab/profile-info/profile-info.component';
+import { MyProfileTabsComponent } from './components/my-profile/my-profile-tabs/my-profile-tabs.component';
+import { MyInfoTabComponent } from './components/my-profile/my-info-tab/my-info-tab.component';
+import { EditProfileComponent } from './components/my-profile/my-info-tab/edit-profile/edit-profile.component';
+import { DeleteAccountComponent } from './components/my-profile/my-info-tab/delete-account/delete-account.component';
+import { TopEventsComponent } from './components/home/top-events/top-events.component';
+import { RegistrationComponent } from './components/registration/registration.component';
 
 
+import { EventSearchComponent } from './components/event-search/event-search.component';
+import { FaqComponent } from './components/faq/faq.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +82,20 @@ import { GuestHeaderComponent } from './sections/header/guest-header/guest-heade
     ResetPasswordComponent,
     CreateUserComponent,
     CreateUserFormComponent,
-    GuestHeaderComponent
+    GuestHeaderComponent,
+    MyProfileContainerComponent,
+    MyProfileSideMenuComponent,
+    ProfileInfoComponent,
+    MyProfileTabsComponent,
+    MyInfoTabComponent,
+    EditProfileComponent,
+    DeleteAccountComponent,
+    TopEventsComponent,
+    RegistrationComponent,
+    GuestHeaderComponent,
+    EventSearchComponent,
+    FaqComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

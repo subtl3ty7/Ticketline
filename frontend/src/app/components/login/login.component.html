@@ -5,19 +5,17 @@
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-
 <div class="container">
   <div class="row">
-    <div class="col-md-7 mx-auto" style="max-width: 660px; max-height: 620px;" >
+    <div class="col-md-7 mx-auto" style="max-width: 660px; max-height: 640px;" >
       <span class="anchor" id="formLogin"></span>
 
-      <div class="card" style="max-width: 660px; max-height: 620px;">
+      <div class="card" style="max-width: 660px; max-height: 640px;">
         <div style="padding: 40px;">
           <h3 class="mb-0" style="font-size: 40px;">Einloggen</h3>
         </div>
-
         <div class="card-body">
-          <form class="form" [formGroup]="loginForm" (ngSubmit)="loginUser()" style="padding-left: 40px; padding-right: 40px; border-bottom-left-radius: 20px;">
+          <form class="form" (keyup.enter)="loginUser()" [formGroup]="loginForm" (ngSubmit)="loginUser()">
 
             <div class="form-group" >
               <label for="inputEmail">E-Mail</label>
@@ -33,6 +31,7 @@
               <label for="password">Passwort</label>
               <input type="password" name="password" formControlName="password" class="form-control" id="password"
                      placeholder="Password" style="margin-bottom: 5px; height: 50px;">
+
               <div *ngIf="submitted && loginForm.controls.password.errors" class="error">
                 <small class="form-text text-warning" *ngIf="loginForm.controls.password.errors.required">Bitte Passwort eingeben!
                 </small>
@@ -42,7 +41,7 @@
               <a href="#" class="float-right" style="margin-top: 10px; font-size: 16px;">Passwort vergessen?</a>
             </div>
 
-            <button type="button" (click)="loginUser()" class="btn float-right" style="color: #FBFBFB; background-color: #43B581; border-radius: 0px; width: 100%; margin-top: 50px; font-size: 18px; height: 42px;">Einloggen</button>
+            <button type="button" (click)="loginUser()" class="btn default" style="color: #FBFBFB; background-color: #43B581; width: 100%; margin-top: 50px;">Einloggen</button>
 
           </form>
           <div class="row">
@@ -51,7 +50,7 @@
           </div>
           <div class="row">
           </div>
-          <p style="padding-left: 30px; padding-right: 30px; font-size: 20px;">Noch kein Konto? <a href="/registration" style="color: #707070">Jetzt registrieren</a></p>
+          <p style="padding-left: 30px; padding-right: 30px;">Noch kein Konto? <a href="/registration" style="color: #707070">Jetzt registrieren</a></p>
         </div>
 
       </div>

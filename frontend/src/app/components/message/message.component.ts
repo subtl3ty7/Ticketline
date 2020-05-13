@@ -31,6 +31,8 @@ export class MessageComponent implements OnInit {
 
   ngOnInit() {
     this.loadMessage();
+    document.body.style.backgroundImage = null;
+    document.body.style.backgroundColor = '#DEDEDE';
   }
 
   /**
