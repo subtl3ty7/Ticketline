@@ -88,8 +88,8 @@ public interface TestData {
                 .id(ID).showId(ID).eventLocationName(FNAME).eventLocationDescription(DESC).street(STREET).city(CITY).country(COUNTRY).plz(PLZ).sections(SECTIONS).capacity(TOTAL).build());
         }
     };
-    char COLUMN = 'A';
-    char ROW = '1';
+    String COLUMN = "A";
+    String ROW = "1";
     List<Seat> SEATS = new ArrayList<>() {
         {
             add(Seat.builder().id(ID).sectionId(ID).isFree(true).seatColumn(COLUMN).seatRow(ROW).build());
