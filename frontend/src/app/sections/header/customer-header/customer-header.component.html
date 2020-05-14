@@ -1,12 +1,73 @@
-<nav class="navbar-custom navbar-expand-lg d-flex">
-  <button class="navbar-toggler ml-5" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+
+<!--Mobile Navbar -->
+<nav class="navbar-custom navbar-expand-lg d-flex" *ngIf="isMobileLayout">
+  <div class="container-fluid">
+    <div class="row header-row">
+      <div class="navbar-header">
+        <div class="row">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                  aria-controls="navbarSupportedContentMobile" aria-expanded="false" aria-label="Toggle navigation" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed">
+            <span class="navbar-toggler-icon fas fa-bars"></span>
+          </button>
+          <div class= "col">
+            <a class="navbar-brand ml-lg-5" routerLink="/customer-home">Ticketline</a>
+          </div>
+          <div class="col text-right" style="margin-top: 36px; padding-right: 0px; ">
+            <button class="btn btn.default logout" routerLink="/" (click)="authService.logoutUser()" >
+              <span class="fas fa-sign-out-alt"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="collapse navbar-collapse" id="navbarSupportedContentMobile" [ngbCollapse]="isCollapsed">
+        <ul class="navbar-nav ml-auto  align-items-center">
+          <li><a class="nav-link font-weight-lighter" routerLink="/event-search">Events</a></li>
+          <li class="divider" *ngIf="!isMobileLayout"></li>
+          <li><a class="nav-link font-weight-lighter" routerLink="/news">News</a></li>
+          <li class="divider" *ngIf="!isMobileLayout"></li>
+          <li><a class="nav-link font-weight-lighter" routerLink="/merch-shop">Merch</a></li>
+          <li class="divider" *ngIf="!isMobileLayout"></li>
+          <li><a class="nav-link font-weight-lighter" routerLink="/faq">FAQ</a></li>
+          <li class="divider" *ngIf="!isMobileLayout"></li>
+          <li><a class="nav-link font-weight-lighter" routerLink="/my-profile">Konto</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="row search-row">
+      <form class="form-inline my-3 my-xl-0">
+        <div class="input-group">
+          <input class="form-control left" type="text" placeholder="Veranstaltung suchen..." aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-sm right" type="submit"><i class="fas fa-search"></i></button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</nav>
+
+
+
+<!--Navbar for screens bigger than 1000px-->
+<nav class="navbar-custom navbar-expand-lg d-flex" *ngIf="!isMobileLayout">
+  <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed">
-    <span class="navbar-toggler-icon"></span>
+    <span class="navbar-toggler-icon fas fa-bars" style="color: white;"><i class=""></i></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngbCollapse]="isCollapsed">
-    <a class="navbar-brand ml-lg-5" routerLink="/customer-home">Ticketline</a>
-    <ul class="navbar-nav ml-auto  align-items-center " style="padding-right: 40px;">
+    <a class="navbar-brand ml-lg-5" routerLink="/guest-home">Ticketline</a>
+    <form class="form-inline my-2 my-xl-0">
+      <div class="input-group" >
+        <input class="form-control left" type="text" placeholder="Veranstaltung suchen..." aria-label="Search">
+        <div class="input-group-append">
+          <button class="btn btn-sm right" type="submit" routerLink="/event-search"><i class="fas fa-search"></i></button>
+        </div>
+      </div>
+    </form>
+    <ul class="navbar-nav ml-auto  align-items-center">
       <li><a class="nav-link font-weight-lighter" routerLink="/event-search">Events</a></li>
       <li class="divider" *ngIf="!isMobileLayout"></li>
       <li><a class="nav-link font-weight-lighter" routerLink="/news">News</a></li>
@@ -18,7 +79,11 @@
       <li><a class="nav-link font-weight-lighter" routerLink="/my-profile">Konto</a></li>
     </ul>
     <div style="padding-right: 50px;">
-      <a class="nav-link" routerLink="/" (click)="authService.logoutUser()">Logout</a>
+      <button class="btn btn.default logout" routerLink="/" (click)="authService.logoutUser()" >
+        <span class="fas fa-sign-out-alt"></span>
+      </button>
     </div>
   </div>
 </nav>
+
+
