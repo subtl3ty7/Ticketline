@@ -1,5 +1,11 @@
 <div class="container" *ngIf="events && events.length > 0">
-  <h1 class="mb-4">Top-Veranstaltungen</h1>
+    <div class="title-button" routerLink="/top-ten-events">
+      <div class="row col-12">
+        <h1 class="title-headline">Top Veranstaltungen</h1>
+        <h5 class="title-hover"><i class="fa fa-caret-right" style="font-size: 40px"></i></h5>
+      </div>
+    </div>
+
 
   <!--Carousel Wrapper-->
   <div id="multi-item-example" class="my-slider carousel slide carousel-multi-item" data-ride="carousel">
@@ -38,7 +44,7 @@
                 <div class = "card-title row">
                   <h4 class="col-sm" style="padding-top: 10px">{{event.name}}</h4>
                   <button *ngIf="event === threeEvents[0]"
-                          class="btn default font-weight-bold event-button col-sm"
+                          class="btn default event-button col-sm"
                           routerLinkActive="active" style="margin-right: 20px">
                     <h3>Tickets ab €{{event.startPrice}},-</h3>
                   </button>
