@@ -1,0 +1,175 @@
+ol.carousel-indicators {
+  position: absolute;
+  bottom: 0px;
+  margin: 0;
+  left: 0;
+  right: 0;
+}
+
+.carousel-indicators li {
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  background-color: #444444;
+}
+
+.carousel-indicators li:not(:last-child) {
+  margin-right: 20px;
+}
+
+.carousel-button-left {
+  left: -50px;
+}
+
+.carousel-button-right {
+  right: -50px;
+}
+
+.carousel-button-left,
+.carousel-button-right {
+  width: 130px;
+  z-index: 112;
+  transition: .2s;
+}
+
+.carousel-button-left:hover,
+.carousel-button-right:hover {
+  opacity: 1;
+  transform: scale(1.5);
+}
+
+.carousel-item {
+  padding: 30px 50px;
+}
+
+.carousel {
+  padding-bottom: 20px;
+}
+
+
+.carousel-visual-button {
+  width: 48px;
+  height: 48px;
+  background: black;
+  color: white;
+  border-radius: 10px;
+}
+
+.card-body {
+  margin: 0px;
+  border-radius: 0px 0px 10px 10px;
+  border-width: 10px;
+  opacity: 1;
+}
+
+.card-body,
+.card {
+  background-color: #202020;
+}
+
+
+.card {
+  border-radius: 10px 10px 10px 10px;
+  transition: .2s;
+  opacity: 1;
+}
+
+.card:hover {
+  cursor: pointer;
+}
+
+.card:hover .card-img-top {
+  opacity: 1;
+  filter: brightness(110%) contrast(110%);
+}
+.card:hover .card-body {
+  opacity: 1;
+}
+.card:hover .top-left {
+  display: block;
+}
+
+
+.card-title {
+  color: white;
+  font-family: Calibri, "Segoe UI", serif;
+  font-size: 20px;
+}
+
+
+.zoom {
+  transition: transform .2s; /* Animation */
+}
+
+.zoom:hover
+{
+  transform: scale(1.1);
+  z-index: 111;
+}
+
+.image-crop-big {
+  object-fit: cover; /* scale the image */
+  object-position: center; /* Center the image within the element */
+  height: 325px;
+  width: 600px;
+}
+.image-crop-small {
+  object-fit: cover; /* scale the image */
+  object-position: center; /* Center the image within the element */
+  height: 325px;
+  width: 300px;
+}
+
+.card-img-top {
+  opacity: 0.95;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.event-button {
+  border: 2px solid white;
+  background-color: transparent;
+  color: white;
+  cursor: pointer;
+  border-radius: 0px;
+}
+
+.event-button:hover {
+  background: black;
+}
+
+.title-button {
+  transition: .1s;
+  background-color: transparent;
+  color: black;
+  border: none;
+  border-radius: 50px 50px 50px 50px;
+  padding: 30px 20px 20px 20px;
+}
+
+.title-button:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+  color: black;
+  transition: all 0.2s ease-in-out;
+}
+
+.title-headline {
+  transition: .1s;
+}
+
+.title-button:hover .title-headline {
+  padding-left: 50px;
+  transition: all 0.2s ease-in-out;
+}
+
+.title-button:hover .title-hover {
+  transition: all 0.2s ease-in-out;
+  visibility: visible;
+  opacity: 1;
+}
+
+.title-hover {
+  padding-left: 20px;
+  visibility: hidden;
+  opacity: 0;
+}

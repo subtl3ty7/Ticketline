@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="17px" height="22px" viewBox="0 0 17 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>a1-loeschen</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M19.9126214,8.62524272 L19.9126214,6.61747573 L4.79029126,6.61747573 L4.79029126,8.64660194 L6.26407767,22.8932039 L18.438835,22.8932039 L19.9126214,8.62524272 Z M9.23300971,21.2912621 L8.1223301,21.2912621 L6.88349515,8.83883495 L9.23300971,8.83883495 L9.23300971,21.2912621 Z M13.2485437,21.2912621 L11.4330097,21.2912621 L11.4330097,8.83883495 L13.2485437,8.83883495 L13.2485437,21.2912621 Z M15.4485437,21.2912621 L15.4485437,8.83883495 L17.7980583,8.83883495 L16.5592233,21.2912621 L15.4485437,21.2912621 Z M20.7029126,4.07572816 L20.7029126,5.57087379 L4,5.57087379 L4,4.07572816 L9.36116505,2.77281553 L9.36116505,1 L15.3417476,1 L15.3417476,2.77281553 L20.7029126,4.07572816 Z" id="path-1"></path>
+    </defs>
+    <g id="My-Account" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="a1-loeschen" transform="translate(-4.000000, -1.000000)">
+            <g>
+                <rect id="Rectangle" fill-rule="nonzero" x="0" y="0" width="24" height="24"></rect>
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="path-1" fill="#C2C2C2" xlink:href="#path-1"></use>
+            </g>
+        </g>
+    </g>
+</svg>

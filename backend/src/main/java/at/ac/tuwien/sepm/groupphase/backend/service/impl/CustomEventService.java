@@ -54,6 +54,12 @@ public class CustomEventService implements EventService {
     }
 
     @Override
+    public List<Event> findAllEvents() {
+        List<Event> allEvents = eventRepository.findAll();
+        return allEvents;
+    }
+
+    @Override
     public Event createNewEvent(Event event){
         LOGGER.info("Moving Event Entity through Service Layer: " + event);
         event.setEventCode(getNewEventCode());
@@ -92,8 +98,9 @@ public class CustomEventService implements EventService {
     }
 
     @Override
-    public Event deletebyEventCode(String eventCode) {
+    public void deletebyEventCode(String eventCode) {
         validator.validateExists(eventCode).throwIfViolated();
-        return eventRepository.deleteEventByEventCode(eventCode);
+        Event event = eventRepository.findEventByEventCode(eventCode);
+        eventRepository.delete(event);
     }
 }

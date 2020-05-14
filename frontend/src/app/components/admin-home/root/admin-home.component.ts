@@ -7,6 +7,7 @@ import { Component, Inject, Input, OnInit } from '@angular/core';
 })
 export class AdminHomeComponent implements OnInit {
   constructor() {
+    document.body.style.backgroundColor = '#FFFFFF';
   }
 ngOnInit(): void {
 }

@@ -63,7 +63,7 @@ public class UserValidatorImpl implements UserValidator {
         AbstractUser user = userRepository.findAbstractUserByUserCode(userCode);
         constraints.add("user_exists", user != null);
         if (user != null) {
-            constraints.add("user_isNotSelf", validateUserIdentityWithGivenEmail(user.getEmail()));
+            constraints.add("user_isSelf", validateUserIdentityWithGivenEmail(user.getEmail()));
             constraints.add("user_notAdmin", !(user instanceof Administrator));
             constraints.add("user_isLogged", user.isLogged());
         }
@@ -77,7 +77,7 @@ public class UserValidatorImpl implements UserValidator {
         AbstractUser userFromDataBase = userRepository.findAbstractUserByUserCode(customer.getUserCode());
         constraints.add("user_exists", userFromDataBase != null);
         constraints.add("user_isLogged", userFromDataBase != null && userFromDataBase.isLogged());
-        constraints.add("user_isNotSelf", userFromDataBase != null && validateUserIdentityWithGivenEmail(userFromDataBase.getEmail()));
+        constraints.add("user_isSelf", userFromDataBase != null && validateUserIdentityWithGivenEmail(userFromDataBase.getEmail()));
         return constraints;
     }
 

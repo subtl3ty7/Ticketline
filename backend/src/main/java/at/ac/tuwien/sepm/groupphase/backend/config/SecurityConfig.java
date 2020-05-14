@@ -46,10 +46,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenizer = jwtTokenizer;
 
+        //Adding white-listed url's to bypass authorization
         List<String> whiteList = securityProperties.getWhiteList();
         whiteList.add("/api/v1/users/customers");
         whiteList.add("/api/v1/events/top10");
         whiteList.add("/api/v1/events/{eventCode}");
+        whiteList.add("/api/v1/events/all");
         this.whiteListedRequests = new OrRequestMatcher(
             whiteList.stream()
             .map(AntPathRequestMatcher::new)
@@ -73,7 +75,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) {
         web.ignoring().requestMatchers(whiteListedRequests);
-        //web.ignoring().antMatchers("/api/v1/users/register");
     }
 
     @Override

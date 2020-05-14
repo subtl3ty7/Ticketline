@@ -1,0 +1,92 @@
+.top-three-element {
+  margin: 0px 10px 0px 10px;
+}
+
+.card {
+  transition: .2s;
+  background: transparent;
+  border-radius: 0px;
+  padding: 0px;
+}
+
+.top-three-image {
+  object-fit: cover; /* scale the image */
+  object-position: center; /* Center the image within the element */
+  width: 100%;
+  height: 460px;
+  margin: 0px;
+  border-radius: 0px;
+  filter: grayscale(20%) contrast(110%);
+}
+
+.img-overlay{
+  transition: transform .2s;
+  height:100%;
+  width: 100%;
+  position:absolute;
+  background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.3) 63%, rgba(0,0,0,0.8) 80%, rgba(0,0,0,0.95) 90%, rgba(0,0,0,1) 100%);
+  opacity: 1;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  border-radius: 0px;
+}
+.top-three-rank {
+  bottom: 0px;
+}
+.top-three-name {
+  padding: 5px 0px 0px 30px;
+  bottom: -20px;
+}
+
+.img-footer {
+  bottom: 0; left: 0;
+  padding: 0px 0px 30px 50px;
+  position: absolute;
+
+  width: 100%;
+  color: white;
+}
+
+.zoom {
+  transition: .2s;
+  cursor: pointer;
+}
+
+.zoom:hover {
+  transform: scale(1.2);
+}
+/*
+.zoom:hover .card {
+  box-shadow: 40px 40px 0px 5px rgba(30,0,100,0.3);
+}
+*/
+
+.zoom:hover img {
+  opacity: 1;
+  filter: brightness(110%) contrast(110%);
+}
+
+.zoom:hover .img-overlay {
+  background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 63%, rgba(0,0,0,0.95) 90%, rgba(0,0,0,1) 100%);
+  opacity: 0.7;
+}
+
+
+.bottom-image {
+  object-fit: cover; /* scale the image */
+  object-position: center; /* Center the image within the element */
+  width: 100%;
+  height: 140px;
+  margin: 0px;
+  border-radius: 0px;
+  filter: grayscale(20%) contrast(110%);
+}
+
+.bottom-rank {
+  padding-left: 30px;
+}
+.bottom-name {
+  padding: 5px 0px 0px 30px;
+  bottom: -20px;
+}

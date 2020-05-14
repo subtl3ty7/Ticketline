@@ -4,10 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.SerializationUtils;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Setter
@@ -24,19 +23,21 @@ public class Seat implements Serializable {
     private Long sectionId;
 
     @NotNull
-    @Column(nullable = false)
-    private char seatRow;
+    @Size(min=1, max = 100)
+    @Column(nullable = false, length = 100)
+    private String seatRow;
 
     @NotNull
-    @Column(nullable = false)
-    private char seatColumn;
+    @Size(min=1, max = 100)
+    @Column(nullable = false, length = 100)
+    private String seatColumn;
 
     @Column
     private boolean isFree;
 
     public Seat() {}
 
-    public Seat(char seatColumn, char seatRow) {
+    public Seat(String seatColumn, String seatRow) {
         this.seatColumn = seatColumn;
         this.seatRow = seatRow;
     }

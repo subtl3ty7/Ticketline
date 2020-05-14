@@ -3,7 +3,6 @@ package at.ac.tuwien.sepm.groupphase.backend.entity;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -57,11 +56,6 @@ public class Event implements Serializable {
     @Column(nullable = false, name = "end_datetime")
     private LocalDateTime endsAt;
 
-    @NotNull
-    @Column(nullable = false, name = "photo")
-    private String photo;
-
-    @NotNull
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "event_code", referencedColumnName = "event_code")
     private List<Show> shows;
@@ -69,13 +63,16 @@ public class Event implements Serializable {
     @Column
     private int totalTicketsSold;
 
-    @NotNull
     @ElementCollection(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
     private List<String> artists;
 
-    @NotNull
     @ElementCollection(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT) //only way to fetch more than two collections with type eager ...
     private List<Integer> prices;
+
+    @NotNull
+    @Lob
+    @Column(nullable = false, name = "photo")
+    private String photo;
 }

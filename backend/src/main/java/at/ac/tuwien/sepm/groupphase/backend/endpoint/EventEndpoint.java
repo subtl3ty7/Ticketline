@@ -1,11 +1,8 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.DetailedEventDto;
-import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.DetailedMessageDto;
-import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.MessageInquiryDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleEventDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EventMapper;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -37,6 +34,7 @@ public class EventEndpoint {
         this.eventMapper = eventMapper;
     }
 
+    @CrossOrigin(maxAge = 3600)
     @GetMapping(value = "/top10")
     @ApiOperation(
         value = "Get Top 10 events",
@@ -81,6 +79,8 @@ public class EventEndpoint {
     }
 
 
+
+    @CrossOrigin(maxAge = 3600)
     @GetMapping(value = "/{eventCode}")
     @ApiOperation(
         value = "Get event by its Code",
@@ -96,20 +96,36 @@ public class EventEndpoint {
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
+    @CrossOrigin(maxAge = 3600)
+    @GetMapping(value = "/all")
+    @ApiOperation(
+        value = "Get all events",
+        notes = "Get all events without details",
+        authorizations = {@Authorization(value = "apiKey")})
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "Events are successfully retrieved"),
+        @ApiResponse(code = 404, message = "No Event is found"),
+        @ApiResponse(code = 500, message = "Connection Refused"),
+    })
+    public ResponseEntity<List<SimpleEventDto>> findAllEvents() {
+        LOGGER.info("GET /api/v1/events/all");
+        List<SimpleEventDto> result = eventMapper.eventToSimpleEventDto(eventService.findAllEvents());
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
     @DeleteMapping(value = "/{eventCode}")
     @ApiOperation(
         value = "Get event by its Code",
         notes = "Get event by its Code")
     @ApiResponses({
-        @ApiResponse(code = 200, message = "Events are successfully retrieved"),
+        @ApiResponse(code = 204, message = "Events are successfully retrieved"),
         @ApiResponse(code = 404, message = "No Event is found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<SimpleEventDto> deleteByEventCode(@PathVariable String eventCode) {
-        LOGGER.info("GET /api/v1/events/" + eventCode);
-        SimpleEventDto result = eventMapper.eventToSimpleEventDto(eventService.deletebyEventCode(eventCode));
-        return new ResponseEntity(result, HttpStatus.OK);
+    public ResponseEntity<Void> deleteByEventCode(@PathVariable String eventCode) {
+        LOGGER.info("DELETE /api/v1/events/" + eventCode);
+        eventService.deletebyEventCode(eventCode);
+        return ResponseEntity.noContent().build();
     }
 
 }

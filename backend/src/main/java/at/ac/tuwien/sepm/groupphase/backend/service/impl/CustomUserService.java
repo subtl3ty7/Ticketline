@@ -20,15 +20,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.CookieClearingLogoutHandler;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.security.web.authentication.rememberme.AbstractRememberMeServices;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManagerFactory;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -188,11 +195,9 @@ public class CustomUserService implements UserService {
         LOGGER.info("Deleting Customer Entity in Service Layer");
         validator.validateDelete(userCode).throwIfViolated();
         AbstractUser user = findUserByUserCode(userCode);
-        Session session = getSession();
-        session.beginTransaction();
-        userRepository.deleteByUserCode(userCode);
-        userAttemptsRepository.deleteByEmail(user.getEmail());
-        session.getTransaction().commit();
+        UserAttempts userAttempts = userAttemptsRepository.findUserAttemptsByEmail(user.getEmail());
+        userRepository.delete(user);
+        userAttemptsRepository.delete(userAttempts);
     }
 
     @Override
@@ -204,10 +209,28 @@ public class CustomUserService implements UserService {
         LocalDateTime now = LocalDateTime.now();
         userFromDatabase.setUpdatedAt(now);
         userFromDatabase.setBirthday(customer.getBirthday());
-        userFromDatabase.setEmail(customer.getEmail());
         userFromDatabase.setFirstName(customer.getFirstName());
         userFromDatabase.setLastName(customer.getLastName());
+        userFromDatabase.setEmail(customer.getEmail());
 
-        return userRepository.save(customer);
+        return userRepository.save(userFromDatabase);
+    }
+
+    @Override
+    public AbstractUser getAuthenticatedUser(Authentication auth) {
+        String email = "";
+        Object principal = auth.getPrincipal();
+        if (principal != null) {
+            if (principal instanceof User) {
+                User user = (User) principal;
+                email = user.getUsername();
+            }
+            if (principal instanceof String) {
+                email = (String) principal;
+            }
+            LOGGER.info("Getting user information for " + email);
+            return findUserByEmail(email);
+        }
+        return null;
     }
 }

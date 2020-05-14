@@ -1,7 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint.dto;
 
 import lombok.*;
-
 import java.time.LocalDateTime;
 
 @Getter

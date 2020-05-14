@@ -5,6 +5,8 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
 import at.ac.tuwien.sepm.groupphase.backend.entity.UserAttempts;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserAttemptsRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.AbstractAuthenticationEvent;
@@ -15,13 +17,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
+import java.lang.invoke.MethodHandles;
+
 @Component
 public class AuthenticationEventListener implements ApplicationListener<AbstractAuthenticationEvent> {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     @Autowired
     UserAttemptsRepository userAttemptsRepository;
     @Autowired
     UserRepository userRepository;
+
 
     @Override
     public void onApplicationEvent(AbstractAuthenticationEvent event) {
@@ -36,6 +41,7 @@ public class AuthenticationEventListener implements ApplicationListener<Abstract
             if(principal instanceof String) {
                 email = (String) principal;
             }
+            // IF USER HAS SUCCESSFULLY LOGGED IN
             if (event instanceof AuthenticationSuccessEvent) {
                 AbstractUser user = userRepository.findAbstractUserByEmail(email);
                 user.setLogged(true);
@@ -48,12 +54,14 @@ public class AuthenticationEventListener implements ApplicationListener<Abstract
                 }
             }
 
+            // IF USER HAS SUCCESSFULLY LOGGED OUT
             if (event instanceof LogoutSuccessEvent) {
                 AbstractUser user = userRepository.findAbstractUserByEmail(email);
                 user.setLogged(false);
                 userRepository.save(user);
             }
 
+            // IF USER HAS MADE AN UNSUCCESSFUL LOGIN ATTEMPT
             if (event instanceof AuthenticationFailureBadCredentialsEvent) {
                 AbstractUser user = userRepository.findAbstractUserByEmail(email);
                 if (user instanceof Customer) {

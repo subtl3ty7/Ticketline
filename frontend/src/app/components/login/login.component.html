@@ -5,49 +5,49 @@
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-
-<div class="pt-5">
+<div class="container">
   <div class="row">
-    <div class="col-md-6 mx-auto">
+    <div class="col-md-7 mx-auto" style="max-width: 660px; max-height: 640px;" >
       <span class="anchor" id="formLogin"></span>
 
-      <div class="card rounded-0">
-        <div class="card-header">
-          <h3 class="mb-0">Einloggen</h3>
+      <div class="card" style="max-width: 660px; max-height: 640px;">
+        <div style="padding: 40px;">
+          <h2>Einloggen</h2>
         </div>
-
         <div class="card-body">
-          <form class="form" [formGroup]="loginForm" (ngSubmit)="loginUser()">
+          <form class="form" (keyup.enter)="loginUser()" [formGroup]="loginForm" (ngSubmit)="loginUser()">
 
-            <div class="form-group">
-              <label for="inputUsername">E-Mail</label>
-              <input type="text" name="username" formControlName="username" class="form-control" id="inputUsername"
-                     aria-describedby="usernameHelp" placeholder="Enter username">
-              <div *ngIf="submitted && loginForm.controls.username.errors" class="error">
-                <small class="form-text text-warning" *ngIf="loginForm.controls.username.errors.required">Your username is
-                  required!
+            <div class="form-group" >
+              <label for="inputEmail">E-Mail</label>
+              <input type="text" name="email" formControlName="email" class="form-control" id="inputEmail"
+                     aria-describedby="emailHelp" placeholder="E-Mail eingeben" style="margin-bottom: 5px; height: 50px;">
+              <div *ngIf="submitted && loginForm.controls.email.errors" class="error">
+                <small class="form-text text-warning" *ngIf="loginForm.controls.email.errors.required">Bitte E-Mail Adresse eingeben!
                 </small>
               </div>
             </div>
 
             <div class="form-group">
               <label for="password">Passwort</label>
-              <input type="password" name="password" formControlName="password" class="form-control" id="password"
-                     placeholder="Password">
+              <input type="password" name="password" formControlName="password" class="form-control" id="password" placeholder="Password">
               <div *ngIf="submitted && loginForm.controls.password.errors" class="error">
-                <small class="form-text text-warning" *ngIf="loginForm.controls.password.errors.required">Your password
-                  is
-                  required!
+                <small class="form-text text-warning" *ngIf="loginForm.controls.password.errors.required">Bitte Passwort eingeben!
                 </small>
-                <small class="form-text text-warning" *ngIf="loginForm.controls.password.errors.minlength">Your password
-                  must be at least 8 characters long!
+                <small class="form-text text-warning" *ngIf="loginForm.controls.password.errors.minlength">Das Passwort muss mindestens 8 Zeichen lang sein
                 </small>
               </div>
+              <a href="#" class="float-right">Passwort vergessen?</a>
             </div>
-
-            <button type="button" (click)="loginUser()" class="btn btn-success float-right">Einloggen</button>
+            <button type="button" (click)="loginUser()" class="btn default">Einloggen</button>
 
           </form>
+          <div class="row">
+          </div>
+          <div class="h-divider">
+          </div>
+          <div class="row">
+          </div>
+          <p style="padding-left: 30px; padding-right: 30px;">Noch kein Konto? <a href="/registration" style="color: #707070">Jetzt registrieren</a></p>
         </div>
 
       </div>

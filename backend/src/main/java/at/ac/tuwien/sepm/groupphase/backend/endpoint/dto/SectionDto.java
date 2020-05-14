@@ -1,6 +1,5 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint.dto;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.Seat;
 import lombok.*;
 
 import java.util.List;
@@ -17,4 +16,5 @@ public class SectionDto {
     private String name;
     private String description;
     private List<SeatDto> seats;
+    private int capacity;
 }

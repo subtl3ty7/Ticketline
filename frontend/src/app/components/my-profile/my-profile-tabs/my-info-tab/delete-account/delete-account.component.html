@@ -1,0 +1,18 @@
+<div class="elements">
+
+  <div class="info">
+    <span> Do you really want to delete your account? </span>
+    <span> This action can not be undone and you will lose all your Bonuspoints!</span>
+  </div>
+
+  <div class="button-wrapper" (click)="closeModal()">
+    <button mat-raised-button (click)="deleteAccount()"
+            color="warn"
+            class="confirm-button">
+      <span class="confirm-button-label">Confirm</span>
+    </button>
+    <button class="cancel-button" >
+      <span class="cancel-button-label">Cancel</span>
+    </button>
+  </div>
+</div>

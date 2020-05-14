@@ -1,0 +1,86 @@
+<div class="container" *ngIf="events && events.length > 0">
+    <div class="title-button" routerLink="/top-ten-events">
+      <div class="row col-12">
+        <h1 class="title-headline">Top Veranstaltungen</h1>
+        <h5 class="title-hover"><i class="fa fa-caret-right" style="font-size: 40px"></i></h5>
+      </div>
+    </div>
+
+
+  <!--Carousel Wrapper-->
+  <div id="multi-item-example" class="my-slider carousel slide carousel-multi-item" data-ride="carousel">
+
+    <!--Indicators-->
+    <ol class="carousel-indicators">
+      <li data-target="#multi-item-example" data-slide-to="0" class="active"></li>
+      <li data-target="#multi-item-example" data-slide-to="1"></li>
+      <li data-target="#multi-item-example" data-slide-to="2"></li>
+    </ol>
+
+    <!--Inner Carousel-->
+    <div class="carousel-inner" role="listbox">
+
+      <!--Carousel Items-->
+      <div class="carousel-item"
+           *ngFor="let threeEvents of events"
+           [class.active]="threeEvents === events[0]">
+        <div class="row">
+
+          <!--The three Events inside a Carousel Item-->
+          <div class="zoom"
+               *ngFor="let event of threeEvents"
+               [class.col-md-6]="event === threeEvents[0]"
+               [class.col-md-3]="event !== threeEvents[0]"
+               [class.clearfix]="event !== threeEvents[0]"
+               [class.d-none]="event !== threeEvents[0]"
+               [class.d-md-block]="event !== threeEvents[0]"
+               style="padding: 10px">
+            <div class="card">
+              <img class="card-img-top img-fluid"
+                   [class.image-crop-big]="event === threeEvents[0]"
+                   [class.image-crop-small]="event !== threeEvents[0]"
+                   src="{{event.photo}}">
+              <div class="card-body">
+                <div class = "card-title row">
+                  <h4 class="col-sm" style="padding-top: 10px">{{event.name}}</h4>
+                  <button *ngIf="event === threeEvents[0]"
+                          class="btn default event-button col-sm"
+                          routerLinkActive="active" style="margin-right: 20px">
+                    <h3>Tickets ab €{{event.startPrice}},-</h3>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!--/Inner Carousel-->
+
+    <!--Controls-->
+    <a class="carousel-button-left left carousel-control-prev" href="#multi-item-example" data-slide="prev">
+      <div class="col-12 text-right">
+        <a class="btn carousel-visual-button">
+          <div  style="padding-top: 4px">
+            <span class="fa fa-chevron-left"></span>
+          </div>
+        </a>
+      </div>
+    </a>
+    <a class="carousel-button-right right carousel-control-next" href="#multi-item-example" data-slide="next">
+      <div class="col-12 text-left">
+        <a class="btn carousel-visual-button">
+          <div  style="padding-top: 4px">
+            <span class="fa fa-chevron-right"></span>
+          </div>
+        </a>
+      </div>
+    </a>
+
+
+  </div>
+</div>
+
+<!--<img class="image-crop" src="https://www.mch-group.com/-/media/mch-group/Images/Content/News/Blog/2017/2017-04/mch-group-live-marketing-aktivierung.jpg" />-->
+

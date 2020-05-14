@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../../services/auth.service';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-guest-header',
@@ -9,8 +10,13 @@ import {AuthService} from '../../../services/auth.service';
 export class GuestHeaderComponent implements OnInit {
 
   constructor(public authService: AuthService) { }
+  public isMobileLayout = false;
+  isCollapsed: boolean;
 
   ngOnInit(): void {
+    this.isCollapsed = true;
+    this.isMobileLayout = window.innerWidth <= 992;
+    window.onresize = () => this.isMobileLayout = window.innerWidth <= 992;
   }
 
 }

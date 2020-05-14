@@ -3,7 +3,6 @@ package at.ac.tuwien.sepm.groupphase.backend.endpoint.dto;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -34,13 +33,13 @@ public class DetailedEventDto {
         private String name;
         private String description;
         private int startPrice;
-        private String photo;
         private List<Show> shows;
         private List<String> artists;
         private String type;
         private String category;
         private List<Integer> prices;
         private int totalTicketsSold;
+        private String photo;
 
         private DetailedEventDtoBuilder(String eventCode, LocalDateTime startsAt, String name,
                                       String description, int startPrice, LocalDateTime endsAt,

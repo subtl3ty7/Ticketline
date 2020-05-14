@@ -4,7 +4,6 @@ package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.UserMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
 import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -13,11 +12,18 @@ import io.swagger.annotations.Authorization;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.authentication.event.LogoutSuccessEvent;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.logout.CookieClearingLogoutHandler;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.security.web.authentication.rememberme.AbstractRememberMeServices;
 import org.springframework.web.bind.annotation.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
@@ -27,11 +33,13 @@ public class UserEndpoint {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final UserService userService;
     private final UserMapper userMapper;
+    private ApplicationEventPublisher applicationEventPublisher;
 
     @Autowired
-    public UserEndpoint(UserService userService, UserMapper userMapper) {
+    public UserEndpoint(UserService userService, UserMapper userMapper, ApplicationEventPublisher applicationEventPublisher) {
         this.userService = userService;
        this.userMapper = userMapper;
+        this.applicationEventPublisher = applicationEventPublisher;
     }
 
     @CrossOrigin(maxAge = 3600)
@@ -83,23 +91,7 @@ public class UserEndpoint {
         UserDto result = userMapper.abstractUserToUserDto(userService.findUserByUserCode(uc));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-/*
-    @GetMapping(value = "/{email}")
-    @ApiOperation(
-        value = "Get user",
-        notes = "Get user by email",
-        authorizations = {@Authorization(value = "apiKey")})
-    @ApiResponses({
-        @ApiResponse(code = 200, message = "User is successfully retrieved"),
-        @ApiResponse(code = 404, message = "User is not found"),
-        @ApiResponse(code = 500, message = "Connection Refused"),
-    })
-    public ResponseEntity<SimpleUserDto> findUserByEmail(@PathVariable String email) {
-        LOGGER.info("GET /api/v1/users/" + email);
-        SimpleUserDto result = userMapper.userToSimpleUserDto(userService.findUserByEmail(email));
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-*/
+
     @Secured("ROLE_ADMIN")
     @PostMapping(value = "/administrators")
     @ApiOperation(
@@ -125,17 +117,17 @@ public class UserEndpoint {
         notes = "Delete user by usercode",
         authorizations = {@Authorization(value = "apiKey")})
     @ApiResponses({
-        @ApiResponse(code = 200, message = "User is successfully deleted"),
+        @ApiResponse(code = 204, message = "User is successfully deleted"),
         @ApiResponse(code = 404, message = "User is not found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
     public ResponseEntity<Void> deleteUser(@PathVariable String usercode) {
-        LOGGER.info("GET /api/v1/users/delete/" + usercode);
+        LOGGER.info("DELETE /api/v1/users/delete/" + usercode);
         userService.deleteUserByUsercode(usercode);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping(value= "/customers")
+    @PutMapping(value= "/update")
     @ApiOperation(
         value = "Update user",
         notes = "Update user by usercode",
@@ -186,5 +178,36 @@ public class UserEndpoint {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/logout")
+    @ApiOperation(
+        value = "Logout",
+        notes = "Logout the user",
+        authorizations = {@Authorization(value = "apiKey")})
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "Successful logout"),
+        @ApiResponse(code = 500, message = "Connection Refused"),
+    })
+    public ResponseEntity<Boolean> logout(HttpServletRequest request, HttpServletResponse response, Authentication auth) {
+        LOGGER.info("GET /api/v1/users/logout");
+        new SecurityContextLogoutHandler().logout(request, response, auth);
+        new CookieClearingLogoutHandler(AbstractRememberMeServices.SPRING_SECURITY_REMEMBER_ME_COOKIE_KEY).logout(request, response, auth);
+        this.applicationEventPublisher.publishEvent(new LogoutSuccessEvent(auth));
+        return new ResponseEntity<>(true, HttpStatus.OK);
+    }
 
+    @GetMapping(value = "/my-profile")
+    @ApiOperation(
+        value = "Return the current user",
+        notes = "Return the information about current authenticated user",
+        authorizations = {@Authorization(value = "apiKey")})
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "Successfully retrieved user info"),
+        @ApiResponse(code = 404, message = "User is not found"),
+        @ApiResponse(code = 500, message = "Connection Refused"),
+    })
+    public ResponseEntity<UserDto> getAuthenticatedUser(Authentication auth) {
+        LOGGER.info("GET /api/v1/users/my-profile");
+        UserDto result = userMapper.abstractUserToUserDto(userService.getAuthenticatedUser(auth));
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

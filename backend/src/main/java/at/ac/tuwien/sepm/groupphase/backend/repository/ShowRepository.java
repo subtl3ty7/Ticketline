@@ -9,6 +9,19 @@ import java.util.List;
 @Repository
 public interface ShowRepository extends JpaRepository<Show, Long> {
 
+    /**
+     * Find a show by its id.
+     *
+     * @param id
+     * @return a show with corresponding id.
+     */
     Show findShowById(Long id);
+
+    /**
+     * Find all shows which belong to a single event with event code.
+     *
+     * @param eventCode
+     * @return a list of shows which belong to corresponding event.
+     */
     List<Show> findShowsByEventCode(String eventCode);
 }
