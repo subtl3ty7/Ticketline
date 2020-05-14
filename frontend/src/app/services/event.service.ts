@@ -33,7 +33,6 @@ export class EventService {
       catchError(this.handleError)
     );
   }
-
   getAllEvents(): Observable<SimpleEvent[]> {
     console.log('Load all events.');
     return this.httpClient.get<SimpleEvent[]>(this.eventBaseUri + '/all').pipe(
