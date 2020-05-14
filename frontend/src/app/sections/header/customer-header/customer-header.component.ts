@@ -10,9 +10,12 @@ export class CustomerHeaderComponent implements OnInit {
 
   constructor(public authService: AuthService) { }
   public isMobileLayout = false;
+  isCollapsed: boolean;
+
   ngOnInit(): void {
-    this.isMobileLayout = window.innerWidth <= 1000;
-    window.onresize = () => this.isMobileLayout = window.innerWidth <= 1000;
+    this.isCollapsed = true;
+    this.isMobileLayout = window.innerWidth <= 992;
+    window.onresize = () => this.isMobileLayout = window.innerWidth <= 992;
   }
 
 }

@@ -18,9 +18,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { AdminSideMenuComponent } from './components/admin-home/admin-side-menu/admin-side-menu.component';
-import { UsersTabComponent } from './components/admin-home/users-tab/users-tab.component';
+import { UsersTabComponent } from './components/admin-home/admin-tabs/users-tab/users-tab.component';
 import { AdminTabsComponent } from './components/admin-home/admin-tabs/admin-tabs.component';
-import { EventsTabComponent } from './components/admin-home/events-tab/events-tab.component';
+import { EventsTabComponent } from './components/admin-home/admin-tabs/events-tab/events-tab.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTableModule} from '@angular/material/table';
 import {ContentComponent} from './sections/content/content.component';
@@ -28,31 +28,36 @@ import { AdminHeaderComponent } from './sections/header/admin-header/admin-heade
 import { CustomerHeaderComponent } from './sections/header/customer-header/customer-header.component';
 import {MatInputModule} from '@angular/material/input';
 import {MatSortModule} from '@angular/material/sort';
-import { UserDetailsContainerComponent } from './components/admin-home/user-details-container/root/user-details-container.component';
-import { UserDetailsComponent } from './components/admin-home/user-details-container/user-details/user-details.component';
-import { UserInfoComponent } from './components/admin-home/user-details-container/user-details/user-info/user-info.component';
-import { CreateUserContainerComponent } from './components/admin-home/create-user-container/root/create-user-container.component';
+import { UserDetailsContainerComponent } from './components/admin-home/admin-tabs/users-tab/user-details-container/root/user-details-container.component';
+import { UserDetailsComponent } from './components/admin-home/admin-tabs/users-tab/user-details-container/user-details/user-details.component';
+import { UserInfoComponent } from './components/admin-home/admin-tabs/users-tab/user-details-container/user-details/user-info/user-info.component';
+import { CreateUserContainerComponent } from './components/admin-home/admin-tabs/users-tab/create-user-container/root/create-user-container.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 // tslint:disable-next-line:max-line-length
-import { ResetPasswordComponent } from './components/admin-home/user-details-container/user-details/reset-password/reset-password.component';
-import { CreateUserComponent } from './components/admin-home/create-user-container/create-user/create-user.component';
-import { CreateUserFormComponent } from './components/admin-home/create-user-container/create-user/create-user-form/create-user-form.component';
+import { ResetPasswordComponent } from './components/admin-home/admin-tabs/users-tab/user-details-container/user-details/reset-password/reset-password.component';
+import { CreateUserComponent } from './components/admin-home/admin-tabs/users-tab/create-user-container/create-user/create-user.component';
+import { CreateUserFormComponent } from './components/admin-home/admin-tabs/users-tab/create-user-container/create-user/create-user-form/create-user-form.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import { MustMatchDirective } from './utils/must-match.directive';
 import { GuestHeaderComponent } from './sections/header/guest-header/guest-header.component';
 import { MyProfileContainerComponent } from './components/my-profile/root/my-profile-container.component';
 import { MyProfileSideMenuComponent } from './components/my-profile/my-profile-side-menu/my-profile-side-menu.component';
-import { ProfileInfoComponent } from './components/my-profile/my-info-tab/profile-info/profile-info.component';
+import { ProfileInfoComponent } from './components/my-profile/my-profile-tabs/my-info-tab/profile-info/profile-info.component';
 import { MyProfileTabsComponent } from './components/my-profile/my-profile-tabs/my-profile-tabs.component';
-import { MyInfoTabComponent } from './components/my-profile/my-info-tab/my-info-tab.component';
-import { EditProfileComponent } from './components/my-profile/my-info-tab/edit-profile/edit-profile.component';
-import { DeleteAccountComponent } from './components/my-profile/my-info-tab/delete-account/delete-account.component';
-import { TopEventsComponent } from './components/home/top-events/top-events.component';
+import { MyInfoTabComponent } from './components/my-profile/my-profile-tabs/my-info-tab/my-info-tab.component';
+import { EditProfileComponent } from './components/my-profile/my-profile-tabs/my-info-tab/edit-profile/edit-profile.component';
+import { DeleteAccountComponent } from './components/my-profile/my-profile-tabs/my-info-tab/delete-account/delete-account.component';
+import { TopEventsComponent} from './components/home/top-events/top-events.component';
 import { RegistrationComponent } from './components/registration/registration.component';
-
-
 import { EventSearchComponent } from './components/event-search/event-search.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { EventDetailsContainerComponent } from './components/admin-home/admin-tabs/events-tab/event-details-container/root/event-details-container.component';
+import { EventDetailsComponent } from './components/admin-home/admin-tabs/events-tab/event-details-container/event-details/event-details.component';
+import { EventInfoComponent } from './components/admin-home/admin-tabs/events-tab/event-details-container/event-details/event-info/event-info.component';
+import { ShowsTableComponent } from './components/admin-home/admin-tabs/events-tab/event-details-container/event-details/event-info/shows-table/shows-table.component';
+import { CreateEventContainerComponent } from './components/admin-home/admin-tabs/events-tab/create-event-container/root/create-event-container.component';
+import { CreateEventComponent } from './components/admin-home/admin-tabs/events-tab/create-event-container/create-event/create-event.component';
 import { FaqComponent } from './components/faq/faq.component';
 import { HomeComponent } from './components/home/home.component';
 import { TopTenEventsComponent } from './components/top-ten-events/top-ten-events.component';
@@ -94,6 +99,12 @@ import { TopEventsListComponent } from './components/top-ten-events/top-events-l
     RegistrationComponent,
     GuestHeaderComponent,
     EventSearchComponent,
+    EventDetailsContainerComponent,
+    EventDetailsComponent,
+    EventInfoComponent,
+    ShowsTableComponent,
+    CreateEventContainerComponent,
+    CreateEventComponent,
     FaqComponent,
     HomeComponent,
     TopTenEventsComponent,
@@ -120,7 +131,8 @@ import { TopEventsListComponent } from './components/top-ten-events/top-events-l
     MatSortModule,
     MatCheckboxModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatPaginatorModule
   ],
   providers: [httpInterceptorProviders, MatDatepickerModule, MatNativeDateModule],
   bootstrap: [AppComponent]

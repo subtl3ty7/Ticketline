@@ -10,9 +10,11 @@ public interface EventService {
 
     List<Event> findTop10EventsOfMonthByCategory(String category);
 
+    List<Event> findAllEvents();
+
     Event createNewEvent(Event event);
 
     Event findByEventCode(String eventCode);
 
-    Event deletebyEventCode(String eventCode);
+    void deletebyEventCode(String eventCode);
 }
