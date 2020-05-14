@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {UserService} from '../../../../services/user.service';
+import {UserService} from '../../../../../../services/user.service';
 import {UserDetailsWrapper} from '../../user-details-container/user-details/user-details-wrapper';
 import {CreateUserWrapper} from './create-user-wrapper';
-import {User} from '../../../../dtos/user';
+import {User} from '../../../../../../dtos/user';
 
 @Component({
   selector: 'app-create-user',

@@ -1,4 +1,4 @@
-import {User} from '../../../../dtos/user';
+import {User} from '../../../../../../dtos/user';
 
 export enum State {
   READY,

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {User} from '../../../../../dtos/user';
+import {User} from '../../../../../../../dtos/user';
 import {MatDatepicker, MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import {FormControl} from '@angular/forms';

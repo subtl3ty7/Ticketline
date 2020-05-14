@@ -1,9 +1,10 @@
 import {AfterContentChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {User} from '../../../dtos/user';
-import {UserService} from '../../../services/user.service';
+import {User} from '../../../../dtos/user';
+import {UserService} from '../../../../services/user.service';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {ActivatedRoute, Router} from '@angular/router';
+import {MatPaginator} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-users-tab',
@@ -20,8 +21,11 @@ export class UsersTabComponent implements OnInit {
     'password'
   ];
   public dataSource: any;
+
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('scrollBlock') scrollBlock: ElementRef;
+
   error = false;
   errorMessage = '';
   private user: User;
@@ -56,6 +60,7 @@ export class UsersTabComponent implements OnInit {
     if (this.users) {
       this.dataSource = new MatTableDataSource(this.users);
       this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
     }
   }
 

@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {UserService} from '../../../../services/user.service';
+import {UserService} from '../../../../../../services/user.service';
 import {State, UserDetailsWrapper} from './user-details-wrapper';
-import {User} from '../../../../dtos/user';
+import {User} from '../../../../../../dtos/user';
 import {ResetPasswordComponent} from './reset-password/reset-password.component';
 
 @Component({
