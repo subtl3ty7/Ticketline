@@ -132,7 +132,7 @@ public class EventLocationEndpointTest implements TestData {
         EventLocationDto eventLocationDto = eventLocationDtos.get(0);
         assertAll(
             () -> assertEquals(ID, eventLocationDto.getId()),
-            () -> assertEquals(FNAME, eventLocationDto.getEventLocationName()),
+            () -> assertEquals(FNAME, eventLocationDto.getName()),
             () -> assertEquals(DESC, eventLocationDto.getEventLocationDescription()),
             () -> assertEquals(STREET, eventLocationDto.getStreet()),
             () -> assertEquals(CITY, eventLocationDto.getCity()),
