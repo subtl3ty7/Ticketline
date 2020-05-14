@@ -13,11 +13,9 @@
             <a class="navbar-brand ml-lg-5" routerLink="/customer-home">Ticketline</a>
           </div>
           <div class="col text-right" style="margin-top: 36px; padding-right: 0px; ">
-            <div style="border-color: #FBFBFB">
-              <button class="btn btn.default logout" routerLink="/" (click)="authService.logoutUser()" >
-                <span class="fas fa-sign-out-alt"></span>
-              </button>
-            </div>
+            <button class="btn btn.default logout" routerLink="/" (click)="authService.logoutUser()" >
+              <span class="fas fa-sign-out-alt"></span>
+            </button>
           </div>
         </div>
       </div>
@@ -81,7 +79,9 @@
       <li><a class="nav-link font-weight-lighter" routerLink="/my-profile">Konto</a></li>
     </ul>
     <div style="padding-right: 50px;">
-      <a class="nav-link" routerLink="/" (click)="authService.logoutUser()">Logout</a>
+      <button class="btn btn.default logout" routerLink="/" (click)="authService.logoutUser()" >
+        <span class="fas fa-sign-out-alt"></span>
+      </button>
     </div>
   </div>
 </nav>
