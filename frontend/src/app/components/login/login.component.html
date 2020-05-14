@@ -12,7 +12,7 @@
 
       <div class="card" style="max-width: 660px; max-height: 640px;">
         <div style="padding: 40px;">
-          <h3 class="mb-0" style="font-size: 40px;">Einloggen</h3>
+          <h1>Einloggen</h1>
         </div>
         <div class="card-body">
           <form class="form" (keyup.enter)="loginUser()" [formGroup]="loginForm" (ngSubmit)="loginUser()">
@@ -29,19 +29,16 @@
 
             <div class="form-group">
               <label for="password">Passwort</label>
-              <input type="password" name="password" formControlName="password" class="form-control" id="password"
-                     placeholder="Password" style="margin-bottom: 5px; height: 50px;">
-
+              <input type="password" name="password" formControlName="password" class="form-control" id="password" placeholder="Password">
               <div *ngIf="submitted && loginForm.controls.password.errors" class="error">
                 <small class="form-text text-warning" *ngIf="loginForm.controls.password.errors.required">Bitte Passwort eingeben!
                 </small>
                 <small class="form-text text-warning" *ngIf="loginForm.controls.password.errors.minlength">Das Passwort muss mindestens 8 Zeichen lang sein
                 </small>
               </div>
-              <a href="#" class="float-right" style="margin-top: 10px; font-size: 16px;">Passwort vergessen?</a>
+              <a href="#" class="float-right">Passwort vergessen?</a>
             </div>
-
-            <button type="button" (click)="loginUser()" class="btn default" style="color: #FBFBFB; background-color: #43B581; width: 100%; margin-top: 50px;">Einloggen</button>
+            <button type="button" (click)="loginUser()" class="btn default">Einloggen</button>
 
           </form>
           <div class="row">
