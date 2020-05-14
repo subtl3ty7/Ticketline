@@ -13,6 +13,7 @@ import {CreateUserContainerComponent} from './components/admin-home/admin-tabs/u
 import {MyProfileContainerComponent} from './components/my-profile/root/my-profile-container.component';
 import {RegistrationComponent} from './components/registration/registration.component';
 import {EventSearchComponent} from './components/event-search/event-search.component';
+import {EventDetailsUserViewComponent} from './components/event-details/event-details-user-view';
 import {EventDetailsContainerComponent} from './components/admin-home/admin-tabs/events-tab/event-details-container/root/event-details-container.component';
 import {CreateEventContainerComponent} from './components/admin-home/admin-tabs/events-tab/create-event-container/root/create-event-container.component';
 import {FaqComponent} from './components/faq/faq.component';
@@ -37,8 +38,12 @@ const routes: Routes = [
   {path: 'create-event', canActivate: [AdminGuard], component: CreateEventContainerComponent},
   {path: 'create-user', canActivate: [AdminGuard], component: CreateUserContainerComponent},
   {path: 'event-search', canActivate: [], component: EventSearchComponent},
+<<<<<<< frontend/src/app/app-routing.module.ts
+  {path: 'event-details/:eventCode', canActivate: [LoggedInGuard], component: EventDetailsUserViewComponent}
+=======
   {path: 'faq', canActivate: [], component: FaqComponent},
   {path: 'top-ten-events', component: TopTenEventsComponent}
+>>>>>>> frontend/src/app/app-routing.module.ts
 ];
 
 @NgModule({

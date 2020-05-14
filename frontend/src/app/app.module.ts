@@ -51,6 +51,7 @@ import { DeleteAccountComponent } from './components/my-profile/my-profile-tabs/
 import { TopEventsComponent} from './components/home/top-events/top-events.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { EventSearchComponent } from './components/event-search/event-search.component';
+import { EventDetailsUserViewComponent } from './components/event-details/event-details-user-view';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { EventDetailsContainerComponent } from './components/admin-home/admin-tabs/events-tab/event-details-container/root/event-details-container.component';
 import { EventDetailsComponent } from './components/admin-home/admin-tabs/events-tab/event-details-container/event-details/event-details.component';
@@ -99,6 +100,7 @@ import { TopEventsListComponent } from './components/top-ten-events/top-events-l
     RegistrationComponent,
     GuestHeaderComponent,
     EventSearchComponent,
+    EventDetailsUserViewComponent,
     EventDetailsContainerComponent,
     EventDetailsComponent,
     EventInfoComponent,
