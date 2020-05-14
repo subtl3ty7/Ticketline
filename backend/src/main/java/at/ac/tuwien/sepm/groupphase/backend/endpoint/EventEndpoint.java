@@ -116,10 +116,10 @@ public class EventEndpoint {
 
     @DeleteMapping(value = "/{eventCode}")
     @ApiOperation(
-        value = "Get event by its Code",
-        notes = "Get event by its Code")
+        value = "Delete event by its Code",
+        notes = "Delete event by its Code")
     @ApiResponses({
-        @ApiResponse(code = 204, message = "Events are successfully retrieved"),
+        @ApiResponse(code = 204, message = "Event is successfully deleted"),
         @ApiResponse(code = 404, message = "No Event is found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
