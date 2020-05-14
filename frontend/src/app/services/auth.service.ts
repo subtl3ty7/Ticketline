@@ -41,6 +41,11 @@ export class AuthService {
     localStorage.removeItem('authToken');
   }
 
+  logoutUserDeleted() {
+    console.log('Logout');
+    localStorage.removeItem('authToken');
+  }
+
   getToken() {
     return localStorage.getItem('authToken');
   }

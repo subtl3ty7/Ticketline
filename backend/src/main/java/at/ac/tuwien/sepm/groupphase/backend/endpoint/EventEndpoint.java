@@ -34,7 +34,7 @@ public class EventEndpoint {
         this.eventMapper = eventMapper;
     }
 
-    @CrossOrigin(maxAge = 3600)
+    @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
     @GetMapping(value = "/top10")
     @ApiOperation(
         value = "Get Top 10 events",
@@ -50,6 +50,7 @@ public class EventEndpoint {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
     @GetMapping(value = "/top10/{category}")
     @ApiOperation(
         value = "Get Top 10 events by category",
@@ -80,7 +81,7 @@ public class EventEndpoint {
 
 
 
-    @CrossOrigin(maxAge = 3600)
+    @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
     @GetMapping(value = "/{eventCode}")
     @ApiOperation(
         value = "Get event by its Code",
@@ -96,7 +97,7 @@ public class EventEndpoint {
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
-    @CrossOrigin(maxAge = 3600)
+    @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
     @GetMapping(value = "/all")
     @ApiOperation(
         value = "Get all events",
@@ -115,10 +116,10 @@ public class EventEndpoint {
 
     @DeleteMapping(value = "/{eventCode}")
     @ApiOperation(
-        value = "Get event by its Code",
-        notes = "Get event by its Code")
+        value = "Delete event by its Code",
+        notes = "Delete event by its Code")
     @ApiResponses({
-        @ApiResponse(code = 204, message = "Events are successfully retrieved"),
+        @ApiResponse(code = 204, message = "Event is successfully deleted"),
         @ApiResponse(code = 404, message = "No Event is found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
