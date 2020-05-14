@@ -34,7 +34,7 @@ public class EventEndpoint {
         this.eventMapper = eventMapper;
     }
 
-    @CrossOrigin(maxAge = 3600)
+    @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
     @GetMapping(value = "/top10")
     @ApiOperation(
         value = "Get Top 10 events",
@@ -50,6 +50,7 @@ public class EventEndpoint {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
     @GetMapping(value = "/top10/{category}")
     @ApiOperation(
         value = "Get Top 10 events by category",
@@ -80,7 +81,7 @@ public class EventEndpoint {
 
 
 
-    @CrossOrigin(maxAge = 3600)
+    @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
     @GetMapping(value = "/{eventCode}")
     @ApiOperation(
         value = "Get event by its Code",
@@ -96,7 +97,7 @@ public class EventEndpoint {
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
-    @CrossOrigin(maxAge = 3600)
+    @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
     @GetMapping(value = "/all")
     @ApiOperation(
         value = "Get all events",
