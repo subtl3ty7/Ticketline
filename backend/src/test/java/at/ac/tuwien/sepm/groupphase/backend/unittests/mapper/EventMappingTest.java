@@ -97,6 +97,25 @@ public class EventMappingTest implements TestData {
         );
     }
 
+    @Test
+    public void shouldMapDetailedEventDtoToEvent() {
+        DetailedEventDto detailedEventDto = eventMapper.eventToDetailedEventDto(event);
+        Event event1 = eventMapper.detailedEventDtoToEvent(detailedEventDto);
+        assertAll(
+            () -> assertEquals(USER_CODE, event1.getEventCode()),
+            () -> assertEquals(NAME, event1.getName()),
+            () -> assertEquals(DESC, event1.getDescription()),
+            () -> assertEquals(TYP, event1.getType()),
+            () -> assertEquals(CAT, event1.getCategory()),
+            () -> assertEquals(START, event1.getStartsAt()),
+            () -> assertEquals(END, event1.getEndsAt()),
+            () -> assertEquals(PRICES, event1.getPrices()),
+            () -> assertEquals(TOTAL, event1.getTotalTicketsSold()),
+            () -> assertEquals(ARTISTS, event1.getArtists()),
+            () -> assertEquals(SHOWS, event1.getShows())
+        );
+    }
+
 
 
 }

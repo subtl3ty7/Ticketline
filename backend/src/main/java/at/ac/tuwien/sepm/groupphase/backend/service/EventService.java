@@ -16,5 +16,5 @@ public interface EventService {
 
     Event findByEventCode(String eventCode);
 
-    Event deletebyEventCode(String eventCode);
+    void deletebyEventCode(String eventCode);
 }

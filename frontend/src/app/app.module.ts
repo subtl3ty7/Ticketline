@@ -52,8 +52,6 @@ import { EditProfileComponent } from './components/my-profile/my-profile-tabs/my
 import { DeleteAccountComponent } from './components/my-profile/my-profile-tabs/my-info-tab/delete-account/delete-account.component';
 import { TopEventsComponent } from './components/guest-home/top-events/top-events.component';
 import { RegistrationComponent } from './components/registration/registration.component';
-
-
 import { EventSearchComponent } from './components/event-search/event-search.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { EventDetailsContainerComponent } from './components/admin-home/admin-tabs/events-tab/event-details-container/root/event-details-container.component';
@@ -62,6 +60,8 @@ import { EventInfoComponent } from './components/admin-home/admin-tabs/events-ta
 import { ShowsTableComponent } from './components/admin-home/admin-tabs/events-tab/event-details-container/event-details/event-info/shows-table/shows-table.component';
 import { CreateEventContainerComponent } from './components/admin-home/admin-tabs/events-tab/create-event-container/root/create-event-container.component';
 import { CreateEventComponent } from './components/admin-home/admin-tabs/events-tab/create-event-container/create-event/create-event.component';
+import { FaqComponent } from './components/faq/faq.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -105,6 +105,8 @@ import { CreateEventComponent } from './components/admin-home/admin-tabs/events-
     ShowsTableComponent,
     CreateEventContainerComponent,
     CreateEventComponent,
+    FaqComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

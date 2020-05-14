@@ -49,9 +49,6 @@ public class EventLocationEndpointTest implements TestData {
     private ObjectMapper objectMapper;
 
     @Autowired
-    private EventLocationMapper eventLocationMapper;
-
-    @Autowired
     private JwtTokenizer jwtTokenizer;
 
     @Autowired
@@ -61,7 +58,6 @@ public class EventLocationEndpointTest implements TestData {
         .id(ID)
         .eventLocationName(FNAME)
         .eventLocationDescription(DESC)
-        .showId(ID)
         .capacity(TOTAL)
         .street(STREET)
         .city(CITY)
@@ -77,7 +73,6 @@ public class EventLocationEndpointTest implements TestData {
             .id(ID)
             .eventLocationName(FNAME)
             .eventLocationDescription(DESC)
-            .showId(ID)
             .capacity(TOTAL)
             .street(STREET)
             .city(CITY)
@@ -86,7 +81,7 @@ public class EventLocationEndpointTest implements TestData {
             .build();
     }
 
-  /*  @Test
+    @Test
     public void givenAdminLoggedIn_whenGetAll_then200andEmptyList() throws Exception {
         MvcResult mvcResult = this.mockMvc.perform(get(LOCATION_BASE_URI)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
@@ -137,12 +132,13 @@ public class EventLocationEndpointTest implements TestData {
         EventLocationDto eventLocationDto = eventLocationDtos.get(0);
         assertAll(
             () -> assertEquals(ID, eventLocationDto.getId()),
-            () -> assertEquals(ID, eventLocationDto.getShowId()),
-            () -> assertEquals(NAME, eventLocationDto.getName()),
+            () -> assertEquals(FNAME, eventLocationDto.getEventLocationName()),
+            () -> assertEquals(DESC, eventLocationDto.getEventLocationDescription()),
             () -> assertEquals(STREET, eventLocationDto.getStreet()),
             () -> assertEquals(CITY, eventLocationDto.getCity()),
             () -> assertEquals(COUNTRY, eventLocationDto.getCountry()),
-            () -> assertEquals(PLZ, eventLocationDto.getPlz())
+            () -> assertEquals(PLZ, eventLocationDto.getPlz()),
+            () -> assertEquals(TOTAL, eventLocationDto.getCapacity())
         );
-    } */
+    }
 }
