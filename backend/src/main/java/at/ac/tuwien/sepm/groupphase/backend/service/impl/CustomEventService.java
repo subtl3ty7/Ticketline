@@ -54,6 +54,12 @@ public class CustomEventService implements EventService {
     }
 
     @Override
+    public List<Event> findAllEvents() {
+        List<Event> allEvents = eventRepository.findAll();
+        return allEvents;
+    }
+
+    @Override
     public Event createNewEvent(Event event){
         LOGGER.info("Moving Event Entity through Service Layer: " + event);
         event.setEventCode(getNewEventCode());
