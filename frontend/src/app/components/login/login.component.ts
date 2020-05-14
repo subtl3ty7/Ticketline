@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
       email: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8)]]
     });
-    document.body.style.backgroundImage = 'url("img_1.png")';
+    document.body.style.backgroundImage = 'url("assets/images/bg.png")';
     document.body.style.backgroundColor = '#0c0d0f';
   }
 
