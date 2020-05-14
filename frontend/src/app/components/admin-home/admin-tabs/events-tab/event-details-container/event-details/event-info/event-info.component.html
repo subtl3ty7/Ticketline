@@ -1,0 +1,88 @@
+<div class="center-block">
+  <ng-content></ng-content>
+  <div class="container">
+  <img src="{{event?.photo}}" class="img-fluid img-thumbnail" style="width: 200px;" alt="Photo is not available" >
+  <button mat-raised-button color = "basic" (click)="openShowDialog()" style="margin-left: 61%;margin-bottom: 1%">Click to see Shows</button>
+  </div>
+  <!--NAME-->
+  <div class="info-wrapper">
+    <div class="info">
+      <div class="info-label"></div>
+      <div class="info-field">
+        {{event?.name}}
+      </div>
+    </div>
+  </div>
+
+  <!--EVENT CODE-->
+  <div class="info-wrapper">
+    <div class="info">
+      <div class="info-label">Event Code</div>
+      <div class="info-field code-field">
+        {{event?.eventCode}}
+      </div>
+    </div>
+  </div>
+
+  <!--START DATE-->
+  <div class="info-wrapper">
+    <div class="info">
+      <div class="info-label">Start Date</div>
+      <div class="info-field">{{event?.startsAt | date}}</div>
+    </div>
+  </div>
+
+  <!--END DATE-->
+  <div class="info-wrapper">
+    <div class="info">
+      <div class="info-label">End Date</div>
+      <div class="info-field">{{event?.endsAt | date}}</div>
+    </div>
+  </div>
+
+  <!--DESCRIPTION-->
+  <div class="info-wrapper">
+    <div class="info">
+      <div class="info-label">Description</div>
+      <div class="info-field">{{event?.description}}</div>
+    </div>
+  </div>
+  <!--CATEGORY-->
+  <div class="info-wrapper">
+    <div class="info">
+      <div class="info-label">Category</div>
+      <div class="info-field ">{{event?.category}}</div>
+    </div>
+  </div>
+
+  <!--TYPE-->
+  <div class="info-wrapper">
+    <div class="info">
+      <div class="info-label">Type</div>
+      <div class="info-field status-label">{{event?.type}}</div>
+    </div>
+  </div>
+  <!--TOTAL SOLD-->
+  <div class="info-wrapper">
+    <div class="info">
+      <div class="info-label">Total tickets sold</div>
+      <div class="info-field status-label">{{event?.totalTicketsSold}}</div>
+    </div>
+  </div>
+
+  <div class="info-wrapper">
+    <div class="info">
+      <div class="info-label">Prices</div>
+      <div class="info-field status-label">{{priceToString()}}</div>
+    </div>
+  </div>
+
+  <div class="info-wrapper">
+    <div class="info">
+      <div class="info-label">Artists</div>
+      <div class="info-field status-label">{{event?.artists}}</div>
+    </div>
+  </div>
+
+</div>
+

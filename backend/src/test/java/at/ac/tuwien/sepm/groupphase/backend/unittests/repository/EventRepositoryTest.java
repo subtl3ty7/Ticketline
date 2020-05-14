@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.unittests.repository;
 
 import at.ac.tuwien.sepm.groupphase.backend.basetest.TestData;
+import at.ac.tuwien.sepm.groupphase.backend.datagenerator.EventDataGenerator;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Show;

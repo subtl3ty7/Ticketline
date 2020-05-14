@@ -11,7 +11,7 @@ export class GuestHomeComponent implements OnInit {
   constructor(public authService: AuthService) {
 
     document.body.style.background = '#0c0d0f';
-    document.body.style.backgroundImage = 'url("img_1.png")';
+    document.body.style.backgroundImage = 'url("assets/images/bg.png")';
     document.body.style.backgroundSize = '100%';
     document.body.style.backgroundRepeat = 'no-repeat';
     document.body.style.backgroundPosition = 'center';

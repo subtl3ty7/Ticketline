@@ -1,10 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
 import lombok.*;
-import org.apache.commons.lang3.SerializationUtils;
-
 import javax.persistence.*;
-import javax.validation.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.ArrayList;
