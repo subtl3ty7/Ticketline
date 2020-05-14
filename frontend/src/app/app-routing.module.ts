@@ -38,12 +38,9 @@ const routes: Routes = [
   {path: 'create-event', canActivate: [AdminGuard], component: CreateEventContainerComponent},
   {path: 'create-user', canActivate: [AdminGuard], component: CreateUserContainerComponent},
   {path: 'event-search', canActivate: [], component: EventSearchComponent},
-<<<<<<< frontend/src/app/app-routing.module.ts
-  {path: 'event-details/:eventCode', canActivate: [LoggedInGuard], component: EventDetailsUserViewComponent}
-=======
+  {path: 'event-details/:eventCode', canActivate: [LoggedInGuard], component: EventDetailsUserViewComponent},
   {path: 'faq', canActivate: [], component: FaqComponent},
   {path: 'top-ten-events', component: TopTenEventsComponent}
->>>>>>> frontend/src/app/app-routing.module.ts
 ];
 
 @NgModule({
