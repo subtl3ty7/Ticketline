@@ -22,7 +22,7 @@ import {NotAdminGuard} from './guards/not-admin.guard';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
-  {path: 'home', canActivate: [], component: HomeComponent},
+  {path: 'home', canActivate: [NotAdminGuard], component: HomeComponent},
   {path: 'login', canActivate: [NotLoggedInGuard], component: LoginComponent},
   {path: 'message', canActivate: [LoggedInGuard], component: MessageComponent},
   {path: 'administration', canActivate: [AdminGuard], component: AdminHomeComponent},
