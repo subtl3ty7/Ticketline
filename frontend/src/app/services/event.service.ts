@@ -14,7 +14,7 @@ import {Router} from '@angular/router';
 export class EventService {
   error: boolean = false;
   errorMessage: string = '';
-  private userBaseUri: string = this.globals.backendUri + '/events';
+  private eventBaseUri: string = this.globals.backendUri + '/events';
   constructor(private httpClient: HttpClient, private globals: Globals, private router: Router) {
   }
   private handleError(err: HttpErrorResponse) {
@@ -29,8 +29,19 @@ export class EventService {
   }
   getTop10Events(): Observable<SimpleEvent[]> {
     console.log('Load top 10 events.');
-    return this.httpClient.get<SimpleEvent[]>(this.userBaseUri + '/top10').pipe(
-      tap(data => console.log('Top 10 ' + JSON.stringify(data))),
+    return this.httpClient.get<SimpleEvent[]>(this.eventBaseUri + '/top10').pipe(
+      catchError(this.handleError)
+    );
+  }
+  getAllEvents(): Observable<SimpleEvent[]> {
+    console.log('Load all events.');
+    return this.httpClient.get<SimpleEvent[]>(this.eventBaseUri + '/all').pipe(
+      catchError(this.handleError)
+    );
+  }
+  getDetailedEventByUserCode(eventCode: string): Observable<DetailedEvent> {
+    console.log('Load event by EventCode');
+    return this.httpClient.get<DetailedEvent>(this.eventBaseUri + '/' + eventCode).pipe(
       catchError(this.handleError)
     );
   }

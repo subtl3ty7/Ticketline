@@ -43,7 +43,9 @@ public class EventLocationMappingTest implements TestData {
     public void shouldMapEventLocationToEventLocationDto() {
         EventLocationDto eventLocationDto = eventLocationMapper.eventLocationToEventLocationDto(eventLocation);
         assertAll(
-            () -> assertEquals(ID, eventLocationDto.getId()),
+            () -> assertEquals(FNAME, eventLocationDto.getName()),
+            () -> assertEquals(DESC, eventLocationDto.getEventLocationDescription()),
+            () -> assertEquals(TOTAL, eventLocationDto.getCapacity()),
             () -> assertEquals(ID, eventLocationDto.getShowId()),
             () -> assertEquals(STREET, eventLocationDto.getStreet()),
             () -> assertEquals(CITY, eventLocationDto.getCity()),
@@ -61,6 +63,9 @@ public class EventLocationMappingTest implements TestData {
         List<EventLocationDto> eventLocationDtos = eventLocationMapper.eventLocationToEventLocationDto(eventLocations);
         EventLocationDto eventLocationDto = eventLocationDtos.get(0);
         assertAll(
+            () -> assertEquals(FNAME, eventLocationDto.getName()),
+            () -> assertEquals(DESC, eventLocationDto.getEventLocationDescription()),
+            () -> assertEquals(TOTAL, eventLocationDto.getCapacity()),
             () -> assertEquals(ID, eventLocationDto.getId()),
             () -> assertEquals(ID, eventLocationDto.getShowId()),
             () -> assertEquals(STREET, eventLocationDto.getStreet()),

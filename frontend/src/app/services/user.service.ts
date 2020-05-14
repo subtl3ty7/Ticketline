@@ -67,7 +67,7 @@ export class UserService {
   }
   delete(user: User) {
     console.log('Deleting user ' + user.userCode + ' in the database');
-    return this.httpClient.get(this.userBaseUri + '/delete/' + user.userCode).pipe(
+    return this.httpClient.delete(this.userBaseUri + '/delete/' + user.userCode).pipe(
       catchError(this.handleError)
     );
   }

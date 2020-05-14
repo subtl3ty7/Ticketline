@@ -9,5 +9,11 @@ import java.util.List;
 
 @Repository
 public interface SectionRepository extends JpaRepository<Section, Long> {
+    /**
+     * Find a section by its id.
+     *
+     * @param id
+     * @return a secction with corresponding id.
+     */
     Section findSectionById(Long id);
 }

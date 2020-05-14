@@ -75,8 +75,11 @@ label {
   font-size: 20px;
 }
 
-html, body { height: 100%; }
-body, h1, h2, h3, h4, h5, h6, p, a, label { margin: 0; font-family: Segue UI, Roboto, "Helvetica Neue", sans-serif; }
+html, body { min-height: 100%; }
+body, h1, h2, h3, h4, h5, h6, p, a, label {
+  margin: 0 !important;
+  font-family: Segue UI, Roboto, "Helvetica Neue", sans-serif !important;
+}
 body {
   background: #DEDEDE no-repeat center;
   background-size: cover;
@@ -88,14 +91,31 @@ label {
 
 //Page Title
 h1 {
-  font-size: 40px;
-  font-weight: bold;
+  font-size: 40px !important;
+  font-weight: bold !important;
 }
 
 //Card Body Title
 h2 {
-  font-size: 30px;
-  font-weight: bold;
+  font-size: 30px !important;
+  font-weight: bold !important;
+}
+
+//Card Body Description/Alternative Title
+h3 {
+  font-size: 25px !important;
+  font-weight: bold !important;
+}
+
+//Card Body Description/Alternative Title non bold
+h4 {
+  font-size: 25px !important;
+  font-weight: lighter !important;
+}
+
+h5 {
+  font-size: 20px !important;
+  font-weight: lighter !important;
 }
 
 //General Text
@@ -122,16 +142,6 @@ p {
   color: white;
 }
 
-/* Blue */
-.info {
-  border-color: #2196F3;
-  color: dodgerblue
-}
-
-.info:hover {
-  background: #2196F3;
-  color: white;
-}
 
 /* Orange */
 .warning {

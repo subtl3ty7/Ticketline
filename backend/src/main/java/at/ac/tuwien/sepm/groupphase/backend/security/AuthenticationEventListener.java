@@ -27,6 +27,7 @@ public class AuthenticationEventListener implements ApplicationListener<Abstract
     @Autowired
     UserRepository userRepository;
 
+
     @Override
     public void onApplicationEvent(AbstractAuthenticationEvent event) {
         String email = "";
@@ -40,6 +41,7 @@ public class AuthenticationEventListener implements ApplicationListener<Abstract
             if(principal instanceof String) {
                 email = (String) principal;
             }
+            // IF USER HAS SUCCESSFULLY LOGGED IN
             if (event instanceof AuthenticationSuccessEvent) {
                 AbstractUser user = userRepository.findAbstractUserByEmail(email);
                 user.setLogged(true);
@@ -52,12 +54,14 @@ public class AuthenticationEventListener implements ApplicationListener<Abstract
                 }
             }
 
+            // IF USER HAS SUCCESSFULLY LOGGED OUT
             if (event instanceof LogoutSuccessEvent) {
                 AbstractUser user = userRepository.findAbstractUserByEmail(email);
                 user.setLogged(false);
                 userRepository.save(user);
             }
 
+            // IF USER HAS MADE AN UNSUCCESSFUL LOGIN ATTEMPT
             if (event instanceof AuthenticationFailureBadCredentialsEvent) {
                 AbstractUser user = userRepository.findAbstractUserByEmail(email);
                 if (user instanceof Customer) {

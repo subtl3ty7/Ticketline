@@ -1,13 +1,10 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity(name = "user")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
