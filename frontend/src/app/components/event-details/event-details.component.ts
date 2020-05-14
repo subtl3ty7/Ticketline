@@ -11,19 +11,18 @@ import {SimpleEvent} from '../../dtos/simple-event';
 })
 export class EventDetailsComponent implements OnInit {
 
-  events: SimpleEvent[];
-  @Input() e: SimpleEvent;
+  e: SimpleEvent;
 
   constructor(private eventService: EventService,
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-  //  this.loadEvent();
+  //  this.events = null;
   }
 
   public loadEvent(): void {
     const eventCode = this.route.snapshot.paramMap.get('eventCode');
-    this.eventService.getEventByEventCode(eventCode).subscribe(e => this.e = e);
+  //  this.eventService.getEventByEventCode(eventCode).subscribe(e => this.e = e);
   }
 
 }
