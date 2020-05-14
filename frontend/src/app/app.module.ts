@@ -55,7 +55,7 @@ import { RegistrationComponent } from './components/registration/registration.co
 
 
 import { EventSearchComponent } from './components/event-search/event-search.component';
-import { EventDetailsComponent } from './components/event-details/event-details.component';
+import { EventDetailsUserViewComponent } from './components/event-details/event-details-user-view';
 
 @NgModule({
   declarations: [
@@ -93,7 +93,7 @@ import { EventDetailsComponent } from './components/event-details/event-details.
     RegistrationComponent,
     GuestHeaderComponent,
     EventSearchComponent,
-    EventDetailsComponent,
+    EventDetailsUserViewComponent,
   ],
   imports: [
     BrowserModule,

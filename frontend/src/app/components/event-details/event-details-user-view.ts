@@ -6,10 +6,10 @@ import {SimpleEvent} from '../../dtos/simple-event';
 
 @Component({
   selector: 'app-event-details',
-  templateUrl: './event-details.component.html',
-  styleUrls: ['./event-details.component.css']
+  templateUrl: './event-details-user-view.html',
+  styleUrls: ['./event-details-user-view.component.css']
 })
-export class EventDetailsComponent implements OnInit {
+export class EventDetailsUserViewComponent implements OnInit {
 
   e: SimpleEvent;
 
