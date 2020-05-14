@@ -19,11 +19,9 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.event.LogoutSuccessEvent;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.CookieClearingLogoutHandler;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.authentication.rememberme.AbstractRememberMeServices;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.invoke.MethodHandles;
@@ -93,23 +91,7 @@ public class UserEndpoint {
         UserDto result = userMapper.abstractUserToUserDto(userService.findUserByUserCode(uc));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-/*
-    @GetMapping(value = "/{email}")
-    @ApiOperation(
-        value = "Get user",
-        notes = "Get user by email",
-        authorizations = {@Authorization(value = "apiKey")})
-    @ApiResponses({
-        @ApiResponse(code = 200, message = "User is successfully retrieved"),
-        @ApiResponse(code = 404, message = "User is not found"),
-        @ApiResponse(code = 500, message = "Connection Refused"),
-    })
-    public ResponseEntity<SimpleUserDto> findUserByEmail(@PathVariable String email) {
-        LOGGER.info("GET /api/v1/users/" + email);
-        SimpleUserDto result = userMapper.userToSimpleUserDto(userService.findUserByEmail(email));
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-*/
+
     @Secured("ROLE_ADMIN")
     @PostMapping(value = "/administrators")
     @ApiOperation(

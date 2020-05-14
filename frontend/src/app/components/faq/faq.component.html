@@ -1,4 +1,5 @@
-<app-customer-header class="not-print"></app-customer-header>
+<app-customer-header *ngIf="authService.isLoggedIn()"></app-customer-header>
+<app-guest-header *ngIf="!authService.isLoggedIn()"></app-guest-header>
 <app-content>
   <div class="container justify-content-center">
     <div class="row">
