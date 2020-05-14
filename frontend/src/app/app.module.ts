@@ -58,6 +58,7 @@ import { HomeComponent } from './components/home/home.component';
 import { TopTenEventsComponent } from './components/top-ten-events/top-ten-events.component';
 import { HeaderComponent } from './sections/header/header.component';
 import { CurrentNewsComponent } from './components/home/current-news/current-news.component';
+import { TopEventsListComponent } from './components/top-ten-events/top-events-list/top-events-list.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +98,8 @@ import { CurrentNewsComponent } from './components/home/current-news/current-new
     HomeComponent,
     TopTenEventsComponent,
     HeaderComponent,
-    CurrentNewsComponent
+    CurrentNewsComponent,
+    TopEventsListComponent
   ],
   imports: [
     BrowserModule,
