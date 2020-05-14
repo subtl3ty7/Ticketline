@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {MyProfileWrapper} from '../../my-profile-wrapper';
+import {MyProfileWrapper} from '../../../my-profile-wrapper';
 import {Form, FormControl} from '@angular/forms';
 import {MatDatepicker, MatDatepickerInputEvent} from '@angular/material/datepicker';
 

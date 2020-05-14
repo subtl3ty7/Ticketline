@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {User} from '../../../dtos/user';
-import {MyProfileWrapper, State} from '../my-profile-wrapper';
+import {User} from '../../../../dtos/user';
+import {MyProfileWrapper, State} from '../../my-profile-wrapper';
 import {ActivatedRoute, Router} from '@angular/router';
-import {UserService} from '../../../services/user.service';
+import {UserService} from '../../../../services/user.service';
 import {DeleteAccountComponent} from './delete-account/delete-account.component';
 import {MatDialog} from '@angular/material/dialog';
 

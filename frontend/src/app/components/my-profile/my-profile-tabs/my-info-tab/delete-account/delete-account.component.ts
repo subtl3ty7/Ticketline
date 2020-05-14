@@ -1,8 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {MyProfileWrapper} from '../../my-profile-wrapper';
-import {UserService} from '../../../../services/user.service';
-import {AuthService} from '../../../../services/auth.service';
+import {MyProfileWrapper} from '../../../my-profile-wrapper';
+import {UserService} from '../../../../../services/user.service';
+import {AuthService} from '../../../../../services/auth.service';
 import {Router} from '@angular/router';
 
 @Component({
