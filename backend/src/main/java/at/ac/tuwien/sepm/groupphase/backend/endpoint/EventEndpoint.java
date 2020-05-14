@@ -82,6 +82,8 @@ public class EventEndpoint {
     }
 
 
+
+    @CrossOrigin(maxAge = 3600)
     @GetMapping(value = "/{eventCode}")
     @ApiOperation(
         value = "Get event by its Code",
@@ -97,6 +99,22 @@ public class EventEndpoint {
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
+    @CrossOrigin(maxAge = 3600)
+    @GetMapping(value = "/all")
+    @ApiOperation(
+        value = "Get all events",
+        notes = "Get all events without details",
+        authorizations = {@Authorization(value = "apiKey")})
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "Events are successfully retrieved"),
+        @ApiResponse(code = 404, message = "No Event is found"),
+        @ApiResponse(code = 500, message = "Connection Refused"),
+    })
+    public ResponseEntity<List<SimpleEventDto>> findAllEvents() {
+        LOGGER.info("GET /api/v1/events/all");
+        List<SimpleEventDto> result = eventMapper.eventToSimpleEventDto(eventService.findAllEvents());
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
     @DeleteMapping(value = "/{eventCode}")
     @ApiOperation(

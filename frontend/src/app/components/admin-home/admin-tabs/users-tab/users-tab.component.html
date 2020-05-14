@@ -1,0 +1,87 @@
+<div class="table-container all-height" #table>
+  <div class="flex">
+    <mat-form-field class="input-wrapper">
+      <mat-label>Search</mat-label>
+      <input matInput
+             name="searchUser"
+             (keyup)="searchForAllUsers($event)">
+    </mat-form-field>
+  </div>
+
+  <mat-checkbox color = "primary" labelPosition = 'before' [(ngModel)]='showBlocked' (change)='applySearch(users)'>Show only blocked users</mat-checkbox>
+
+  <button mat-raised-button color = "basic" (click)="createNewUser()" style="margin-left: 61%;margin-bottom: 1%">Create a new User</button>
+
+<div class="table">
+  <mat-table #table [dataSource]="dataSource" matSort>
+
+      <!--USERCODE-->
+      <ng-container matColumnDef="userCode">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>User Code</mat-header-cell>
+        <mat-cell *matCellDef="let element" (click)="userDetails(element)">
+          <div class="cell-padding">
+            {{element?.userCode}}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <!--FIRST NAME-->
+      <ng-container matColumnDef="firstName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>First name</mat-header-cell>
+        <mat-cell *matCellDef="let element" (click)="userDetails(element)">
+          <div class="cell-padding">
+            {{element?.firstName}}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <!--LAST NAME-->
+      <ng-container matColumnDef="lastName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Last name</mat-header-cell>
+        <mat-cell *matCellDef="let element" (click)="userDetails(element)">
+          <div class="cell-padding">
+           {{element?.lastName}}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <!--EMAIL-->
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>E-Mail</mat-header-cell>
+        <mat-cell *matCellDef="let element" (click)="userDetails(element)">
+          <div class="cell-padding">
+            {{element?.email}}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+    <!--BLOCK-->
+    <ng-container matColumnDef="block">
+      <mat-header-cell *matHeaderCellDef ></mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <div class="cell-padding">
+          <button mat-raised-button color = "warn" *ngIf="element?.blocked === false && element?.admin === false" (click)="blockUser(element)" style="margin-left: 15%">Block</button>
+          <button mat-raised-button color = "green" *ngIf="element?.blocked === true && element?.admin === false" (click)="unblockUser(element)">Unblock</button>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+      <!--PASSWORD RESET-->
+      <ng-container matColumnDef="password">
+        <mat-header-cell *matHeaderCellDef ></mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="cell-padding">
+            <button mat-raised-button color = "primary" (click)="changePassword(element)">Password Zurücksetzen</button>
+          </div>
+        </mat-cell>
+      </ng-container>
+
+
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row;
+             columns: displayedColumns;"></mat-row>
+    </mat-table>
+  <mat-paginator showFirstLastButtons [pageSizeOptions]="[10, 25, 50]"></mat-paginator>
+</div>
+</div>
