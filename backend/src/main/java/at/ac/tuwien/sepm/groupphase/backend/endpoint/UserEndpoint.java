@@ -140,7 +140,7 @@ public class UserEndpoint {
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
     public ResponseEntity<Void> deleteUser(@PathVariable String usercode) {
-        LOGGER.info("GET /api/v1/users/delete/" + usercode);
+        LOGGER.info("DELETE /api/v1/users/delete/" + usercode);
         userService.deleteUserByUsercode(usercode);
         return ResponseEntity.noContent().build();
     }
