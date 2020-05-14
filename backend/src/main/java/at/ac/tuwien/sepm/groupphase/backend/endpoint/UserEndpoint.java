@@ -42,7 +42,7 @@ public class UserEndpoint {
         this.applicationEventPublisher = applicationEventPublisher;
     }
 
-    @CrossOrigin(maxAge = 3600)
+    @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
     @PostMapping(value = "/customers")
     @ApiOperation(
         value = "Register new customer",
