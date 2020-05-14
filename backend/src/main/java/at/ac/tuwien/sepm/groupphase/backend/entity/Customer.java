@@ -1,14 +1,10 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.apache.tomcat.jni.Local;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 

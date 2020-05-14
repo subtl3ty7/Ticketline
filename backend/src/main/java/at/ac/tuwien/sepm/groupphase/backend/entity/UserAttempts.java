@@ -4,14 +4,7 @@ package at.ac.tuwien.sepm.groupphase.backend.entity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.security.core.userdetails.User;
-
 import javax.persistence.*;
-
-import java.time.LocalDateTime;
-
-import static javax.persistence.FetchType.LAZY;
-
 
 @Entity
 @Table(name = "user_attempt")
