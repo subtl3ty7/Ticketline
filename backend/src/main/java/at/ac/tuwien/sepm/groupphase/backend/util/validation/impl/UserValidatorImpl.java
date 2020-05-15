@@ -1,12 +1,11 @@
-package at.ac.tuwien.sepm.groupphase.backend.util.Validation.impl;
+package at.ac.tuwien.sepm.groupphase.backend.util.validation.impl;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Administrator;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.util.Constraints;
-import at.ac.tuwien.sepm.groupphase.backend.util.Validation.UserValidator;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
+import at.ac.tuwien.sepm.groupphase.backend.util.validation.UserValidator;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;

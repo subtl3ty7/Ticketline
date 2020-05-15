@@ -1,11 +1,11 @@
-package at.ac.tuwien.sepm.groupphase.backend.util.Validation.impl;
+package at.ac.tuwien.sepm.groupphase.backend.util.validation.impl;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.*;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventLocationRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventLocationService;
 import at.ac.tuwien.sepm.groupphase.backend.util.Constraints;
-import at.ac.tuwien.sepm.groupphase.backend.util.Validation.EventValidator;
+import at.ac.tuwien.sepm.groupphase.backend.util.validation.EventValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

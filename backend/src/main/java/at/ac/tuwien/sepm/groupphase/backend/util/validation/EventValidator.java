@@ -1,4 +1,4 @@
-package at.ac.tuwien.sepm.groupphase.backend.util.Validation;
+package at.ac.tuwien.sepm.groupphase.backend.util.validation;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.*;
 import at.ac.tuwien.sepm.groupphase.backend.util.Constraints;

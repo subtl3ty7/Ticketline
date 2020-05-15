@@ -5,7 +5,7 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.Seat;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Section;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventLocationRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventLocationService;
-import at.ac.tuwien.sepm.groupphase.backend.util.Validation.EventValidator;
+import at.ac.tuwien.sepm.groupphase.backend.util.validation.EventValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
