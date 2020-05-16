@@ -2,7 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 import {EventService} from '../../services/event.service';
-import {SimpleEvent} from '../../dtos/simple-event';
+import {DetailedEvent} from '../../dtos/detailed-event';
+import {Show} from '../../dtos/show';
+import {EventLocation} from '../../dtos/event-location';
 
 @Component({
   selector: 'app-event-details',
@@ -11,18 +13,18 @@ import {SimpleEvent} from '../../dtos/simple-event';
 })
 export class EventDetailsUserViewComponent implements OnInit {
 
-  e: SimpleEvent;
+  @Input() event: DetailedEvent;
 
   constructor(private eventService: EventService,
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-  //  this.events = null;
+    this.loadEvent();
   }
 
   public loadEvent(): void {
     const eventCode = this.route.snapshot.paramMap.get('eventCode');
-  //  this.eventService.getEventByEventCode(eventCode).subscribe(e => this.e = e);
+    this.eventService.getDetailedEventByUserCode(eventCode).subscribe(e => this.event = e);
   }
 
 }
