@@ -89,6 +89,12 @@ public class ValidationMessage {
             put("event_prices", "Prices list cannot be null.");
             put("eventCode_unique", "Event Code is already present in database.");
             put("event_exists", "Event was not found in the database.");
+
+            //ticket
+            put("ticketCode_unique", "Ticket code is already present in the database.");
+            put("userCode_exists", "User was not found in the database.");
+            put("show_exists", "Show was not found in the database.");
+            put("seat_notFree", "The seat is already taken.");
         }
     };
 

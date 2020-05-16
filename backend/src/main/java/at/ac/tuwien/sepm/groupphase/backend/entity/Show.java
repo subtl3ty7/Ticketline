@@ -20,7 +20,6 @@ import java.util.Set;
 @Builder
 @Entity
 public class Show implements Serializable {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
