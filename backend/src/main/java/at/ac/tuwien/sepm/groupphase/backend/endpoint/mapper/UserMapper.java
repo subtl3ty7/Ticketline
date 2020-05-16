@@ -23,7 +23,7 @@ public interface UserMapper {
     @Named("userDtoToAdministrator")
     Administrator userDtoToAdministrator(UserDto userDto);
 
-    @IterableMapping(qualifiedByName = "userDtoToCustomer")
+    @IterableMapping(qualifiedByName = "userDtoToAdministrator")
     List<Administrator> userDtoToAdministrator(List<UserDto> userDtos);
 
     @Named("abstractUserToUserDto")
