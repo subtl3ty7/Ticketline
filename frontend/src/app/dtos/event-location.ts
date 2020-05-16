@@ -1,12 +1,12 @@
 import {Section} from './section';
 
 export class EventLocation {
-  private id: number;
-  private showId: string;
-  private eventLocationName: string;
-  private street: string;
-  private plz: string;
-  private city: string;
-  private country: string;
-  private sections: Section[];
+  public id: number;
+  public showId: string;
+  public eventLocationName: string;
+  public street: string;
+  public plz: string;
+  public city: string;
+  public country: string;
+  public sections: Section[];
 }
