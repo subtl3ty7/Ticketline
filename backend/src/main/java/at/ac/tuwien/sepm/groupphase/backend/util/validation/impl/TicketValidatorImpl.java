@@ -1,12 +1,10 @@
-package at.ac.tuwien.sepm.groupphase.backend.util.Validation.impl;
+package at.ac.tuwien.sepm.groupphase.backend.util.validation.impl;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
 import at.ac.tuwien.sepm.groupphase.backend.repository.*;
 import at.ac.tuwien.sepm.groupphase.backend.util.Constraints;
-import at.ac.tuwien.sepm.groupphase.backend.util.Validation.TicketValidator;
+import at.ac.tuwien.sepm.groupphase.backend.util.validation.TicketValidator;
 import org.springframework.stereotype.Component;
 
 @Component
