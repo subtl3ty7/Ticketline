@@ -17,7 +17,6 @@ import java.util.List;
 @Builder
 @Entity
 public class Show implements Serializable {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -39,12 +38,11 @@ public class Show implements Serializable {
     @Column
     private int ticketsAvailable;
 
-
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "SHOW_ID", referencedColumnName = "ID")
     private List<EventLocation> eventLocation;
 
-    public Show() {
+    public Show(){
     }
 
     public Show(List<Seat> freeSeats, String eventCode) {
