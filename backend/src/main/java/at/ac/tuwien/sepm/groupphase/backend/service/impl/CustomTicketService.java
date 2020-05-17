@@ -50,14 +50,20 @@ public class CustomTicketService implements TicketService {
             ticketEntity.setTicketCode(getNewTicketCode());
             LocalDateTime now = LocalDateTime.now();
             ticketEntity.setPurchaseDate(now);
+
             Seat seat = seatRepository.findSeatById(ticketEntity.getSeat().getId());
             ticketEntity.setSeat(seat);
             seatRepository.save(seat);
 
-            validator.validatePurchase(ticketEntity).throwIfViolated();
-
             Show show = showRepository.findShowById(ticketEntity.getShow().getId());
             ticketEntity.setShow(show);
+            showRepository.save(show);
+
+            validator.validatePurchase(ticketEntity).throwIfViolated();
+            validator.validate(ticketEntity).throwIfViolated();
+
+            show.setTicketsSold(show.getTicketsSold() + 1);
+            show.setTicketsAvailable(show.getTicketsAvailable() - 1);
             showRepository.save(show);
 
             ticketEntity.getSeat().setFree(false);

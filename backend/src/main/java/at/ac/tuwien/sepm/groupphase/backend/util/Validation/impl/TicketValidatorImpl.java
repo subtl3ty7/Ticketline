@@ -43,16 +43,18 @@ public class TicketValidatorImpl implements TicketValidator {
     @Override
     public Constraints validatePurchase(Ticket ticket) {
         Constraints constraints = new Constraints();
+        AbstractUser userFromDataBase = userRepository.findAbstractUserByUserCode(ticket.getUserCode());
         constraints.add("seat_notFree", seatRepository.findSeatById(ticket.getSeat().getId()).isFree());
+        constraints.add("userCode_exists", userFromDataBase != null);
+        constraints.add("show_exists", showRepository.findShowById(ticket.getShow().getId()) != null);
+        constraints.add("seat_exists", seatRepository.findSeatById(ticket.getSeat().getId()) != null);
+       // constraints.add("tickets_sold", (showRepository.findShowById(ticket.getShow().getId()).getTicketsAvailable()) == 0);
         return constraints;
     }
 
     private Constraints validateUnique(Ticket ticket){
         Constraints constraints = new Constraints();
-        AbstractUser userFromDataBase = userRepository.findAbstractUserByUserCode(ticket.getUserCode());
         constraints.add("ticketCode_unique", ticketRepository.findTicketByTicketCode(ticket.getTicketCode()) == null);
-        constraints.add("userCode_exists", userFromDataBase != null);
-        constraints.add("show_exists", showRepository.findShowById(ticket.getShow().getId()) != null);
         return constraints;
     }
 }

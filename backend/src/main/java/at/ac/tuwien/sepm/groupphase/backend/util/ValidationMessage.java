@@ -95,6 +95,8 @@ public class ValidationMessage {
             put("userCode_exists", "User was not found in the database.");
             put("show_exists", "Show was not found in the database.");
             put("seat_notFree", "The seat is already taken.");
+            put("seat_exists", "The seat was not found in the database.");
+            put("tickets_sold", "This show is sold out.");
         }
     };
 
