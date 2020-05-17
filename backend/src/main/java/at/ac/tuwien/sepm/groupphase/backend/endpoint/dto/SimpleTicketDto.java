@@ -4,9 +4,6 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.Seat;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
 import lombok.*;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Getter
@@ -15,13 +12,15 @@ import java.time.LocalDateTime;
 @Builder
 @ToString
 @NoArgsConstructor
-public class TicketDto {
+public class SimpleTicketDto {
     private Long ticketId;
     private String ticketCode;
     private boolean isPurchased;
     private LocalDateTime purchaseDate;
-    private Seat seat;
+    private Long seatId;
     private String userCode;
     private Integer price;
-    private Show show;
+    private Long showId;
+
+
 }
