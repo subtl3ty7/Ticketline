@@ -32,6 +32,7 @@
 }
 .input-wrapper {
   padding-top: 4px;
+  padding-left: 32px;
 }
 .border {
   border-right: 1px solid #c8c8c8;
@@ -94,6 +95,4 @@
   height: 55px;
 }
 
-.flex {
-  display: flex;
-}
+

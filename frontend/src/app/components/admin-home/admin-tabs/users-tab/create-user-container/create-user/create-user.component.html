@@ -1,5 +1,5 @@
 <div class="user-wrapper">
-  <div class="user-line">
+  <div fxLayout="row" class="user-line">
     <div class="link opacity" (click)="usersNavigate()">
       <span class="bread-crumps">Users</span>
     </div>
@@ -9,14 +9,14 @@
     </div>
   </div>
 </div>
-<div class="flex" >
+<div fxLayout="row" >
   <div class="administration-tabs">
     <app-admin-side-menu></app-admin-side-menu>
   </div>
   <div class="center-block">
     <div>
       <app-create-user-form [user]="wrapper.model">
-        <div class="buttons-wrapper">
+        <div fxLayout="row" class="buttons-wrapper">
         <button id="user-password-save-button"
                 class="save-button"
                 (click)="saveUser()">

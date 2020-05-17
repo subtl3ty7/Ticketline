@@ -6,13 +6,7 @@
   width: 100%;
 }
 
-.flex {
-  display: flex;
-  width: 100%;
-}
-
 .info-wrapper {
-  display: flex;
   align-items: flex-end;
   height: 60px;
   border-top: 1px solid #efefef;

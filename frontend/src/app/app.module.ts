@@ -33,6 +33,7 @@ import { UserDetailsComponent } from './components/admin-home/admin-tabs/users-t
 import { UserInfoComponent } from './components/admin-home/admin-tabs/users-tab/user-details-container/user-details/user-info/user-info.component';
 import { CreateUserContainerComponent } from './components/admin-home/admin-tabs/users-tab/create-user-container/root/create-user-container.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 // tslint:disable-next-line:max-line-length
 import { ResetPasswordComponent } from './components/admin-home/admin-tabs/users-tab/user-details-container/user-details/reset-password/reset-password.component';
 import { CreateUserComponent } from './components/admin-home/admin-tabs/users-tab/create-user-container/create-user/create-user.component';
@@ -134,7 +135,8 @@ import { TopEventsListComponent } from './components/top-ten-events/top-events-l
     MatCheckboxModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    FlexModule
   ],
   providers: [httpInterceptorProviders, MatDatepickerModule, MatNativeDateModule],
   bootstrap: [AppComponent]

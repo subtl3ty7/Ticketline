@@ -1,5 +1,5 @@
 <div class="event-wrapper">
-  <div class="event-line">
+  <div fxLayout="row" class="event-line">
     <div class="link opacity" (click)="eventsNavigate()">
       <span class="bread-crumps">Events</span>
     </div>
@@ -11,12 +11,12 @@
 </div>
 
 
-<div class="flex" *ngIf="wrapper.state !== state.PROCESSING">
+<div fxLayout="row" *ngIf="wrapper.state !== state.PROCESSING">
   <div class="administration-tabs">
     <app-admin-side-menu></app-admin-side-menu>
   </div>
   <div class="center-block">
-    <div *ngIf="wrapper.state === state.READY">
+    <div fxLayout="row" *ngIf="wrapper.state === state.READY">
       <app-event-info [event]="wrapper.model">
       </app-event-info>
     </div>

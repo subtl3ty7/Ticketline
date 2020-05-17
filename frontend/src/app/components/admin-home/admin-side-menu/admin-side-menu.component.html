@@ -1,7 +1,7 @@
 
 <div id="administration-users-tab"
      class="tab"
-     [routerLink]="['/administration', 1]"
+     [routerLink]="['/administration', 'users']"
      routerLinkActive="select-tab">
   <img src="assets/images/tabs/users.svg">
   <span class="tab-label"> Users</span>
@@ -9,22 +9,22 @@
 
 <div id="administration-events-tab"
      class="tab"
-     [routerLink]="['/administration', 2]"
+     [routerLink]="['/administration', 'events']"
      routerLinkActive="select-tab">
   <img src="assets/images/tabs/events.svg">
   <span class="tab-label"
-        [ngClass]="{'select-tab-label': globals.getChoosenTab === 2}">
+        [ngClass]="{'select-tab-label': globals.getChoosenTab === 'events'}">
         Events
       </span>
 </div>
 
 <div id="administration-news-tab"
      class="tab"
-     [routerLink]="['/administration', 3]"
+     [routerLink]="['/administration', 'news']"
      routerLinkActive="select-tab">
   <img src="assets/images/tabs/news.svg">
   <span class="tab-label"
-        [ngClass]="{'select-tab-label': globals.getChoosenTab === 3}">
+        [ngClass]="{'select-tab-label': globals.getChoosenTab === 'news'}">
         News
       </span>
 </div>

@@ -18,9 +18,9 @@ export class MyProfileTabsComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(param => {
       if (!param['tabId']) {
-        this.router.navigate(['/my-profile', 1]);
+        this.router.navigate(['/my-info', 1]);
       }
-      this.globals.setProfileChoosenTab = +param['tabId'];
+      this.globals.setProfileChoosenTab = param['tabId'];
     });
   }
 
