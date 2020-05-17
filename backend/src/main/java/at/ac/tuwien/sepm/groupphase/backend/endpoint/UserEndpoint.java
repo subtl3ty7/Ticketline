@@ -210,4 +210,19 @@ public class UserEndpoint {
         UserDto result = userMapper.abstractUserToUserDto(userService.getAuthenticatedUser(auth));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
+    @GetMapping(value = "/reset-password/{email}")
+    @ApiOperation(
+        value = "Reset password of user",
+        notes = "Reset password of user with email")
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "Successfully reset user password"),
+        @ApiResponse(code = 404, message = "User is not found"),
+        @ApiResponse(code = 500, message = "Connection Refused"),
+    })
+    public ResponseEntity<Void> resetPassword(@PathVariable String email) {
+        LOGGER.info("GET /api/v1/users//reset-password/" + email);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
