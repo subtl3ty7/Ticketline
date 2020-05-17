@@ -1,10 +1,28 @@
 <div class="table-container all-height" #table>
-  <div class="flex">
+  <div fxLayout = "row">
     <mat-form-field class="input-wrapper">
-      <mat-label>Search</mat-label>
+      <mat-label>Search User code</mat-label>
       <input matInput
-             name="searchUser"
-             (keyup)="searchForAllUsers($event)">
+             name="searchUserCode"
+             (keyup)="searchForAllUsers($event, 'userCode')">
+    </mat-form-field>
+    <mat-form-field class="input-wrapper">
+      <mat-label>Search First name</mat-label>
+      <input matInput
+             name="searchFirstName"
+             (keyup)="searchForAllUsers($event, 'fname')">
+    </mat-form-field>
+    <mat-form-field class="input-wrapper">
+      <mat-label>Search Last name</mat-label>
+      <input matInput
+             name="searchLastName"
+             (keyup)="searchForAllUsers($event, 'lname')">
+    </mat-form-field>
+    <mat-form-field class="input-wrapper">
+      <mat-label>Search Email</mat-label>
+      <input matInput
+             name="searchEmail"
+             (keyup)="searchForAllUsers($event, 'email')">
     </mat-form-field>
   </div>
 

@@ -22,9 +22,9 @@ export class AdminTabsComponent implements OnInit {
     this.route.params.subscribe(param => {
       if (!param['tabId']) {
         console.log('debug');
-        this.router.navigate(['/administration', 1]);
+        this.router.navigate(['/administration', 'users']);
       }
-      this.globals.setChoosenTab = +param['tabId'];
+      this.globals.setChoosenTab = param['tabId'];
     });
   }
 

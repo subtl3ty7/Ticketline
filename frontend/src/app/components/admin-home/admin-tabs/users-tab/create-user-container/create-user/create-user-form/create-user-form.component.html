@@ -1,7 +1,7 @@
 <div class="center-block">
   <!--User Type-->
-  <div class="info-wrapper">
-    <img src="assets/resources/images/administration/users/person.svg" alt="">
+  <div fxLayout="row" class="info-wrapper">
+    <img src="assets/images/user/person.svg" alt="">
     <div class="info">
       <div class="info-label">User Type</div>
       <div class="info-field status-label" *ngIf="user.admin">Administrator</div>
@@ -10,8 +10,8 @@
   </div>
   <mat-checkbox color = "primary" labelPosition = 'before' [(ngModel)]='adminFlag' (change)='changeUserType()' style="margin-left: 7%">Is Admin?</mat-checkbox>
   <!--FIRST NAME-->
-  <div class="info-wrapper">
-    <img src="assets/resources/images/administration/users/person.svg" alt="">
+  <div fxLayout="row" class="info-wrapper">
+    <img src="assets/images/user/person.svg" alt="">
     <div class="info">
       <div class="info-label">First Name</div>
     </div>
@@ -28,8 +28,8 @@
   </mat-form-field>
 
   <!--LAST NAME-->
-  <div class="info-wrapper">
-    <img src="assets/resources/images/administration/users/person.svg" alt="">
+  <div fxLayout="row" class="info-wrapper">
+    <img src="assets/images/user/person.svg" alt="">
     <div class="info">
       <div class="info-label">Last Name</div>
     </div>
@@ -46,8 +46,8 @@
   </mat-form-field>
 
   <!--EMAIL-->
-  <div class="info-wrapper">
-    <img src="assets/resources/images/administration/users/email.svg" alt="">
+  <div fxLayout="row" class="info-wrapper">
+    <img src="assets/images/user/email.svg" alt="">
     <div class="info">
       <div class="info-label">E-Mail</div>
     </div>
@@ -64,8 +64,8 @@
   </mat-form-field>
 
   <!--PASSWORD-->
-  <div class="info-wrapper">
-    <img src="assets/resources/images/administration/users/loupe.svg" alt="">
+  <div fxLayout="row" class="info-wrapper">
+    <img src="assets/images/user/loupe.svg" alt="">
     <div class="info">
       <div class="info-label">Password</div>
     </div>
@@ -82,8 +82,8 @@
   </mat-form-field>
 
   <!--BIRTHDATE-->
-  <div class="info-wrapper">
-    <img src="assets/resources/images/administration/users/birth.svg" alt="">
+  <div fxLayout="row" class="info-wrapper">
+    <img src="assets/images/user/birth.svg" alt="">
     <div class="info">
       <div class="info-label">Birthdate</div>
     </div>

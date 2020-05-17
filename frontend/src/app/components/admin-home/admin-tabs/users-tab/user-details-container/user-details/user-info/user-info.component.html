@@ -2,7 +2,7 @@
   <ng-content></ng-content>
 
   <!--NAME-->
-  <div class="info-wrapper">
+  <div fxLayout="row" class="info-wrapper">
     <img src="assets/images/user/person.svg" alt="">
     <div class="info">
       <div class="info-label"></div>
@@ -14,7 +14,7 @@
   </div>
 
   <!--USER CODE-->
-  <div class="info-wrapper">
+  <div fxLayout="row" class="info-wrapper">
     <img src="assets/images/user/loupe.svg" alt="">
     <div class="info">
       <div class="info-label">User Code</div>
@@ -25,7 +25,7 @@
   </div>
 
   <!--EMAIL-->
-  <div class="info-wrapper">
+  <div fxLayout="row" class="info-wrapper">
     <img src="assets/images/user/email.svg" alt="">
     <div class="info">
       <div class="info-label">E-Mail</div>
@@ -34,7 +34,7 @@
   </div>
 
   <!--BIRTHDATE-->
-  <div class="info-wrapper">
+  <div fxLayout="row" class="info-wrapper">
     <img src="assets/images/user/birth.svg" alt="">
     <div class="info">
       <div class="info-label">Birthdate</div>
@@ -42,7 +42,7 @@
     </div>
   </div>
 
-  <div class="info-wrapper">
+  <div fxLayout="row" class="info-wrapper">
     <div class="info">
       <div class="info-label">User Type</div>
       <div class="info-field status-label" *ngIf="user.admin">Administrator</div>
@@ -51,14 +51,14 @@
   </div>
 
   <!--ONLINE STATUS-->
-  <div class="info-wrapper">
+  <div fxLayout="row" class="info-wrapper">
     <div class="info">
       <div class="info-label">Is Online</div>
       <div class="info-field status-label">{{user?.logged}}</div>
     </div>
   </div>
 
-  <div class="info-wrapper">
+  <div fxLayout="row" class="info-wrapper">
     <img src="assets/images/user/history.svg" alt="">
     <div class="info">
       <div class="info-label">Created At</div>
@@ -66,7 +66,7 @@
     </div>
   </div>
 
-  <div class="info-wrapper">
+  <div fxLayout="row" class="info-wrapper">
     <img src="assets/images/user/history.svg" alt="">
     <div class="info">
       <div class="info-label">Updated At</div>
@@ -78,12 +78,12 @@
   <!--Account Status-->
   <div *ngIf="user?.admin === false">
 
-    <div class="flex user-info-padding">
+    <div fxLayout="row" class="user-info-padding">
       <div class="customer-label">Customer Related Information</div>
     </div>
 
     <!--BLOCKED STATUS-->
-    <div class="info-wrapper">
+    <div fxLayout="row" class="info-wrapper">
       <img src="assets/images/user/block.svg" alt="" *ngIf="user?.blocked">
       <img src="assets/images/user/not-block.svg" alt="" *ngIf="user?.blocked === false">
       <div class="info">
@@ -93,7 +93,7 @@
     </div>
 
     <!--POINTS-->
-    <div class="info-wrapper">
+    <div fxLayout="row" class="info-wrapper">
       <img src="assets/images/user/points.svg" alt="">
       <div class="info">
         <div class="info-label">Points</div>

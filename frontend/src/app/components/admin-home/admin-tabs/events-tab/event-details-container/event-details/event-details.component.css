@@ -2,11 +2,6 @@
   display: block;
 }
 
-.flex {
-  display: flex;
-  padding-left: 31px;
-}
-
 .event-wrapper {
   margin-left: 14.8%;
   margin-right: 3%;
@@ -17,7 +12,6 @@ img {
 }
 
 .event-line {
-  display: flex;
   align-items: center;
   border-bottom: 1px solid #888888;
 }
@@ -58,7 +52,6 @@ img {
 }
 
 .event-block-wrapper {
-  display: flex;
   background: white;
   border: none;
   padding: 0;

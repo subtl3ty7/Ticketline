@@ -7,7 +7,7 @@ import {Show} from '../../dtos/show';
 import {EventLocation} from '../../dtos/event-location';
 
 @Component({
-  selector: 'app-event-details',
+  selector: 'app-event-details-user-view',
   templateUrl: './event-details-user-view.html',
   styleUrls: ['./event-details-user-view.component.css']
 })
