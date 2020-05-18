@@ -35,6 +35,10 @@ public class Ticket {
     private boolean isPurchased;
 
     @NotNull
+    @Column(nullable = false, name = "is_reserved")
+    private boolean isReserved;
+
+    @NotNull
     @Column(nullable = false, name = "purchase_date")
     private LocalDateTime purchaseDate;
 

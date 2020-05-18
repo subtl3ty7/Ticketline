@@ -6,6 +6,8 @@ import at.ac.tuwien.sepm.groupphase.backend.util.Constraints;
 public interface TicketValidator {
     Constraints validateTicketCode(String ticketCode);
     Constraints validate(Ticket ticket);
-    Constraints validatePurchase(Ticket ticket);
+    Constraints validateSave(Ticket ticket);
     Constraints validateAllTicketsOfUser(String usercode);
+    Constraints validateReserve(Ticket ticket);
+
 }
