@@ -98,6 +98,7 @@ public class ValidationMessage {
             put("seat_exists", "The seat was not found in the database.");
             put("tickets_sold", "This show is sold out.");
             put("no_tickets", "This user has no tickets.");
+            put("ticket_exists", "This ticket is already saved in the database.");
         }
     };
 

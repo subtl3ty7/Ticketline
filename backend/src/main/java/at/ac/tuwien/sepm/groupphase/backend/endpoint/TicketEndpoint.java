@@ -44,7 +44,7 @@ public class TicketEndpoint {
     })
     public ResponseEntity<String> buyTicket(@RequestBody List<DetailedTicketDto> detailedTicketDto) {
         LOGGER.info("POST " + detailedTicketDto);
-        List<Ticket> tickets = ticketService.buyTicket(ticketMapper.detailedTicketDtoListToTicketList(detailedTicketDto));
+        List<Ticket> tickets = ticketService.buyTickets(ticketMapper.detailedTicketDtoListToTicketList(detailedTicketDto));
 
         ResponseEntity response = new ResponseEntity(ticketMapper.ticketListToSimpleTicketDtoList(tickets), HttpStatus.CREATED);
 
@@ -83,6 +83,25 @@ public class TicketEndpoint {
         }
         return simpleTickets;
     }*/
+    @PostMapping(value = "/reserve")
+    @ApiOperation(
+        value = "Reserving a ticket",
+        notes = "Reserving a ticket",
+        authorizations = {@Authorization(value = "apiKey")})
+    @ApiResponses({
+        @ApiResponse(code = 201, message = "Ticket is successfully reserved"),
+        @ApiResponse(code = 400, message = "Ticket is already reserved"),
+        @ApiResponse(code = 500, message = "Connection Refused"),
+    })
+    public ResponseEntity<String> reserveTicket(@RequestBody List<DetailedTicketDto> detailedTicketDto) {
+        LOGGER.info("POST " + detailedTicketDto);
+        List<Ticket> tickets = ticketService.reserveTickets(ticketMapper.detailedTicketDtoListToTicketList(detailedTicketDto));
+
+        ResponseEntity response = new ResponseEntity(ticketMapper.ticketListToSimpleTicketDtoList(tickets), HttpStatus.CREATED);
+
+        LOGGER.info("Sending API Response: [" + response.getBody() + ", " + response.getStatusCode() + "]");
+        return response;
+    }
 
 
 
