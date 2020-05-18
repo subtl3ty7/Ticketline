@@ -213,42 +213,5 @@ public class UserEndpoint {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
-    @PostMapping(value = "/reset-password/{email}")
-    @ApiOperation(
-        value = "Reset password of user",
-        notes = "Reset password of user with email")
-    @ApiResponses({
-        @ApiResponse(code = 200, message = "Successfully reset user password"),
-        @ApiResponse(code = 404, message = "User is not found"),
-        @ApiResponse(code = 500, message = "Connection Refused"),
-    })
-    public ResponseEntity<Void> resetPasswordRequest(@PathVariable String email) {
-        LOGGER.info("GET /api/v1/users/reset-password/" + email);
-        userService.resetPasswordRequest(email);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
-    @GetMapping(value = "/reset-password/{resetPasswordCode}")
-    @ApiOperation(
-        value = "Get email of reset password code",
-        notes = "Get email associated with reset password code")
-    @ApiResponses({
-        @ApiResponse(code = 200, message = "Code is correct"),
-        @ApiResponse(code = 404, message = "Reset Password Code is not found"),
-        @ApiResponse(code = 500, message = "Connection Refused"),
-    })
-    public ResponseEntity<UserLoginDto> getResetPasswordUserLoginDto(@PathVariable String resetPasswordCode) {
-        LOGGER.info("GET /api/v1/users/validate-reset-password/" + resetPasswordCode);
-        String email = userService.getResetPasswordEmailwithCode(resetPasswordCode);
-        UserLoginDto result =
-            UserLoginDto.UserLoginDtoBuilder
-            .anUserLoginDto()
-                .withEmail(email)
-                .withPassword(userService.findUserByEmail(email).getPassword())
-                .build();
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
 
 }

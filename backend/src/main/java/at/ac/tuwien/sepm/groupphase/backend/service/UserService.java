@@ -103,7 +103,5 @@ public interface UserService extends UserDetailsService {
      */
     AbstractUser getAuthenticatedUser(Authentication auth);
 
-    void resetPasswordRequest(String email);
 
-    String getResetPasswordEmailwithCode(String resetPasswordCode);
 }

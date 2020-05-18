@@ -6,6 +6,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "reset_password")
@@ -25,12 +26,18 @@ public class ResetPassword {
     @Column(name = "resetPasswordCode")
     private String resetPasswordCode;
 
+    @NotNull
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+
     public ResetPassword() {
 
     }
-    public ResetPassword(String email, String resetPasswordCode) {
+    public ResetPassword(String email, String resetPasswordCode, LocalDateTime createdAt) {
         this.email = email;
         this.resetPasswordCode = resetPasswordCode;
+        this.createdAt = createdAt;
     }
 
 

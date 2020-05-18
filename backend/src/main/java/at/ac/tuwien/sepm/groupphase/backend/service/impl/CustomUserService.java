@@ -29,6 +29,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManagerFactory;
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -235,21 +236,4 @@ public class CustomUserService implements UserService {
         return null;
     }
 
-    @Override
-    public void resetPasswordRequest(String email) {
-        validator.validateEmail(email).throwIfViolated();
-        String resetPasswordCode = CodeGenerator.generateResetPasswordCode();
-        ResetPassword resetPassword = new ResetPassword(email, resetPasswordCode);
-        resetPasswordRepository.save(resetPassword);
-        emailService.sendResetPasswordEmail(resetPassword);
-    }
-
-    @Override
-    public String getResetPasswordEmailwithCode(String resetPasswordCode) {
-        ResetPassword resetPassword = resetPasswordRepository.findByResetPasswordCode(resetPasswordCode);
-        if(resetPassword == null) {
-            throw new NullPointerException("Can not find reset password code!");
-        }
-        return resetPassword.getEmail();
-    }
 }
