@@ -3,14 +3,12 @@ package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
-import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventLocationRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
-import at.ac.tuwien.sepm.groupphase.backend.util.Constraints;
-import at.ac.tuwien.sepm.groupphase.backend.util.Validation.EventValidator;
+import at.ac.tuwien.sepm.groupphase.backend.util.validation.EventValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +49,12 @@ public class CustomEventService implements EventService {
         List<Event> top10 = new ArrayList<>();
         for(int i = 0; i < Math.min(10, allEventsFromMonth.size()); i++) top10.add(allEventsFromMonth.get(i));
         return top10;
+    }
+
+    @Override
+    public List<Event> findAllEvents() {
+        List<Event> allEvents = eventRepository.findAll();
+        return allEvents;
     }
 
     @Override

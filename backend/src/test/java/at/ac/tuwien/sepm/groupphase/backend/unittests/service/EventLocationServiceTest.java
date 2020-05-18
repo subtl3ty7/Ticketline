@@ -39,7 +39,7 @@ public class EventLocationServiceTest implements TestData {
 
     private EventLocation eventLocation = EventLocation.builder()
         .id(ID)
-        .eventLocationName(FNAME)
+        .name(FNAME)
         .eventLocationDescription(DESC)
         .capacity(TOTAL)
         .street(STREET)
@@ -61,7 +61,7 @@ public class EventLocationServiceTest implements TestData {
             .build();
         eventLocation = EventLocation.builder()
             .id(ID)
-            .eventLocationName(FNAME)
+            .name(FNAME)
             .eventLocationDescription(DESC)
             .capacity(TOTAL)
             .street(STREET)
@@ -79,7 +79,7 @@ public class EventLocationServiceTest implements TestData {
         assertEquals(1, eventLocationService.getAllEventLocations().size());
         EventLocation eventLocation = eventLocationService.getAllEventLocations().get(0);
         assertAll(
-            () -> assertEquals(FNAME, eventLocation.getEventLocationName()),
+            () -> assertEquals(FNAME, eventLocation.getName()),
             () -> assertEquals(DESC, eventLocation.getEventLocationDescription()),
             () -> assertEquals(TOTAL, eventLocation.getCapacity()),
             () -> assertEquals(STREET, eventLocation.getStreet()),

@@ -1,0 +1,34 @@
+<div class="user-wrapper">
+  <div fxLayout="row" class="user-line">
+    <div class="link opacity" (click)="usersNavigate()">
+      <span class="bread-crumps">Users</span>
+    </div>
+
+    <div class="bread-crumps user-padding">
+      > Create User
+    </div>
+  </div>
+</div>
+<div fxLayout="row" >
+  <div class="administration-tabs">
+    <app-admin-side-menu></app-admin-side-menu>
+  </div>
+  <div class="center-block">
+    <div>
+      <app-create-user-form [user]="wrapper.model">
+        <div fxLayout="row" class="buttons-wrapper">
+        <button id="user-password-save-button"
+                class="save-button"
+                (click)="saveUser()">
+          <span class="save-button-label">Save</span>
+        </button>
+        <button id="user-password-cancel-button"
+                class="cancel-button"
+                (click)="cancelCreateUserMode()">
+          <span class="cancel-button-label">Cancel</span>
+        </button>
+        </div>
+      </app-create-user-form>
+    </div>
+  </div>
+</div>

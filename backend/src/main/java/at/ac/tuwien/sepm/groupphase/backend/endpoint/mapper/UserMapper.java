@@ -8,7 +8,6 @@ import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
-
 import java.util.List;
 
 @Mapper
@@ -23,7 +22,7 @@ public interface UserMapper {
     @Named("userDtoToAdministrator")
     Administrator userDtoToAdministrator(UserDto userDto);
 
-    @IterableMapping(qualifiedByName = "userDtoToCustomer")
+    @IterableMapping(qualifiedByName = "userDtoToAdministrator")
     List<Administrator> userDtoToAdministrator(List<UserDto> userDtos);
 
     @Named("abstractUserToUserDto")

@@ -152,7 +152,7 @@ public class EventDataGenerator {
         for(int i=0; i<numberOfEventLocations; i++) {
             List<Section> sections = generateSections();
             EventLocation eventLocation = EventLocation.builder()
-                .eventLocationName("Stephansplatz " + i)
+                .name("Stephansplatz " + i)
                 .city("Vienna")
                 .country("Austria")
                 .plz("1010")

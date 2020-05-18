@@ -1,0 +1,25 @@
+<div class="event-wrapper">
+  <div fxLayout="row" class="event-line">
+    <div class="link opacity" (click)="eventsNavigate()">
+      <span class="bread-crumps">Events</span>
+    </div>
+
+    <div class="bread-crumps event-padding">
+      > {{name}}
+    </div>
+  </div>
+</div>
+
+
+<div fxLayout="row" *ngIf="wrapper.state !== state.PROCESSING">
+  <div class="administration-tabs">
+    <app-admin-side-menu></app-admin-side-menu>
+  </div>
+  <div class="center-block">
+    <div fxLayout="row" *ngIf="wrapper.state === state.READY">
+      <app-event-info [event]="wrapper.model">
+      </app-event-info>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,98 @@
+:host {
+  display: block;
+}
+.mat-form-field-ripple {
+  background-color: #444444;
+}
+
+.mat-form-field-prefix {
+  padding-right: 8px;
+}
+.mat-input-element {
+  caret-color: #888888;
+}
+.mat-form-field-label {
+  font-family: SansSerif, sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  color: #888888;
+}
+
+.mat-cell {
+  cursor: pointer;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  border-left: 1px solid white;
+  box-sizing: border-box;
+}
+.input-wrapper {
+  padding-top: 4px;
+  padding-left: 32px;
+}
+.border {
+  border-right: 1px solid #c8c8c8;
+  height: 25px;
+  box-sizing: border-box;
+}
+
+.table {
+  height: 90%;
+  overflow-x: auto;
+  overflow-y: auto;
+  margin: 0;
+}
+
+.table-container {
+  padding-left: 4%;
+  margin-right: 2%;
+}
+
+.cell-padding {
+  font-family: SansSerif, sans-serif;
+  font-size: 15px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.3px;
+  color: #000000;
+}
+
+
+.mat-column-userCode {
+  flex: 0 0 12%;
+}
+
+.mat-column-firstName {
+  flex: 0 0 15%;
+}
+
+.mat-column-lastName {
+  flex: 0 0 15%;
+}
+
+.mat-column-email {
+  flex: 0 0 27%;
+}
+
+.mat-column-password {
+  flex: 0 0 21%;
+  align-content: center;
+}
+
+.mat-column-block {
+  flex: 0 0 10%;
+  align-content: center;
+}
+
+
+.table-header-wrapper {
+  height: 55px;
+}
+
+

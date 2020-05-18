@@ -1,0 +1,58 @@
+.event {
+  margin-left: 45px;
+}
+
+.eventName {
+  max-width: 50%;
+  height: auto;
+  float: left;
+}
+
+.eventInfo {
+  float: left;
+  height: auto;
+}
+
+.headline {
+  max-width: 100%;
+  height: auto;
+  font-size: 40px;
+  padding-top: 30px;
+}
+
+.sub-headline {
+  /* padding-top: 10px; */
+}
+
+.img-fluid {
+  display: inline-flex;
+  float: left;
+
+
+  padding-top: 30px;
+  max-width: 100%;
+  height: auto;
+}
+
+#descriptionText {
+  padding-left: 10px;
+}
+
+.h3 {
+  padding-top: 15px;
+  max-width: 100%;
+  height: auto;
+}
+
+.my-custom-scrollbar {
+  position: relative;
+  max-width: 100%;
+  height: 200px;
+  overflow: auto;
+}
+
+.table-wrapper-scroll-y {
+  display: block;
+}
+
+

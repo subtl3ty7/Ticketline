@@ -1,9 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
 import lombok.*;
-import org.apache.commons.lang3.SerializationUtils;
-import org.hibernate.validator.constraints.Length;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -28,7 +25,7 @@ public class EventLocation implements Serializable {
     @NotNull
     @Size(min=1, max = 100)
     @Column(nullable = false, length = 100)
-    private String eventLocationName;
+    private String name;
 
     @Size(max = 1000)
     @Column(length = 1000)
@@ -66,7 +63,7 @@ public class EventLocation implements Serializable {
         this.capacity = eventLocation.getCapacity();
         this.plz = eventLocation.getPlz();
         this.eventLocationDescription = eventLocation.getEventLocationDescription();
-        this.eventLocationName = eventLocation.getEventLocationName();
+        this.name = eventLocation.getName();
         this.street = eventLocation.getStreet();
         this.sections = new ArrayList<>();
         for(Section section: eventLocation.getSections()) {

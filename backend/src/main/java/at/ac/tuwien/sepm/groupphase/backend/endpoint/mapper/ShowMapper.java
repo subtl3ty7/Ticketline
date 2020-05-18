@@ -1,13 +1,9 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper;
 
-import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.EventLocationDto;
+
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.ShowDto;
-import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleEventDto;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
-import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
 import org.mapstruct.IterableMapping;
-import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 

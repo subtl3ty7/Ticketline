@@ -75,7 +75,7 @@ label {
   font-size: 20px;
 }
 
-html, body { height: 100%; }
+html, body { min-height: 100%; }
 body, h1, h2, h3, h4, h5, h6, p, a, label {
   margin: 0 !important;
   font-family: Segue UI, Roboto, "Helvetica Neue", sans-serif !important;
@@ -113,6 +113,11 @@ h4 {
   font-weight: lighter !important;
 }
 
+h5 {
+  font-size: 20px !important;
+  font-weight: lighter !important;
+}
+
 //General Text
 p {
   font-size: 18px;
@@ -137,16 +142,6 @@ p {
   color: white;
 }
 
-/* Blue */
-.info {
-  border-color: #2196F3;
-  color: dodgerblue
-}
-
-.info:hover {
-  background: #2196F3;
-  color: white;
-}
 
 /* Orange */
 .warning {

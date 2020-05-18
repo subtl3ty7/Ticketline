@@ -13,7 +13,7 @@
 
       <div class="card" style="max-width: 660px; max-height: 1080px;">
         <div style="padding: 40px;">
-          <h3 class="mb-0" style="font-size: 40px;">Registrieren</h3>
+          <h2 class="mb-0">Registrieren</h2>
         </div>
 
         <div class="card-body">
@@ -21,7 +21,7 @@
             <div class="form-group" >
               <label for="firstName">Vorname</label>
               <input type="text" name="firstName" formControlName="firstName" class="form-control" id="firstName"
-                     aria-describedby="emailHelp" placeholder="Vorname eingeben" style="margin-bottom: 5px; height: 50px;">
+                     aria-describedby="emailHelp" placeholder="Vorname eingeben">
               <div *ngIf="submitted && registrationForm.controls.firstName.errors" class="error">
                 <small class="form-text text-warning" *ngIf="registrationForm.controls.firstName.errors.required">Bitte Vorname eingeben!
                 </small>
@@ -31,7 +31,7 @@
             <div class="form-group" >
             <label for="lastName">Nachname</label>
             <input type="text" name="lastName" formControlName="lastName" class="form-control" id="lastName"
-                   aria-describedby="emailHelp" placeholder="Nachname eingeben" style="margin-bottom: 5px; height: 50px;">
+                   aria-describedby="emailHelp" placeholder="Nachname eingeben">
             <div *ngIf="submitted && registrationForm.controls.lastName.errors" class="error">
               <small class="form-text text-warning" *ngIf="registrationForm.controls.lastName.errors.required">Bitte Nachname eingeben!
               </small>
@@ -41,7 +41,7 @@
             <div class="form-group" >
               <label for="birthDate">Geburtstagsdatum</label>
               <input type="date" name="birthDate" formControlName="birthDate" class="form-control" id="birthDate"
-                     aria-describedby="emailHelp" [max]="maxDate" placeholder="Geburtstagdatum eingeben" style="margin-bottom: 5px; height: 50px;">
+                     aria-describedby="emailHelp" [max]="maxDate" placeholder="Geburtstagdatum eingeben">
               <div *ngIf="submitted && registrationForm.controls.birthDate.errors" class="error">
                 <small class="form-text text-warning" *ngIf="registrationForm.controls.birthDate.errors.required">Bitte Geburtstagsdatum eingeben!
                 </small>
@@ -52,7 +52,7 @@
             <div class="form-group" >
               <label for="inputEmail">E-Mail</label>
               <input type="text" name="email" formControlName="email" class="form-control" id="inputEmail"
-                     aria-describedby="emailHelp" placeholder="E-Mail eingeben" style="margin-bottom: 5px; height: 50px;">
+                     aria-describedby="emailHelp" placeholder="E-Mail eingeben">
               <div *ngIf="submitted && registrationForm.controls.email.errors" class="error">
                 <small class="form-text text-warning" *ngIf="registrationForm.controls.email.errors.required">Bitte E-Mail Adresse eingeben!
                 </small>
@@ -61,8 +61,7 @@
 
             <div class="form-group">
               <label for="password">Passwort</label>
-              <input type="password" name="password" formControlName="password" class="form-control" id="password"
-                     placeholder="Password" style="margin-bottom: 5px; height: 50px;">
+              <input type="password" name="password" formControlName="password" class="form-control" id="password" placeholder="Password">
               <div *ngIf="submitted && registrationForm.controls.password.errors" class="error">
                 <small class="form-text text-warning" *ngIf="registrationForm.controls.password.errors.required">Bitte Passwort eingeben!
                 </small>
@@ -71,9 +70,11 @@
               </div>
             </div>
 
-            <button type="button" (click)="registerUser()" class="btn float-right" style="color: #FBFBFB; background-color: #43B581; border-radius: 0px; width: 100%; margin-top: 50px; font-size: 18px; height: 42px;">Registrieren</button>
+            <button type="button" (click)="registerUser()" class="btn default float-right">Registrieren</button>
 
           </form>
+          <div class="row">
+          </div>
           <div class="row">
           </div>
           <div class="h-divider">

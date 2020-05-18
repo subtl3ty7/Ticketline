@@ -1,13 +1,10 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint.dto;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
-import lombok.AccessLevel;
-import lombok.Data;
+
 import lombok.Getter;
 import lombok.Setter;
-
 import java.time.LocalDateTime;
-import java.util.List;
+
 
 @Getter
 @Setter

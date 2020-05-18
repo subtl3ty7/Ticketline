@@ -7,7 +7,13 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserAttemptsRepository extends JpaRepository<UserAttempts, Long> {
+
+    /**
+     * Find attempts of a user by user email.
+     *
+     * @param email
+     * @return an user attempts object for user with email which contains login attempts information
+     */
     UserAttempts findUserAttemptsByEmail(String email);
-    UserAttempts deleteByEmail(String email);
 
 }

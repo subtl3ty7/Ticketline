@@ -1,0 +1,4 @@
+<app-admin-header *ngIf="!authService.isLoggedIn() && this.authService.getUserRole() === 'ADMIN'"></app-admin-header>
+<app-customer-header *ngIf="authService.isLoggedIn() && this.authService.getUserRole() === 'USER'"></app-customer-header>
+<app-guest-header *ngIf="!authService.isLoggedIn()"></app-guest-header>
+

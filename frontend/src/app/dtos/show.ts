@@ -1,11 +1,11 @@
 import {EventLocation} from './event-location';
 
 export class Show {
-  private id: number;
-  private eventCode: string;
-  private startsAt: string;
-  private endsAt: string;
-  private ticketsSold: number;
-  private ticketsAvailable: number;
-  private eventLocation: EventLocation[];
+  public id: number;
+  public eventCode: string;
+  public startsAt: Date;
+  public endsAt: Date;
+  public ticketsSold: number;
+  public ticketsAvailable: number;
+  public eventLocation: EventLocation[];
 }

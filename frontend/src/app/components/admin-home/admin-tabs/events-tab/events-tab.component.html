@@ -1,0 +1,55 @@
+<div class="table-container all-height" #table>
+
+
+  <button mat-raised-button color = "basic" (click)="createNewEvent()" style="margin-left: 80%;margin-bottom: 1%">Create a new Event</button>
+
+  <div class="table">
+    <mat-table #table [dataSource]="dataSource" matSort>
+
+      <!--EVENTCODE-->
+      <ng-container matColumnDef="eventCode">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Event Code</mat-header-cell>
+        <mat-cell *matCellDef="let element" (click)="eventDetails(element)">
+          <div class="cell-padding">
+            {{element?.eventCode}}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <!--NAME-->
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+        <mat-cell *matCellDef="let element" (click)="eventDetails(element)">
+          <div class="cell-padding">
+            {{element?.name}}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <!--STARTDATE-->
+      <ng-container matColumnDef="startsAt">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</mat-header-cell>
+        <mat-cell *matCellDef="let element" (click)="eventDetails(element)">
+          <div class="cell-padding">
+            {{element?.startsAt | date}}
+          </div>
+        </mat-cell>
+      </ng-container>
+      <!--ENDDATE-->
+      <ng-container matColumnDef="endsAt">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>End Date</mat-header-cell>
+        <mat-cell *matCellDef="let element" (click)="eventDetails(element)">
+          <div class="cell-padding">
+            {{element?.endsAt | date}}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row;
+             columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator showFirstLastButtons [pageSizeOptions]="[10, 25, 50]"></mat-paginator>
+  </div>
+</div>
+

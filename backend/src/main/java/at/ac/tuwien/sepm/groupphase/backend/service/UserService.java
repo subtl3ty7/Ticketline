@@ -37,8 +37,20 @@ public interface UserService extends UserDetailsService {
      */
     AbstractUser findUserByEmail(String email);
 
-    AbstractUser findUserByUserCode(String email);
+    /**
+     * Find a application user based on the user code
+     *
+     * @param userCode the user code
+     * @return a application user
+     */
+    AbstractUser findUserByUserCode(String userCode);
 
+    /**
+     * Unblock a customer based on the user code
+     *
+     * @param userCode the user code
+     * @return user code
+     */
     String unblockUser(String userCode);
 
     /**
@@ -55,13 +67,38 @@ public interface UserService extends UserDetailsService {
      */
     Administrator registerNewAdmin(Administrator admin);
 
+    /**
+     * Find all users
+     * @return the list of all users
+     */
     List<AbstractUser> loadAllUsers();
 
-    void deleteUserByUsercode(String usercode);
+    /**
+     * Delete a user in the database
+     * @param userCode the user that should be deleted
+     */
+    void deleteUserByUsercode(String userCode);
 
+    /**
+     * Update a customer in the database
+     * @param customer the customer that should be updated
+     * @return the edited user
+     */
     AbstractUser updateCustomer(Customer customer);
 
-    String blockCustomer(String usercode);
+    /**
+     * Block a customer based on the user code
+     *
+     * @param userCode the user code
+     * @return user code
+     */
+    String blockCustomer(String userCode);
 
+    /**
+     * Get the current user based on authentication
+     *
+     * @param auth is the authentication object
+     * @return the authenticated user
+     */
     AbstractUser getAuthenticatedUser(Authentication auth);
 }

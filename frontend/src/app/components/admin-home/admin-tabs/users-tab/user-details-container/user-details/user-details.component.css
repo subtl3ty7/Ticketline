@@ -1,0 +1,150 @@
+:host {
+  display: block;
+}
+
+.flex {
+  display: flex;
+  padding-left: 31px;
+}
+
+.user-wrapper {
+  margin-left: 14.8%;
+  margin-right: 3%;
+}
+
+img {
+  vertical-align: baseline;
+}
+
+.user-line {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #888888;
+}
+
+.bread-crumps {
+  font-family: SansSerif, sans-serif;
+  font-size: 24px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.2px;
+  color: #000000;
+}
+
+.opacity {
+  opacity: 0.5;
+}
+
+.link {
+  cursor: pointer;
+  border: none;
+}
+
+.user-padding {
+  padding-left: 8px;
+}
+
+.center-block {
+  width: 480px;
+  margin: 0 auto;
+  padding-top: 30px;
+  padding-bottom: 110px;
+}
+
+.button-wrapper {
+  padding-top: 50px;
+}
+
+.edit-button {
+  display: flex;
+  align-items: center;
+  font-family: Verdana;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.29;
+  letter-spacing: normal;
+  text-align: right;
+  color: #222222;
+  cursor: pointer;
+}
+
+.user-block-wrapper {
+  display: flex;
+  background: white;
+  border: none;
+  padding: 0;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.user-block {
+  padding-left: 8px;
+  font-family: Verdana, Serif;
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  color: #ff1f20;
+}
+
+.buttons-wrapper {
+  padding-top: 70px;
+  justify-content: space-evenly;
+}
+
+.save-button {
+  width: 120px;
+  height: 40px;
+  background-color: #ffffff;
+  border: 1px solid #000000;
+}
+
+.save-button-label {
+  font-family: SansSerif, sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.9px;
+  text-align: center;
+  color: #000000;
+  text-transform: uppercase;
+}
+
+.cancel-button {
+  width: 120px;
+  height: 40px;
+  background-color: #ff1f20;
+  border: none;
+}
+
+.cancel-button-label {
+  font-family: SansSerif, sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.9px;
+  text-align: center;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+button {
+  outline: none;
+  cursor: pointer;
+}
+
+.text-disabled {
+  color: #c1c1c1;
+}
