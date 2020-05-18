@@ -56,9 +56,12 @@ public class CustomEmailService implements EmailService {
             // Set Subject: header field
             message.setSubject("Reset Password request");
 
-            // Now set the actual message
-            message.setText("Greetings! You can use the following link to reset your password: localhost:4200/api/v1/users/change-password/" + resetPassword.getResetPasswordCode());
+            String link = "http://localhost:4200/reset-password/" + resetPassword.getResetPasswordCode();
 
+            String text = "Greetings!\n You can use the following link to access your account: " + link + "\n Link is valid only for 30 minutes. So please change your password immediately from your account settings after clicking the link. \n\n Have a nice day!\n Your Ticketline Support";
+
+            // set the actual message
+            message.setText(text);
             // Send message
             Transport.send(message);
             LOGGER.info("Sent reset password email successfully....");
