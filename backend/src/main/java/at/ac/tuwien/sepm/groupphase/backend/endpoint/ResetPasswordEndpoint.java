@@ -1,10 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserLoginDto;
-import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.UserMapper;
-import at.ac.tuwien.sepm.groupphase.backend.entity.ResetPassword;
 import at.ac.tuwien.sepm.groupphase.backend.service.ResetPasswordService;
-import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -23,12 +20,10 @@ import java.util.List;
 @RequestMapping(value = "/api/v1/reset-password")
 public class ResetPasswordEndpoint {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    private final UserService userService;
     private final ResetPasswordService resetPasswordService;
 
     @Autowired
-    public ResetPasswordEndpoint(UserService userService, ResetPasswordService resetPasswordService) {
-        this.userService = userService;
+    public ResetPasswordEndpoint(ResetPasswordService resetPasswordService) {
         this.resetPasswordService = resetPasswordService;
     }
 
@@ -62,11 +57,12 @@ public class ResetPasswordEndpoint {
     public ResponseEntity<UserLoginDto> getResetPasswordUserLoginDto(@PathVariable String resetPasswordCode) {
         LOGGER.info("GET /api/v1/reset-password/" + resetPasswordCode);
         String email = resetPasswordService.getResetPasswordEmailWithCode(resetPasswordCode);
+        String password =resetPasswordService.generateRandomPasswordFor(email);
         UserLoginDto result =
             UserLoginDto.UserLoginDtoBuilder
                 .anUserLoginDto()
                 .withEmail(email)
-                .withPassword(userService.findUserByEmail(email).getPassword())
+                .withPassword(password)
                 .build();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

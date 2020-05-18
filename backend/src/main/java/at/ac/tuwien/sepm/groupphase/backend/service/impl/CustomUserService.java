@@ -38,27 +38,18 @@ public class CustomUserService implements UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final UserRepository userRepository;
     private final UserAttemptsRepository userAttemptsRepository;
-    private final ResetPasswordRepository resetPasswordRepository;
-    private final EmailService emailService;
-    private final PasswordEncoder passwordEncoder;
     private final UserValidator validator;
     private final EntityManagerFactory entityManagerFactory;
 
 
     @Autowired
     public CustomUserService(UserRepository userRepository,
-                             PasswordEncoder passwordEncoder,
                              UserAttemptsRepository userAttemptsRepository,
-                             ResetPasswordRepository resetPasswordRepository,
-                             EmailService emailService,
                              UserValidator validator,
                              EntityManagerFactory entityManagerFactory) {
 
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
         this.userAttemptsRepository = userAttemptsRepository;
-        this.resetPasswordRepository = resetPasswordRepository;
-        this.emailService = emailService;
         this.validator = validator;
         this.entityManagerFactory = entityManagerFactory;
     }

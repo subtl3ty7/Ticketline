@@ -7,4 +7,6 @@ public interface ResetPasswordService {
     String getResetPasswordEmailWithCode(String resetPasswordCode);
 
     void deleteExpiredResetPasswordCodes();
+
+    String generateRandomPasswordFor(String email);
 }
