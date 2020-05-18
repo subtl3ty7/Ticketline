@@ -97,6 +97,7 @@ public class ValidationMessage {
             put("seat_notFree", "The seat is already taken.");
             put("seat_exists", "The seat was not found in the database.");
             put("tickets_sold", "This show is sold out.");
+            put("no_tickets", "This user has no tickets.");
         }
     };
 

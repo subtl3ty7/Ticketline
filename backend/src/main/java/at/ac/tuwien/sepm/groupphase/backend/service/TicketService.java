@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface TicketService {
     List<Ticket> buyTicket(List<Ticket> tickets);
+    List<Ticket> allTicketsOfUser(String userCode);
 }

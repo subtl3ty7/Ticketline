@@ -50,6 +50,15 @@ public class TicketValidatorImpl implements TicketValidator {
         return constraints;
     }
 
+    @Override
+    public Constraints validateAllTicketsOfUser(String userCode) {
+        Constraints constraints = new Constraints();
+        AbstractUser userFromDataBase = userRepository.findAbstractUserByUserCode(userCode);
+        constraints.add("userCode_exists", userFromDataBase != null);
+        constraints.add("no_tickets", !ticketRepository.findTicketsByUserCode(userCode).isEmpty());
+        return constraints;
+    }
+
     private Constraints validateUnique(Ticket ticket){
         Constraints constraints = new Constraints();
         constraints.add("ticketCode_unique", ticketRepository.findTicketByTicketCode(ticket.getTicketCode()) == null);

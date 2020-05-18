@@ -1,11 +1,11 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper;
 
-import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.EventLocationDto;
-import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.TicketDto;
-import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.DetailedTicketDto;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleTicketDto;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
 import java.util.List;
@@ -13,17 +13,29 @@ import java.util.List;
 @Mapper
 public interface TicketMapper {
 
-    @Named(value = "ticketToTicketDto")
-    TicketDto ticketToTicketDto(Ticket ticket);
+    @Named(value = "ticketToSimpleTicketDto")
+    @Mapping(source = "ticket", target = "showId", qualifiedByName = "setShowId")
+    @Mapping(source = "ticket", target = "seatId", qualifiedByName = "setSeatId")
+    SimpleTicketDto ticketToSimpleTicketDto(Ticket ticket);
 
     @Named(value = "ticketDtoToTicket")
-    Ticket ticketDtoToTicket(TicketDto ticketDto);
+    Ticket detailedTicketDtoToTicket(DetailedTicketDto detailedTicketDto);
 
     @IterableMapping(qualifiedByName = "ticketDtoToTicket")
-    List<Ticket> ticketDtoListToTicketList(List<TicketDto> ticketDto);
+    List<Ticket> detailedTicketDtoListToTicketList(List<DetailedTicketDto> detailedTicketDto);
 
-    @IterableMapping(qualifiedByName = "ticketToTicketDto")
-    List<TicketDto> ticketListToTicketDtoList(List<Ticket> ticket);
+    @IterableMapping(qualifiedByName = "ticketToSimpleTicketDto")
+    List<SimpleTicketDto> ticketListToSimpleTicketDtoList(List<Ticket> ticket);
+
+    @Named("setShowId")
+    default long setShowId(Ticket ticket){
+        return ticket.getShow().getId();
+    }
+
+    @Named("setSeatId")
+    default long setSeatId(Ticket ticket){
+        return ticket.getSeat().getId();
+    }
 }
 
 

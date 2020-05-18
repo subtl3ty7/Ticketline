@@ -1,5 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
+import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Seat;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
@@ -92,5 +93,12 @@ public class CustomTicketService implements TicketService {
             throw new ServiceException("Something went wrong while generating TicketCode", null);
         }
         return ticketCode;
+    }
+
+    @Override
+    public List<Ticket> allTicketsOfUser(String userCode) {
+        validator.validateAllTicketsOfUser(userCode).throwIfViolated();
+        List<Ticket> allTickets = ticketRepository.findTicketsByUserCode(userCode);
+        return allTickets;
     }
 }
