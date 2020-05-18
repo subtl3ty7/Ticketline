@@ -83,6 +83,29 @@ public class UserDataGenerator {
             userAttemptsRepository.save(attempts);
             session.getTransaction().commit();
         }
+        AbstractUser customer = Customer.CustomerBuilder.aCustomer()
+            .withFirstName("ege")
+            .withLastName("demirsoy")
+            .withEmail("egedemirsoy@gmail.com")
+            .withPassword(passwordEncoder.encode(TEST_USER_PASSWORD))
+            .withUserCode("U11111")
+            .withBirthday(LocalDateTime.now().minusMonths(2))
+            .withIsLogged(false)
+            .withCreatedAt(LocalDateTime.now())
+            .withUpdatedAt(LocalDateTime.now())
+            .withPoints(2)
+            .withIsBlocked(false)
+            .build();
+        UserAttempts attempts = UserAttempts.UserAttemptsBuilder.aAttempts()
+            .withAttempts(0)
+            .withEmail("egedemirsoy@gmail.com")
+            .build();
+        LOGGER.debug("saving customer " + customer.getEmail() + " with attempts " + attempts.getAttempts() );
+        Session session = getSession();
+        session.beginTransaction();
+        userRepository.save(customer);
+        userAttemptsRepository.save(attempts);
+        session.getTransaction().commit();
     }
 
     private void generateAdministrator() {

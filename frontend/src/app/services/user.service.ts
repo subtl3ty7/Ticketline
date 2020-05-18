@@ -4,8 +4,7 @@ import {Globals} from '../global/globals';
 import {Observable, throwError} from 'rxjs';
 import {User} from '../dtos/user';
 import {catchError, tap} from 'rxjs/operators';
-import {Router} from '@angular/router';
-import {ChangePassword} from '../dtos/change-password';
+import {UserLogin} from '../dtos/user-login';
 
 @Injectable({
   providedIn: 'root'
@@ -83,12 +82,13 @@ export class UserService {
       catchError(this.handleError)
     );
   }
-  resetPassword(userCode: string, oldPassword: string, newPassword: string) {
-    console.log('Reset password for ' + userCode);
-    // encoding
-    return this.httpClient.post<ChangePassword>(this.userBaseUri + '/reset-password',
-      new ChangePassword(userCode, oldPassword, newPassword)).pipe(
-      tap(data => console.log('All ' + JSON.stringify(data))),
+  resetPasswordRequest(email: string) {
+    return this.httpClient.post(this.globals.backendUri + '/reset-password/' + email, {}).pipe(
+      catchError(this.handleError)
+    );
+  }
+  resetPasswordAuth(resetPasswordCode: string) {
+    return this.httpClient.get<UserLogin>(this.globals.backendUri + '/reset-password/' + resetPasswordCode).pipe(
       catchError(this.handleError)
     );
   }

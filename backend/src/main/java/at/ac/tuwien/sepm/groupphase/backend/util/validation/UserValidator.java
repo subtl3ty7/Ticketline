@@ -8,6 +8,7 @@ public interface UserValidator {
     Constraints validateRegistration(AbstractUser user);
     Constraints validateDelete(String userCode);
     Constraints validateUpdate(Customer customer);
+    Constraints validateEmail(String email);
     Constraints validateUserCode(String userCode);
     Constraints validateBlock(String userCode);
     Constraints validateUnblock(String userCode);
