@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.service;
 import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Administrator;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
+import at.ac.tuwien.sepm.groupphase.backend.entity.ResetPassword;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.Authentication;
@@ -101,4 +102,8 @@ public interface UserService extends UserDetailsService {
      * @return the authenticated user
      */
     AbstractUser getAuthenticatedUser(Authentication auth);
+
+    void resetPasswordRequest(String email);
+
+    String getResetPasswordEmailwithCode(String resetPasswordCode);
 }

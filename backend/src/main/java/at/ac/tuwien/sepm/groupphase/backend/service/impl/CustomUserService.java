@@ -1,14 +1,13 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Administrator;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
-import at.ac.tuwien.sepm.groupphase.backend.entity.UserAttempts;
+import at.ac.tuwien.sepm.groupphase.backend.entity.*;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
+import at.ac.tuwien.sepm.groupphase.backend.repository.ResetPasswordRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserAttemptsRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
+import at.ac.tuwien.sepm.groupphase.backend.service.EmailService;
 import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
 import at.ac.tuwien.sepm.groupphase.backend.util.validation.UserValidator;
@@ -38,17 +37,27 @@ public class CustomUserService implements UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final UserRepository userRepository;
     private final UserAttemptsRepository userAttemptsRepository;
+    private final ResetPasswordRepository resetPasswordRepository;
+    private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
     private final UserValidator validator;
     private final EntityManagerFactory entityManagerFactory;
 
 
     @Autowired
-    public CustomUserService(UserRepository userRepository, PasswordEncoder passwordEncoder,
-                             UserAttemptsRepository userAttemptsRepository, UserValidator validator, EntityManagerFactory entityManagerFactory) {
+    public CustomUserService(UserRepository userRepository,
+                             PasswordEncoder passwordEncoder,
+                             UserAttemptsRepository userAttemptsRepository,
+                             ResetPasswordRepository resetPasswordRepository,
+                             EmailService emailService,
+                             UserValidator validator,
+                             EntityManagerFactory entityManagerFactory) {
+
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userAttemptsRepository = userAttemptsRepository;
+        this.resetPasswordRepository = resetPasswordRepository;
+        this.emailService = emailService;
         this.validator = validator;
         this.entityManagerFactory = entityManagerFactory;
     }
@@ -224,5 +233,23 @@ public class CustomUserService implements UserService {
             return findUserByEmail(email);
         }
         return null;
+    }
+
+    @Override
+    public void resetPasswordRequest(String email) {
+        validator.validateEmail(email).throwIfViolated();
+        String resetPasswordCode = CodeGenerator.generateResetPasswordCode();
+        ResetPassword resetPassword = new ResetPassword(email, resetPasswordCode);
+        resetPasswordRepository.save(resetPassword);
+        emailService.sendResetPasswordEmail(resetPassword);
+    }
+
+    @Override
+    public String getResetPasswordEmailwithCode(String resetPasswordCode) {
+        ResetPassword resetPassword = resetPasswordRepository.findByResetPasswordCode(resetPasswordCode);
+        if(resetPassword == null) {
+            throw new NullPointerException("Can not find reset password code!");
+        }
+        return resetPassword.getEmail();
     }
 }

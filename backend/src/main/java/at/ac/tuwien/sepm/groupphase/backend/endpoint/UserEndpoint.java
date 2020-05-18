@@ -4,6 +4,7 @@ package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.UserMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
+import at.ac.tuwien.sepm.groupphase.backend.entity.ResetPassword;
 import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -212,7 +213,7 @@ public class UserEndpoint {
     }
 
     @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
-    @GetMapping(value = "/reset-password/{email}")
+    @PostMapping(value = "/reset-password/{email}")
     @ApiOperation(
         value = "Reset password of user",
         notes = "Reset password of user with email")
@@ -221,8 +222,25 @@ public class UserEndpoint {
         @ApiResponse(code = 404, message = "User is not found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<Void> resetPassword(@PathVariable String email) {
-        LOGGER.info("GET /api/v1/users//reset-password/" + email);
+    public ResponseEntity<Void> resetPasswordRequest(@PathVariable String email) {
+        LOGGER.info("GET /api/v1/users/reset-password/" + email);
+        userService.resetPasswordRequest(email);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
+    @GetMapping(value = "/reset-password/{resetPasswordCode}")
+    @ApiOperation(
+        value = "Get email of reset password code",
+        notes = "Get email associated with reset password code")
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "Code is correct"),
+        @ApiResponse(code = 404, message = "Reset Password Code is not found"),
+        @ApiResponse(code = 500, message = "Connection Refused"),
+    })
+    public ResponseEntity<String> getResetPasswordEmail(@PathVariable String resetPasswordCode) {
+        LOGGER.info("GET /api/v1/users/validate-reset-password/" + resetPasswordCode);
+        String result = userService.getResetPasswordEmailwithCode(resetPasswordCode);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
