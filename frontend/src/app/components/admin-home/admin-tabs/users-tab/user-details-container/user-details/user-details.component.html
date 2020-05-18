@@ -23,23 +23,6 @@
       </app-user-info>
     </div>
   </div>
-
-  <div class="center-block" *ngIf="wrapper.state === state.PASSWORD">
-    <app-reset-password>
-      <div fxLayout = "row" class="buttons-wrapper">
-        <button id="user-password-save-button"
-                class="save-button"
-                (click)="savePassword()">
-          <span class="save-button-label">Save</span>
-        </button>
-        <button id="user-password-cancel-button"
-                class="cancel-button"
-                (click)="cancelResetPasswordMode()">
-          <span class="cancel-button-label">Cancel</span>
-        </button>
-      </div>
-    </app-reset-password>
-  </div>
 </div>
 
 
