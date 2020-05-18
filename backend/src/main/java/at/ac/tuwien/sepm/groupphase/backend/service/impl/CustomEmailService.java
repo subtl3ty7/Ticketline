@@ -27,8 +27,8 @@ public class CustomEmailService implements EmailService {
 
         // Setup mail server
         properties.setProperty("mail.smtp.host", host);
-        properties.put("mail.smtp.port", "465");
-        properties.put("mail.smtp.ssl.enable", "true");
+        properties.put("mail.smtp.port", "587");
+        properties.put("mail.smtp.starttls.enable", "true");
         properties.put("mail.smtp.auth", "true");
 
         // Get the default Session object.
@@ -36,7 +36,7 @@ public class CustomEmailService implements EmailService {
 
             protected PasswordAuthentication getPasswordAuthentication() {
 
-                return new PasswordAuthentication(from, "ticketline2020");
+                return new PasswordAuthentication(from, "Ticketline2020");
 
             }
 
