@@ -2,6 +2,7 @@ package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 
 
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserDto;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserLoginDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.UserMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
 import at.ac.tuwien.sepm.groupphase.backend.entity.ResetPassword;
@@ -238,9 +239,16 @@ public class UserEndpoint {
         @ApiResponse(code = 404, message = "Reset Password Code is not found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<String> getResetPasswordEmail(@PathVariable String resetPasswordCode) {
+    public ResponseEntity<UserLoginDto> getResetPasswordUserLoginDto(@PathVariable String resetPasswordCode) {
         LOGGER.info("GET /api/v1/users/validate-reset-password/" + resetPasswordCode);
-        String result = userService.getResetPasswordEmailwithCode(resetPasswordCode);
+        String email = userService.getResetPasswordEmailwithCode(resetPasswordCode);
+        UserLoginDto result =
+            UserLoginDto.UserLoginDtoBuilder
+            .anUserLoginDto()
+                .withEmail(email)
+                .withPassword(userService.findUserByEmail(email).getPassword())
+                .build();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
 }
