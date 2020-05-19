@@ -2,7 +2,7 @@ package at.ac.tuwien.sepm.groupphase.backend.util.validation.impl;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.Section;
 import at.ac.tuwien.sepm.groupphase.backend.util.Constraints;
-import at.ac.tuwien.sepm.groupphase.backend.util.Validation.EventValidator;
+import at.ac.tuwien.sepm.groupphase.backend.util.validation.EventValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
