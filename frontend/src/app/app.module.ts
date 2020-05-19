@@ -67,6 +67,7 @@ import { CurrentNewsComponent } from './components/home/current-news/current-new
 import { TopEventsListComponent } from './components/top-ten-events/top-events-list/top-events-list.component';
 import { ResetPasswordComponent} from './components/reset-password/reset-password.component';
 import { ResetPasswordAuthComponent } from './components/reset-password/reset-password-auth/reset-password-auth.component';
+import { ChartComponent } from './components/top-ten-events/chart/chart.component';
 
 @NgModule({
   declarations: [
@@ -115,7 +116,8 @@ import { ResetPasswordAuthComponent } from './components/reset-password/reset-pa
     CurrentNewsComponent,
     TopEventsListComponent,
     ResetPasswordComponent,
-    ResetPasswordAuthComponent
+    ResetPasswordAuthComponent,
+    ChartComponent
   ],
   imports: [
     BrowserModule,
