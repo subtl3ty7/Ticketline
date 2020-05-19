@@ -17,7 +17,7 @@ import javax.persistence.EntityManagerFactory;
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDateTime;
 
-@Component
+@Component("UserDataGenerator")
 @Profile("generateData")
 public class UserDataGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
