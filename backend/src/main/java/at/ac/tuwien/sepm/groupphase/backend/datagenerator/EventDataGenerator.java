@@ -124,7 +124,6 @@ public class EventDataGenerator {
     }
 
     private List<Show> generateShows(EventLocation eventLocation) {
-        LOGGER.info("Generating Show Test Data");
         int numberOfShows = 2;
 
         List<Show> shows = new ArrayList<>();
@@ -146,7 +145,6 @@ public class EventDataGenerator {
 
 
     private List<EventLocation> generateEventLocations(boolean doSave) {
-        LOGGER.info("Generating Event Location Test Data");
 
         List<EventLocation> eventLocations = new ArrayList<>();
         for(int i=0; i<numberOfEventLocations; i++) {
@@ -170,7 +168,6 @@ public class EventDataGenerator {
 
 
     private List<Section> generateSections() {
-        LOGGER.info("Generating Section Test Data");
         int numberOfSections = 4;
 
         List<Section> sections = new ArrayList<>();
@@ -190,7 +187,6 @@ public class EventDataGenerator {
     }
 
     private List<Seat> generateSeats() {
-        LOGGER.info("Generating Seat Test Data");
         String[] columns = new String[]{
             "1",
             "2",
