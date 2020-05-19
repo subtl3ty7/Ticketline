@@ -1,9 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -16,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
+@ToString
 public class Show implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +37,7 @@ public class Show implements Serializable {
     @Column
     private int ticketsAvailable;
 
+    @ToString.Exclude
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "SHOW_ID", referencedColumnName = "ID")
     private List<EventLocation> eventLocation;
@@ -47,17 +47,5 @@ public class Show implements Serializable {
 
     public Show(List<Seat> freeSeats, String eventCode) {
         this.eventCode = eventCode;
-    }
-
-    @Override
-    public String toString() {
-        return "Show{" +
-            "id=" + id +
-            ", eventCode='" + eventCode + '\'' +
-            ", startsAt=" + startsAt +
-            ", endsAt=" + endsAt +
-            ", ticketsSold=" + ticketsSold +
-            ", ticketsAvailable=" + ticketsAvailable +
-            '}';
     }
 }
