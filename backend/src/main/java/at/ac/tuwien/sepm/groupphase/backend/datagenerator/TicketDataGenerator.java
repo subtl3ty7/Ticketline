@@ -61,6 +61,7 @@ public class TicketDataGenerator {
 
     public void generateTickets(){
         LOGGER.info("Generating ticket data.");
+        boolean bool = true;
 
         if(seatRepository.findAll().isEmpty()){
             throw new NotFoundException("No seats in argument list. Needs to contain at least one.");
@@ -75,31 +76,42 @@ public class TicketDataGenerator {
         List<Ticket> tickets = new ArrayList<>();
         for (int i = 0; i < NUMBER_OF_TICKETS_TO_GENERATE; i++) {
             Ticket ticket = Ticket.builder()
-                .price(i)
+                .price(40 + i*2)
                 .purchaseDate(LocalDateTime.now())
                 .seat(seatRepository.findSeatById(((long)i + 1)))
                 .show(showRepository.findShowById((long) i + 1))
                 .userCode("U123X0")
                 .build();
             tickets.add(ticket);
+            randomPurchaseReserve(tickets, bool);
+            bool = !bool;
+            tickets = new ArrayList<>();
         }
-        ticketService.reserveTickets(tickets);
 
         // buy tickets for user U123X1
-        List<Ticket> tickets1 = new ArrayList<>();
         for (int i = NUMBER_OF_TICKETS_TO_GENERATE; i < NUMBER_OF_TICKETS_TO_GENERATE + NUMBER_OF_TICKETS_TO_GENERATE; i++) {
             Ticket ticket = Ticket.builder()
-                .price(i)
+                .price(100 - i*3 )
                 .purchaseDate(LocalDateTime.now())
                 .seat(seatRepository.findSeatById(((long) i + 1)))
-                .show(showRepository.findShowById((long) i+ 1))
+                .show(showRepository.findShowById((long) i + 1))
                 .userCode("U123X1")
                 .build();
-            tickets1.add(ticket);
+            tickets.add(ticket);
+            randomPurchaseReserve(tickets, bool);
+            bool = !bool;
+            tickets = new ArrayList<>();
         }
-        ticketService.buyTickets(tickets1);
 
 
+    }
+
+    private void randomPurchaseReserve(List<Ticket> tickets, boolean bool){
+        if(bool) {
+            ticketService.reserveTickets(tickets);
+        } else {
+            ticketService.buyTickets(tickets);
+        }
     }
 
 
