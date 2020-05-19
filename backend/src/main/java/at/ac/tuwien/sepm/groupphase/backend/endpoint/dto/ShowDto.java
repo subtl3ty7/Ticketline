@@ -16,5 +16,6 @@ public class ShowDto {
     private LocalDateTime endsAt;
     private int ticketsSold;
     private int ticketsAvailable;
+    @ToString.Exclude
     private EventLocationDto eventLocation;
 }

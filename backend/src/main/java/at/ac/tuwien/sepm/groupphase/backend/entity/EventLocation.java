@@ -47,7 +47,7 @@ public class EventLocation implements Serializable {
     @Column(length = 100)
     private String country;
 
-
+    @ToString.Exclude
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,  orphanRemoval = true)
     @JoinColumn(name = "EVENT_LOCATION_ID", referencedColumnName = "ID")
     private List<Section> sections;
