@@ -33,22 +33,6 @@ public class ArtistEndpoint {
         this.artistMapper = artistMapper;
     }
 
-    /*@CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
-    @GetMapping
-    @ApiOperation(
-        value = "Get all artists"
-    )
-    @ApiResponses({
-        @ApiResponse(code = 200, message = "Artists are successfully retrieved"),
-        @ApiResponse(code = 404, message = "No artists have been found"),
-        @ApiResponse(code = 500, message = "Connection Refused"),
-    })
-    public ResponseEntity<List<ArtistDto>> findAllArtists() {
-        LOGGER.info("GET /api/v1/artists/all");
-        List<ArtistDto> result = artistMapper.artistsToArtistDtos(artistService.findAllArtists());
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }*/
-
     @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
     @GetMapping
     @ApiOperation(

@@ -54,12 +54,31 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngbCollapse]="isCollapsed">
     <a class="navbar-brand ml-lg-5" routerLink="/home">Ticketline</a>
-    <form class="form-inline my-2 my-xl-0">
+    <form class="form-inline">
       <div class="input-group" >
-        <input class="form-control left" type="text" placeholder="Veranstaltung suchen..." aria-label="Search">
-        <div class="input-group-append">
-          <button class="btn btn-sm right" type="submit"><i class="fas fa-search"></i></button>
+        <div class="container" style="max-width: 1000px; width: 100%;">
+          <div class="row" style="width: 100%; margin: 0">
+            <div class="col" style="padding: 0; margin: 0;">
+              <input class="form-control left" (keyup)="refreshSearchTerm($event)" (keyup.enter)="searchEvent(searchTerm)" [ngModel]="searchTerm" name="term" type="text" placeholder="Veranstaltung suchen..." aria-label="Search">
+            </div>
+            <div class="col" style="padding: 0; margin: 0; max-width: 75px;">
+              <div class="input-group-append" style="width: 75px;">
+                <button class="btn btn-sm right" type="submit" routerLink="/event-search" (click)="searchEvent(searchTerm)"><i class="fas fa-search"></i></button>
+              </div>
+            </div>
+          </div>
+          <div class="row" (click)="searchArtist(searchTerm)" *ngIf="searchTerm.length" style="margin: 0">
+            <a class="result" style="background-color: white; width: 100%; color: black; height: 75px; border: 1px #202020 solid; padding: 25px; font-size: 20px; z-index: 99999;">
+              {{searchTerm}} in <b>Künstlern</b> suchen
+            </a>
+          </div>
+          <div class="row" (click)="searchLocation(searchTerm)" *ngIf="searchTerm.length" style="margin: 0">
+          <a style="background-color: white; width: 100%; color: black; height: 75px; border: 1px #202020 solid; border-top: 0px; padding: 25px; z-index: 99999; font-size: 20px;">
+              {{searchTerm}} in <b>Orten</b> suchen
+            </a>
+          </div>
         </div>
+
       </div>
     </form>
     <ul class="navbar-nav ml-auto  align-items-center">
