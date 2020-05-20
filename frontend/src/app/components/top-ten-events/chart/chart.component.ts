@@ -66,7 +66,7 @@ export class ChartComponent implements OnInit {
     pieSeries.hiddenState.properties.endAngle = -90;
     pieSeries.hiddenState.properties.startAngle = -90;
 
-    this.chart.events.on('ready', () => {
+    pieSeries.events.on('ready', () => {
       // Create Chart Legend
       this.chart.legend = new am4charts.Legend();
       const legend = this.chart.legend;
