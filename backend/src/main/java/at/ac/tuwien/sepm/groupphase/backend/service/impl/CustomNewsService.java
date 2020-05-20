@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.*;
+import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.NewsRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.NewsService;
@@ -45,12 +46,16 @@ public class CustomNewsService implements NewsService {
     }
 
     @Override
-    public News findByNewsCode(String eventCode) {
-        return null;
+    public News findByNewsCode(String newsCode) {
+        News news = newsRepository.findByNewsCode(newsCode);
+        if (news==null) {
+            throw new NotFoundException("Could not find this News entry");
+        }
+        return news;
     }
 
     @Override
-    public void deleteByNewsCode(String eventCode) {
+    public void deleteByNewsCode(String newsCode) {
 
     }
 

@@ -13,8 +13,6 @@ import java.util.List;
 public interface NewsRepository extends JpaRepository<News, Long> {
 
     /**
-     *
-     *
      * @param userCode
      * @return
      */
@@ -26,5 +24,5 @@ public interface NewsRepository extends JpaRepository<News, Long> {
      * @param newsCode
      * @return a single News entry which has the corresponding event code
      */
-    Event findByNewsCode(String newsCode);
+    News findByNewsCode(String newsCode);
 }
