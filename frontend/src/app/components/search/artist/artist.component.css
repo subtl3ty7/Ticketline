@@ -1,0 +1,18 @@
+.artist-block {
+  width: 100%;
+  height: 100px;
+  box-shadow: 0px 3px 6px #00000029;
+}
+
+.artist-button {
+  float: right;
+  border: 0;
+}
+
+.artist-name {
+  font-size: 30px;
+}
+
+.artist-row {
+  height: 100%;
+}

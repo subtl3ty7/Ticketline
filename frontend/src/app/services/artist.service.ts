@@ -39,8 +39,8 @@ export class ArtistService {
     params = params.set('lastName', lastName);
     const searchForm = '?' + params.toString();
 
-    console.log('Navigating to backend with URI: ' + this.artistBaseUri + searchForm);
-    return this.httpClient.get<Artist[]>(this.artistBaseUri + searchForm).pipe(
+    console.log('Navigating to backend with URI: ' + this.artistBaseUri + '/search' + searchForm);
+    return this.httpClient.get<Artist[]>(this.artistBaseUri + '/search' + searchForm).pipe(
       catchError(this.handleError)
     );
   }

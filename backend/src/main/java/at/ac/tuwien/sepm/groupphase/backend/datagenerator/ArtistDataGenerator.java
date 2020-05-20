@@ -18,8 +18,8 @@ public class ArtistDataGenerator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final int NUMBER_OF_ARTISTS_TO_GENERATE = 5;
-    private static final String TEST_ARTISTS_FIRSTNAME = "Chance";
-    private static final String TEST_ARTISTS_LASTNAME = "Bennett";
+    private static final String TEST_ARTISTS_FIRSTNAME = "Test";
+    private static final String TEST_ARTISTS_LASTNAME = "Person";
     private final ArtistRepository artistRepository;
 
     public ArtistDataGenerator(ArtistRepository artistRepository) {
@@ -34,8 +34,8 @@ public class ArtistDataGenerator {
             LOGGER.debug("generating {} message entries", NUMBER_OF_ARTISTS_TO_GENERATE);
             for (int i = 0; i < NUMBER_OF_ARTISTS_TO_GENERATE; i++) {
                 Artist artist = Artist.ArtistBuilder.anArtist()
-                    .withFirstName(TEST_ARTISTS_FIRSTNAME + i)
-                    .withLastName(TEST_ARTISTS_LASTNAME + i)
+                    .withFirstName(((char) (65 + (i%26))) + TEST_ARTISTS_FIRSTNAME)
+                    .withLastName(TEST_ARTISTS_LASTNAME)
                     .build();
                 LOGGER.debug("saving artist {}", artist);
                 artistRepository.save(artist);

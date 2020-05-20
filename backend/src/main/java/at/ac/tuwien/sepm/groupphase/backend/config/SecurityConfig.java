@@ -52,6 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         whiteList.add("/api/v1/events/top10");
         whiteList.add("/api/v1/events/{eventCode}");
         whiteList.add("/api/v1/events/all");
+        whiteList.add("/api/v1/artists/search");
         this.whiteListedRequests = new OrRequestMatcher(
             whiteList.stream()
             .map(AntPathRequestMatcher::new)

@@ -19,16 +19,16 @@
             <div *ngFor="let a of artists">
               <div class="row">
                 <div class="artist-block">
-                  <div class="row">
+                  <div class="row artist-row">
                     <div class="col">
-                      <div class="artist-name">
+                      <div class="artist-name pl-5" style="margin-top: 45px;">
                         {{a.firstName}} {{a.lastName}}
                       </div>
                     </div>
-                    <div class="col">
-                      <div class="btn artist-button">
-                        Veranstaltungen
-                      </div>
+                    <div class="col pr-5">
+                      <button class="btn default artist-button align-middle" style="margin-top: 30px;">
+                        Zu den Events
+                      </button>
                     </div>
                   </div>
                 </div>
