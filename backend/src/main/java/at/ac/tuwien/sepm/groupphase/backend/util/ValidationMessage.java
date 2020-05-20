@@ -15,7 +15,6 @@ import java.util.*;
 public class ValidationMessage {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    public static final String defaultDataAccessMessage = "Something went wrong while accessing the database.";
     private static final String defaultConstraintMessage = "Input violates an(other) unknown constraint.";
     /**
      * maps constraint name to  a user-friendly hint on wrong input (should not reveal any implementation details)
