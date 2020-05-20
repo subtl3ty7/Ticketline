@@ -9,6 +9,7 @@ import {EventService} from '../../services/event.service';
   styleUrls: ['./top-ten-events.component.css']
 })
 export class TopTenEventsComponent implements OnInit {
+  error;
   currentMonth: string;
   events: SimpleEvent[];
 
@@ -40,6 +41,7 @@ export class TopTenEventsComponent implements OnInit {
       },
       error => {
         this.events = null;
+        this.error = error.error;
       }
     );
   }

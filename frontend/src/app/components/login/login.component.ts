@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   // After first submission attempt, form validation will start
   submitted: boolean = false;
-  // Error flag
+  // BackendError flag
   error: boolean = false;
   errorMessage: string = '';
 
@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit {
   }
 
   /**
-   * Error flag will be deactivated, which clears the error message
+   * BackendError flag will be deactivated, which clears the error message
    */
   vanishError() {
     this.error = false;

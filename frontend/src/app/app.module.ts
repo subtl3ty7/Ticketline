@@ -68,6 +68,7 @@ import { TopEventsListComponent } from './components/top-ten-events/top-events-l
 import { ResetPasswordComponent} from './components/reset-password/reset-password.component';
 import { ResetPasswordAuthComponent } from './components/reset-password/reset-password-auth/reset-password-auth.component';
 import { ChartComponent } from './components/top-ten-events/chart/chart.component';
+import { ErrorComponent } from './components/error/error.component';
 
 @NgModule({
   declarations: [
@@ -117,7 +118,8 @@ import { ChartComponent } from './components/top-ten-events/chart/chart.componen
     TopEventsListComponent,
     ResetPasswordComponent,
     ResetPasswordAuthComponent,
-    ChartComponent
+    ChartComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,

@@ -108,7 +108,7 @@ export class MessageComponent implements OnInit {
   }
 
   /**
-   * Error flag will be deactivated, which clears the error message
+   * BackendError flag will be deactivated, which clears the error message
    */
   vanishError() {
     this.error = false;

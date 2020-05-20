@@ -1,3 +1,5 @@
+<app-error *ngIf="error" [error]="error"></app-error>
+
 <div class="container" *ngIf="events && events.length > 0">
     <div class="title-button" routerLink="/top-ten-events">
       <div class="row col-12">
