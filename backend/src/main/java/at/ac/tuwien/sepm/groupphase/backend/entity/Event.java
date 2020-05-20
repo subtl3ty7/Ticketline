@@ -64,10 +64,6 @@ public class Event implements Serializable {
     private int totalTicketsSold;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SELECT)
-    private List<String> artists;
-
-    @ElementCollection(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT) //only way to fetch more than two collections with type eager ...
     private List<Integer> prices;
 

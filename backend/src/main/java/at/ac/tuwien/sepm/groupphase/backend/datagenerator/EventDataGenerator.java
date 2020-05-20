@@ -103,7 +103,6 @@ public class EventDataGenerator {
             String imgName = "event_img" + i + ".jpg";
 
             Event event = Event.builder()
-                .artists(List.of("Artist1", "Artist2", "Artist3"))
                 .category("Talk")
                 .description("Interesting debate!")
                 .startsAt(LocalDateTime.now())
