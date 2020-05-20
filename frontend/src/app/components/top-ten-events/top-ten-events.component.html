@@ -1,6 +1,5 @@
 <app-header></app-header>
 
-
 <div class="row row-headline">
   <div class="rail-select col-2 ml-5">
     <div class="select-side">
@@ -25,7 +24,8 @@
 <div class="container-fluid" style="padding-left: 0px; padding-right: 0px; padding-top: 50px;">
   <div class="row">
     <div class="mx-auto" style="max-width: 1400px; width: 100%; padding: 30px 0px 0px 0px; background-color: transparent">
-      <app-top-ten-events-list></app-top-ten-events-list>
+      <app-chart *ngIf="events" [events]="events"></app-chart>
+      <app-top-ten-events-list *ngIf="events" [events]="events"></app-top-ten-events-list>
     </div>
   </div>
 </div>
