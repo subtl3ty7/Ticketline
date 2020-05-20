@@ -50,7 +50,6 @@ import { EditProfileComponent } from './components/my-profile/my-profile-tabs/my
 import { DeleteAccountComponent } from './components/my-profile/my-profile-tabs/my-info-tab/delete-account/delete-account.component';
 import { TopEventsComponent} from './components/home/top-events/top-events.component';
 import { RegistrationComponent } from './components/registration/registration.component';
-import { EventSearchComponent } from './components/event-search/event-search.component';
 import { EventDetailsUserViewComponent } from './components/event-details/event-details-user-view';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { EventDetailsContainerComponent } from './components/admin-home/admin-tabs/events-tab/event-details-container/root/event-details-container.component';
@@ -65,6 +64,11 @@ import { TopTenEventsComponent } from './components/top-ten-events/top-ten-event
 import { HeaderComponent } from './sections/header/header.component';
 import { CurrentNewsComponent } from './components/home/current-news/current-news.component';
 import { TopEventsListComponent } from './components/top-ten-events/top-events-list/top-events-list.component';
+import { SearchComponent } from './components/search/search.component';
+import { ArtistComponent } from './components/search/artist/artist.component';
+import { EventComponent } from './components/search/event/event.component';
+import { LocationComponent } from './components/search/location/location.component';
+import { ShowComponent } from './components/search/show/show.component';
 
 @NgModule({
   declarations: [
@@ -99,7 +103,6 @@ import { TopEventsListComponent } from './components/top-ten-events/top-events-l
     TopEventsComponent,
     RegistrationComponent,
     GuestHeaderComponent,
-    EventSearchComponent,
     EventDetailsUserViewComponent,
     EventDetailsContainerComponent,
     EventDetailsComponent,
@@ -112,7 +115,12 @@ import { TopEventsListComponent } from './components/top-ten-events/top-events-l
     TopTenEventsComponent,
     HeaderComponent,
     CurrentNewsComponent,
-    TopEventsListComponent
+    TopEventsListComponent,
+    SearchComponent,
+    ArtistComponent,
+    EventComponent,
+    LocationComponent,
+    ShowComponent
   ],
   imports: [
     BrowserModule,
