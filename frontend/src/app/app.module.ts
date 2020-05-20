@@ -122,7 +122,7 @@ import { ErrorComponent } from './components/error/error.component';
     ResetPasswordComponent,
     ResetPasswordAuthComponent,
     ChartComponent,
-    ErrorComponent
+    ErrorComponent,
     TopEventsListComponent,
     SearchComponent,
     ArtistComponent,

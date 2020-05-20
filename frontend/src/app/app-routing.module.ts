@@ -24,6 +24,7 @@ import {ArtistComponent} from './components/search/artist/artist.component';
 import {EventComponent} from './components/search/event/event.component';
 import {LocationComponent} from './components/search/location/location.component';
 import {ShowComponent} from './components/search/show/show.component';
+import {SearchComponent} from './components/search/search.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -44,10 +45,7 @@ const routes: Routes = [
   {path: 'event-details/:eventCode', canActivate: [LoggedInGuard], component: EventDetailsUserViewComponent},
   {path: 'faq', canActivate: [], component: FaqComponent},
   {path: 'top-ten-events', component: TopTenEventsComponent},
-  {path: 'search-event', canActivate: [], component: EventComponent},
-  {path: 'search-artist', component: ArtistComponent},
-  {path: 'search-location', component: LocationComponent},
-  {path: 'search-show', component: ShowComponent}
+  {path: 'search', canActivate: [], component: SearchComponent},
   {path: 'top-ten-events', component: TopTenEventsComponent},
   {path: 'reset-password', component: ResetPasswordComponent},
   {path: 'reset-password/:rc', component: ResetPasswordAuthComponent},

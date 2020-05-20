@@ -1,38 +1,21 @@
-<app-header></app-header>
-<div *ngIf="error" class="alert alert-warning alert-dismissible fade show" role="alert">
-  <strong>Authentication problems!</strong> {{ errorMessage }}
-  <button type="button" (click)="vanishError()" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
+<div class="card-header d-flex align-items-center">
+  <h1 class="mb-0 ml-3 page-title">Nach Künstler suchen</h1>
 </div>
-<div class="container-fluid justify-content-center" style="padding-left: 5%; padding-right: 5%;">
-  <div class="row">
-    <div class="mx-auto" style="max-width: 1320px; width: 100%;">
-      <span class="anchor" id="formLogin"></span>
-
-      <div class="card main-body">
-        <div class="card-header d-flex align-items-center">
-          <h1 class="mb-0 page-title" style="">Nach Künstler suchen</h1>
-        </div>
-        <div class="card-body">
-          <div *ngIf="artists.length > 0">
-            <div *ngFor="let a of artists">
-              <div class="row">
-                <div class="artist-block">
-                  <div class="row artist-row">
-                    <div class="col">
-                      <div class="artist-name pl-5" style="margin-top: 45px;">
-                        {{a.firstName}} {{a.lastName}}
-                      </div>
-                    </div>
-                    <div class="col pr-5">
-                      <button class="btn default artist-button align-middle" style="margin-top: 30px;">
-                        Zu den Events
-                      </button>
-                    </div>
-                  </div>
-                </div>
+<div class="card-body">
+  <div *ngIf="artists.length > 0">
+    <div *ngFor="let a of artists">
+      <div class="row">
+        <div class="artist-block">
+          <div class="row artist-row">
+            <div class="col">
+              <div class="artist-name pl-5" style="margin-top: 45px;">
+                {{a.firstName}} {{a.lastName}}
               </div>
+            </div>
+            <div class="col pr-5">
+              <button class="btn default artist-button align-middle" style="margin-top: 30px;">
+                Zu den Events
+              </button>
             </div>
           </div>
         </div>

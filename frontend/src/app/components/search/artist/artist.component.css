@@ -9,8 +9,12 @@
   border: 0;
 }
 
+.artist-button:hover {
+  color: #FBFBFB;
+}
+
 .artist-name {
-  font-size: 30px;
+  font-size: 25px;
 }
 
 .artist-row {

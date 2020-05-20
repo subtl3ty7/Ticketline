@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../../services/auth.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {SearchShared, SearchEntity} from '../../../components/search/search-shared';
 
 @Component({
   selector: 'app-customer-header',
@@ -9,11 +10,12 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class CustomerHeaderComponent implements OnInit {
 
-  constructor(public authService: AuthService, public router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(public authService: AuthService, public router: Router, private activatedRoute: ActivatedRoute, private searchShared: SearchShared) { }
   public isMobileLayout = false;
   isCollapsed: boolean;
   isSearchActive: boolean;
-  searchTerm: string = '';
+  searchTerm: string;
+  searchedEntity = SearchEntity;
 
   ngOnInit(): void {
     this.isSearchActive = false;
@@ -32,28 +34,13 @@ export class CustomerHeaderComponent implements OnInit {
     searchQuery[1] = searchQuery[1] === undefined ? '' : searchQuery[1];
     const searchQueryString = 'firstName=' + searchQuery[0] + '&lastName=' + searchQuery[1];
     console.log('navigating to ' + 'search-artist?' + searchQueryString);
-    this.router.navigateByUrl('search-artist?' + searchQueryString);
-  }
-  private navigateEventSearch(searchQuery: string) {
-    this.router.navigateByUrl('search-event?');
-  }
-  private navigateLocationSearch(searchQuery: string) {
-    this.router.navigateByUrl('search-location?');
   }
 
-  searchArtist(searchTerm: string) {
-    console.log('searching for artist with string: ' + searchTerm);
-    const searchQuery = searchTerm.split(' ', 2);
-    this.navigateArtistSearch(searchQuery);
+
+  searchEntity(searchTerm: string) {
+    console.log('navigating to search with searchTerm: ' + searchTerm);
+    this.searchShared.searchTerm = searchTerm;
+    this.router.navigate(['search']);
   }
 
-  searchLocation(searchTerm: string) {
-    console.log('searching for location with string: ' + searchTerm);
-    this.navigateLocationSearch(searchTerm);
-  }
-
-  searchEvent(searchTerm: string) {
-    console.log('searching for event with string: ' + searchTerm);
-    this.navigateEventSearch(searchTerm);
-  }
 }
