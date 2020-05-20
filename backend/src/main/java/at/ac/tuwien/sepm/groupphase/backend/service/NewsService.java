@@ -1,0 +1,20 @@
+package at.ac.tuwien.sepm.groupphase.backend.service;
+
+import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
+import at.ac.tuwien.sepm.groupphase.backend.entity.News;
+
+import java.util.List;
+
+public interface NewsService {
+
+    List<News> find6UnseenNewsByCustomer(Customer customer);
+
+    List<News> findAllNews();
+
+    News createNewNewsEntry(News news);
+
+    News findByNewsCode(String eventCode);
+
+    void deleteByNewsCode(String eventCode);
+}
