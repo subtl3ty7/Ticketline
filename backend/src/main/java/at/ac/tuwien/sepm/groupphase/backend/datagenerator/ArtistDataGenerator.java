@@ -34,8 +34,8 @@ public class ArtistDataGenerator {
             LOGGER.debug("generating {} message entries", NUMBER_OF_ARTISTS_TO_GENERATE);
             for (int i = 0; i < NUMBER_OF_ARTISTS_TO_GENERATE; i++) {
                 Artist artist = Artist.ArtistBuilder.anArtist()
-                    .withFirstName(TEST_ARTISTS_FIRSTNAME + " " + i)
-                    .withLastName(TEST_ARTISTS_LASTNAME + " " + i)
+                    .withFirstName(TEST_ARTISTS_FIRSTNAME + i)
+                    .withLastName(TEST_ARTISTS_LASTNAME + i)
                     .build();
                 LOGGER.debug("saving artist {}", artist);
                 artistRepository.save(artist);
