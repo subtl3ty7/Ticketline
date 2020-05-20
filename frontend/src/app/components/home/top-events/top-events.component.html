@@ -34,7 +34,8 @@
                [class.clearfix]="event !== threeEvents[0]"
                [class.d-none]="event !== threeEvents[0]"
                [class.d-md-block]="event !== threeEvents[0]"
-               style="padding: 10px">
+               style="padding: 10px"
+               routerLink="/events/{{event.eventCode}}">
             <div class="card">
               <img class="card-img-top img-fluid"
                    [class.image-crop-big]="event === threeEvents[0]"
