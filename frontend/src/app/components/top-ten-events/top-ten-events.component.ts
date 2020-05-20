@@ -14,13 +14,13 @@ export class TopTenEventsComponent implements OnInit {
 
 
   constructor(private eventService: EventService) {
-    this.defineBackground();
   }
 
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.currentMonth = this.getCurrentMonth();
     this.getTop10Events();
+    this.defineBackground();
   }
 
   getCurrentMonth(): string {
@@ -55,7 +55,11 @@ export class TopTenEventsComponent implements OnInit {
     document.body.style.background = 'linear-gradient(to right, rgba(43,121,184,1) 0%, rgba(201,100,161,1) 100%)';
     document.body.style.filter = 'progid:DXImageTransform.Microsoft.gradient( startColorstr=\'#2b79b8\', endColorstr=\'#c964a1\', GradientType=1 )';
     document.body.style.backgroundPosition = 'center';
-    document.body.style.backgroundRepeat = 'no-repeat';
+    document.body.style.backgroundRepeat = 'repeat';
     document.body.style.backgroundSize = 'cover';
+  }
+
+  private delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
   }
 }

@@ -25,61 +25,56 @@ export class ChartComponent implements OnInit {
   }
 
   public addChart() {
-    /* Chart code */
-    // Themes begin
     am4core.useTheme(am4themes_animated);
-    // Themes end
 
-    const elementExists = document.getElementById('chartdiv');
-    if (elementExists) {
-      console.log('chartdiv exists.');
-    } else {
-      console.log('chartdiv doesnt exist.');
-    }
     // Create chart instance
-    this.chart = am4core.create('chartdiv', am4charts.PieChart);
+    this.chart = am4core.create('chartdiv', am4charts.PieChart3D);
+    this.chart.innerRadius = am4core.percent(40);
+    // this.chart.width = am4core.percent(100);
+    // this.chart.height = am4core.percent(100);
 
-    // Add data
-    this.chart.data = [ {
-      'country': 'Lithuania',
-      'litres': 501.9
-    }, {
-      'country': 'Czechia',
-      'litres': 301.9
-    }, {
-      'country': 'Ireland',
-      'litres': 201.1
-    }, {
-      'country': 'Germany',
-      'litres': 165.8
-    }, {
-      'country': 'Australia',
-      'litres': 139.9
-    }, {
-      'country': 'Austria',
-      'litres': 128.3
-    }, {
-      'country': 'UK',
-      'litres': 99
-    }, {
-      'country': 'Belgium',
-      'litres': 60
-    }, {
-      'country': 'The Netherlands',
-      'litres': 50
-    } ];
+    this.chart.data = [];
+
+    for (const event of this.events) {
+      this.chart.data.push({
+        'event': event.name,
+        'ticketsSold': event.totalTicketsSold
+      });
+    }
 
     // Add and configure Series
-    const pieSeries = this.chart.series.push(new am4charts.PieSeries());
-    pieSeries.dataFields.value = 'litres';
-    pieSeries.dataFields.category = 'country';
+    const pieSeries = this.chart.series.push(new am4charts.PieSeries3D());
+
+    pieSeries.dataFields.value = 'ticketsSold';
+    pieSeries.dataFields.category = 'event';
+    pieSeries.labels.template.fill = am4core.color('#fff');
     pieSeries.slices.template.stroke = am4core.color('#fff');
     pieSeries.slices.template.strokeWidth = 2;
     pieSeries.slices.template.strokeOpacity = 1;
+    pieSeries.slices.template.fillOpacity = 1;
+    pieSeries.ticks.template.hidden = true;
+    pieSeries.labels.template.hidden = true;
 
-// This creates initial animation
+    // This creates initial animation
     pieSeries.hiddenState.properties.opacity = 1;
     pieSeries.hiddenState.properties.endAngle = -90;
     pieSeries.hiddenState.properties.startAngle = -90;
+
+    // create legend
+    this.chart.legend = new am4charts.Legend();
+    const legend = this.chart.legend;
+    legend.parent = this.chart.chartContainer;
+    legend.labels.template.text = '[bold white]{name}';
+    legend.valueLabels.template.text = '[bold white]{value}';
+    legend.position = 'left';
+    legend.valign = 'top';
+    legend.itemContainers.template.tooltipText = '{ticketsSold}';
+
+    // custom marker
+    const marker = legend.markers.template.children.getIndex(0);
+    marker.cornerRadius(12, 12, 12, 12);
+    marker.strokeWidth = 2;
+    marker.strokeOpacity = 1;
+    marker.stroke = am4core.color('#ccc');
   }
 }

@@ -110,10 +110,10 @@ public class EventDataGenerator {
                 .startsAt(LocalDateTime.now())
                 .endsAt(LocalDateTime.now())
                 .eventCode("E1234" + i)
-                .name("Talk Event")
+                .name("Event " + i)
                 .photo(getImage(imgName))
                 .prices(List.of(1,2,3))
-                .totalTicketsSold(5)
+                .totalTicketsSold(5*i*i*i)
                 .type("Of the cool type")
                 .shows(generateShows(eventLocations.get(eventLocationIndex)))
                 .build();
