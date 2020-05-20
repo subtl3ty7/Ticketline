@@ -19,11 +19,6 @@ export class ChartComponent implements OnInit {
     this.addChart();
   }
 
-
-  private delay(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
-  }
-
   public addChart() {
     am4core.useTheme(am4themes_animated);
 
@@ -42,7 +37,14 @@ export class ChartComponent implements OnInit {
       });
     }
 
-    // Add and configure Series
+    // Chart Title
+    const title = this.chart.titles.create();
+    title.text = '[white] Gemessen an Anzahl der verkauften Tickets';
+    title.color = am4core.color('#fff');
+    title.fontSize = 25;
+    title.marginBottom = 30;
+
+    // Add and configure Chart Slices
     const pieSeries = this.chart.series.push(new am4charts.PieSeries3D());
 
     pieSeries.dataFields.value = 'ticketsSold';
@@ -52,29 +54,41 @@ export class ChartComponent implements OnInit {
     pieSeries.slices.template.strokeWidth = 2;
     pieSeries.slices.template.strokeOpacity = 1;
     pieSeries.slices.template.fillOpacity = 1;
-    pieSeries.ticks.template.hidden = true;
-    pieSeries.labels.template.hidden = true;
+    pieSeries.labels.template.text = '{label}';
+    pieSeries.alignLabels = false;
+    pieSeries.labels.template.bent = true;
+    pieSeries.labels.template.radius = 100;
+    pieSeries.labels.template.disabled = false;
+    pieSeries.ticks.template.disabled = true;
 
     // This creates initial animation
     pieSeries.hiddenState.properties.opacity = 1;
     pieSeries.hiddenState.properties.endAngle = -90;
     pieSeries.hiddenState.properties.startAngle = -90;
 
-    // create legend
-    this.chart.legend = new am4charts.Legend();
-    const legend = this.chart.legend;
-    legend.parent = this.chart.chartContainer;
-    legend.labels.template.text = '[bold white]{name}';
-    legend.valueLabels.template.text = '[bold white]{value}';
-    legend.position = 'left';
-    legend.valign = 'top';
-    legend.itemContainers.template.tooltipText = '{ticketsSold}';
+    this.chart.events.on('ready', () => {
+      // Create Chart Legend
+      this.chart.legend = new am4charts.Legend();
+      const legend = this.chart.legend;
+      legend.parent = this.chart.chartContainer;
+      legend.labels.template.text = '[bold white]{name}';
+      legend.valueLabels.template.text = '[bold white]{value}';
+      legend.position = 'left';
+      legend.valign = 'top';
+      legend.itemContainers.template.tooltipText = '{ticketsSold}';
 
-    // custom marker
-    const marker = legend.markers.template.children.getIndex(0);
-    marker.cornerRadius(12, 12, 12, 12);
-    marker.strokeWidth = 2;
-    marker.strokeOpacity = 1;
-    marker.stroke = am4core.color('#ccc');
+      // Configure Custom Legend Markers
+      const marker = legend.markers.template.children.getIndex(0);
+      marker.cornerRadius(12, 12, 12, 12);
+      marker.strokeWidth = 2;
+      marker.strokeOpacity = 1;
+      marker.stroke = am4core.color('#ccc');
+
+    });
+  }
+
+
+  private delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
   }
 }
