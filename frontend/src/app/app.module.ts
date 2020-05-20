@@ -33,8 +33,8 @@ import { UserDetailsComponent } from './components/admin-home/admin-tabs/users-t
 import { UserInfoComponent } from './components/admin-home/admin-tabs/users-tab/user-details-container/user-details/user-info/user-info.component';
 import { CreateUserContainerComponent } from './components/admin-home/admin-tabs/users-tab/create-user-container/root/create-user-container.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 // tslint:disable-next-line:max-line-length
-import { ResetPasswordComponent } from './components/admin-home/admin-tabs/users-tab/user-details-container/user-details/reset-password/reset-password.component';
 import { CreateUserComponent } from './components/admin-home/admin-tabs/users-tab/create-user-container/create-user/create-user.component';
 import { CreateUserFormComponent } from './components/admin-home/admin-tabs/users-tab/create-user-container/create-user/create-user-form/create-user-form.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -69,6 +69,10 @@ import { ArtistComponent } from './components/search/artist/artist.component';
 import { EventComponent } from './components/search/event/event.component';
 import { LocationComponent } from './components/search/location/location.component';
 import { ShowComponent } from './components/search/show/show.component';
+import { ResetPasswordComponent} from './components/reset-password/reset-password.component';
+import { ResetPasswordAuthComponent } from './components/reset-password/reset-password-auth/reset-password-auth.component';
+import { ChartComponent } from './components/top-ten-events/chart/chart.component';
+import { ErrorComponent } from './components/error/error.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +93,6 @@ import { ShowComponent } from './components/search/show/show.component';
     UserDetailsComponent,
     UserInfoComponent,
     CreateUserContainerComponent,
-    ResetPasswordComponent,
     CreateUserComponent,
     CreateUserFormComponent,
     GuestHeaderComponent,
@@ -115,6 +118,11 @@ import { ShowComponent } from './components/search/show/show.component';
     TopTenEventsComponent,
     HeaderComponent,
     CurrentNewsComponent,
+    TopEventsListComponent,
+    ResetPasswordComponent,
+    ResetPasswordAuthComponent,
+    ChartComponent,
+    ErrorComponent
     TopEventsListComponent,
     SearchComponent,
     ArtistComponent,
@@ -142,7 +150,8 @@ import { ShowComponent } from './components/search/show/show.component';
     MatCheckboxModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    FlexModule
   ],
   providers: [httpInterceptorProviders, MatDatepickerModule, MatNativeDateModule],
   bootstrap: [AppComponent]

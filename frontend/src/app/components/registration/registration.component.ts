@@ -18,7 +18,7 @@ export class RegistrationComponent implements OnInit {
   registrationForm: FormGroup;
   // After first submission attempt, form validation will start
   submitted: boolean = false;
-  // Error flag
+  // BackendError flag
   error: boolean = false;
   errorMessage: string = '';
   maxDate: Date;

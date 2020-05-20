@@ -3,7 +3,6 @@ package at.ac.tuwien.sepm.groupphase.backend.util.validation.impl;
 import at.ac.tuwien.sepm.groupphase.backend.entity.*;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventLocationRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
-import at.ac.tuwien.sepm.groupphase.backend.service.EventLocationService;
 import at.ac.tuwien.sepm.groupphase.backend.util.Constraints;
 import at.ac.tuwien.sepm.groupphase.backend.util.validation.EventValidator;
 import org.slf4j.Logger;
@@ -67,16 +66,18 @@ public class EventValidatorImpl implements EventValidator {
         Constraints constraints = new Constraints();
         constraints.add(AccesoryValidator.validateJavaxConstraints(show));
         constraints.add("show_idNull", show.getId()==null);
-        if(show.getEventLocation() != null) {
+        constraints.add( "eventLocation_given", show.getEventLocation() != null);
+        if(!constraints.isViolated()) {
             constraints.add("eventLocation_given", show.getEventLocation().size() > 0);
             constraints.add("eventLocation_onlyOne", show.getEventLocation().size() <= 1);
             constraints.add("eventLocation_exists", show.getEventLocation().size() == 1 && show.getEventLocation().get(0) != null && show.getEventLocation().get(0).getId() != null);
+        }
+        if(!constraints.isViolated()) {
+            EventLocation eventLocation = eventLocationRepository.findEventLocationById(show.getEventLocation().get(0).getId());
+            constraints.add("eventLocation_exists", eventLocation != null);
             if(!constraints.isViolated()) {
-                EventLocation eventLocation = eventLocationRepository.findEventLocationById(show.getEventLocation().get(0).getId());
-                constraints.add("eventLocation_exists", eventLocation != null);
                 constraints.add("eventLocation_unassigned", eventLocation.getShowId() == null);
             }
-
         }
         return constraints;
     }

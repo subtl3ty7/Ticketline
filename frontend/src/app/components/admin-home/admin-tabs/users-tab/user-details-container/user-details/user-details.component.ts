@@ -3,7 +3,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../../../../../../services/user.service';
 import {State, UserDetailsWrapper} from './user-details-wrapper';
 import {User} from '../../../../../../dtos/user';
-import {ResetPasswordComponent} from './reset-password/reset-password.component';
 
 @Component({
   selector: 'app-user-details',
@@ -17,7 +16,6 @@ export class UserDetailsComponent implements OnInit {
   private state = State;
   public firstName: string;
   public lastName: string;
-  @ViewChild(ResetPasswordComponent) resetPassword: ResetPasswordComponent;
   constructor(private router: Router,
               private route: ActivatedRoute,
               private userService: UserService) {}
@@ -51,15 +49,5 @@ export class UserDetailsComponent implements OnInit {
       this.router.navigate(['administration']);
     }
   }
-  public cancelResetPasswordMode() {
-    this.wrapper.state = this.state.READY;
-    this.usersNavigate();
-  }
-  public savePassword() {
-    if (this.wrapper.model && this.resetPassword.password) {
-      this.userService.resetPassword(this.wrapper.model.userCode, this.wrapper.model.password, this.resetPassword.password);
-      this.wrapper.state = this.state.READY;
-      this.usersNavigate();
-    }
-  }
+
 }

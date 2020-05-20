@@ -30,7 +30,7 @@ public class Section implements Serializable {
     @Column(length = 1000)
     private String sectionDescription;
 
-
+    @ToString.Exclude
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "SECTION_ID", referencedColumnName = "ID")
     private List<Seat> seats;

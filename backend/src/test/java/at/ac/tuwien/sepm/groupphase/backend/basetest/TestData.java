@@ -85,7 +85,7 @@ public interface TestData {
     List<EventLocation> LOCATIONS = new ArrayList<>() {
         {
             add(EventLocation.builder()
-                .id(ID).showId(ID).eventLocationName(FNAME).eventLocationDescription(DESC).street(STREET).city(CITY).country(COUNTRY).plz(PLZ).sections(SECTIONS).capacity(TOTAL).build());
+                .id(ID).showId(ID).name(FNAME).eventLocationDescription(DESC).street(STREET).city(CITY).country(COUNTRY).plz(PLZ).sections(SECTIONS).capacity(TOTAL).build());
         }
     };
     String COLUMN = "A";

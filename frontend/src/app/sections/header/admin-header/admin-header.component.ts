@@ -9,8 +9,13 @@ import {AuthService} from '../../../services/auth.service';
 export class AdminHeaderComponent implements OnInit {
 
   constructor(public authService: AuthService) { }
+  public isMobileLayout = false;
+  isCollapsed: boolean;
 
   ngOnInit(): void {
+    this.isCollapsed = true;
+    this.isMobileLayout = window.innerWidth <= 992;
+    window.onresize = () => this.isMobileLayout = window.innerWidth <= 992;
   }
 
 }

@@ -41,6 +41,9 @@ public class CustomEventService implements EventService {
         List<Event> allEventsFromMonth = eventRepository.findAllByStartsAtAfterOrderByTotalTicketsSoldDesc(LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),1,0,0));
         List<Event> top10 = new ArrayList<>();
         for(int i = 0; i < Math.min(10, allEventsFromMonth.size()); i++) top10.add(allEventsFromMonth.get(i));
+        if(top10.size() < 1) {
+            throw new NotFoundException("Could not find any Event.");
+        }
         return top10;
     }
 

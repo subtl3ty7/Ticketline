@@ -1,14 +1,13 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Administrator;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
-import at.ac.tuwien.sepm.groupphase.backend.entity.UserAttempts;
+import at.ac.tuwien.sepm.groupphase.backend.entity.*;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
+import at.ac.tuwien.sepm.groupphase.backend.repository.ResetPasswordRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserAttemptsRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
+import at.ac.tuwien.sepm.groupphase.backend.service.EmailService;
 import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
 import at.ac.tuwien.sepm.groupphase.backend.util.validation.UserValidator;
@@ -21,21 +20,16 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.logout.CookieClearingLogoutHandler;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.security.web.authentication.rememberme.AbstractRememberMeServices;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManagerFactory;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -44,16 +38,17 @@ public class CustomUserService implements UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final UserRepository userRepository;
     private final UserAttemptsRepository userAttemptsRepository;
-    private final PasswordEncoder passwordEncoder;
     private final UserValidator validator;
     private final EntityManagerFactory entityManagerFactory;
 
 
     @Autowired
-    public CustomUserService(UserRepository userRepository, PasswordEncoder passwordEncoder,
-                             UserAttemptsRepository userAttemptsRepository, UserValidator validator, EntityManagerFactory entityManagerFactory) {
+    public CustomUserService(UserRepository userRepository,
+                             UserAttemptsRepository userAttemptsRepository,
+                             UserValidator validator,
+                             EntityManagerFactory entityManagerFactory) {
+
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
         this.userAttemptsRepository = userAttemptsRepository;
         this.validator = validator;
         this.entityManagerFactory = entityManagerFactory;
@@ -231,4 +226,5 @@ public class CustomUserService implements UserService {
         }
         return null;
     }
+
 }

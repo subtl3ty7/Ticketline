@@ -33,6 +33,7 @@ export class UsersTabComponent implements OnInit {
   private searchUsers: Array<User>;
   private searchParam = '';
   private showBlocked = false;
+  private searchIn;
 
   constructor(private userService: UserService,
               public  router: Router,
@@ -73,33 +74,34 @@ export class UsersTabComponent implements OnInit {
   }
 
   private blockUser(element) {
+    element.blocked = true;
     this.userService.blockUser(element.userCode).subscribe(
       error => {
         this.defaultServiceErrorHandling(error);
       }
     );
-    window.location.reload();
   }
 
   private unblockUser(element) {
+
+    element.blocked = false;
     this.userService.unblockUser(element.userCode).subscribe(
       error => {
         this.defaultServiceErrorHandling(error);
       }
     );
-    window.location.reload();
   }
 
   private createNewUser() {
     this.router.navigate(['create-user']);
   }
 
-  public searchForAllUsers(searchData?) {
+  public searchForAllUsers(searchData?, searchIn?) {
     this.searchParam = searchData.target.value;
-    this.applySearch(this.users);
+    this.applySearch(this.users, searchIn);
   }
 
-  private applySearch(users: Array<User>) {
+  private applySearch(users: Array<User>, searchIn) {
     if (!this.searchParam) {
       if (this.showBlocked) {
         this.searchUsers = users.filter(param => param.blocked === true);

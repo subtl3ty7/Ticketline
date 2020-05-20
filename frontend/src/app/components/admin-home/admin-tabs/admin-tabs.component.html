@@ -3,9 +3,9 @@
     <div class="administration-title-wrapper">
       <div class="administration-line">
         <div class="administration-title">
-          <span *ngIf="globals.getChoosenTab === 1">Users</span>
-          <span *ngIf="globals.getChoosenTab === 2">Events</span>
-          <span *ngIf="globals.getChoosenTab === 3">News</span>
+          <span *ngIf="globals.getChoosenTab === 'users'">Users</span>
+          <span *ngIf="globals.getChoosenTab === 'events'">Events</span>
+          <span *ngIf="globals.getChoosenTab === 'news'">News</span>
         </div>
       </div>
     </div>
@@ -17,17 +17,17 @@
       </div>
 
       <div class="administration-content all-height"
-           *ngIf="globals.getChoosenTab === 1">
+           *ngIf="globals.getChoosenTab === 'users'">
         <app-users-tab class="all-height"></app-users-tab>
       </div>
 
       <div class="administration-content"
-           *ngIf="globals.getChoosenTab === 2">
+           *ngIf="globals.getChoosenTab === 'events'">
         <app-events-tab class="all-height"></app-events-tab>
       </div>
 
       <div class="administration-content"
-           *ngIf="globals.getChoosenTab === 3">
+           *ngIf="globals.getChoosenTab === 'news'">
         <app-news-tab class="all-height"></app-news-tab>
       </div>
 

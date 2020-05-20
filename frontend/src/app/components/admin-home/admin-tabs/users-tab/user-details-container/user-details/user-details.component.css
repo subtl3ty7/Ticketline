@@ -85,7 +85,7 @@ img {
 
 .user-block {
   padding-left: 8px;
-  font-family: Verdana;
+  font-family: Verdana, Serif;
   font-size: 18px;
   font-weight: normal;
   font-style: normal;
@@ -97,8 +97,7 @@ img {
 
 .buttons-wrapper {
   padding-top: 70px;
-  display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 .save-button {

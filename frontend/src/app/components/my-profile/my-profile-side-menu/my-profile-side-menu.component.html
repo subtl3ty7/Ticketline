@@ -1,26 +1,26 @@
 <div id="profile-info-tab"
      class="tab"
-     [routerLink]="['/my-profile', 1]"
+     [routerLink]="['/my-profile', 'my-info']"
      routerLinkActive="select-tab">
   <span class="tab-label">My Info</span>
 </div>
 
 <div id="profile-tickets-tab"
      class="tab"
-     [routerLink]="['/my-profile', 2]"
+     [routerLink]="['/my-profile', 'my-tickets']"
      routerLinkActive="select-tab">
   <span class="tab-label"
-        [ngClass]="{'select-tab-label': globals.getProfileChoosenTab === 2}">
+        [ngClass]="{'select-tab-label': globals.getProfileChoosenTab === 'my-tickets'}">
         My Tickets
       </span>
 </div>
 
 <div id="profile-invoices-tab"
      class="tab"
-     [routerLink]="['/my-profile', 3]"
+     [routerLink]="['/my-profile', 'my-invoices']"
      routerLinkActive="select-tab">
   <span class="tab-label"
-        [ngClass]="{'select-tab-label': globals.getProfileChoosenTab === 3}">
+        [ngClass]="{'select-tab-label': globals.getProfileChoosenTab === 'my-invoices'}">
         My Invoices
       </span>
 </div>

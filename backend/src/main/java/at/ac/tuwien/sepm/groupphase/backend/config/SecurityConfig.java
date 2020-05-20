@@ -49,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //Adding white-listed url's to bypass authorization
         List<String> whiteList = securityProperties.getWhiteList();
         whiteList.add("/api/v1/users/customers");
+        whiteList.add("/api/v1/reset-password/*");
         whiteList.add("/api/v1/events/top10");
         whiteList.add("/api/v1/events/{eventCode}");
         whiteList.add("/api/v1/events/all");
@@ -70,7 +71,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .addFilter(new JwtAuthenticationFilter(authenticationManager(), securityProperties, jwtTokenizer))
             .addFilter(new JwtAuthorizationFilter(authenticationManager(), securityProperties))
             .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .and()
+        .anonymous().disable();
     }
 
     @Override

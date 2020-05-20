@@ -25,7 +25,7 @@ public class EventLocation implements Serializable {
     @NotNull
     @Size(min=1, max = 100)
     @Column(nullable = false, length = 100)
-    private String eventLocationName;
+    private String name;
 
     @Size(max = 1000)
     @Column(length = 1000)
@@ -47,7 +47,7 @@ public class EventLocation implements Serializable {
     @Column(length = 100)
     private String country;
 
-
+    @ToString.Exclude
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,  orphanRemoval = true)
     @JoinColumn(name = "EVENT_LOCATION_ID", referencedColumnName = "ID")
     private List<Section> sections;
@@ -63,7 +63,7 @@ public class EventLocation implements Serializable {
         this.capacity = eventLocation.getCapacity();
         this.plz = eventLocation.getPlz();
         this.eventLocationDescription = eventLocation.getEventLocationDescription();
-        this.eventLocationName = eventLocation.getEventLocationName();
+        this.name = eventLocation.getName();
         this.street = eventLocation.getStreet();
         this.sections = new ArrayList<>();
         for(Section section: eventLocation.getSections()) {

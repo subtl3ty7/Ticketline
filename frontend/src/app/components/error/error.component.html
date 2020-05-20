@@ -1,0 +1,14 @@
+<div class="container border border-danger bg-white text-danger">
+  <h1 *ngIf="error">
+    {{error.status}} {{error.error}}
+  </h1>
+  <h3>
+    Diese Komponente konnte nicht geladen werden. Das tut uns Leid.
+  </h3>
+
+  <h5 *ngIf="error">
+    <div *ngFor="let message of error.messages">
+      {{message}}
+    </div>
+  </h5>
+</div>
