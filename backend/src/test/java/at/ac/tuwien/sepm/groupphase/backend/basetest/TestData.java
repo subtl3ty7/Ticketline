@@ -1,9 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.basetest;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Seat;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Section;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
+import at.ac.tuwien.sepm.groupphase.backend.entity.*;
 import org.hibernate.mapping.Table;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -93,6 +90,16 @@ public interface TestData {
     List<Seat> SEATS = new ArrayList<>() {
         {
             add(Seat.builder().id(ID).sectionId(ID).isFree(true).seatColumn(COLUMN).seatRow(ROW).build());
+        }
+    };
+
+    String TYP_I = "purchase";
+    String PAY = "card";
+    LocalDateTime PURCHASE = LocalDateTime.of(2020, 5, 20, 16, 0,0);
+    int NUM = 1;
+    List<Ticket> TICKETS = new ArrayList<>() {
+        {
+            add(Ticket.builder().ticketCode(USER_CODE).userCode(USER_CODE).price(TOTAL).purchaseDate(PURCHASE).isPurchased(true).isReserved(false).build());
         }
     };
 
