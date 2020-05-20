@@ -59,7 +59,10 @@ public class NewsEndpoint {
         value = "Get News Entry by newsCode",
         notes = "Get News Entry by newsCode",
         authorizations = {@Authorization(value = "apiKey")})
-    @ApiResponse(code = 200, message = "Successfully retrieved News Entry")
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "Successfully retrieved News Entry"),
+        @ApiResponse(code = 500, message = "Connection Refused"),
+    })
     public NewsDto get(@PathVariable String newsCode) {
         LOGGER.info("GET /api/v1/news/" + newsCode);
 

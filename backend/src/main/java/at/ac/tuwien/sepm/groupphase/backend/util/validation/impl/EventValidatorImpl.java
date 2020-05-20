@@ -30,12 +30,15 @@ public class EventValidatorImpl implements EventValidator {
     @Override
     public Constraints validate(Event event) {
         Constraints constraints = new Constraints();
-        constraints.add(AccesoryValidator.validateJavaxConstraints(event));
-        constraints.add(validateEventCode(event.getEventCode()));
-        constraints.add("artists_notNull", event.getArtists() != null);
-        constraints.add("prices_exist", event.getPrices() != null && event.getPrices().size()>0);
-        constraints.add("shows_exist", event.getShows() != null && event.getShows().size()>0);
-        if(event.getShows() != null) {
+        constraints.add("event_notNull", event != null);
+        if(!constraints.isViolated()) {
+            constraints.add(AccesoryValidator.validateJavaxConstraints(event));
+            constraints.add(validateEventCode(event.getEventCode()));
+            constraints.add("artists_notNull", event.getArtists() != null);
+            constraints.add("prices_exist", event.getPrices() != null && event.getPrices().size() > 0);
+            constraints.add("shows_exist", event.getShows() != null && event.getShows().size() > 0);
+        }
+        if(!constraints.isViolated()) {
             constraints.add(validateShows(event.getShows()));
         }
         return constraints;

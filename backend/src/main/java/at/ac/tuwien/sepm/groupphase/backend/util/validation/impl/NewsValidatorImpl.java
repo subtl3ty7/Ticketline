@@ -27,9 +27,21 @@ public class NewsValidatorImpl implements NewsValidator {
         this.eventLocationRepository = eventLocationRepository;
     }
 
+    @Override
     public Constraints validateNewsCode(String newsCode) {
         Constraints constraints = new Constraints();
         constraints.add("newsCode_unique", eventRepository.findEventByEventCode(newsCode) == null);
+        return constraints;
+    }
+
+    @Override
+    public Constraints validate(News news) {
+        Constraints constraints = new Constraints();
+        constraints.add("news_given", news != null);
+        if(!constraints.isViolated()) {
+            constraints.add(AccesoryValidator.validateJavaxConstraints(news));
+            constraints.add("newsCode_unique", eventRepository.findEventByEventCode(news.getNewsCode()) == null);
+        }
         return constraints;
     }
 }

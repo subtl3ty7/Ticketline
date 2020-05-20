@@ -42,6 +42,7 @@ public class CustomNewsService implements NewsService {
     @Override
     public News createNewNewsEntry(News news) {
         news.setNewsCode(this.getNewNewsCode());
+        validator.validate(news).throwIfViolated();
         return newsRepository.save(news);
     }
 
