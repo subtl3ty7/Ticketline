@@ -126,13 +126,15 @@ public class CustomTicketService implements TicketService {
     }
 
     @Override
-    public void cancelPurchasedTicket(String ticketCode) {
-        LOGGER.info("Validating ticket " + ticketCode);
-        validator.validateDelete(ticketCode).throwIfViolated();
+    public void cancelPurchasedTicket(String ticketCode) throws ValidationException, DataAccessException{
+        LOGGER.info("Validating ticket with ticketCode " + ticketCode);
+        validator.validateTicketCode(ticketCode).throwIfViolated();
 
         Ticket ticket1 = ticketRepository.findTicketByTicketCode(ticketCode);
         ticketRepository.delete(ticket1);
         // do the money return  and invoices stuff
+
+        LOGGER.info("Canceled ticket with ticketCode " + ticketCode);
     }
 
 

@@ -98,7 +98,9 @@ public class ValidationMessage {
             put("tickets_sold", "This show is sold out.");
             put("no_tickets", "This user has no tickets.");
             put("ticket_exists", "This ticket is already saved in the database.");
-            put("ticket_nonExisting", "Ticket was not found in the databse.");
+            put("admin_purchase", "Admin can not reserve or purchase tickets.");
+            put("price_exists", "Price has to be inputed.");
+            put("price_notZero", "Price can not be zero.");
         }
     };
 
