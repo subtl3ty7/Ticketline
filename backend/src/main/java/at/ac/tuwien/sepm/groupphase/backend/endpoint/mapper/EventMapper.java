@@ -14,6 +14,7 @@ public interface EventMapper {
 
     @Named("simpleEvent")
     @Mapping(expression = "java(event.getPrices().get(0))", target = "startPrice")
+    @Mapping(expression = "java(event.getTotalTicketsSold())", target = "totalTicketsSold")
     SimpleEventDto eventToSimpleEventDto(Event event);
 
     @IterableMapping(qualifiedByName = "simpleEvent")

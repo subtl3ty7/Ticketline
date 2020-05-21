@@ -49,6 +49,13 @@ public class UserValidatorImpl implements UserValidator {
     }
 
     @Override
+    public Constraints validateEmail(String email) {
+        Constraints constraints = new Constraints();
+        constraints.add("email_exists", userRepository.findAbstractUserByEmail(email) != null);
+        return constraints;
+    }
+
+    @Override
     public Constraints validateUserCode(String userCode) {
         Constraints constraints = new Constraints();
         constraints.add("userCode_unique", userRepository.findAbstractUserByUserCode(userCode) == null);

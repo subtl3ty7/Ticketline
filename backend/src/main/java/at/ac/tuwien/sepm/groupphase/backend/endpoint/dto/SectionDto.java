@@ -15,6 +15,7 @@ public class SectionDto {
     private Long eventLocationId;
     private String name;
     private String description;
+    @ToString.Exclude
     private List<SeatDto> seats;
     private int capacity;
 }

@@ -3,11 +3,14 @@ package at.ac.tuwien.sepm.groupphase.backend.endpoint.dto;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
 @Setter
+@ToString
 public class DetailedEventDto {
 
     private String eventCode;
@@ -17,6 +20,7 @@ public class DetailedEventDto {
     private String description;
     private int startPrice;
     private String photo;
+    @ToString.Exclude
     private List<Show> shows;
     private List<String> artists;
     private String type;

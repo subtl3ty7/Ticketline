@@ -35,7 +35,6 @@ import { CreateUserContainerComponent } from './components/admin-home/admin-tabs
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 // tslint:disable-next-line:max-line-length
-import { ResetPasswordComponent } from './components/admin-home/admin-tabs/users-tab/user-details-container/user-details/reset-password/reset-password.component';
 import { CreateUserComponent } from './components/admin-home/admin-tabs/users-tab/create-user-container/create-user/create-user.component';
 import { CreateUserFormComponent } from './components/admin-home/admin-tabs/users-tab/create-user-container/create-user/create-user-form/create-user-form.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -66,6 +65,10 @@ import { TopTenEventsComponent } from './components/top-ten-events/top-ten-event
 import { HeaderComponent } from './sections/header/header.component';
 import { CurrentNewsComponent } from './components/home/current-news/current-news.component';
 import { TopEventsListComponent } from './components/top-ten-events/top-events-list/top-events-list.component';
+import { ResetPasswordComponent} from './components/reset-password/reset-password.component';
+import { ResetPasswordAuthComponent } from './components/reset-password/reset-password-auth/reset-password-auth.component';
+import { ChartComponent } from './components/top-ten-events/chart/chart.component';
+import { ErrorComponent } from './components/error/error.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +89,6 @@ import { TopEventsListComponent } from './components/top-ten-events/top-events-l
     UserDetailsComponent,
     UserInfoComponent,
     CreateUserContainerComponent,
-    ResetPasswordComponent,
     CreateUserComponent,
     CreateUserFormComponent,
     GuestHeaderComponent,
@@ -113,7 +115,11 @@ import { TopEventsListComponent } from './components/top-ten-events/top-events-l
     TopTenEventsComponent,
     HeaderComponent,
     CurrentNewsComponent,
-    TopEventsListComponent
+    TopEventsListComponent,
+    ResetPasswordComponent,
+    ResetPasswordAuthComponent,
+    ChartComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,

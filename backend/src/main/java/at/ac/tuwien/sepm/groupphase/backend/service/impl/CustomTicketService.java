@@ -1,5 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
+import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Seat;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import javax.xml.crypto.Data;
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -42,38 +44,17 @@ public class CustomTicketService implements TicketService {
 
 
     @Override
-    public List<Ticket> buyTicket(List<Ticket> tickets) throws ValidationException, DataAccessException {
+    public List<Ticket> buyTickets(List<Ticket> tickets) throws ValidationException, DataAccessException {
         List<Ticket> savedTickets = new ArrayList<>();
 
-        for (Ticket ticketEntity: tickets) {
-            LOGGER.info("Validating ticket " + ticketEntity);
-            ticketEntity.setTicketCode(getNewTicketCode());
-            LocalDateTime now = LocalDateTime.now();
-            ticketEntity.setPurchaseDate(now);
-
-            Seat seat = seatRepository.findSeatById(ticketEntity.getSeat().getId());
-            ticketEntity.setSeat(seat);
-            seatRepository.save(seat);
-
-            Show show = showRepository.findShowById(ticketEntity.getShow().getId());
-            ticketEntity.setShow(show);
-            showRepository.save(show);
-
-            validator.validatePurchase(ticketEntity).throwIfViolated();
-            validator.validate(ticketEntity).throwIfViolated();
-
-            show.setTicketsSold(show.getTicketsSold() + 1);
-            show.setTicketsAvailable(show.getTicketsAvailable() - 1);
-            showRepository.save(show);
-
-            ticketEntity.getSeat().setFree(false);
-            seatRepository.save(seat);
-
+        for ( Ticket ticketEntity: tickets
+        ) {
+            save(ticketEntity);
             ticketEntity.setPurchased(true);
             Ticket savedTicket = ticketRepository.save(ticketEntity);
             savedTickets.add(savedTicket);
 
-            LOGGER.info("Saved ticket " + savedTicket + " in the database.");
+            LOGGER.info("Purchased ticket " + savedTicket);
         }
         return savedTickets;
     }
@@ -93,4 +74,58 @@ public class CustomTicketService implements TicketService {
         }
         return ticketCode;
     }
+
+    @Override
+    public List<Ticket> allTicketsOfUser(String userCode) throws ValidationException, DataAccessException{
+        validator.validateAllTicketsOfUser(userCode).throwIfViolated();
+        return ticketRepository.findTicketsByUserCode(userCode);
+    }
+
+    @Override
+    public Ticket save(Ticket ticketEntity) throws ValidationException, DataAccessException {
+            LOGGER.info("Validating ticket " + ticketEntity);
+            ticketEntity.setTicketCode(getNewTicketCode());
+            LocalDateTime now = LocalDateTime.now();
+            ticketEntity.setPurchaseDate(now);
+
+            Seat seat = seatRepository.findSeatById(ticketEntity.getSeat().getId());
+            ticketEntity.setSeat(seat);
+            seatRepository.save(seat);
+
+            Show show = showRepository.findShowById(ticketEntity.getShow().getId());
+            ticketEntity.setShow(show);
+            showRepository.save(show);
+
+            validator.validateSave(ticketEntity).throwIfViolated();
+            validator.validate(ticketEntity).throwIfViolated();
+
+            show.setTicketsSold(show.getTicketsSold() + 1);
+            show.setTicketsAvailable(show.getTicketsAvailable() - 1);
+            showRepository.save(show);
+
+            ticketEntity.getSeat().setFree(false);
+            seatRepository.save(seat);
+
+        return ticketEntity;
+    }
+
+    @Override
+    public List<Ticket> reserveTickets(List<Ticket> tickets) throws ValidationException, DataAccessException {
+        List<Ticket> reservedTickets = new ArrayList<>();
+
+        for ( Ticket ticketEntity: tickets
+             ) {
+            save(ticketEntity);
+            ticketEntity.setReserved(true);
+            Ticket reservedTicket = ticketRepository.save(ticketEntity);
+            reservedTickets.add(reservedTicket);
+
+            LOGGER.info("Reserved ticket " + reservedTicket);
+        }
+        return reservedTickets;
+    }
+
+
+
+
 }

@@ -74,21 +74,22 @@ export class UsersTabComponent implements OnInit {
   }
 
   private blockUser(element) {
+    element.blocked = true;
     this.userService.blockUser(element.userCode).subscribe(
       error => {
         this.defaultServiceErrorHandling(error);
       }
     );
-    window.location.reload();
   }
 
   private unblockUser(element) {
+
+    element.blocked = false;
     this.userService.unblockUser(element.userCode).subscribe(
       error => {
         this.defaultServiceErrorHandling(error);
       }
     );
-    window.location.reload();
   }
 
   private createNewUser() {

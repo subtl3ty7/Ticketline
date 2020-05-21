@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
@@ -21,7 +22,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Profile("generateData")
-@Component
+@Component("EventDataGenerator")
 public class EventDataGenerator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -109,10 +110,10 @@ public class EventDataGenerator {
                 .startsAt(LocalDateTime.now())
                 .endsAt(LocalDateTime.now())
                 .eventCode("E1234" + i)
-                .name("Talk Event")
+                .name("Event " + i)
                 .photo(getImage(imgName))
                 .prices(List.of(1,2,3))
-                .totalTicketsSold(5)
+                .totalTicketsSold(5*i*i*i)
                 .type("Of the cool type")
                 .shows(generateShows(eventLocations.get(eventLocationIndex)))
                 .build();
@@ -124,7 +125,6 @@ public class EventDataGenerator {
     }
 
     private List<Show> generateShows(EventLocation eventLocation) {
-        LOGGER.info("Generating Show Test Data");
         int numberOfShows = 2;
 
         List<Show> shows = new ArrayList<>();
@@ -146,7 +146,6 @@ public class EventDataGenerator {
 
 
     private List<EventLocation> generateEventLocations(boolean doSave) {
-        LOGGER.info("Generating Event Location Test Data");
 
         List<EventLocation> eventLocations = new ArrayList<>();
         for(int i=0; i<numberOfEventLocations; i++) {
@@ -170,7 +169,6 @@ public class EventDataGenerator {
 
 
     private List<Section> generateSections() {
-        LOGGER.info("Generating Section Test Data");
         int numberOfSections = 4;
 
         List<Section> sections = new ArrayList<>();
@@ -190,7 +188,6 @@ public class EventDataGenerator {
     }
 
     private List<Seat> generateSeats() {
-        LOGGER.info("Generating Seat Test Data");
         String[] columns = new String[]{
             "1",
             "2",

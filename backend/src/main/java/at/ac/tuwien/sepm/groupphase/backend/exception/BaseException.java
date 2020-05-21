@@ -14,5 +14,10 @@ public abstract class BaseException extends RuntimeException {
         LOGGER.error(message);
     }
 
+    public BaseException(String message) {
+        super(message);
+        LOGGER.error(message);
+    }
+
     public BaseException() {}
 }

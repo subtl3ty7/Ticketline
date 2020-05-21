@@ -39,14 +39,31 @@ public class TicketValidatorImpl implements TicketValidator {
     }
 
     @Override
-    public Constraints validatePurchase(Ticket ticket) {
+    public Constraints validateSave(Ticket ticket) {
         Constraints constraints = new Constraints();
         AbstractUser userFromDataBase = userRepository.findAbstractUserByUserCode(ticket.getUserCode());
         constraints.add("seat_notFree", seatRepository.findSeatById(ticket.getSeat().getId()).isFree());
         constraints.add("userCode_exists", userFromDataBase != null);
         constraints.add("show_exists", showRepository.findShowById(ticket.getShow().getId()) != null);
         constraints.add("seat_exists", seatRepository.findSeatById(ticket.getSeat().getId()) != null);
+        constraints.add("ticket_exists", ticketRepository.findTicketByTicketId(ticket.getTicketId()) == null);
        // constraints.add("tickets_sold", (showRepository.findShowById(ticket.getShow().getId()).getTicketsAvailable()) == 0);
+        return constraints;
+    }
+
+    @Override
+    public Constraints validateAllTicketsOfUser(String userCode) {
+        Constraints constraints = new Constraints();
+        AbstractUser userFromDataBase = userRepository.findAbstractUserByUserCode(userCode);
+        constraints.add("userCode_exists", userFromDataBase != null);
+        constraints.add("no_tickets", !ticketRepository.findTicketsByUserCode(userCode).isEmpty());
+        return constraints;
+    }
+
+    @Override
+    public Constraints validateReserve(Ticket ticket) {
+        Constraints constraints = new Constraints();
+        constraints.add("ticket_reserved", ticketRepository.findTicketByTicketCode(ticket.getTicketCode()) == null);
         return constraints;
     }
 

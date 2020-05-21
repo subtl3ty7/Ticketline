@@ -15,7 +15,6 @@ import java.util.*;
 public class ValidationMessage {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    public static final String defaultDataAccessMessage = "Something went wrong while accessing the database.";
     private static final String defaultConstraintMessage = "Input violates an(other) unknown constraint.";
     /**
      * maps constraint name to  a user-friendly hint on wrong input (should not reveal any implementation details)
@@ -97,6 +96,8 @@ public class ValidationMessage {
             put("seat_notFree", "The seat is already taken.");
             put("seat_exists", "The seat was not found in the database.");
             put("tickets_sold", "This show is sold out.");
+            put("no_tickets", "This user has no tickets.");
+            put("ticket_exists", "This ticket is already saved in the database.");
         }
     };
 
