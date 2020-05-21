@@ -3,23 +3,32 @@ package at.ac.tuwien.sepm.groupphase.backend.endpoint.exceptionhandler;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver;
+import springfox.documentation.spring.web.json.Json;
 
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Register all your Java exceptions here to map them into meaningful HTTP exceptions
@@ -44,13 +53,36 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
+     * Handles all Spring Internal Exceptions (e.g. when JSON to Dto Mapping fails)
+     */
+    @Override
+    protected ResponseEntity<Object> handleExceptionInternal(
+        Exception exception,
+        Object body,
+        HttpHeaders headers,
+        HttpStatus status,
+        WebRequest request) {
+        LOGGER.info("Handling Spring InternalException: " + exception.getMessage());
+        return new ResponseEntity(
+            new JsonResponse(
+                LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                List.of("Input is invalid")
+            ),
+            HttpStatus.BAD_REQUEST
+        );
+    }
+
+    /**
      * This method handles all Exceptions for which there is no other handler
      * To make sure we don't reveal implementation details, the returned message should be something generic
      */
     @ExceptionHandler(value = Exception.class)
-    public ResponseEntity<JsonResponse> handleAll(Exception e) {
-        LOGGER.info("Handling Exception: " + e);
+    public ResponseEntity<JsonResponse> handleAll(Exception e) throws Exception {
+        LOGGER.info("Handling Exception: " + e.getClass().getName());
         e.printStackTrace();
+
         return new ResponseEntity(
             new JsonResponse(
                 LocalDateTime.now(),
@@ -115,5 +147,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             HttpStatus.NOT_FOUND
         );
     }
+
+
 }
 

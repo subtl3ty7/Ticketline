@@ -1,5 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.datagenerator;
 
+import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
@@ -9,6 +11,7 @@ import at.ac.tuwien.sepm.groupphase.backend.repository.TicketRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.datagenerator.EventDataGenerator;
 import at.ac.tuwien.sepm.groupphase.backend.service.TicketService;
+import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -34,16 +37,18 @@ public class TicketDataGenerator {
     private final ShowRepository showRepository;
     private final SeatRepository seatRepository;
     private final TicketService ticketService;
+    private final UserService userService;
     private final EntityManagerFactory entityManagerFactory;
     private static final int NUMBER_OF_TICKETS_TO_GENERATE = 5;
 
     public TicketDataGenerator(TicketRepository ticketRepository, ShowRepository showRepository, SeatRepository seatRepository
-                                , EntityManagerFactory entityManagerFactory, TicketService ticketService){
+                                , EntityManagerFactory entityManagerFactory, TicketService ticketService, UserService userService){
         this.ticketRepository = ticketRepository;
         this.seatRepository = seatRepository;
         this.showRepository = showRepository;
         this.ticketService = ticketService;
         this.entityManagerFactory = entityManagerFactory;
+        this.userService = userService;
     }
 
     private Session getSession() {
@@ -72,7 +77,11 @@ public class TicketDataGenerator {
         }
 
 
-        // reserve tickets for user U123X0
+        List<AbstractUser> users = userService.loadAllUsers();
+        Customer customer0 = (Customer) users.get(0);
+        Customer customer1 = (Customer) users.get(1);
+
+        // reserve tickets for customer0
         List<Ticket> tickets = new ArrayList<>();
         for (int i = 0; i < NUMBER_OF_TICKETS_TO_GENERATE; i++) {
             Ticket ticket = Ticket.builder()
@@ -80,7 +89,7 @@ public class TicketDataGenerator {
                 .purchaseDate(LocalDateTime.now())
                 .seat(seatRepository.findSeatById(((long)i + 1)))
                 .show(showRepository.findShowById((long) i + 1))
-                .userCode("U123X0")
+                .userCode(customer0.getUserCode())
                 .build();
             tickets.add(ticket);
             randomPurchaseReserve(tickets, bool);
@@ -88,14 +97,14 @@ public class TicketDataGenerator {
             tickets = new ArrayList<>();
         }
 
-        // buy tickets for user U123X1
+        // reserve tickets for customer1
         for (int i = NUMBER_OF_TICKETS_TO_GENERATE; i < NUMBER_OF_TICKETS_TO_GENERATE + NUMBER_OF_TICKETS_TO_GENERATE; i++) {
             Ticket ticket = Ticket.builder()
                 .price(100 - i*3 )
                 .purchaseDate(LocalDateTime.now())
                 .seat(seatRepository.findSeatById(((long) i + 1)))
                 .show(showRepository.findShowById((long) i + 1))
-                .userCode("U123X1")
+                .userCode(customer1.getUserCode())
                 .build();
             tickets.add(ticket);
             randomPurchaseReserve(tickets, bool);
