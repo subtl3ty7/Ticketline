@@ -23,8 +23,7 @@ public class Invoice implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "INVOICE_ID", referencedColumnName = "ID")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ticketCode")
     private List<Ticket> tickets;
 
     @NotNull

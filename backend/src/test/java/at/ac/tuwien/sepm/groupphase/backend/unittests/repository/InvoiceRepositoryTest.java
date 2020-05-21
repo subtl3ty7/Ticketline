@@ -60,7 +60,8 @@ public class InvoiceRepositoryTest implements TestData {
 
     @Test
     public void givenNothing_whenSaveInvoice_thenFindListWithOneElementAndFindInvoiceByUserCode() {
-        TICKETS.get(0).setTicketCode("code12");
+        invoiceRepository.save(invoice);
+        invoice.setId(2L);
         invoiceRepository.save(invoice);
 
         assertAll(
