@@ -7,6 +7,7 @@ export class SimpleEvent {
   public name: string;
   public description: string;
   public startPrice: number;
+  public totalTicketsSold: number;
   public photo: number;
 
 }

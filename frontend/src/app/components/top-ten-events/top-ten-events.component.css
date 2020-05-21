@@ -24,6 +24,10 @@ select {
   font-size: 30px;
 }
 
+select option {
+  background-color: transparent;
+}
+
 .select-side {
   position: absolute;
   right: 30px;

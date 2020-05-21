@@ -5,5 +5,8 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
 import java.util.List;
 
 public interface TicketService {
-    List<Ticket> buyTicket(List<Ticket> tickets);
+    List<Ticket> buyTickets(List<Ticket> tickets);
+    List<Ticket> allTicketsOfUser(String userCode);
+    Ticket save(Ticket ticketEntity);
+    List<Ticket> reserveTickets(List<Ticket> tickets);
 }
