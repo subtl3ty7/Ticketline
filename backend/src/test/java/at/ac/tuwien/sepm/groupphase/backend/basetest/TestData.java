@@ -92,7 +92,6 @@ public interface TestData {
             add(Seat.builder().id(ID).sectionId(ID).isFree(true).seatColumn(COLUMN).seatRow(ROW).build());
         }
     };
-    Seat SEAT_NO_SECTION = Seat.builder().id(ID).isFree(true).seatColumn(COLUMN).seatRow(ROW).build();
 
     Customer USER_TICKET = Customer.CustomerBuilder.aCustomer().withId(ID).withUserCode(USER_CODE).withFirstName(FNAME)
         .withLastName(LNAME).withEmail(DEFAULT_USER).withPassword(PASS).withBirthday(BIRTHDAY).withCreatedAt(CRE)
