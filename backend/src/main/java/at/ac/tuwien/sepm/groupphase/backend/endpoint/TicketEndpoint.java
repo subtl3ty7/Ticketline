@@ -102,6 +102,21 @@ public class TicketEndpoint {
         LOGGER.info("Sending API Response: [" + response.getBody() + ", " + response.getStatusCode() + "]");
         return response;
     }
+    @DeleteMapping(value = "/cancelPurchased/{ticketCode}")
+    @ApiOperation(
+        value = "Cancel purchased ticket.",
+        notes = "Cancel purchased ticket.",
+        authorizations = {@Authorization(value = "apiKey")})
+    @ApiResponses({
+        @ApiResponse(code = 204, message = "Ticket is successfully canceled"),
+        @ApiResponse(code = 404, message = "Ticket is not found"),
+        @ApiResponse(code = 500, message = "Connection Refused"),
+    })
+    public ResponseEntity<Void> cancelPurchasedTicket(@PathVariable String ticketCode) {
+        LOGGER.info("DELETE /api/v1/tickets/cancelPurchased/" + ticketCode);
+        ticketService.cancelPurchasedTicket(ticketCode);
+        return ResponseEntity.noContent().build();
+    }
 
 
 
