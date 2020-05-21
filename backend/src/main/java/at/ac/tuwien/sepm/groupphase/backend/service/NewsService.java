@@ -10,11 +10,13 @@ public interface NewsService {
 
     List<News> findLatestSixUnseenNewsByCustomer(String userCode);
 
+    List<News> findLatestSix();
+
     List<News> findAllNews();
+
+    List<News> findSeenNews(String userCode);
 
     News createNewNewsEntry(News news);
 
     News findByNewsCode(String eventCode);
-
-    void deleteByNewsCode(String eventCode);
 }

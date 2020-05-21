@@ -63,17 +63,61 @@ public class NewsEndpoint {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @GetMapping(value = "/latest6/{userCode}")
+    @GetMapping(value = "/latest6unseen/{userCode}")
     @ApiOperation(
         value = "Get the latest 6 News Entries for a Customer",
         notes = "This only returns News Entries the Customer has not seen yet",
         authorizations = {@Authorization(value = "apiKey")})
     @ApiResponse(code = 200, message = "Successfully retrieved News Entries")
-    public List<NewsDto> getLatest6(@PathVariable String userCode) {
-        LOGGER.info("GET /api/v1/news/latest6/" + userCode);
+    public List<NewsDto> getLatest6Unseen(@PathVariable String userCode) {
+        LOGGER.info("GET /api/v1/news/latest6Unseen/" + userCode);
 
         return newsMapper.newsToNewsDto(
             newsService.findLatestSixUnseenNewsByCustomer(userCode)
+        );
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @GetMapping(value = "/latest6")
+    @ApiOperation(
+        value = "Get the latest 6 News Entries",
+        notes = "Get the latest 6 News Entries")
+    @ApiResponse(code = 200, message = "Successfully retrieved News Entries")
+    public List<NewsDto> getLatest6() {
+        LOGGER.info("GET /api/v1/news/latest6/");
+
+        return newsMapper.newsToNewsDto(
+            newsService.findLatestSix()
+        );
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @GetMapping(value = "/seen/{userCode}")
+    @ApiOperation(
+        value = "Get all News Entries that this customer has already seen",
+        notes = "Get all News Entries that this customer has already seen",
+        authorizations = {@Authorization(value = "apiKey")})
+    @ApiResponse(code = 200, message = "Successfully retrieved News Entries")
+    public List<NewsDto> getSeen(@PathVariable String userCode) {
+        LOGGER.info("GET /api/v1/news/latest6/" + userCode);
+
+        return newsMapper.newsToNewsDto(
+            newsService.findSeenNews(userCode)
+        );
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @GetMapping(value = "/all")
+    @ApiOperation(
+        value = "Get all News Entries",
+        notes = "Get all News Entries",
+        authorizations = {@Authorization(value = "apiKey")})
+    @ApiResponse(code = 200, message = "Successfully retrieved News Entries")
+    public List<NewsDto> getAll() {
+        LOGGER.info("GET /api/v1/news/all");
+
+        return newsMapper.newsToNewsDto(
+            newsService.findAllNews()
         );
     }
 

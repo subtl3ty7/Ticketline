@@ -48,8 +48,25 @@ public class CustomNewsService implements NewsService {
     }
 
     @Override
+    public List<News> findLatestSix() {
+        List<News> news = newsRepository.findAllByOrderByPublishedAtDesc();
+        if (news.size() > 6) {
+            return news.subList(0, 6);
+        } else {
+            return news;
+        }
+    }
+
+    @Override
     public List<News> findAllNews() {
         return newsRepository.findAll();
+    }
+
+    @Override
+    public List<News> findSeenNews(String userCode) {
+        validator.validateUserCode(userCode).throwIfViolated();
+        Customer customer = (Customer) userRepository.findAbstractUserByUserCode(userCode);
+        return newsRepository.findAllBySeenByContainsOrderByPublishedAtDesc(customer);
     }
 
     @Override
@@ -58,7 +75,7 @@ public class CustomNewsService implements NewsService {
             news.setNewsCode(this.getNewNewsCode());
             news.setPublishedAt(LocalDateTime.now());
         }
-        
+
         validator.validate(news).throwIfViolated();
         return newsRepository.save(news);
     }
@@ -70,11 +87,6 @@ public class CustomNewsService implements NewsService {
             throw new NotFoundException("Could not find this News entry");
         }
         return news;
-    }
-
-    @Override
-    public void deleteByNewsCode(String newsCode) {
-
     }
 
     private String getNewNewsCode() {

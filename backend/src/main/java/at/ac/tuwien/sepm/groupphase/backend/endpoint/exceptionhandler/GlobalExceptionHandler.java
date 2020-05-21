@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver;
 import springfox.documentation.spring.web.json.Json;
 
 import java.lang.invoke.MethodHandles;
@@ -76,10 +78,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      * This method handles all Exceptions for which there is no other handler
      * To make sure we don't reveal implementation details, the returned message should be something generic
      */
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<JsonResponse> handleAll(Exception e) {
+    @ExceptionHandler(value = Exception.class)
+    public ResponseEntity<JsonResponse> handleAll(Exception e) throws Exception {
         LOGGER.info("Handling Exception: " + e.getClass().getName());
         e.printStackTrace();
+
         return new ResponseEntity(
             new JsonResponse(
                 LocalDateTime.now(),

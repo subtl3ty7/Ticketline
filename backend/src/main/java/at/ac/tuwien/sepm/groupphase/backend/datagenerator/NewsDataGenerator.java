@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.datagenerator;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.*;
+import at.ac.tuwien.sepm.groupphase.backend.repository.NewsRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.NewsService;
 import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
 import org.slf4j.Logger;
@@ -27,15 +28,16 @@ public class NewsDataGenerator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final NewsService newsService;
+    private final NewsRepository newsRepository;
     private final UserService userService;
     private final ResourceLoader resourceLoader;
 
-    private static final int NUMBER_OF_NEWS = 5;
+    private static final int NUMBER_OF_NEWS = 20;
 
-    public NewsDataGenerator(NewsService newsService,
-                             UserService userService,
-                             ResourceLoader resourceLoader) {
+
+    public NewsDataGenerator(NewsService newsService, NewsRepository newsRepository, UserService userService, ResourceLoader resourceLoader) {
         this.newsService = newsService;
+        this.newsRepository = newsRepository;
         this.userService = userService;
         this.resourceLoader = resourceLoader;
     }
@@ -62,14 +64,16 @@ public class NewsDataGenerator {
             News newsEntry = News.builder()
                 .author("J.K. Rowling")
                 .photo(getImage("event_img0.jpg"))
-                .publishedAt(LocalDateTime.now())
-                .stopsBeingRelevantAt(LocalDateTime.of(2021, 5, 5, 5, 5))
+                .publishedAt(null)
+                .stopsBeingRelevantAt(LocalDateTime.now().plusWeeks(i))
                 .title("News " + i)
                 .summary("You should check it out")
                 .text("All of them are good, actually")
                 .seenBy(customers.subList(i*splitUp, (i+1)*splitUp))
                 .build();
             newsService.createNewNewsEntry(newsEntry);
+            newsEntry.setPublishedAt(LocalDateTime.now().minusWeeks(i));
+            newsRepository.save(newsEntry);
         }
 
     }
