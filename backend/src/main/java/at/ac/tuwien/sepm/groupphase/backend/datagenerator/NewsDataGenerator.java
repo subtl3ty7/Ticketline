@@ -51,14 +51,7 @@ public class NewsDataGenerator {
             LocalDateTime end = LocalDateTime.now();
             float runningTime = Duration.between(start, end).toMillis();
             LOGGER.info("Generating News Test Data took " + runningTime/1000.0 + " seconds");
-
-            testFind();
         }
-    }
-
-    private void testFind() {
-        Customer customer = (Customer) userService.loadAllUsers().get(15);
-        newsService.findSixUnseenNewsByCustomer(customer);
     }
 
     private void generateNews() {

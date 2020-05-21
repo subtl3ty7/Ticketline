@@ -43,8 +43,8 @@ public class News implements Serializable {
     private LocalDateTime stopsBeingRelevantAt;
 
     @NotNull
-    @Size(min=1, max=100)
-    @Column(nullable = false, length = 100)
+    @Size(min=1, max=1000)
+    @Column(nullable = false, length = 1000)
     private String summary;
 
     @ToString.Exclude

@@ -9,4 +9,6 @@ public interface NewsValidator {
     Constraints validateNewsCode(String newsCode);
 
     Constraints validate(News news);
+
+    Constraints validateUserCode(String userCode);
 }

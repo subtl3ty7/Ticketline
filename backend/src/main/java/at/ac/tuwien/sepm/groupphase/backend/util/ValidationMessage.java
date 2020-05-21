@@ -35,6 +35,7 @@ public class ValidationMessage {
             put("password_encoded", "Password has to be bCrypt encoded.");
             put("birthday_16yo", "Needs to be at least 16 years old.");
             put("userCode_unique", "User Code is already present in database.");
+            put("userCode_notNull", "User Code cannot be null.");
             put("isLogged_false", "Logged-In field cannot be true on Registration.");
             put("isBlocked_false", "Is-Blocked field cannot be true on Registration.");
             put("email_unique", "Email is already present in database.");
@@ -101,6 +102,14 @@ public class ValidationMessage {
 
             //news
             put("newsCode_unique", "News code is already present in the database.");
+            put("news_newsCode", "News code has to be 6 characters long.");
+            put("news_title", "News title cannot be empty or longer than 100 characters.");
+            put("news_publishedAt", "Published Date has to be given.");
+            put("news_stopsBeingRelevantAt", " Relevancy Date has to be given.");
+            put("news_summary", "News summary cannot be empty or longer than 1000 characters.");
+            put("news_text", "News text cannot be empty or longer than 100.000 characters.");
+            put("news_author", "News author has to be given and cannot be longer than 100 characters.");
+            put("news_photo", "News image has to be given.");
         }
     };
 

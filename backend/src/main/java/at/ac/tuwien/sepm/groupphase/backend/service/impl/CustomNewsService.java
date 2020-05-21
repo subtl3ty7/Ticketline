@@ -32,10 +32,18 @@ public class CustomNewsService implements NewsService {
     }
 
     @Override
-    public List<News> findSixUnseenNewsByCustomer(Customer customer) {
-        //Long id = userRepository.findAbstractUserByUserCode(customer.getUserCode()).getId();
+    public List<News> findLatestSixUnseenNewsByCustomer(String userCode) {
+        validator.validateUserCode(userCode).throwIfViolated();
+        Customer customer = (Customer) userRepository.findAbstractUserByUserCode(userCode);
         List<News> news = newsRepository.findAllBySeenByNotContainsOrderByPublishedAtDesc(customer);
-        return news;
+        if(news.isEmpty()) {
+            throw new NotFoundException("Could not find Unseen News");
+        }
+        if (news.size() > 6) {
+            return news.subList(0, 6);
+        } else {
+            return news;
+        }
     }
 
     @Override
