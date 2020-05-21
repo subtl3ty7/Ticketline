@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -53,7 +54,11 @@ public class CustomNewsService implements NewsService {
 
     @Override
     public News createNewNewsEntry(News news) {
-        news.setNewsCode(this.getNewNewsCode());
+        if(news != null) {
+            news.setNewsCode(this.getNewNewsCode());
+            news.setPublishedAt(LocalDateTime.now());
+        }
+        
         validator.validate(news).throwIfViolated();
         return newsRepository.save(news);
     }

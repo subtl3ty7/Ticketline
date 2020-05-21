@@ -38,7 +38,9 @@ public class ValidationMessage {
             put("userCode_notNull", "User Code cannot be null.");
             put("isLogged_false", "Logged-In field cannot be true on Registration.");
             put("isBlocked_false", "Is-Blocked field cannot be true on Registration.");
+            put("email_notNull", "EMail can't be null.");
             put("email_unique", "Email is already present in database.");
+            put("email_valid", "Email does not look like a valid EMail Address.");
             put("user_isLogged", "Needs to be logged in.");
             put("user_exists", "User does not exist.");
             put("user_notAdmin", "User can't be an Admin.");
@@ -110,6 +112,7 @@ public class ValidationMessage {
             put("news_text", "News text cannot be empty or longer than 100.000 characters.");
             put("news_author", "News author has to be given and cannot be longer than 100 characters.");
             put("news_photo", "News image has to be given.");
+            put("seenBy_notNull", "SeenBy List cannot be null.");
         }
     };
 

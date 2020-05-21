@@ -47,6 +47,7 @@ public class NewsValidatorImpl implements NewsValidator {
         if(!constraints.isViolated()) {
             constraints.add(AccesoryValidator.validateJavaxConstraints(news));
             constraints.add(validateNewsCode(news.getNewsCode()));
+            constraints.add("seenBy_notNull", news.getSeenBy() != null);
         }
         return constraints;
     }
