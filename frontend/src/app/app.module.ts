@@ -67,6 +67,10 @@ import { CurrentNewsComponent } from './components/home/current-news/current-new
 import { TopEventsListComponent } from './components/top-ten-events/top-events-list/top-events-list.component';
 import { ResetPasswordComponent} from './components/reset-password/reset-password.component';
 import { ResetPasswordAuthComponent } from './components/reset-password/reset-password-auth/reset-password-auth.component';
+import { TicketPurchaseComponent } from './components/ticket-purchase/ticket-purchase.component';
+import {MatStepperModule} from '@angular/material/stepper';
+import { ChooseTicketComponent } from './components/ticket-purchase/choose-ticket/choose-ticket.component';
+import { PaymentMethodOverviewComponent } from './components/ticket-purchase/payment-method-overview/payment-method-overview.component';
 
 @NgModule({
   declarations: [
@@ -115,7 +119,10 @@ import { ResetPasswordAuthComponent } from './components/reset-password/reset-pa
     CurrentNewsComponent,
     TopEventsListComponent,
     ResetPasswordComponent,
-    ResetPasswordAuthComponent
+    ResetPasswordAuthComponent,
+    TicketPurchaseComponent,
+    ChooseTicketComponent,
+    PaymentMethodOverviewComponent
   ],
   imports: [
     BrowserModule,
@@ -138,9 +145,10 @@ import { ResetPasswordAuthComponent } from './components/reset-password/reset-pa
     MatDatepickerModule,
     MatNativeDateModule,
     MatPaginatorModule,
-    FlexModule
+    FlexModule,
+    MatStepperModule
   ],
-  providers: [httpInterceptorProviders, MatDatepickerModule, MatNativeDateModule],
+  providers: [httpInterceptorProviders, MatDatepickerModule, MatNativeDateModule, ChooseTicketComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -1,0 +1,99 @@
+<div class="container">
+
+  <div class="row">
+
+  <div class="col-7">
+    <p> put the seating plan here </p>
+  </div>
+
+  <div class="col">
+
+    <div class="numberOfTickets">
+      <h3> Anzahl der Tickets: </h3>
+
+      <select class="form-control"  name="numberOfTickets" required="required" id="numberOfTickets">
+        <option value="1"> 1 </option>
+        <option value="2"> 2 </option>
+        <option value="3"> 3 </option>
+        <option value="4"> 4 </option>
+        <option value="5"> 5 </option>
+      </select> <br>
+      <br>
+
+    </div>
+
+    <div class="seatingInfo">
+
+      <h3>Sitzplätze</h3>
+
+      <br>
+
+      <div class="section">
+        <p> Sektion: </p>
+
+
+        <select class="form-control"  name="section" required="required" id="section">
+          <option value="A"> A </option>
+          <option value="B"> B </option>
+          <option value="C"> C </option>
+        </select> <br>
+        <br>
+      </div>
+
+
+      <div class="ticketRow">
+        <p> Reihe: </p>
+
+        <select class="form-control"  name="ticketRow" required="required" id="ticketRow">
+          <option value="1"> 1 </option>
+          <option value="2"> 2 </option>
+          <option value="3"> 3 </option>
+          <option value="4"> 4 </option>
+          <option value="5"> 5 </option>
+        </select> <br>
+        <br>
+      </div>
+
+
+      <div class="ticketPlace">
+
+        <p> Platz: </p>
+
+
+        <select class="form-control"  name="numberOfTickets" required="required" id="ticketPlace">
+          <option value="A"> A </option>
+          <option value="B"> B </option>
+          <option value="C"> C </option>
+          <option value="D"> D </option>
+          <option value="E"> E </option>
+        </select> <br>
+        <br>
+      </div>
+
+    </div>
+
+    <div class="category">
+      <h3> Preiskategorie:</h3>
+      <p> Kategorie A: 78.00$</p>
+      <P> Kategorie B: 89.50$</P>
+      <P> Kategorie C: 94.79$</P>
+
+    </div>
+
+    <div class="finalPrice">
+      <h3> Preis: 78.00 EUR </h3>
+    </div>
+
+    <button type="button" mat-button matStepperNext class="btn btn-success" (click)="ticketPurchaseSharingService.isPurchase(ticketPurchaseSharingService.ticketState)">Jetzt kaufen</button>
+    <br>
+    <button type="button" mat-button matStepperNext class="btn btn-secondary" (click)="ticketPurchaseSharingService.isReserve(ticketPurchaseSharingService.ticketState)">Reservieren</button>
+
+
+
+
+  </div>
+
+
+
+</div>
+</div>

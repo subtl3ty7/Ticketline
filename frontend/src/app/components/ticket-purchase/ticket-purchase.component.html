@@ -1,0 +1,56 @@
+<app-customer-header></app-customer-header>
+
+<div class="card main-body">
+  <div class="card-header d-flex align-items-center">
+    <h3 class="mb-0 " style="font-size: 40px; padding-left: 20px;"></h3>
+  </div>
+
+  <div class="card-body">
+  <mat-horizontal-stepper [linear]="isLinear" #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+      <ng-template matStepLabel>Choose Ticket</ng-template>
+    <app-choose-ticket></app-choose-ticket>
+  </mat-step>
+
+
+
+    <mat-step [stepControl]="secondFormGroup" *ngIf="ticketPurchaseSharingService.methodIsPurchase(ticketPurchaseSharingService.ticketState)">
+      <ng-template matStepLabel>Payment Method</ng-template>
+    <app-payment-method-overview></app-payment-method-overview>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+
+
+
+
+
+    <div class="messageWhenPurchased" *ngIf="ticketPurchaseSharingService.methodIsPurchase(ticketPurchaseSharingService.ticketState)">
+      <h2> Danke für Ihren Einkauf!</h2>
+      <br>
+      <h4> Ticket(s):</h4>
+      <br>
+      <button type="button" class="btn btn-secondary">Ticket herunterladen</button>
+      <br>
+      <br>
+    </div>
+
+
+    <div class="messageWhenPurchased" *ngIf="!ticketPurchaseSharingService.methodIsPurchase(ticketPurchaseSharingService.ticketState)">
+      <h2> Danke für Ihre Reservierung!</h2>
+      <br>
+      <h4> Reservierung(en):</h4>
+      <br>
+      <button type="button" class="btn btn-secondary">Reservierungsbestätigung herunterladen</button>
+      <br>
+      <br>
+    </div>
+    <button type="button" class="btn btn-primary" routerLink="/home">Zurück zur Startseite</button>
+
+  </mat-step>
+</mat-horizontal-stepper>
+
+
+
+</div>
+</div>
