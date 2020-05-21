@@ -1,11 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import {TicketPurchaseSharedServiceService} from '../ticket-purchase-shared-service.service';
 
-/* enum TicketState {
-  PURCHASE,
-  RESERVE
-}
-*/
+import {Seat} from '../../../dtos/seat';
+import {SeatService} from '../../../services/seat.service';
+
+import {Section} from '../../../dtos/section';
+
+
+import {Show} from '../../../dtos/show';
+
+
+import {EventLocation} from '../../../dtos/event-location';
+
+
+
 @Component({
   selector: 'app-choose-ticket',
   templateUrl: './choose-ticket.component.html',
@@ -13,25 +21,10 @@ import {TicketPurchaseSharedServiceService} from '../ticket-purchase-shared-serv
 })
 export class ChooseTicketComponent implements OnInit {
 
-
- /* isPurchased: boolean;
-  ticketState = TicketState.RESERVE;
-*/
   constructor(
-    private ticketPurchaseSharingService: TicketPurchaseSharedServiceService
-
-  ) {
+    private ticketPurchaseSharingService: TicketPurchaseSharedServiceService  ) {
   }
 
   ngOnInit(): void {
- //   this.isPurchased = this.methodIsPurchase(this.ticketState);
-
- //   console.log('Is the ticket purchased?' + this.isPurchased);
   }
-
-  /* public methodIsPurchase(ticketState: TicketState) {
-    // tslint:disable-next-line:triple-equals
-    return ticketState == TicketState.PURCHASE;
-  }
-*/
 }
