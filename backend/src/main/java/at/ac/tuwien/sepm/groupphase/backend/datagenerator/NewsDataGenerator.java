@@ -14,6 +14,7 @@ import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.invoke.MethodHandles;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -29,6 +30,8 @@ public class NewsDataGenerator {
     private final UserService userService;
     private final ResourceLoader resourceLoader;
 
+    private static final int NUMBER_OF_NEWS = 5;
+
     public NewsDataGenerator(NewsService newsService,
                              UserService userService,
                              ResourceLoader resourceLoader) {
@@ -40,27 +43,42 @@ public class NewsDataGenerator {
     @PostConstruct
     private void generate() {
         if(newsService.findAllNews().size() > 0) {
-            LOGGER.debug("News Test Data already generated");
+            LOGGER.info("News Test Data already generated");
         } else {
+            LOGGER.info("Generating News Test Data");
+            LocalDateTime start = LocalDateTime.now();
             generateNews();
+            LocalDateTime end = LocalDateTime.now();
+            float runningTime = Duration.between(start, end).toMillis();
+            LOGGER.info("Generating News Test Data took " + runningTime/1000.0 + " seconds");
+
+            testFind();
         }
     }
 
+    private void testFind() {
+        Customer customer = (Customer) userService.loadAllUsers().get(15);
+        newsService.findSixUnseenNewsByCustomer(customer);
+    }
+
     private void generateNews() {
-        LOGGER.debug("\n\n\n\n\n GENERATING NEWS \n\n\n\n\n\n");
+        List<Customer> customers = getCustomers();
+        int splitUp = customers.size()/NUMBER_OF_NEWS;
 
-        News newsEntry = News.builder()
-            .author("J.K. Rowling")
-            .photo(getImage("event_img0.jpg"))
-            .publishedAt(LocalDateTime.now())
-            .stopsBeingRelevantAt(LocalDateTime.of(2021, 5, 5, 5, 5))
-            .title("These are the hottest events in May")
-            .summary("You should check it out")
-            .text("All of them are good, actually")
-            .seenBy(this.getCustomers())
-            .build();
+        for(int i=0; i<NUMBER_OF_NEWS; i++) {
+            News newsEntry = News.builder()
+                .author("J.K. Rowling")
+                .photo(getImage("event_img0.jpg"))
+                .publishedAt(LocalDateTime.now())
+                .stopsBeingRelevantAt(LocalDateTime.of(2021, 5, 5, 5, 5))
+                .title("News " + i)
+                .summary("You should check it out")
+                .text("All of them are good, actually")
+                .seenBy(customers.subList(i*splitUp, (i+1)*splitUp))
+                .build();
+            newsService.createNewNewsEntry(newsEntry);
+        }
 
-        newsService.createNewNewsEntry(newsEntry);
     }
 
     private List<Customer> getCustomers() {
@@ -71,7 +89,7 @@ public class NewsDataGenerator {
                 customers.add((Customer) user);
             }
         }
-        return customers.subList(0,customers.size()/2);
+        return customers;
     }
 
 

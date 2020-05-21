@@ -58,7 +58,7 @@ public class News implements Serializable {
     @Column(nullable = false, length = 100)
     private String author;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Customer> seenBy;
 
     @ToString.Exclude

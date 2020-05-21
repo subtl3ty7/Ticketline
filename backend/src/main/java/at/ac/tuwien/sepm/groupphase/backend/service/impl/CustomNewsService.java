@@ -4,6 +4,7 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.*;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.NewsRepository;
+import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.NewsService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
 import at.ac.tuwien.sepm.groupphase.backend.util.validation.NewsValidator;
@@ -20,18 +21,21 @@ public class CustomNewsService implements NewsService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final NewsRepository newsRepository;
+    private final UserRepository userRepository;
     private final NewsValidator validator;
 
-
     @Autowired
-    public CustomNewsService(NewsRepository newsRepository, NewsValidator validator) {
+    public CustomNewsService(NewsRepository newsRepository, UserRepository userRepository, NewsValidator validator) {
         this.newsRepository = newsRepository;
+        this.userRepository = userRepository;
         this.validator = validator;
     }
 
     @Override
-    public List<News> find6UnseenNewsByCustomer(Customer customer) {
-        return null;
+    public List<News> findSixUnseenNewsByCustomer(Customer customer) {
+        //Long id = userRepository.findAbstractUserByUserCode(customer.getUserCode()).getId();
+        List<News> news = newsRepository.findAllBySeenByNotContainsOrderByPublishedAtDesc(customer);
+        return news;
     }
 
     @Override

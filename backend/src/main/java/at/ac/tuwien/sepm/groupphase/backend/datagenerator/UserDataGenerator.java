@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManagerFactory;
 import java.lang.invoke.MethodHandles;
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 @Component("UserDataGenerator")
@@ -28,7 +29,6 @@ public class UserDataGenerator {
     private static final String TEST_CUSTOMER_EMAIL = "@customer.com";
     private static final String TEST_ADMIN_EMAIL = "@admin.com";
     private static final String TEST_USER_PASSWORD = "Password";
-    private static final String TEST_USER_CODE = "U123X";
 
     private final UserService userService;
     private final UserAttemptsRepository userAttemptsRepository;
@@ -43,17 +43,26 @@ public class UserDataGenerator {
     }
 
     @PostConstruct
-    private void generateUsers() {
+    private void generate() {
         if (userService.loadAllUsers().size() > 0) {
-            LOGGER.debug("users already generated");
+            LOGGER.info("users already generated");
         } else {
-            generateCustomer();
-            generateAdministrator();
+            LOGGER.info("Generating User Test Data");
+            LocalDateTime start = LocalDateTime.now();
+            generateUsers();
+            LocalDateTime end = LocalDateTime.now();
+            float runningTime = Duration.between(start, end).toMillis();
+            LOGGER.info("Generating User Test Data took " + runningTime/1000.0 + " seconds");
         }
     }
 
     private Session getSession() {
         return entityManagerFactory.unwrap(SessionFactory.class).openSession();
+    }
+
+    private void generateUsers() {
+        generateCustomer();
+        generateAdministrator();
     }
 
     private void generateCustomer() {
@@ -64,7 +73,6 @@ public class UserDataGenerator {
                 .withLastName(TEST_USER_LAST_NAME  + i)
                 .withEmail( "e" + i + TEST_CUSTOMER_EMAIL)
                 .withPassword(passwordEncoder.encode(TEST_USER_PASSWORD + i))
-                .withUserCode(TEST_USER_CODE + i)
                 .withBirthday(LocalDateTime.now().minusYears(20))
                 .withIsLogged(false)
                 .withCreatedAt(LocalDateTime.now())
@@ -72,11 +80,7 @@ public class UserDataGenerator {
                 .withPoints(0)
                 .withIsBlocked(false)
                 .build();
-            UserAttempts attempts = UserAttempts.UserAttemptsBuilder.aAttempts()
-                .withAttempts(0)
-                .withEmail("e" + i + TEST_CUSTOMER_EMAIL)
-                .build();
-            LOGGER.debug("saving customer " + customer.getEmail() + " with attempts " + attempts.getAttempts() );
+            LOGGER.debug("saving customer " + customer.getEmail());
             userService.registerNewCustomer(customer);
         }
         Customer customer = Customer.CustomerBuilder.aCustomer()
@@ -84,7 +88,6 @@ public class UserDataGenerator {
             .withLastName("demirsoy")
             .withEmail("egedemirsoy@gmail.com")
             .withPassword(passwordEncoder.encode(TEST_USER_PASSWORD))
-            .withUserCode("U11111")
             .withBirthday(LocalDateTime.now().minusYears(20))
             .withIsLogged(false)
             .withCreatedAt(LocalDateTime.now())
@@ -92,11 +95,7 @@ public class UserDataGenerator {
             .withPoints(0)
             .withIsBlocked(false)
             .build();
-        UserAttempts attempts = UserAttempts.UserAttemptsBuilder.aAttempts()
-            .withAttempts(0)
-            .withEmail("egedemirsoy@gmail.com")
-            .build();
-        LOGGER.debug("saving customer " + customer.getEmail() + " with attempts " + attempts.getAttempts() );
+        LOGGER.debug("saving customer " + customer.getEmail());
         userService.registerNewCustomer(customer);
     }
 
@@ -108,13 +107,12 @@ public class UserDataGenerator {
                 .withLastName(TEST_USER_LAST_NAME  + i)
                 .withEmail( "e" + i + TEST_ADMIN_EMAIL)
                 .withPassword(passwordEncoder.encode(TEST_USER_PASSWORD + i))
-                .withUserCode(TEST_USER_CODE + (9-i))
                 .withBirthday(LocalDateTime.now().minusYears(20+i))
                 .withIsLogged(false)
                 .withCreatedAt(LocalDateTime.now())
                 .withUpdatedAt(LocalDateTime.now())
                 .build();
-            LOGGER.debug("saving customer " + administrator.getEmail() );
+            LOGGER.debug("saving admin " + administrator.getEmail() );
             userService.registerNewAdmin(administrator);
         }
     }

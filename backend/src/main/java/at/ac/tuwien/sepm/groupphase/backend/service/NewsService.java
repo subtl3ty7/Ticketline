@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface NewsService {
 
-    List<News> find6UnseenNewsByCustomer(Customer customer);
+    List<News> findSixUnseenNewsByCustomer(Customer customer);
 
     List<News> findAllNews();
 

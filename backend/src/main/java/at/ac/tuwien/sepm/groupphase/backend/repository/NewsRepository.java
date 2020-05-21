@@ -13,10 +13,11 @@ import java.util.List;
 public interface NewsRepository extends JpaRepository<News, Long> {
 
     /**
-     * @param userCode
-     * @return
+     * Find six News entries the customer has not seen yet
+     * @param customer the customer
+     * @return A list of six News
      */
-    //List<Event> findAllByStartsAtAfterOrderByTotalTicketsSoldDesc(String userCode);
+    List<News> findAllBySeenByNotContainsOrderByPublishedAtDesc(Customer customer);
 
     /**
      * Find a News entry by newsCode.
