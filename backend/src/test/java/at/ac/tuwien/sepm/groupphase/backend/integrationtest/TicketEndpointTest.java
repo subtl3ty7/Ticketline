@@ -3,7 +3,6 @@ package at.ac.tuwien.sepm.groupphase.backend.integrationtest;
 import at.ac.tuwien.sepm.groupphase.backend.basetest.TestData;
 import at.ac.tuwien.sepm.groupphase.backend.config.properties.SecurityProperties;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleEventDto;
-import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.TicketDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.TicketMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;

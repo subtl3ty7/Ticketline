@@ -25,6 +25,7 @@ public class TicketRepositoryTest implements TestData {
         .ticketId(ID)
         .ticketCode(USER_CODE)
         .isPurchased(false)
+        .isReserved(false)
         .purchaseDate(START)
         .price(TOTAL)
         .userCode(USER_CODE)
@@ -37,6 +38,7 @@ public class TicketRepositoryTest implements TestData {
             .ticketId(ID)
             .ticketCode(USER_CODE)
             .isPurchased(false)
+            .isReserved(false)
             .purchaseDate(START)
             .price(TOTAL)
             .userCode(USER_CODE)
@@ -49,7 +51,24 @@ public class TicketRepositoryTest implements TestData {
 
         assertAll(
             () -> assertEquals(1, ticketRepository.findAll().size()),
-            () -> assertNotNull(ticketRepository.findTicketByTicketCode(ticket.getTicketCode()))
+            () -> assertNotNull(ticketRepository.findTicketByTicketCode(ticket.getTicketCode())),
+            () -> assertNotNull(ticketRepository.findTicketByTicketId(ticket.getTicketId()))
+        );
+    }
+
+    @Test
+    public void givenNothing_whenSave2Tickets_thenFindListWith2ElementsAndFindTicketsByUserCode() {
+        ticket.setTicketId(2L);
+        ticket.setTicketCode("code12");
+        ticketRepository.save(ticket);
+        ticket.setTicketId(3L);
+        ticket.setTicketCode("code13");
+        ticket.setUserCode("code12");
+        ticketRepository.save(ticket);
+
+        assertAll(
+            () -> assertEquals(2, ticketRepository.findAll().size()),
+            () -> assertEquals(1, ticketRepository.findTicketsByUserCode(USER_CODE).size())
         );
     }
 }

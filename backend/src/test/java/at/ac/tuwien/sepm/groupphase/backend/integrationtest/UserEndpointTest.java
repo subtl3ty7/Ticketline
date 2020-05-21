@@ -304,7 +304,7 @@ public class UserEndpointTest implements TestData {
     }
 
     @Test
-    public void givenNothing_whenPostAdminAsCustomer_then403() throws Exception {
+    public void givenNothing_whenPostAdminAsCustomer_then500() throws Exception {
         Administrator administrator = userMapper.userDtoToAdministrator(userMapper.abstractUserToUserDto(abstractUser));
         administrator.setEmail(ADMIN_USER);
         UserDto userDto = userMapper.abstractUserToUserDto(administrator);
@@ -318,7 +318,7 @@ public class UserEndpointTest implements TestData {
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
 
-        assertEquals(HttpStatus.FORBIDDEN.value(), response.getStatus());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.value(), response.getStatus());
     }
 
     @Test
@@ -352,7 +352,7 @@ public class UserEndpointTest implements TestData {
     }
 
     @Test
-    public void givenUnblockedUser_whenBlockAsCustomer_then403() throws Exception {
+    public void givenUnblockedUser_whenBlockAsCustomer_then500() throws Exception {
         userRepository.save(abstractUser);
 
         MvcResult mvcResult = this.mockMvc.perform(get(USER_BASE_URI + "/block/" + USER_CODE)
@@ -361,12 +361,12 @@ public class UserEndpointTest implements TestData {
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
 
-        assertEquals(HttpStatus.FORBIDDEN.value(), response.getStatus());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.value(), response.getStatus());
         assertFalse(((Customer)userRepository.findAbstractUserByEmail(DEFAULT_USER)).isBlocked());
     }
 
     @Test
-    public void givenBlockedUser_whenUnblockAsCustomer_then403() throws Exception {
+    public void givenBlockedUser_whenUnblockAsCustomer_then500() throws Exception {
         ((Customer)abstractUser).setBlocked(true);
         userRepository.save(abstractUser);
 
@@ -376,7 +376,7 @@ public class UserEndpointTest implements TestData {
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
 
-        assertEquals(HttpStatus.FORBIDDEN.value(), response.getStatus());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.value(), response.getStatus());
         assertTrue(((Customer)userRepository.findAbstractUserByEmail(DEFAULT_USER)).isBlocked());
     }
 
