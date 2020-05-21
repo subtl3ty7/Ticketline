@@ -125,7 +125,15 @@ public class CustomTicketService implements TicketService {
         return reservedTickets;
     }
 
+    @Override
+    public void cancelPurchasedTicket(String ticketCode) {
+        LOGGER.info("Validating ticket " + ticketCode);
+        validator.validateDelete(ticketCode).throwIfViolated();
 
+        Ticket ticket1 = ticketRepository.findTicketByTicketCode(ticketCode);
+        ticketRepository.delete(ticket1);
+        // do the money return  and invoices stuff
+    }
 
 
 }

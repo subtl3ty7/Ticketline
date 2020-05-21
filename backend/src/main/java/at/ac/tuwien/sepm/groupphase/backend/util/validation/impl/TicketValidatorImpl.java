@@ -67,6 +67,13 @@ public class TicketValidatorImpl implements TicketValidator {
         return constraints;
     }
 
+    @Override
+    public Constraints validateDelete(String ticketCode) {
+        Constraints constraints = new Constraints();
+        constraints.add("ticket_nonExisting", ticketRepository.findTicketByTicketCode(ticketCode) != null);
+        return constraints;
+    }
+
     private Constraints validateUnique(Ticket ticket){
         Constraints constraints = new Constraints();
         constraints.add("ticketCode_unique", ticketRepository.findTicketByTicketCode(ticket.getTicketCode()) == null);
