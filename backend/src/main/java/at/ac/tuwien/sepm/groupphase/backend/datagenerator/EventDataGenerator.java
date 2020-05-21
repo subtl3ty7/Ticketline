@@ -59,7 +59,7 @@ public class EventDataGenerator {
     }
 
     @PostConstruct
-    private void generate() {
+    public void generate() {
         if(seatRepository.findAll().size() > 0) {
             LOGGER.debug("Event Test Data already generated");
         } else {

@@ -16,10 +16,7 @@ import at.ac.tuwien.sepm.groupphase.backend.security.JwtTokenizer;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventLocationService;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -39,6 +36,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
@@ -46,6 +44,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @SpringBootTest
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class TicketEndpointTest implements TestData {
 
     @Autowired
@@ -98,9 +97,10 @@ public class TicketEndpointTest implements TestData {
 
     private DetailedTicketDto detailedTicketDto;
 
-    @BeforeEach
-    public void beforeEach() {
-        ticketRepository.deleteAll();
+    @Test
+    @Order(1)
+    public void givenNothing_whenBuyTicket_then201AndTicketList_AndTicketPurchasedTrue() throws Exception{
+
         userRepository.save(USER_TICKET);
         EventDataGenerator eventDataGenerator = new EventDataGenerator(sectionRepository, seatRepository,
             showRepository, eventService, eventLocationService, entityManagerFactory, resourceLoader);
@@ -108,11 +108,6 @@ public class TicketEndpointTest implements TestData {
 
         detailedTicketDto = DetailedTicketDto.DetailedTicketDtoBuilder.aDetailedTicketDto(
             ID, USER_CODE, false, false, START, seatRepository.findSeatById(6L), USER_CODE, TOTAL, showRepository.findShowById(6L)).build();
-    }
-
-
-    @Test
-    public void whenBuyTicket_then201AndTicketListWithBoughtTickets_AndTicketPurchasedTrue() throws Exception{
 
         List<DetailedTicketDto> ticketDtos = new ArrayList<>();
         ticketDtos.add(detailedTicketDto);
@@ -137,8 +132,56 @@ public class TicketEndpointTest implements TestData {
         assertTrue(ticketDtos1.get(0).isPurchased());
     }
 
-    @AfterEach
-    public void afterAll(){
+    @Test
+    @Order(2)
+    public void givenNothing_whenReserveTicket_then201AndTicketList_AndTicketReservedTrue() throws Exception{
+
+        detailedTicketDto = DetailedTicketDto.DetailedTicketDtoBuilder.aDetailedTicketDto(
+            2L, "code12", false, false, START, seatRepository.findSeatById(7L), USER_CODE, TOTAL, showRepository.findShowById(7L)).build();
+
+        List<DetailedTicketDto> ticketDtos = new ArrayList<>();
+        ticketDtos.add(detailedTicketDto);
+        String body = objectMapper.writeValueAsString(ticketDtos);
+
+        MvcResult mvcResult = this.mockMvc.perform(post(TICKETS_BASE_URI + "/reserve")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(body)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
+            .andDo(print())
+            .andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        assertAll(
+            () -> assertEquals(HttpStatus.CREATED.value(), response.getStatus()),
+            () -> assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType())
+        );
+
+        List<SimpleTicketDto> ticketDtos1 = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
+            SimpleTicketDto[].class));
+        assertEquals(1, ticketDtos1.size());
+        assertTrue(ticketDtos1.get(0).isReserved());
+    }
+
+    @Test
+    @Order(3)
+    public void givenTicket_whenGetTicketsByUserCode_then200AndTicketList() throws Exception{
+
+        MvcResult mvcResult = this.mockMvc.perform(get(TICKETS_BASE_URI + "/" + USER_CODE)
+            .contentType(MediaType.APPLICATION_JSON)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
+            .andDo(print())
+            .andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        assertAll(
+            () -> assertEquals(HttpStatus.OK.value(), response.getStatus()),
+            () -> assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType())
+        );
+
+        List<SimpleTicketDto> ticketDtos1 = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
+            SimpleTicketDto[].class));
+        assertEquals(2, ticketDtos1.size());
+
         ticketRepository.deleteAll();
         seatRepository.deleteAll();
         showRepository.deleteAll();
@@ -147,6 +190,5 @@ public class TicketEndpointTest implements TestData {
         eventRepository.deleteAll();
         userRepository.deleteAll();
     }
-
 
 }
