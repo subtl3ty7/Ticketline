@@ -49,7 +49,6 @@ public class TicketValidatorImpl implements TicketValidator {
         constraints.add("seat_exists", seatRepository.findSeatById(ticket.getSeat().getId()) != null);
         constraints.add("ticket_exists", ticketRepository.findTicketByTicketId(ticket.getTicketId()) == null);
         constraints.add("admin_purchase", !(userFromDataBase instanceof Administrator));
-        constraints.add("price_notZero", ticket.getPrice() != 0);
        // constraints.add("tickets_sold", (showRepository.findShowById(ticket.getShow().getId()).getTicketsAvailable()) == 0);
         return constraints;
     }
@@ -64,9 +63,26 @@ public class TicketValidatorImpl implements TicketValidator {
     }
 
     @Override
-    public Constraints validateReserve(Ticket ticket) {
+    public Constraints validatePurchased(String ticketCode) {
         Constraints constraints = new Constraints();
-        constraints.add("ticket_reserved", ticketRepository.findTicketByTicketCode(ticket.getTicketCode()) == null);
+        constraints.add("ticket_notExist", ticketRepository.findTicketByTicketCode(ticketCode) != null);
+        if(!constraints.isViolated()){
+            constraints.add("ticket_purchased", ticketRepository.findTicketByTicketCode(ticketCode).isPurchased());
+        }
+        return constraints;
+    }
+
+    @Override
+    public Constraints validateBefore(Ticket ticket) {
+        Constraints constraints = new Constraints();
+        constraints.add("seat_null", ticket.getSeat().getId() != null);
+        constraints.add("show_null", ticket.getShow().getId() != null);
+        constraints.add("price_null", ticket.getPrice() != null);
+        if(!constraints.isViolated()) {
+            constraints.add("show_zero", ticket.getShow().getId() != 0);
+            constraints.add("seat_zero", ticket.getSeat().getId() != 0);
+            constraints.add("price_zero", ticket.getPrice() != 0);
+        }
         return constraints;
     }
 

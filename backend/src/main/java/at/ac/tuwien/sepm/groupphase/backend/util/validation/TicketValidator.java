@@ -8,6 +8,7 @@ public interface TicketValidator {
     Constraints validate(Ticket ticket);
     Constraints validateSave(Ticket ticket);
     Constraints validateAllTicketsOfUser(String usercode);
-    Constraints validateReserve(Ticket ticket);
+    Constraints validatePurchased(String ticketCode);
+    Constraints validateBefore(Ticket ticket);
 
 }

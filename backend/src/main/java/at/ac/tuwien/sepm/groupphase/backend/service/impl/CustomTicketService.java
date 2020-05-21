@@ -88,6 +88,8 @@ public class CustomTicketService implements TicketService {
             LocalDateTime now = LocalDateTime.now();
             ticketEntity.setPurchaseDate(now);
 
+            validator.validateBefore(ticketEntity).throwIfViolated();
+
             Seat seat = seatRepository.findSeatById(ticketEntity.getSeat().getId());
             ticketEntity.setSeat(seat);
             seatRepository.save(seat);
@@ -128,7 +130,7 @@ public class CustomTicketService implements TicketService {
     @Override
     public void cancelPurchasedTicket(String ticketCode) throws ValidationException, DataAccessException{
         LOGGER.info("Validating ticket with ticketCode " + ticketCode);
-        validator.validateTicketCode(ticketCode).throwIfViolated();
+        validator.validatePurchased(ticketCode).throwIfViolated();
 
         Ticket ticket1 = ticketRepository.findTicketByTicketCode(ticketCode);
         ticketRepository.delete(ticket1);
