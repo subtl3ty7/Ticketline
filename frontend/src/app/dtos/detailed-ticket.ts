@@ -1,4 +1,5 @@
 import {Seat} from './seat';
+import {Show} from './show';
 
 export class DetailedTicket {
   public id: number;
@@ -9,5 +10,5 @@ export class DetailedTicket {
   public seat: Seat;
   public price: number;
   public userCode: string;
-  public showId: number;
+  public show: Show;
 }
