@@ -262,7 +262,6 @@ public class UserEndpointTest implements TestData {
     @Test
     public void givenNothing_whenPostInvalid_then400() throws Exception {
         abstractUser.setEmail(null);
-        abstractUser.setFirstName(null);
         UserDto userDto = userMapper.abstractUserToUserDto(abstractUser);
         String body = objectMapper.writeValueAsString(userDto);
 

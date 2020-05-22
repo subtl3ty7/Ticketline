@@ -36,8 +36,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @ExtendWith(SpringExtension.class)
@@ -164,7 +163,7 @@ public class TicketEndpointTest implements TestData {
 
     @Test
     @Order(3)
-    public void givenTicket_whenGetTicketsByUserCode_then200AndTicketList() throws Exception{
+    public void givenTicket_whenGetTicketsByUserCode_then200AndTicketListWith2Elements() throws Exception{
 
         MvcResult mvcResult = this.mockMvc.perform(get(TICKETS_BASE_URI + "/" + USER_CODE)
             .contentType(MediaType.APPLICATION_JSON)
@@ -181,6 +180,24 @@ public class TicketEndpointTest implements TestData {
         List<SimpleTicketDto> ticketDtos1 = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
             SimpleTicketDto[].class));
         assertEquals(2, ticketDtos1.size());
+    }
+
+    @Test
+    @Order(4)
+    public void givenPurchasedTicket_whenCancelPurchase_then204AndTicketListWith1Element() throws Exception{
+
+        MvcResult mvcResult = this.mockMvc.perform(delete(TICKETS_BASE_URI + "/cancelPurchased/" +
+            ticketRepository.findTicketByTicketId(ID).getTicketCode())
+            .contentType(MediaType.APPLICATION_JSON)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
+            .andDo(print())
+            .andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        assertAll(
+            () -> assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatus()),
+            () -> assertEquals(1, ticketRepository.findAll().size())
+        );
 
         ticketRepository.deleteAll();
         seatRepository.deleteAll();
