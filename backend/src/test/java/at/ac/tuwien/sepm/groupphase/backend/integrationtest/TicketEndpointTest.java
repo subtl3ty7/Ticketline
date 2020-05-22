@@ -161,8 +161,34 @@ public class TicketEndpointTest implements TestData {
         assertTrue(ticketDtos1.get(0).isReserved());
     }
 
-    @Test
     @Order(3)
+    @Test
+    public void givenReservedTicket_whenPurchase_then201AndTicketListWithPurchasedTickets() throws Exception{
+
+        MvcResult mvcResult = this.mockMvc.perform(post(TICKETS_BASE_URI + "/purchaseReserved/" +
+            ticketRepository.findTicketByTicketId(2L).getTicketCode())
+            .contentType(MediaType.APPLICATION_JSON)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
+            .andDo(print())
+            .andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        assertAll(
+            () -> assertEquals(HttpStatus.CREATED.value(), response.getStatus()),
+            () -> assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType())
+        );
+        SimpleTicketDto simpleTicketDto = objectMapper.readValue(response.getContentAsString(),
+            SimpleTicketDto.class);
+
+        assertAll(
+            () ->  assertTrue(simpleTicketDto.isPurchased()),
+            () ->  assertFalse(simpleTicketDto.isReserved())
+        );
+
+    }
+
+    @Test
+    @Order(4)
     public void givenTicket_whenGetTicketsByUserCode_then200AndTicketListWith2Elements() throws Exception{
 
         MvcResult mvcResult = this.mockMvc.perform(get(TICKETS_BASE_URI + "/" + USER_CODE)
@@ -183,7 +209,7 @@ public class TicketEndpointTest implements TestData {
     }
 
     @Test
-    @Order(4)
+    @Order(5)
     public void givenPurchasedTicket_whenCancelPurchase_then204AndTicketListWith1Element() throws Exception{
 
         MvcResult mvcResult = this.mockMvc.perform(delete(TICKETS_BASE_URI + "/cancelPurchased/" +
