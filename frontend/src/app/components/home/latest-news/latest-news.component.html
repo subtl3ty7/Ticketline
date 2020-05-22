@@ -12,6 +12,7 @@
       <!--The three News inside of a row-->
       <div class="zoom col-md-4"
            *ngFor="let newsEntry of threeNews"
+           routerLink="/news-details/{{newsEntry.newsCode}}"
            style="padding: 10px">
         <div class="card">
           <img class="card-img-top img-fluid image-crop-big"

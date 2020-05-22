@@ -18,4 +18,9 @@ export class NewsService {
     console.log('Load latest 6 news that the customer has not seen yet.');
     return this.httpClient.get<News[]>(this.eventBaseUri + '/latest-unseen');
   }
+
+  getNewsEntry(newsCode: string): Observable<News> {
+    console.log('Load news by newsCode.');
+    return this.httpClient.get<News>(this.eventBaseUri + '/' + newsCode);
+  }
 }

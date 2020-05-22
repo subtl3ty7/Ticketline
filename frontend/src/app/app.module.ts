@@ -69,6 +69,7 @@ import { ResetPasswordAuthComponent } from './components/reset-password/reset-pa
 import { ChartComponent } from './components/top-ten-events/chart/chart.component';
 import { ErrorComponent } from './components/error/error.component';
 import { LatestNewsComponent } from './components/home/latest-news/latest-news.component';
+import { NewsDetailsComponent } from './components/news-details/news-details.component';
 
 @NgModule({
   declarations: [
@@ -119,7 +120,8 @@ import { LatestNewsComponent } from './components/home/latest-news/latest-news.c
     ResetPasswordAuthComponent,
     ChartComponent,
     ErrorComponent,
-    LatestNewsComponent
+    LatestNewsComponent,
+    NewsDetailsComponent
   ],
   imports: [
     BrowserModule,

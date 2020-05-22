@@ -24,3 +24,8 @@
 .zoom:hover {
   transform: scale(1.09);
 }
+
+.title-button {
+  padding-top: 100px;
+  padding-bottom: 50px;
+}
