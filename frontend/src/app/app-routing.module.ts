@@ -21,10 +21,6 @@ import {NotAdminGuard} from './guards/not-admin.guard';
 import {ResetPasswordComponent} from './components/reset-password/reset-password.component';
 import {ResetPasswordAuthComponent} from './components/reset-password/reset-password-auth/reset-password-auth.component';
 import {TicketPurchaseComponent} from './components/ticket-purchase/ticket-purchase.component';
-import {ArtistComponent} from './components/search/artist/artist.component';
-import {EventComponent} from './components/search/event/event.component';
-import {LocationComponent} from './components/search/location/location.component';
-import {ShowComponent} from './components/search/show/show.component';
 import {SearchComponent} from './components/search/search.component';
 
 const routes: Routes = [

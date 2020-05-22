@@ -136,6 +136,10 @@ result:hover {
   color: white;
 }
 
+.entity-row:hover {
+  cursor: pointer;
+}
+
 /*Mobile screen*/
 @media screen and (max-width: 992px) {
   a.nav-link:hover {
