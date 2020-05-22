@@ -4,8 +4,10 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.*;
 import at.ac.tuwien.sepm.groupphase.backend.repository.NewsRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.NewsService;
 import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
+import at.ac.tuwien.sepm.groupphase.backend.util.Resources;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ResourceLoader;
@@ -30,16 +32,16 @@ public class NewsDataGenerator {
     private final NewsService newsService;
     private final NewsRepository newsRepository;
     private final UserService userService;
-    private final ResourceLoader resourceLoader;
+    private final Resources resources;
 
-    private static final int NUMBER_OF_NEWS = 20;
+    private static final int NUMBER_OF_NEWS = 10;
 
-
-    public NewsDataGenerator(NewsService newsService, NewsRepository newsRepository, UserService userService, ResourceLoader resourceLoader) {
+    @Autowired
+    public NewsDataGenerator(NewsService newsService, NewsRepository newsRepository, UserService userService, Resources resources) {
         this.newsService = newsService;
         this.newsRepository = newsRepository;
         this.userService = userService;
-        this.resourceLoader = resourceLoader;
+        this.resources = resources;
     }
 
     @PostConstruct
@@ -60,14 +62,18 @@ public class NewsDataGenerator {
         List<Customer> customers = getCustomers();
         int splitUp = customers.size()/NUMBER_OF_NEWS;
 
+
         for(int i=0; i<NUMBER_OF_NEWS; i++) {
+
+            String imgName = "news_img" + i + ".jpg";
+
             News newsEntry = News.builder()
                 .author("J.K. Rowling")
-                .photo(getImage("event_img0.jpg"))
+                .photo(resources.getImageEncoded(imgName))
                 .publishedAt(null)
                 .stopsBeingRelevantAt(LocalDateTime.now().plusWeeks(i))
                 .title("News " + i)
-                .summary("You should check it out")
+                .summary("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac viverra massa, tincidunt dapibus massa. Nulla sit amet dui eu lorem malesuada convallis. Etiam lacinia, nisi ac tempus scelerisque, purus lectus lacinia felis, non interdum orci nibh nec nibh. Donec nec leo elementum, ultricies nulla a, fermentum mi.")
                 .text("All of them are good, actually")
                 .seenBy(customers.subList(i*splitUp, (i+1)*splitUp))
                 .build();
@@ -87,31 +93,5 @@ public class NewsDataGenerator {
             }
         }
         return customers;
-    }
-
-
-    private String getImage(String imgName) {
-        try {
-            InputStream inputStream = resourceLoader.getResource("classpath:" + imgName).getInputStream();
-            //BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            String encodedString = Base64.getEncoder().encodeToString(inputStream.readAllBytes());
-            //String contents = reader.lines()
-            //   .collect(Collectors.joining(System.lineSeparator()));
-            encodedString = "data:image/" + getFileExtension(imgName) + ";base64," + encodedString;
-            return encodedString;
-        } catch (IOException e) {
-            throw new RuntimeException("Couldn't load Image File for EventDataGenerator.", e);
-        } catch (NullPointerException e) {
-            throw new RuntimeException("Couldn't load Image File for EventDataGenerator.", e);
-        }
-    }
-
-    private String getFileExtension(String imgName) {
-        if(!imgName.contains(".")) {
-            throw new RuntimeException("Could not retrieve file extension of filename ." + imgName);
-        }
-        int dotIndex = imgName.indexOf('.');
-        String fileExtension = imgName.substring(dotIndex+1);
-        return fileExtension;
     }
 }

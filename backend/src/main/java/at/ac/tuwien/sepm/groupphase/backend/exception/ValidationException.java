@@ -8,7 +8,7 @@ public class ValidationException extends BaseException {
     private ValidationMessage validationMessage;
 
     public ValidationException(Constraints constraints) {
-        super("Validation Exception thrown: " + (new ValidationMessage(constraints)).getMessages(), null);
+        super("Validation Exception thrown: " + (new ValidationMessage(constraints)).getConstraintMessages(), null);
         this.validationMessage = new ValidationMessage(constraints);
     }
 

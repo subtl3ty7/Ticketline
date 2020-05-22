@@ -63,12 +63,12 @@ import { FaqComponent } from './components/faq/faq.component';
 import { HomeComponent } from './components/home/home.component';
 import { TopTenEventsComponent } from './components/top-ten-events/top-ten-events.component';
 import { HeaderComponent } from './sections/header/header.component';
-import { CurrentNewsComponent } from './components/home/current-news/current-news.component';
 import { TopEventsListComponent } from './components/top-ten-events/top-events-list/top-events-list.component';
 import { ResetPasswordComponent} from './components/reset-password/reset-password.component';
 import { ResetPasswordAuthComponent } from './components/reset-password/reset-password-auth/reset-password-auth.component';
 import { ChartComponent } from './components/top-ten-events/chart/chart.component';
 import { ErrorComponent } from './components/error/error.component';
+import { LatestNewsComponent } from './components/home/latest-news/latest-news.component';
 
 @NgModule({
   declarations: [
@@ -114,12 +114,12 @@ import { ErrorComponent } from './components/error/error.component';
     HomeComponent,
     TopTenEventsComponent,
     HeaderComponent,
-    CurrentNewsComponent,
     TopEventsListComponent,
     ResetPasswordComponent,
     ResetPasswordAuthComponent,
     ChartComponent,
-    ErrorComponent
+    ErrorComponent,
+    LatestNewsComponent
   ],
   imports: [
     BrowserModule,

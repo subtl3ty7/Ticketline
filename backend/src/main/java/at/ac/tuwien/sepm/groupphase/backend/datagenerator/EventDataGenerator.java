@@ -5,10 +5,12 @@ import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.*;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventLocationService;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
+import at.ac.tuwien.sepm.groupphase.backend.util.Resources;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ResourceLoader;
@@ -33,26 +35,21 @@ public class EventDataGenerator {
     private final EventService eventService;
     private final EventLocationService eventLocationService;
     private final EntityManagerFactory entityManagerFactory;
-    private final ResourceLoader resourceLoader;
+    private final Resources resources;
 
 
     private final static int numberOfEventLocations = 5;
     private static final int numberOfEvents = 15;
 
-    public EventDataGenerator(SectionRepository sectionRepository,
-                              SeatRepository seatRepository, ShowRepository showRepository,
-                              EventService eventService,
-                              EventLocationService eventLocationService,
-                              EntityManagerFactory entityManagerFactory,
-                              ResourceLoader resourceLoader
-    ) {
+    @Autowired
+    public EventDataGenerator(SectionRepository sectionRepository, ShowRepository showRepository, SeatRepository seatRepository, EventService eventService, EventLocationService eventLocationService, EntityManagerFactory entityManagerFactory, Resources resources) {
         this.sectionRepository = sectionRepository;
         this.showRepository = showRepository;
         this.seatRepository = seatRepository;
         this.eventService = eventService;
         this.eventLocationService = eventLocationService;
         this.entityManagerFactory = entityManagerFactory;
-        this.resourceLoader = resourceLoader;
+        this.resources = resources;
     }
 
     private Session getSession() {
@@ -99,7 +96,7 @@ public class EventDataGenerator {
                 .endsAt(LocalDateTime.now())
                 .eventCode("E1234" + i)
                 .name("Event " + i)
-                .photo(getImage(imgName))
+                .photo(resources.getImageEncoded(imgName))
                 .prices(List.of(1,2,3))
                 .totalTicketsSold(5*i*i*i)
                 .type("Of the cool type")
@@ -210,28 +207,4 @@ public class EventDataGenerator {
         return sum;
     }
 
-    private String getImage(String imgName) {
-        try {
-            InputStream inputStream = resourceLoader.getResource("classpath:" + imgName).getInputStream();
-            //BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            String encodedString = Base64.getEncoder().encodeToString(inputStream.readAllBytes());
-            //String contents = reader.lines()
-             //   .collect(Collectors.joining(System.lineSeparator()));
-            encodedString = "data:image/" + getFileExtension(imgName) + ";base64," + encodedString;
-            return encodedString;
-        } catch (IOException e) {
-            throw new RuntimeException("Couldn't load Image File for EventDataGenerator.", e);
-        } catch (NullPointerException e) {
-            throw new RuntimeException("Couldn't load Image File for EventDataGenerator.", e);
-        }
-    }
-
-    private String getFileExtension(String imgName) {
-        if(!imgName.contains(".")) {
-            throw new RuntimeException("Could not retrieve file extension of filename ." + imgName);
-        }
-        int dotIndex = imgName.indexOf('.');
-        String fileExtension = imgName.substring(dotIndex+1);
-        return fileExtension;
-    }
 }
