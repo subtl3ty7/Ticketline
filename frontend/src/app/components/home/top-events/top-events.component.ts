@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {EventService} from '../../../services/event.service';
 import {SimpleEvent} from '../../../dtos/simple-event';
+import {HttpErrorResponse} from '@angular/common/http';
+import {BackendError} from '../../../dtos/backend-error';
 
 @Component({
   selector: 'app-top-events',
@@ -8,6 +10,7 @@ import {SimpleEvent} from '../../../dtos/simple-event';
   styleUrls: ['./top-events.component.css']
 })
 export class TopEventsComponent implements OnInit {
+  error;
   events: SimpleEvent[][];
 
   constructor(private eventService: EventService) { }
@@ -39,8 +42,8 @@ export class TopEventsComponent implements OnInit {
       },
       error => {
         this.events = null;
+        this.error = error.error;
       }
     );
   }
-
 }

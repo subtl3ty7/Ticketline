@@ -11,7 +11,6 @@ import java.util.List;
 @Mapper
 public interface EventLocationMapper {
 
-    @Mapping(source = "eventLocationName", target = "name")
     @Named(value = "eventLocationToEventLocationDto")
     EventLocationDto eventLocationToEventLocationDto(EventLocation eventLocation);
 

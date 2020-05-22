@@ -1,19 +1,16 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Administrator;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
-import at.ac.tuwien.sepm.groupphase.backend.entity.UserAttempts;
-import at.ac.tuwien.sepm.groupphase.backend.exception.CustomServiceException;
+import at.ac.tuwien.sepm.groupphase.backend.entity.*;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
+import at.ac.tuwien.sepm.groupphase.backend.repository.ResetPasswordRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserAttemptsRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
+import at.ac.tuwien.sepm.groupphase.backend.service.EmailService;
 import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
-import at.ac.tuwien.sepm.groupphase.backend.util.Validation.EventValidator;
-import at.ac.tuwien.sepm.groupphase.backend.util.Validation.UserValidator;
+import at.ac.tuwien.sepm.groupphase.backend.util.validation.UserValidator;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -23,21 +20,17 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.logout.CookieClearingLogoutHandler;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.security.web.authentication.rememberme.AbstractRememberMeServices;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManagerFactory;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -46,16 +39,17 @@ public class CustomUserService implements UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final UserRepository userRepository;
     private final UserAttemptsRepository userAttemptsRepository;
-    private final PasswordEncoder passwordEncoder;
     private final UserValidator validator;
     private final EntityManagerFactory entityManagerFactory;
 
 
     @Autowired
-    public CustomUserService(UserRepository userRepository, PasswordEncoder passwordEncoder,
-                             UserAttemptsRepository userAttemptsRepository, UserValidator validator, EntityManagerFactory entityManagerFactory) {
+    public CustomUserService(UserRepository userRepository,
+                             UserAttemptsRepository userAttemptsRepository,
+                             UserValidator validator,
+                             EntityManagerFactory entityManagerFactory) {
+
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
         this.userAttemptsRepository = userAttemptsRepository;
         this.validator = validator;
         this.entityManagerFactory = entityManagerFactory;
@@ -134,8 +128,9 @@ public class CustomUserService implements UserService {
         return "Successfully blocked user.";
     }
     @Override
+    @Transactional
     public Customer registerNewCustomer(Customer customer) throws ValidationException, DataAccessException {
-        LOGGER.info("Validating Customer Entity: " + customer);
+        LOGGER.debug("Validating Customer Entity: " + customer);
         customer.setUserCode(getNewUserCode());
         LocalDateTime now = LocalDateTime.now();
         customer.setCreatedAt(now);
@@ -144,19 +139,16 @@ public class CustomUserService implements UserService {
 
         UserAttempts userAttempts = new UserAttempts(customer);
 
-        Session session = getSession();
-        session.beginTransaction();
         customer = userRepository.save(customer);
         userAttempts = userAttemptsRepository.save(userAttempts);
-        session.getTransaction().commit();
 
-        LOGGER.info("Saved Customer Entity in Database: " + customer);
-        LOGGER.info("Saved UserAttempts Entity in Database: " + userAttempts);
+        LOGGER.debug("Saved Customer Entity in Database: " + customer);
+        LOGGER.debug("Saved UserAttempts Entity in Database: " + userAttempts);
         return customer;
     }
     @Override
     public Administrator registerNewAdmin(Administrator admin) throws ValidationException, DataAccessException {
-        LOGGER.info("Validating Admin Entity: " + admin);
+        LOGGER.debug("Validating Admin Entity: " + admin);
         admin.setUserCode(getNewUserCode());
         LocalDateTime now = LocalDateTime.now();
         admin.setCreatedAt(now);
@@ -165,7 +157,7 @@ public class CustomUserService implements UserService {
 
         admin = userRepository.save(admin);
 
-        LOGGER.info("Saved Admin Entity in Database: " + admin);
+        LOGGER.debug("Saved Admin Entity in Database: " + admin);
         return admin;
     }
 
@@ -233,4 +225,5 @@ public class CustomUserService implements UserService {
         }
         return null;
     }
+
 }

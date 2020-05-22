@@ -29,9 +29,7 @@ export class EventService {
   }
   getTop10Events(): Observable<SimpleEvent[]> {
     console.log('Load top 10 events.');
-    return this.httpClient.get<SimpleEvent[]>(this.eventBaseUri + '/top10').pipe(
-      catchError(this.handleError)
-    );
+    return this.httpClient.get<SimpleEvent[]>(this.eventBaseUri + '/top10');
   }
   getAllEvents(): Observable<SimpleEvent[]> {
     console.log('Load all events.');
@@ -45,4 +43,9 @@ export class EventService {
       catchError(this.handleError)
     );
   }
+
+
+
+
+
 }

@@ -1,0 +1,71 @@
+<app-customer-header></app-customer-header>
+<!-- <div *ngIf="error" class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>Authentication problems!</strong> {{ errorMessage }}
+  <button type="button" (click)="vanishError()" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div> -->
+<div class="container-fluid justify-content-center" style="padding-left: 5%; padding-right: 5%;" *ngIf="event">
+  <div class="row">
+    <div class="mx-auto" style="max-width: 1320px; width: 100%;">
+      <span class="anchor" id="formLogin"></span>
+
+      <div class="card main-body">
+        <div class="card-header d-flex align-items-center">
+          <h3 class="mb-0 " style="font-size: 40px; padding-left: 20px;">{{event.name}}</h3>
+        </div>
+
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <img src="{{event.photo}}" class="img-fluid" alt="some Image">
+
+            </div>
+            <div class="col">
+              <div id="eventHeadline">
+                <h2 class="mb-0 headline">{{event.name}}</h2><br>
+              </div>
+
+              <div id="eventInfo">
+                <p class ="sub-headline">{{event.startsAt | date}} - {{event.endsAt | date }}</p>
+              </div>
+
+              <div id="performanceTitle">
+                <p class="h3">Aufführungen</p>
+              </div>
+
+              <div class="table-wrapper-scroll-y my-custom-scrollbar">
+
+                <table class="table table-responsive-lg table-hover  mb-0">
+                  <tbody *ngFor="let s of event.shows">
+                  <tr *ngFor="let l of s.eventLocation">
+                    <th scope="row"></th>
+                    <td>{{s.startsAt | date:'short'}} - {{s.endsAt | date:'short' }}, {{l.city}}, {{l.country}}</td>
+                    <button type="button" class="btn btn-success btn-sm m-0" (click) = "openPurchase(s)">Tickets</button>
+                  </tr>
+                  </tbody>
+                </table>
+
+              </div>
+
+            </div>
+          </div>
+
+          <div class="row">
+
+            <h2 class="mb-0 headline" style="font-size: 25px; padding-left: 13px;"> Beschreibung  </h2>
+
+          </div>
+
+        <div class="row">
+          <div id="descriptionText">
+            <p> {{event.description}}
+            </p>
+          </div>
+        </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -40,7 +40,6 @@ public class EventServiceTest implements TestData {
         .endsAt(END)
         .prices(PRICES)
         .totalTicketsSold(TOTAL)
-        .artists(ARTISTS)
         .shows(SHOWS)
         .photo(PHOTO)
         .build();
@@ -59,7 +58,6 @@ public class EventServiceTest implements TestData {
             .endsAt(END)
             .prices(PRICES)
             .totalTicketsSold(TOTAL)
-            .artists(ARTISTS)
             .shows(SHOWS)
             .photo(PHOTO)
             .build();
@@ -79,8 +77,7 @@ public class EventServiceTest implements TestData {
             () -> assertEquals(START, event1.getStartsAt()),
             () -> assertEquals(END, event1.getEndsAt()),
             () -> assertEquals(PRICES, event1.getPrices()),
-            () -> assertEquals(TOTAL, event1.getTotalTicketsSold()),
-            () -> assertEquals(ARTISTS, event1.getArtists())
+            () -> assertEquals(TOTAL, event1.getTotalTicketsSold())
         );
     }
 

@@ -72,6 +72,11 @@
             <artifactId>springfox-bean-validators</artifactId>
             <version>${springfox.swagger.version}</version>
         </dependency>
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.5.0-b01</version>
+        </dependency>
         <!-- security -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>

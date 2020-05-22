@@ -34,14 +34,14 @@ export class EventDetailsComponent implements OnInit {
           this.name = this.wrapper.model.name;
         },
         error => {
-          this.router.navigate(['administration', 2]);
+          this.router.navigate(['administration', 'events']);
         }
       );
     }
   }
   public eventsNavigate() {
     if (this.wrapper.state !== this.state.PROCESSING) {
-      this.router.navigate(['administration', 2]);
+      this.router.navigate(['administration', 'events']);
     }
   }
 

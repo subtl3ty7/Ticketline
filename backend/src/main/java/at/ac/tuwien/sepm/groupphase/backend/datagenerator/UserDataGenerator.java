@@ -3,7 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.datagenerator;
 import at.ac.tuwien.sepm.groupphase.backend.entity.*;
 import at.ac.tuwien.sepm.groupphase.backend.repository.MessageRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserAttemptsRepository;
-import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
+import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -15,40 +15,44 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManagerFactory;
 import java.lang.invoke.MethodHandles;
+import java.time.Duration;
 import java.time.LocalDateTime;
 
-@Component
+@Component("UserDataGenerator")
 @Profile("generateData")
 public class UserDataGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    private static final int NUMBER_OF_CUSTOMERS_TO_GENERATE = 3;
+    private static final int NUMBER_OF_CUSTOMERS_TO_GENERATE = 100;
     private static final int NUMBER_OF_ADMINISTRATORS_TO_GENERATE = 2;
     private static final String TEST_USER_FIRST_NAME = "Name";
     private static final String TEST_USER_LAST_NAME = "Surname";
     private static final String TEST_CUSTOMER_EMAIL = "@customer.com";
     private static final String TEST_ADMIN_EMAIL = "@admin.com";
     private static final String TEST_USER_PASSWORD = "Password";
-    private static final String TEST_USER_CODE = "U123X";
 
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final UserAttemptsRepository userAttemptsRepository;
     private final PasswordEncoder passwordEncoder;
     private final EntityManagerFactory entityManagerFactory;
 
-    public UserDataGenerator(UserRepository userRepository, UserAttemptsRepository userAttemptsRepository, PasswordEncoder passwordEncoder, EntityManagerFactory entityManagerFactory) {
-        this.userRepository = userRepository;
+    public UserDataGenerator(UserService userService, UserAttemptsRepository userAttemptsRepository, PasswordEncoder passwordEncoder, EntityManagerFactory entityManagerFactory) {
+        this.userService = userService;
         this.userAttemptsRepository = userAttemptsRepository;
         this.passwordEncoder = passwordEncoder;
         this.entityManagerFactory = entityManagerFactory;
     }
 
     @PostConstruct
-    private void generateUsers() {
-        if (userRepository.findAll().size() > 0) {
-            LOGGER.debug("users already generated");
+    private void generate() {
+        if (userService.loadAllUsers().size() > 0) {
+            LOGGER.info("users already generated");
         } else {
-            generateCustomer();
-            generateAdministrator();
+            LOGGER.info("Generating User Test Data");
+            LocalDateTime start = LocalDateTime.now();
+            generateUsers();
+            LocalDateTime end = LocalDateTime.now();
+            float runningTime = Duration.between(start, end).toMillis();
+            LOGGER.info("Generating User Test Data took " + runningTime/1000.0 + " seconds");
         }
     }
 
@@ -56,51 +60,60 @@ public class UserDataGenerator {
         return entityManagerFactory.unwrap(SessionFactory.class).openSession();
     }
 
+    private void generateUsers() {
+        generateCustomer();
+        generateAdministrator();
+    }
+
     private void generateCustomer() {
         LOGGER.debug("generating {} customers", NUMBER_OF_CUSTOMERS_TO_GENERATE);
         for (int i = 0; i < NUMBER_OF_CUSTOMERS_TO_GENERATE; i++) {
-            AbstractUser customer = Customer.CustomerBuilder.aCustomer()
+            Customer customer = Customer.CustomerBuilder.aCustomer()
                 .withFirstName(TEST_USER_FIRST_NAME  + i)
                 .withLastName(TEST_USER_LAST_NAME  + i)
                 .withEmail( "e" + i + TEST_CUSTOMER_EMAIL)
                 .withPassword(passwordEncoder.encode(TEST_USER_PASSWORD + i))
-                .withUserCode(TEST_USER_CODE + i)
-                .withBirthday(LocalDateTime.now().minusMonths(i))
+                .withBirthday(LocalDateTime.now().minusYears(20))
                 .withIsLogged(false)
                 .withCreatedAt(LocalDateTime.now())
                 .withUpdatedAt(LocalDateTime.now())
-                .withPoints(i)
+                .withPoints(0)
                 .withIsBlocked(false)
                 .build();
-            UserAttempts attempts = UserAttempts.UserAttemptsBuilder.aAttempts()
-                .withAttempts(0)
-                .withEmail("e" + i + TEST_CUSTOMER_EMAIL)
-                .build();
-            LOGGER.debug("saving customer " + customer.getEmail() + " with attempts " + attempts.getAttempts() );
-            Session session = getSession();
-            session.beginTransaction();
-            userRepository.save(customer);
-            userAttemptsRepository.save(attempts);
-            session.getTransaction().commit();
+            LOGGER.debug("saving customer " + customer.getEmail());
+            userService.registerNewCustomer(customer);
         }
+        Customer customer = Customer.CustomerBuilder.aCustomer()
+            .withFirstName("ege")
+            .withLastName("demirsoy")
+            .withEmail("egedemirsoy@gmail.com")
+            .withPassword(passwordEncoder.encode(TEST_USER_PASSWORD))
+            .withBirthday(LocalDateTime.now().minusYears(20))
+            .withIsLogged(false)
+            .withCreatedAt(LocalDateTime.now())
+            .withUpdatedAt(LocalDateTime.now())
+            .withPoints(0)
+            .withIsBlocked(false)
+            .build();
+        LOGGER.debug("saving customer " + customer.getEmail());
+        userService.registerNewCustomer(customer);
     }
 
     private void generateAdministrator() {
         LOGGER.debug("generating {} administrators", NUMBER_OF_ADMINISTRATORS_TO_GENERATE);
         for (int i = 0; i < NUMBER_OF_ADMINISTRATORS_TO_GENERATE; i++) {
-            AbstractUser administrator = Administrator.AdministratorBuilder.aAdministrator()
+            Administrator administrator = Administrator.AdministratorBuilder.aAdministrator()
                 .withFirstName(TEST_USER_FIRST_NAME  + i)
                 .withLastName(TEST_USER_LAST_NAME  + i)
                 .withEmail( "e" + i + TEST_ADMIN_EMAIL)
                 .withPassword(passwordEncoder.encode(TEST_USER_PASSWORD + i))
-                .withUserCode(TEST_USER_CODE + (9-i))
-                .withBirthday(LocalDateTime.now().minusMonths(i))
+                .withBirthday(LocalDateTime.now().minusYears(20+i))
                 .withIsLogged(false)
                 .withCreatedAt(LocalDateTime.now())
                 .withUpdatedAt(LocalDateTime.now())
                 .build();
-            LOGGER.debug("saving customer " + administrator.getEmail() );
-            userRepository.save(administrator);
+            LOGGER.debug("saving admin " + administrator.getEmail() );
+            userService.registerNewAdmin(administrator);
         }
     }
 }

@@ -2,18 +2,12 @@
   display: block;
 }
 
-.flex {
-  display: flex;
-  padding-left: 31px;
-}
-
 .user-wrapper {
   margin-left: 14.8%;
   margin-right: 3%;
 }
 
 .user-line {
-  display: flex;
   align-items: center;
   border-bottom: 1px solid #888888;
 }
@@ -55,7 +49,6 @@
 }
 .buttons-wrapper {
   padding-top: 70px;
-  display: flex;
   justify-content: space-between;
 }
 

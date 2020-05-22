@@ -5,6 +5,7 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Administrator;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
+import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -132,7 +133,7 @@ public class UserServiceTest implements TestData {
     public void givenUnloggedCustomer_saveWithSameEmail_thenError() {
         userService.registerNewCustomer((Customer)customer);
 
-        assertThrows(ServiceException.class,
+        assertThrows(ValidationException.class,
             () ->   userService.registerNewCustomer((Customer)customer));
     }
 
@@ -140,9 +141,9 @@ public class UserServiceTest implements TestData {
     public void givenAdmin_saveWithSameEmailOrBlock_thenError() {
         userService.registerNewAdmin((Administrator)admin);
 
-        assertThrows(ServiceException.class,
+        assertThrows(ValidationException.class,
             () ->   userService.registerNewAdmin((Administrator)admin));
-        assertThrows(ServiceException.class,
+        assertThrows(ValidationException.class,
             () ->   userService.blockCustomer(userService.findUserByEmail(ADMIN_USER).getUserCode()));
     }
 

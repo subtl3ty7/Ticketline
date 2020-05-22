@@ -70,7 +70,6 @@ public class EventEndpointTest implements TestData {
         .endsAt(END)
         .prices(PRICES)
         .totalTicketsSold(TOTAL)
-        .artists(ARTISTS)
         .shows(SHOWS)
         .photo(PHOTO)
         .build();
@@ -89,33 +88,24 @@ public class EventEndpointTest implements TestData {
             .endsAt(END)
             .prices(PRICES)
             .totalTicketsSold(TOTAL)
-            .artists(ARTISTS)
             .shows(SHOWS)
             .photo(PHOTO)
             .build();
     }
 
     @Test
-    public void givenUserLoggedIn_whenGetTop10_then200andEmptyList() throws Exception {
+    public void givenUserLoggedIn_whenGetTop10_then404() throws Exception {
         MvcResult mvcResult = this.mockMvc.perform(get(EVENT_TOP10)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
             .andDo(print())
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
 
-        assertAll(
-            () -> assertEquals(HttpStatus.OK.value(), response.getStatus()),
-            () -> assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType())
-        );
-
-        List<SimpleEventDto> simpleEventDtos = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
-            SimpleEventDto[].class));
-
-        assertEquals(0, simpleEventDtos.size());
+        assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
     }
 
     @Test
-    public void givenNothing_whenPostAsUser_then403() throws Exception {
+    public void givenNothing_whenPostAsUser_then500() throws Exception {
         DetailedEventDto detailedEventDto = eventMapper.eventToDetailedEventDto(event);
         String body = objectMapper.writeValueAsString(detailedEventDto);
 
@@ -127,7 +117,7 @@ public class EventEndpointTest implements TestData {
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
 
-        assertEquals(HttpStatus.FORBIDDEN.value(), response.getStatus());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.value(), response.getStatus());
     }
 
     @Test

@@ -5,9 +5,9 @@
     <div class="profile-title-wrapper">
       <div class="profile-line">
         <div class="profile-title">
-          <span *ngIf="globals.getProfileChoosenTab === 1">My Info</span>
-          <span *ngIf="globals.getProfileChoosenTab === 2">My Tickets</span>
-          <span *ngIf="globals.getProfileChoosenTab === 3">My Invoices</span>
+          <span *ngIf="globals.getProfileChoosenTab === 'my-info'">My Info</span>
+          <span *ngIf="globals.getProfileChoosenTab === 'my-tickets'">My Tickets</span>
+          <span *ngIf="globals.getProfileChoosenTab === 'my-invoices'">My Invoices</span>
         </div>
       </div>
     </div>
@@ -19,17 +19,17 @@
       </div>
 
       <div class="profile-content all-height"
-           *ngIf="globals.getProfileChoosenTab === 1">
+           *ngIf="globals.getProfileChoosenTab === 'my-info'">
         <app-my-info-tab class="all-height"></app-my-info-tab>
       </div>
 
       <div class="profile-content"
-           *ngIf="globals.getProfileChoosenTab === 2">
+           *ngIf="globals.getProfileChoosenTab === 'my-tickets'">
         <app-my-tickets-tab class="all-height" [choosenTab]="globals.getProfileChoosenTab"></app-my-tickets-tab>
       </div>
 
       <div class="profile-content"
-           *ngIf="globals.getProfileChoosenTab === 3">
+           *ngIf="globals.getProfileChoosenTab === 'my-invoices'">
         <app-my-invoices-tab class="all-height" [choosenTab]="globals.getProfileChoosenTab"></app-my-invoices-tab>
       </div>
 

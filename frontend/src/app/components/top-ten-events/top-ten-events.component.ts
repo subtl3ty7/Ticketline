@@ -9,30 +9,59 @@ import {EventService} from '../../services/event.service';
   styleUrls: ['./top-ten-events.component.css']
 })
 export class TopTenEventsComponent implements OnInit {
+  error;
   currentMonth: string;
+  events: SimpleEvent[];
 
 
-  constructor() {
-    // define background as gradient from blue to purple
-    // document.body.style.background = '-moz-linear-gradient(left, rgba(62,104,201,1) 0%, rgba(219,54,164,1) 100%)';
-    // document.body.style.background = '-moz-linear-gradient(left, rgba(26,93,161,1) 0%, rgba(193,130,204,1) 100%)';
-    // document.body.style.background = '-moz-linear-gradient(left, rgba(30,133,235,1) 0%, rgba(255,163,214,1) 100%)';
-    // document.body.style.background = '-moz-linear-gradient(left, rgba(43,118,184,1) 0%, rgba(153,84,152,1) 100%)';
-    document.body.style.background = '-moz-linear-gradient(-30deg, rgba(43,118,184,1) 0%, rgba(200,100,160,1) 100%)';
-    document.body.style.backgroundPosition = 'center';
-    document.body.style.backgroundRepeat = 'no-repeat';
-    document.body.style.backgroundSize = 'cover';
-    // document.body.style.backgroundAttachment = 'fixed';
-    this.currentMonth = this.getCurrentMonth();
+  constructor(private eventService: EventService) {
   }
 
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.currentMonth = this.getCurrentMonth();
+    this.getTop10Events();
+    this.defineBackground();
   }
 
   getCurrentMonth(): string {
     const months: string[] = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember' ];
     const now = new Date();
     return months[now.getMonth()];
+  }
+
+
+  /**
+   * Tries to load the top 10 events from database
+   */
+  public getTop10Events() {
+    this.eventService.getTop10Events().subscribe(
+      (events: SimpleEvent[]) => {
+        this.events = events;
+      },
+      error => {
+        this.events = null;
+        this.error = error.error;
+      }
+    );
+  }
+
+  private defineBackground() {
+    // define background as gradient from blue to purple
+    document.body.style.background = 'rgba(43,121,184,1)';
+    document.body.style.background = '-moz-linear-gradient(left, rgba(43,121,184,1) 0%, rgba(201,100,161,1) 100%)';
+    document.body.style.background = '-webkit-gradient(left top, right top, color-stop(0%, rgba(43,121,184,1)), color-stop(100%, rgba(201,100,161,1)))';
+    document.body.style.background = '-webkit-linear-gradient(left, rgba(43,121,184,1) 0%, rgba(201,100,161,1) 100%)';
+    document.body.style.background = '-o-linear-gradient(left, rgba(43,121,184,1) 0%, rgba(201,100,161,1) 100%)';
+    document.body.style.background = '-ms-linear-gradient(left, rgba(43,121,184,1) 0%, rgba(201,100,161,1) 100%)';
+    document.body.style.background = 'linear-gradient(to right, rgba(43,121,184,1) 0%, rgba(201,100,161,1) 100%)';
+    document.body.style.filter = 'progid:DXImageTransform.Microsoft.gradient( startColorstr=\'#2b79b8\', endColorstr=\'#c964a1\', GradientType=1 )';
+    document.body.style.backgroundPosition = 'center';
+    document.body.style.backgroundRepeat = 'repeat';
+    document.body.style.backgroundSize = 'cover';
+  }
+
+  private delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
   }
 }

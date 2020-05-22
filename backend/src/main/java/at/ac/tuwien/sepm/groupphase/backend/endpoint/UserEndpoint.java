@@ -2,8 +2,10 @@ package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 
 
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserDto;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserLoginDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.UserMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
+import at.ac.tuwien.sepm.groupphase.backend.entity.ResetPassword;
 import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -210,4 +212,6 @@ public class UserEndpoint {
         UserDto result = userMapper.abstractUserToUserDto(userService.getAuthenticatedUser(auth));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+
 }

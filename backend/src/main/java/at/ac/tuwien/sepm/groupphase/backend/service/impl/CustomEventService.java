@@ -9,8 +9,7 @@ import at.ac.tuwien.sepm.groupphase.backend.repository.EventLocationRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
-import at.ac.tuwien.sepm.groupphase.backend.util.Constraints;
-import at.ac.tuwien.sepm.groupphase.backend.util.Validation.EventValidator;
+import at.ac.tuwien.sepm.groupphase.backend.util.validation.EventValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +41,9 @@ public class CustomEventService implements EventService {
         List<Event> allEventsFromMonth = eventRepository.findAllByStartsAtAfterOrderByTotalTicketsSoldDesc(LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),1,0,0));
         List<Event> top10 = new ArrayList<>();
         for(int i = 0; i < Math.min(10, allEventsFromMonth.size()); i++) top10.add(allEventsFromMonth.get(i));
+        if(top10.size() < 1) {
+            throw new NotFoundException("Could not find any Event.");
+        }
         return top10;
     }
 
@@ -61,7 +63,7 @@ public class CustomEventService implements EventService {
 
     @Override
     public Event createNewEvent(Event event){
-        LOGGER.info("Moving Event Entity through Service Layer: " + event);
+        LOGGER.debug("Moving Event Entity through Service Layer: " + event);
         event.setEventCode(getNewEventCode());
         validator.validate(event).throwIfViolated();
 

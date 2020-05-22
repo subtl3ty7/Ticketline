@@ -39,7 +39,6 @@ public class EventRepositoryTest implements TestData {
         .endsAt(END)
         .prices(PRICES)
         .totalTicketsSold(TOTAL)
-        .artists(ARTISTS)
         .shows(SHOWS)
         .photo(PHOTO)
         .build();
@@ -58,7 +57,6 @@ public class EventRepositoryTest implements TestData {
             .endsAt(END)
             .prices(PRICES)
             .totalTicketsSold(TOTAL)
-            .artists(ARTISTS)
             .shows(SHOWS)
             .photo(PHOTO)
             .build();
@@ -73,8 +71,7 @@ public class EventRepositoryTest implements TestData {
             () -> assertNotNull(eventRepository.findById(loadedEvent.getId())),
             () -> assertNotNull(eventRepository.findEventByEventCode(loadedEvent.getEventCode())),
             () -> assertNotNull(eventRepository.findEventByEventCode(loadedEvent.getEventCode()).getShows()),
-            () -> assertNotNull(eventRepository.findEventByEventCode(loadedEvent.getEventCode()).getPrices()),
-            () -> assertNotNull(eventRepository.findEventByEventCode(loadedEvent.getEventCode()).getArtists())
+            () -> assertNotNull(eventRepository.findEventByEventCode(loadedEvent.getEventCode()).getPrices())
         );
     }
 

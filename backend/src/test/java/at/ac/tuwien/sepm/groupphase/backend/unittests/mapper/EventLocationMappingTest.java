@@ -25,7 +25,7 @@ public class EventLocationMappingTest implements TestData {
 
     private final EventLocation eventLocation = EventLocation.builder()
         .id(ID)
-        .eventLocationName(FNAME)
+        .name(FNAME)
         .eventLocationDescription(DESC)
         .showId(ID)
         .capacity(TOTAL)

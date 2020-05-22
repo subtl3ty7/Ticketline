@@ -56,7 +56,7 @@ public class EventLocationEndpointTest implements TestData {
 
     private EventLocation eventLocation = EventLocation.builder()
         .id(ID)
-        .eventLocationName(FNAME)
+        .name(FNAME)
         .eventLocationDescription(DESC)
         .capacity(TOTAL)
         .street(STREET)
@@ -71,7 +71,7 @@ public class EventLocationEndpointTest implements TestData {
         eventLocationRepository.deleteAll();
         eventLocation = EventLocation.builder()
             .id(ID)
-            .eventLocationName(FNAME)
+            .name(FNAME)
             .eventLocationDescription(DESC)
             .capacity(TOTAL)
             .street(STREET)
@@ -101,14 +101,14 @@ public class EventLocationEndpointTest implements TestData {
     }
 
     @Test
-    public void givenUserLoggedIn_whenGetAll_then403() throws Exception {
+    public void givenUserLoggedIn_whenGetAll_then500() throws Exception {
         MvcResult mvcResult = this.mockMvc.perform(get(LOCATION_BASE_URI)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
             .andDo(print())
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
 
-        assertEquals(HttpStatus.FORBIDDEN.value(), response.getStatus());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.value(), response.getStatus());
     }
 
     @Test
