@@ -67,6 +67,11 @@ import { CurrentNewsComponent } from './components/home/current-news/current-new
 import { TopEventsListComponent } from './components/top-ten-events/top-events-list/top-events-list.component';
 import { ResetPasswordComponent} from './components/reset-password/reset-password.component';
 import { ResetPasswordAuthComponent } from './components/reset-password/reset-password-auth/reset-password-auth.component';
+import { TicketPurchaseComponent } from './components/ticket-purchase/ticket-purchase.component';
+import {MatStepperModule} from '@angular/material/stepper';
+import { ChooseTicketComponent } from './components/ticket-purchase/choose-ticket/choose-ticket.component';
+import { PaymentMethodOverviewComponent } from './components/ticket-purchase/payment-method-overview/payment-method-overview.component';
+import {MatSelectModule} from '@angular/material/select';
 import { ChartComponent } from './components/top-ten-events/chart/chart.component';
 import { ErrorComponent } from './components/error/error.component';
 
@@ -118,6 +123,9 @@ import { ErrorComponent } from './components/error/error.component';
     TopEventsListComponent,
     ResetPasswordComponent,
     ResetPasswordAuthComponent,
+    TicketPurchaseComponent,
+    ChooseTicketComponent,
+    PaymentMethodOverviewComponent,
     ChartComponent,
     ErrorComponent
   ],
@@ -142,9 +150,11 @@ import { ErrorComponent } from './components/error/error.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatPaginatorModule,
-    FlexModule
+    FlexModule,
+    MatStepperModule,
+    MatSelectModule
   ],
-  providers: [httpInterceptorProviders, MatDatepickerModule, MatNativeDateModule],
+  providers: [httpInterceptorProviders, MatDatepickerModule, MatNativeDateModule, ChooseTicketComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

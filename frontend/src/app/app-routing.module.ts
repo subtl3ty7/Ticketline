@@ -21,6 +21,7 @@ import {HomeComponent} from './components/home/home.component';
 import {NotAdminGuard} from './guards/not-admin.guard';
 import {ResetPasswordComponent} from './components/reset-password/reset-password.component';
 import {ResetPasswordAuthComponent} from './components/reset-password/reset-password-auth/reset-password-auth.component';
+import {TicketPurchaseComponent} from './components/ticket-purchase/ticket-purchase.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -44,7 +45,7 @@ const routes: Routes = [
   {path: 'top-ten-events', component: TopTenEventsComponent},
   {path: 'reset-password', component: ResetPasswordComponent},
   {path: 'reset-password/:rc', component: ResetPasswordAuthComponent},
-];
+  {path: 'ticket-purchase', canActivate: [LoggedInGuard], component: TicketPurchaseComponent}];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
