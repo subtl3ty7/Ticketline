@@ -64,7 +64,7 @@ public class CustomTicketService implements TicketService {
         String ticketCode = "";
         int i;
         for(i=0; i<maxAttempts; i++) {
-            ticketCode = CodeGenerator.generateUserCode();
+            ticketCode = CodeGenerator.generateTicketCode();
             if(!validator.validateTicketCode(ticketCode).isViolated()) {
                 break;
             }
@@ -96,6 +96,7 @@ public class CustomTicketService implements TicketService {
             ticketEntity.setShow(show);
             showRepository.save(show);
 
+            ticketEntity.setPrice(50);
             validator.validateSave(ticketEntity).throwIfViolated();
             validator.validate(ticketEntity).throwIfViolated();
 
@@ -125,7 +126,17 @@ public class CustomTicketService implements TicketService {
         return reservedTickets;
     }
 
+    @Override
+    public void cancelPurchasedTicket(String ticketCode) throws ValidationException, DataAccessException{
+        LOGGER.info("Validating ticket with ticketCode " + ticketCode);
+        validator.validateTicketCode(ticketCode).throwIfViolated();
 
+        Ticket ticket1 = ticketRepository.findTicketByTicketCode(ticketCode);
+        ticketRepository.delete(ticket1);
+        // do the money return  and invoices stuff
+
+        LOGGER.info("Canceled ticket with ticketCode " + ticketCode);
+    }
 
 
 }

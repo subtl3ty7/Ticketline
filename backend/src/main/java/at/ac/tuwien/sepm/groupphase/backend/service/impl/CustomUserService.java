@@ -25,6 +25,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManagerFactory;
 import java.lang.invoke.MethodHandles;
@@ -127,8 +128,9 @@ public class CustomUserService implements UserService {
         return "Successfully blocked user.";
     }
     @Override
+    @Transactional
     public Customer registerNewCustomer(Customer customer) throws ValidationException, DataAccessException {
-        LOGGER.info("Validating Customer Entity: " + customer);
+        LOGGER.debug("Validating Customer Entity: " + customer);
         customer.setUserCode(getNewUserCode());
         LocalDateTime now = LocalDateTime.now();
         customer.setCreatedAt(now);
@@ -137,19 +139,16 @@ public class CustomUserService implements UserService {
 
         UserAttempts userAttempts = new UserAttempts(customer);
 
-        Session session = getSession();
-        session.beginTransaction();
         customer = userRepository.save(customer);
         userAttempts = userAttemptsRepository.save(userAttempts);
-        session.getTransaction().commit();
 
-        LOGGER.info("Saved Customer Entity in Database: " + customer);
-        LOGGER.info("Saved UserAttempts Entity in Database: " + userAttempts);
+        LOGGER.debug("Saved Customer Entity in Database: " + customer);
+        LOGGER.debug("Saved UserAttempts Entity in Database: " + userAttempts);
         return customer;
     }
     @Override
     public Administrator registerNewAdmin(Administrator admin) throws ValidationException, DataAccessException {
-        LOGGER.info("Validating Admin Entity: " + admin);
+        LOGGER.debug("Validating Admin Entity: " + admin);
         admin.setUserCode(getNewUserCode());
         LocalDateTime now = LocalDateTime.now();
         admin.setCreatedAt(now);
@@ -158,7 +157,7 @@ public class CustomUserService implements UserService {
 
         admin = userRepository.save(admin);
 
-        LOGGER.info("Saved Admin Entity in Database: " + admin);
+        LOGGER.debug("Saved Admin Entity in Database: " + admin);
         return admin;
     }
 
