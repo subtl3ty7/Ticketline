@@ -157,5 +157,18 @@ public class CustomTicketService implements TicketService {
         return ticket;
     }
 
+    @Override
+    public void cancelReservedTicket(String ticketCode) {
+        LOGGER.info("Validating reservation with ticketCode: " + ticketCode);
+        validator.validateReserved(ticketCode).throwIfViolated();
 
+        Ticket chosenTicket = ticketRepository.findTicketByTicketCode(ticketCode);
+
+        Seat seat = chosenTicket.getSeat();
+        seat.setFree(true);
+        seatRepository.save(seat);
+
+        ticketRepository.delete(chosenTicket);
+        LOGGER.info("Reservation with the ticket code" + ticketCode +  " cancelled!");
+    }
 }
