@@ -1,10 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 import {EventService} from '../../services/event.service';
 import {DetailedEvent} from '../../dtos/detailed-event';
-import {Show} from '../../dtos/show';
-import {EventLocation} from '../../dtos/event-location';
 
 @Component({
   selector: 'app-event-details-user-view',
@@ -13,9 +11,10 @@ import {EventLocation} from '../../dtos/event-location';
 })
 export class EventDetailsUserViewComponent implements OnInit {
 
-  @Input() event: DetailedEvent;
+  event: DetailedEvent;
 
   constructor(private eventService: EventService,
+              private router: Router,
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -25,6 +24,13 @@ export class EventDetailsUserViewComponent implements OnInit {
   public loadEvent(): void {
     const eventCode = this.route.snapshot.paramMap.get('eventCode');
     this.eventService.getDetailedEventByUserCode(eventCode).subscribe(e => this.event = e);
+  }
+
+  openPurchase(show) {
+    if (show) {
+      sessionStorage.setItem('show', JSON.stringify(show));
+      this.router.navigate(['ticket-purchase']);
+    }
   }
 
 }
