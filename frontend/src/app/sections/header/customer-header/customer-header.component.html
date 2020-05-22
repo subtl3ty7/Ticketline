@@ -64,20 +64,20 @@
         <div class="container" style="max-width: 1000px; width: 100%;">
           <div class="row" style="width: 100%; margin: 0">
             <div class="col" style="padding: 0; margin: 0;">
-              <input class="form-control left" (keyup)="refreshSearchTerm($event)" (keyup.enter)="searchEvent(searchTerm)" [ngModel]="searchTerm" name="term" type="text" placeholder="Veranstaltung suchen..." aria-label="Search">
+              <input class="form-control left" (keyup)="refreshSearchTerm($event)" (keyup.enter)="searchShared.searchEntity = searchedEntity.EVENT; searchEntity(searchTerm, searchedEntity.EVENT)" [ngModel]="searchTerm" autocomplete="off" name="term" type="text" placeholder="Veranstaltung suchen..." aria-label="Search">
             </div>
             <div class="col" style="padding: 0; margin: 0; max-width: 75px;">
               <div class="input-group-append" style="width: 75px;">
-                <button class="btn btn-sm right" type="submit" (click)="searchShared.searchEntity = searchedEntity.EVENT; searchEntity(searchTerm)"><i class="fas fa-search"></i></button>
+                <button class="btn btn-sm right" type="submit" (click)="searchEntity(searchTerm, searchedEntity.EVENT)"><i class="fas fa-search"></i></button>
               </div>
             </div>
           </div>
-          <div class="row" (click)="searchShared.searchEntity = searchedEntity.ARTIST; searchEntity(searchTerm)" *ngIf="searchTerm.length" style="margin: 0">
+          <div class="row" (click)="searchEntity(searchTerm, searchedEntity.ARTIST)" *ngIf="isSearchActive" style="margin: 0">
             <a class="result" style="background-color: white; width: 100%; color: black; height: 75px; border: 1px #202020 solid; padding: 25px; font-size: 20px; z-index: 99999;">
               {{searchTerm}} in <b>Künstlern</b> suchen
             </a>
           </div>
-          <div class="row" (click)="searchShared.searchEntity = searchedEntity.LOCATION; searchEntity(searchTerm)" *ngIf="searchTerm.length" style="margin: 0">
+          <div class="row" (click)="searchEntity(searchTerm, searchedEntity.LOCATION)" *ngIf="isSearchActive" style="margin: 0">
             <a style="background-color: white; width: 100%; color: black; height: 75px; border: 1px #202020 solid; border-top: 0px; padding: 25px; z-index: 99999; font-size: 20px;">
               {{searchTerm}} in <b>Orten</b> suchen
             </a>

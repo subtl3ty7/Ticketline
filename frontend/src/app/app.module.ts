@@ -73,6 +73,7 @@ import { ResetPasswordComponent} from './components/reset-password/reset-passwor
 import { ResetPasswordAuthComponent } from './components/reset-password/reset-password-auth/reset-password-auth.component';
 import { ChartComponent } from './components/top-ten-events/chart/chart.component';
 import { ErrorComponent } from './components/error/error.component';
+import { SearchShared} from './components/search/search-shared';
 
 @NgModule({
   declarations: [

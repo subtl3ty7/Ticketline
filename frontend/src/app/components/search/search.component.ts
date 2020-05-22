@@ -13,9 +13,13 @@ export class SearchComponent implements OnInit {
   constructor(private authService: AuthService, private searchShared: SearchShared) { }
   public isMobileLayout = false;
   isCollapsed: boolean;
-  searchEntity = SearchEntity;
+  currentTerm: string;
+  currentEntity: string;
 
   ngOnInit(): void {
+    this.currentTerm = localStorage.getItem('searchTerm');
+    this.currentEntity = localStorage.getItem('searchEntity');
+    console.log('entity: ' + this.currentEntity + '; term: ' + this.currentTerm);
     this.isCollapsed = true;
     this.isMobileLayout = window.innerWidth <= 992;
     window.onresize = () => this.isMobileLayout = window.innerWidth <= 992;

@@ -2,8 +2,8 @@
   <h1 class="mb-0 ml-3 page-title">Nach Künstler suchen</h1>
 </div>
 <div class="card-body">
-  <div *ngIf="artists.length > 0">
-    <div *ngFor="let a of artists">
+  <div *ngIf="searchShared.entities.length > 0">
+    <div *ngFor="let a of searchShared.entities">
       <div class="row">
         <div class="artist-block">
           <div class="row artist-row">
@@ -22,4 +22,5 @@
       </div>
     </div>
   </div>
+  <p *ngIf="searchShared.entities.length == 0" style="font-size: 20px; padding-top: 40px; text-align: center">Es konnten keine Künstler mit diesen Kriterien gefunden werden.</p>
 </div>
