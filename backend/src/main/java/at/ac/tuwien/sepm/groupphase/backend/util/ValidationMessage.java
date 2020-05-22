@@ -103,7 +103,15 @@ public class ValidationMessage {
             put("ticket_exists", "This ticket is already saved in the database.");
             put("admin_purchase", "Admin can not reserve or purchase tickets.");
             put("price_exists", "Price has to be inputed.");
-            put("price_notZero", "Price can not be zero.");
+            put("price_zero", "Price can not be zero.");
+            put("seat_zero", "Seat id can not be zero.");
+            put("show_zero", "Show id can not be zero.");
+            put("seat_null", "Seat id can not be null.");
+            put("show_null", "Show id can not be null.");
+            put("price_null", "Price can not be null.");
+            put("ticket_notExist", "Ticket is not found in the database.");
+            put("ticket_purchased", "Ticket is not purchased yet.");
+            put("ticket_reserved", "Ticket is already purchased.");
 
             //news
             put("newsCode_unique", "News code is already present in the database.");
