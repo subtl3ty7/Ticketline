@@ -127,8 +127,8 @@ public class TicketEndpoint {
         @ApiResponse(code = 400, message = "Ticket is already purchased"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<String> buyTicket(@PathVariable String ticketCode) {
-        LOGGER.info("POST " + ticketCode);
+    public ResponseEntity<String> purchaseReservedTicket(@PathVariable String ticketCode) {
+        LOGGER.info("POST /api/v1/tickets/purchaseReserved/" + ticketCode);
         Ticket ticket = ticketService.purchaseReservedTicket(ticketCode);
 
         ResponseEntity response = new ResponseEntity(ticketMapper.ticketToSimpleTicketDto(ticket), HttpStatus.CREATED);
