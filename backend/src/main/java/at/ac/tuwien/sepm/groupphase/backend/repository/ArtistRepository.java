@@ -16,5 +16,6 @@ public interface ArtistRepository extends JpaRepository<Artist, Long> {
      */
     List<Artist> findAllByOrderByLastNameAscFirstNameAsc();
 
-    List<Artist> findArtistsByFirstNameContainingAndLastNameContaining(String firstName, String lastName);
+    List<Artist> findArtistsByFirstNameContainingIgnoreCaseAndLastNameContainingIgnoreCase(String firstName, String lastName);
+
 }

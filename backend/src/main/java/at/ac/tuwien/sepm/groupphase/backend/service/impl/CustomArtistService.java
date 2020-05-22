@@ -28,7 +28,7 @@ public class CustomArtistService implements ArtistService {
     @Override
     public List<Artist> findArtistsByFirstAndLastName(String firstName, String lastName) {
         LOGGER.debug("Find artists by first/last name");
-        return artistRepository.findArtistsByFirstNameContainingAndLastNameContaining(firstName, lastName);
+        return artistRepository.findArtistsByFirstNameContainingIgnoreCaseAndLastNameContainingIgnoreCase(firstName, lastName);
     }
 
     @Override
