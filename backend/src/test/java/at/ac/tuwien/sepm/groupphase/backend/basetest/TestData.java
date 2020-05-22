@@ -1,9 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.basetest;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Seat;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Section;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
+import at.ac.tuwien.sepm.groupphase.backend.entity.*;
 import org.hibernate.mapping.Table;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -95,5 +92,11 @@ public interface TestData {
             add(Seat.builder().id(ID).sectionId(ID).isFree(true).seatColumn(COLUMN).seatRow(ROW).build());
         }
     };
+
+    Customer USER_TICKET = Customer.CustomerBuilder.aCustomer().withId(ID).withUserCode(USER_CODE).withFirstName(FNAME)
+        .withLastName(LNAME).withEmail(DEFAULT_USER).withPassword(PASS).withBirthday(BIRTHDAY).withCreatedAt(CRE)
+        .withUpdatedAt(UPD).withIsBlocked(false).withIsLogged(false).withPoints(POINTS).build();
+
+    String TICKETS_BASE_URI = BASE_URI + "/tickets";
 
 }
