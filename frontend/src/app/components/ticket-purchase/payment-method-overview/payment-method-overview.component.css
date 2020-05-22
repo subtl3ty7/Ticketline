@@ -1,0 +1,35 @@
+.eventName {
+  display: inline-flex;
+}
+
+.artistName {
+  display: inline-flex;
+}
+
+.datum {
+  display: inline-flex;
+}
+
+.performanceTime {
+  display: inline-flex;
+}
+
+.hall {
+  display: inline-flex;
+}
+
+.city {
+  display: inline-flex;
+}
+
+.adress {
+  display: inline-flex;
+}
+
+.seating {
+  display: inline-flex;
+}
+
+.h5_bold {
+  font-weight: bold;
+}

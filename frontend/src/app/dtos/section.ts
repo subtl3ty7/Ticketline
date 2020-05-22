@@ -1,9 +1,9 @@
 import {Seat} from './seat';
 
 export class Section {
-  private id: number;
+  public id: number;
   private eventLocationId: number;
-  private name: string;
+  public sectionName: string;
   private description: string;
-  private seats: Seat[];
+  public seats: Seat[];
 }

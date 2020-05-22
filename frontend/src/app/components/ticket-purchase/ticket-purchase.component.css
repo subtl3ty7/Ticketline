@@ -1,0 +1,18 @@
+.mat-stepper-horizontal {
+  background-color: #FBFBFB;
+  margin-top: 8px;
+  border-radius: 20px 20px 20px 20px;
+
+
+}
+
+.mat-form-field {
+  margin-top: 16px;
+  background-color: #FBFBFB;
+  border-radius: 20px 20px 20px 20px;
+
+}
+
+.btn-secondary{
+  padding-bottom: 10px;
+}

@@ -35,7 +35,7 @@ public class Event implements Serializable {
 
     @NotNull
     @Size(min=1, max=1000)
-    @Column(nullable = false, length = 10000)
+    @Column(nullable = false, length = 1000)
     private String description;
 
     @NotNull
@@ -63,10 +63,6 @@ public class Event implements Serializable {
 
     @Column
     private int totalTicketsSold;
-
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SELECT)
-    private List<String> artists;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT) //only way to fetch more than two collections with type eager ...

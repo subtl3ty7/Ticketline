@@ -63,7 +63,7 @@ public class CustomEventService implements EventService {
 
     @Override
     public Event createNewEvent(Event event){
-        LOGGER.info("Moving Event Entity through Service Layer: " + event);
+        LOGGER.debug("Moving Event Entity through Service Layer: " + event);
         event.setEventCode(getNewEventCode());
         validator.validate(event).throwIfViolated();
 
