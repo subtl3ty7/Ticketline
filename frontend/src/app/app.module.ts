@@ -72,6 +72,8 @@ import {MatStepperModule} from '@angular/material/stepper';
 import { ChooseTicketComponent } from './components/ticket-purchase/choose-ticket/choose-ticket.component';
 import { PaymentMethodOverviewComponent } from './components/ticket-purchase/payment-method-overview/payment-method-overview.component';
 import {MatSelectModule} from '@angular/material/select';
+import { ChartComponent } from './components/top-ten-events/chart/chart.component';
+import { ErrorComponent } from './components/error/error.component';
 
 @NgModule({
   declarations: [
@@ -123,7 +125,9 @@ import {MatSelectModule} from '@angular/material/select';
     ResetPasswordAuthComponent,
     TicketPurchaseComponent,
     ChooseTicketComponent,
-    PaymentMethodOverviewComponent
+    PaymentMethodOverviewComponent,
+    ChartComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,

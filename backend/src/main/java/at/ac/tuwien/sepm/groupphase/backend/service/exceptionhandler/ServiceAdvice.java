@@ -1,5 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.exceptionhandler;
 
+import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
 import at.ac.tuwien.sepm.groupphase.backend.util.ValidationMessage;
@@ -17,6 +18,7 @@ import java.lang.invoke.MethodHandles;
 public class ServiceAdvice {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
+    /*
     @AfterThrowing(
         value = "execution(* at.ac.tuwien.sepm.groupphase.backend.service.*.*(..))",
         throwing = "e"
@@ -34,6 +36,7 @@ public class ServiceAdvice {
         LOGGER.debug("Handling Validation Exception");
         throw new ServiceException(e.getValidationMessage().getMessages(), e);
     }
+    */
 
 
 

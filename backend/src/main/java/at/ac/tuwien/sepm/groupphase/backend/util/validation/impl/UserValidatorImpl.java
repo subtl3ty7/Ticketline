@@ -27,24 +27,32 @@ public class UserValidatorImpl implements UserValidator {
     @Override
     public Constraints validateRegistration(AbstractUser user) {
         Constraints constraints = new Constraints();
-        constraints.add(validate(user));
-        constraints.add("isLogged_false", !user.isLogged());
-        if (user instanceof Customer) {
-            constraints.add("isBlocked_false", !((Customer) user).isBlocked());
-            constraints.add("points_zero", ((Customer) user).getPoints() == 0);
+        constraints.add("user_NotNull", user != null);
+        if(!constraints.isViolated()) {
+            constraints.add(AccesoryValidator.validateJavaxConstraints(user));
+            constraints.add("userCode_unique", userRepository.findAbstractUserByUserCode(user.getUserCode()) == null);
+            constraints.add("isLogged_false", !user.isLogged());
+            constraints.add(validateRegistrationEmail(user.getEmail()));
+            constraints.add(validatePasswordEncoded(user.getPassword()));
+            if (user instanceof Customer) {
+                constraints.add("isBlocked_false", !((Customer) user).isBlocked());
+                constraints.add("points_zero", ((Customer) user).getPoints() == 0);
+            }
+            if (user.getBirthday() != null) {
+                constraints.add("birthday_16yo", ChronoUnit.YEARS.between(user.getBirthday(), LocalDateTime.now()) > 16);
+            }
         }
-        if (user.getBirthday() != null) {
-            constraints.add("birthday_16yo", ChronoUnit.YEARS.between(user.getBirthday(), LocalDateTime.now()) > 16);
-        }
-        constraints.add(validatePasswordEncoded(user.getPassword()));
         return constraints;
     }
 
-    @Override
-    public Constraints validate(AbstractUser user) {
+    private Constraints validateRegistrationEmail(String email) {
+        Pattern eMailPattern = Pattern.compile("[a-zA-Z0-9!#$%&'*+/=?^_‘{|}~\\-:.]+@[a-zA-Z0-9]+(\\.[a-zA-Z0-9]+)+");
         Constraints constraints = new Constraints();
-        constraints.add(validateUnique(user));
-        constraints.add(AccesoryValidator.validateJavaxConstraints(user));
+        constraints.add("email_notNull", email != null);
+        if(!constraints.isViolated()) {
+            constraints.add("email_valid", eMailPattern.matcher(email).matches());
+            constraints.add("email_unique", userRepository.findAbstractUserByEmail(email) == null);
+        }
         return constraints;
     }
 
@@ -108,13 +116,6 @@ public class UserValidatorImpl implements UserValidator {
         Pattern bCryptPattern = Pattern.compile("\\A\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}");
         Constraints constraints = new Constraints();
         constraints.add("password_encoded", bCryptPattern.matcher(password).matches());
-        return constraints;
-    }
-
-    private Constraints validateUnique(AbstractUser user) {
-        Constraints constraints = new Constraints();
-        constraints.add("userCode_unique", userRepository.findAbstractUserByUserCode(user.getUserCode()) == null);
-        constraints.add("email_unique", userRepository.findAbstractUserByEmail(user.getEmail()) == null);
         return constraints;
     }
 

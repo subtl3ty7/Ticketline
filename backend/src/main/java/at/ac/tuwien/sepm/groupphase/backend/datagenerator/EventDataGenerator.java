@@ -18,6 +18,7 @@ import javax.annotation.PostConstruct;
 import javax.persistence.EntityManagerFactory;
 import java.io.*;
 import java.lang.invoke.MethodHandles;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -61,34 +62,21 @@ public class EventDataGenerator {
     @PostConstruct
     private void generate() {
         if(seatRepository.findAll().size() > 0) {
-            LOGGER.debug("Event Test Data already generated");
+            LOGGER.info("Event Test Data already generated");
         } else {
-            generateEventLocations(true);
-            List<EventLocation> eventLocations = eventLocationService.getAllEventLocations();
-            generateEvents(eventLocations);
+            LOGGER.info("Generating Event Test Data");
+            LocalDateTime start = LocalDateTime.now();
+            generateEvents();
+            LocalDateTime end = LocalDateTime.now();
+            float runningTime = Duration.between(start, end).toMillis();
+            LOGGER.info("Generating Event Test Data took " + runningTime/1000.0 + " seconds");
+
         }
     }
 
-    private void updateEvent(Event event) {
-        Session session = getSession();
-        session.beginTransaction();
-        Event eventNew = eventService.findByEventCode(event.getEventCode());
-        eventNew.getShows().remove(2);
-        eventNew.getShows().remove(1);
-        eventNew.getShows().add(Show.builder().startsAt(LocalDateTime.now()).endsAt(LocalDateTime.now()).build());
-        eventService.createNewEvent(eventNew);
-        session.getTransaction().commit();
-        int i=0;
-    }
-
-    private void deleteEvents(List<Event> events) {
-        for(Event event: events) {
-            eventService.deletebyEventCode(event.getEventCode());
-        }
-    }
-
-    private List<Event> generateEvents(List <EventLocation> eventLocations) {
-        LOGGER.info("Generating Event Test Data");
+    private List<Event> generateEvents() {
+        generateEventLocations(true);
+        List<EventLocation> eventLocations = eventLocationService.getAllEventLocations();
 
         if(eventLocations.isEmpty()) {
             throw new NotFoundException("No Event Locations in argument list. Needs to contain at least one.");
@@ -110,10 +98,10 @@ public class EventDataGenerator {
                 .startsAt(LocalDateTime.now())
                 .endsAt(LocalDateTime.now())
                 .eventCode("E1234" + i)
-                .name("Talk Event")
+                .name("Event " + i)
                 .photo(getImage(imgName))
                 .prices(List.of(1,2,3))
-                .totalTicketsSold(5)
+                .totalTicketsSold(5*i*i*i)
                 .type("Of the cool type")
                 .shows(generateShows(eventLocations.get(eventLocationIndex)))
                 .build();

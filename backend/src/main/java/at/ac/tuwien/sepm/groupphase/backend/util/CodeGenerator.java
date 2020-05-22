@@ -60,4 +60,10 @@ public abstract class CodeGenerator {
         char type = 'R';
         return generateCode(resetPasswordCodeLength, type);
     }
+
+    public static String generateNewsCode() {
+        int newsCodeLength = 6;
+        char type = 'N';
+        return generateCode(newsCodeLength, type).toUpperCase();
+    }
 }
