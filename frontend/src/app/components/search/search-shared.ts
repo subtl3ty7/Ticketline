@@ -16,7 +16,7 @@ export enum SearchEntity {
 })
 export class SearchShared {
   public searchTerm: string = '';
-  public searchEntity: SearchEntity;
+  public searchEntity: string;
   public entities: object[];
   
   constructor(public authService: AuthService, private artistService: ArtistService) { }

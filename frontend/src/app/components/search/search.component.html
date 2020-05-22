@@ -10,9 +10,9 @@
     <div class="mx-auto" style="max-width: 1320px; width: 100%;">
       <span class="anchor" id="formLogin"></span>
       <div class="card main-body">
-        <app-artist *ngIf="currentEntity === 'Artist'"></app-artist>
-        <app-location *ngIf="currentTerm === 'Location'"></app-location>
-        <app-event *ngIf="currentTerm === 'Event' || currentTerm === undefined"></app-event>
+        <app-artist *ngIf="searchShared.searchEntity === 'Artist'"></app-artist>
+        <app-location *ngIf="searchShared.searchEntity === 'Location'"></app-location>
+        <app-event *ngIf="searchShared.searchEntity === 'Event' || searchShared.searchEntity === undefined"></app-event>
       </div>
     </div>
   </div>

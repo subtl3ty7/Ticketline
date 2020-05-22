@@ -36,6 +36,7 @@ export class CustomerHeaderComponent implements OnInit {
     localStorage.setItem('searchEntity', s.toString());
     switch (s) {
       case SearchEntity.ARTIST:
+        this.searchShared.searchEntity = 'Artist';
         const term = localStorage.getItem('searchTerm').split(' ', 2);
         const firstName = term[0];
         const lastName = term[1];
@@ -43,10 +44,13 @@ export class CustomerHeaderComponent implements OnInit {
         this.searchShared.getArtistsByFirstAndLastName(firstName, lastName);
         break;
       case SearchEntity.EVENT:
+        this.searchShared.searchEntity = 'Event';
         break;
       case SearchEntity.LOCATION:
+        this.searchShared.searchEntity = 'Location';
         break;
       case SearchEntity.SHOW:
+        this.searchShared.searchEntity = 'Show';
         break;
     }
     this.isSearchActive = false;

@@ -19,6 +19,7 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
     this.currentTerm = localStorage.getItem('searchTerm');
     this.currentEntity = localStorage.getItem('searchEntity');
+    this.searchShared.searchEntity = this.currentEntity;
     console.log('entity: ' + this.currentEntity + '; term: ' + this.currentTerm);
     this.isCollapsed = true;
     this.isMobileLayout = window.innerWidth <= 992;
