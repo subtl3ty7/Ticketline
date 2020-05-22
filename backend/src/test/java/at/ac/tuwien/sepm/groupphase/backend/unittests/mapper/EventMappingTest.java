@@ -39,7 +39,6 @@ public class EventMappingTest implements TestData {
         .endsAt(END)
         .prices(PRICES)
         .totalTicketsSold(TOTAL)
-        .artists(ARTISTS)
         .shows(SHOWS)
         .build();
 
@@ -92,7 +91,6 @@ public class EventMappingTest implements TestData {
             () -> assertEquals(PRICES, detailedEventDto.getPrices()),
             () -> assertEquals(PRICES.get(0), detailedEventDto.getStartPrice()),
             () -> assertEquals(TOTAL, detailedEventDto.getTotalTicketsSold()),
-            () -> assertEquals(ARTISTS, detailedEventDto.getArtists()),
             () -> assertEquals(SHOWS, detailedEventDto.getShows())
         );
     }
@@ -111,7 +109,6 @@ public class EventMappingTest implements TestData {
             () -> assertEquals(END, event1.getEndsAt()),
             () -> assertEquals(PRICES, event1.getPrices()),
             () -> assertEquals(TOTAL, event1.getTotalTicketsSold()),
-            () -> assertEquals(ARTISTS, event1.getArtists()),
             () -> assertEquals(SHOWS, event1.getShows())
         );
     }

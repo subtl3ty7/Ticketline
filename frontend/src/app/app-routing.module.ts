@@ -11,7 +11,6 @@ import {UserDetailsContainerComponent} from './components/admin-home/admin-tabs/
 import {CreateUserContainerComponent} from './components/admin-home/admin-tabs/users-tab/create-user-container/root/create-user-container.component';
 import {MyProfileContainerComponent} from './components/my-profile/root/my-profile-container.component';
 import {RegistrationComponent} from './components/registration/registration.component';
-import {EventSearchComponent} from './components/event-search/event-search.component';
 import {EventDetailsUserViewComponent} from './components/event-details/event-details-user-view';
 import {EventDetailsContainerComponent} from './components/admin-home/admin-tabs/events-tab/event-details-container/root/event-details-container.component';
 import {CreateEventContainerComponent} from './components/admin-home/admin-tabs/events-tab/create-event-container/root/create-event-container.component';
@@ -22,6 +21,11 @@ import {NotAdminGuard} from './guards/not-admin.guard';
 import {ResetPasswordComponent} from './components/reset-password/reset-password.component';
 import {ResetPasswordAuthComponent} from './components/reset-password/reset-password-auth/reset-password-auth.component';
 import {TicketPurchaseComponent} from './components/ticket-purchase/ticket-purchase.component';
+import {ArtistComponent} from './components/search/artist/artist.component';
+import {EventComponent} from './components/search/event/event.component';
+import {LocationComponent} from './components/search/location/location.component';
+import {ShowComponent} from './components/search/show/show.component';
+import {SearchComponent} from './components/search/search.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -39,9 +43,10 @@ const routes: Routes = [
   {path: 'registration', canActivate: [NotLoggedInGuard], component: RegistrationComponent},
   {path: 'create-event', canActivate: [AdminGuard], component: CreateEventContainerComponent},
   {path: 'create-user', canActivate: [AdminGuard], component: CreateUserContainerComponent},
-  {path: 'event-search', canActivate: [], component: EventSearchComponent},
-  {path: 'events/:eventCode', canActivate: [LoggedInGuard], component: EventDetailsUserViewComponent},
+  {path: 'event-details/:eventCode', canActivate: [LoggedInGuard], component: EventDetailsUserViewComponent},
   {path: 'faq', canActivate: [], component: FaqComponent},
+  {path: 'top-ten-events', component: TopTenEventsComponent},
+  {path: 'search', canActivate: [], component: SearchComponent},
   {path: 'top-ten-events', component: TopTenEventsComponent},
   {path: 'reset-password', component: ResetPasswordComponent},
   {path: 'reset-password/:rc', component: ResetPasswordAuthComponent},

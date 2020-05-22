@@ -70,7 +70,6 @@ public class EventEndpointTest implements TestData {
         .endsAt(END)
         .prices(PRICES)
         .totalTicketsSold(TOTAL)
-        .artists(ARTISTS)
         .shows(SHOWS)
         .photo(PHOTO)
         .build();
@@ -89,7 +88,6 @@ public class EventEndpointTest implements TestData {
             .endsAt(END)
             .prices(PRICES)
             .totalTicketsSold(TOTAL)
-            .artists(ARTISTS)
             .shows(SHOWS)
             .photo(PHOTO)
             .build();

@@ -22,7 +22,6 @@ public class DetailedEventDto {
     private String photo;
     @ToString.Exclude
     private List<Show> shows;
-    private List<String> artists;
     private String type;
     private String category;
     private List<Integer> prices;
@@ -38,7 +37,6 @@ public class DetailedEventDto {
         private String description;
         private int startPrice;
         private List<Show> shows;
-        private List<String> artists;
         private String type;
         private String category;
         private List<Integer> prices;
@@ -57,7 +55,6 @@ public class DetailedEventDto {
             this.endsAt = endsAt;
             this.photo = photo;
             this.shows = shows;
-            this.artists = artists;
             this.type = type;
             this.category = category;
             this.prices = prices;
@@ -83,7 +80,6 @@ public class DetailedEventDto {
             detailedEventDto.setEndsAt(endsAt);
             detailedEventDto.setPhoto(photo);
             detailedEventDto.setShows(shows);
-            detailedEventDto.setArtists(artists);
             detailedEventDto.setType(type);
             detailedEventDto.setCategory(category);
             detailedEventDto.setPrices(prices);

@@ -20,6 +20,10 @@ li {
   width: 100%;
 }
 
+result:hover {
+  text-decoration: underline;
+}
+
 .navbar-brand {
   font-size: 40px;
 }
@@ -196,3 +200,5 @@ li {
     padding-right: 40px;
   }
 }
+
+
