@@ -1,7 +1,7 @@
 export class Seat {
   private id: number;
-  private sectionId: number;
-  private seatRow: string;
-  private seatColumn: string;
-  private isFree: boolean;
+  public sectionId: number;
+  public seatRow: string;
+  public seatColumn: string;
+  public isFree: boolean;
 }

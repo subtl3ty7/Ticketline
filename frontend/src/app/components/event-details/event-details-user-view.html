@@ -41,7 +41,7 @@
                   <tr *ngFor="let l of s.eventLocation">
                     <th scope="row"></th>
                     <td>{{s.startsAt | date:'short'}} - {{s.endsAt | date:'short' }}, {{l.city}}, {{l.country}}</td>
-                    <button type="button" class="btn btn-success btn-sm m-0" routerLink="/home">Tickets</button>
+                    <button type="button" class="btn btn-success btn-sm m-0" (click) = "openPurchase(s)">Tickets</button>
                   </tr>
                   </tbody>
                 </table>

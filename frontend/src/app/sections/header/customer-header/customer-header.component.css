@@ -141,6 +141,10 @@ li {
   margin-left: -3px;
 }
 
+.entity-row:hover {
+  cursor: pointer;
+}
+
 /*Mobile screen*/
 @media screen and (max-width: 992px) {
   a.nav-link:hover {

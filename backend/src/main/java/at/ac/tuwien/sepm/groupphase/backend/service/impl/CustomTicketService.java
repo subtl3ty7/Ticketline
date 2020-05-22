@@ -64,7 +64,7 @@ public class CustomTicketService implements TicketService {
         String ticketCode = "";
         int i;
         for(i=0; i<maxAttempts; i++) {
-            ticketCode = CodeGenerator.generateUserCode();
+            ticketCode = CodeGenerator.generateTicketCode();
             if(!validator.validateTicketCode(ticketCode).isViolated()) {
                 break;
             }
@@ -96,6 +96,7 @@ public class CustomTicketService implements TicketService {
             Show show = showRepository.findShowById(ticketEntity.getShow().getId());
             ticketEntity.setShow(show);
 
+            ticketEntity.setPrice(50);
             validator.validateSave(ticketEntity).throwIfViolated();
             validator.validate(ticketEntity).throwIfViolated();
 

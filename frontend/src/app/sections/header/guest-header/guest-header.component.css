@@ -20,6 +20,10 @@ li {
   width: 100%;
 }
 
+result:hover {
+  text-decoration: underline;
+}
+
 .navbar-brand {
   font-size: 40px;
 }
@@ -132,6 +136,10 @@ li {
   color: white;
 }
 
+.entity-row:hover {
+  cursor: pointer;
+}
+
 /*Mobile screen*/
 @media screen and (max-width: 992px) {
   a.nav-link:hover {
@@ -196,3 +204,5 @@ li {
     padding-right: 40px;
   }
 }
+
+

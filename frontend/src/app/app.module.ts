@@ -50,7 +50,6 @@ import { EditProfileComponent } from './components/my-profile/my-profile-tabs/my
 import { DeleteAccountComponent } from './components/my-profile/my-profile-tabs/my-info-tab/delete-account/delete-account.component';
 import { TopEventsComponent} from './components/home/top-events/top-events.component';
 import { RegistrationComponent } from './components/registration/registration.component';
-import { EventSearchComponent } from './components/event-search/event-search.component';
 import { EventDetailsUserViewComponent } from './components/event-details/event-details-user-view';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { EventDetailsContainerComponent } from './components/admin-home/admin-tabs/events-tab/event-details-container/root/event-details-container.component';
@@ -65,10 +64,21 @@ import { TopTenEventsComponent } from './components/top-ten-events/top-ten-event
 import { HeaderComponent } from './sections/header/header.component';
 import { CurrentNewsComponent } from './components/home/current-news/current-news.component';
 import { TopEventsListComponent } from './components/top-ten-events/top-events-list/top-events-list.component';
+import { SearchComponent } from './components/search/search.component';
+import { ArtistComponent } from './components/search/artist/artist.component';
+import { EventComponent } from './components/search/event/event.component';
+import { LocationComponent } from './components/search/location/location.component';
+import { ShowComponent } from './components/search/show/show.component';
 import { ResetPasswordComponent} from './components/reset-password/reset-password.component';
 import { ResetPasswordAuthComponent } from './components/reset-password/reset-password-auth/reset-password-auth.component';
+import { TicketPurchaseComponent } from './components/ticket-purchase/ticket-purchase.component';
+import {MatStepperModule} from '@angular/material/stepper';
+import { ChooseTicketComponent } from './components/ticket-purchase/choose-ticket/choose-ticket.component';
+import { PaymentMethodOverviewComponent } from './components/ticket-purchase/payment-method-overview/payment-method-overview.component';
+import {MatSelectModule} from '@angular/material/select';
 import { ChartComponent } from './components/top-ten-events/chart/chart.component';
 import { ErrorComponent } from './components/error/error.component';
+import { SearchShared} from './components/search/search-shared';
 
 @NgModule({
   declarations: [
@@ -102,7 +112,6 @@ import { ErrorComponent } from './components/error/error.component';
     TopEventsComponent,
     RegistrationComponent,
     GuestHeaderComponent,
-    EventSearchComponent,
     EventDetailsUserViewComponent,
     EventDetailsContainerComponent,
     EventDetailsComponent,
@@ -118,8 +127,17 @@ import { ErrorComponent } from './components/error/error.component';
     TopEventsListComponent,
     ResetPasswordComponent,
     ResetPasswordAuthComponent,
+    TicketPurchaseComponent,
+    ChooseTicketComponent,
+    PaymentMethodOverviewComponent,
     ChartComponent,
-    ErrorComponent
+    ErrorComponent,
+    TopEventsListComponent,
+    SearchComponent,
+    ArtistComponent,
+    EventComponent,
+    LocationComponent,
+    ShowComponent
   ],
   imports: [
     BrowserModule,
@@ -142,9 +160,11 @@ import { ErrorComponent } from './components/error/error.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatPaginatorModule,
-    FlexModule
+    FlexModule,
+    MatStepperModule,
+    MatSelectModule
   ],
-  providers: [httpInterceptorProviders, MatDatepickerModule, MatNativeDateModule],
+  providers: [httpInterceptorProviders, MatDatepickerModule, MatNativeDateModule, ChooseTicketComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

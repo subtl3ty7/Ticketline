@@ -1,0 +1,31 @@
+#numberOfTickets {
+  max-width: 15%;
+}
+
+.numberOfTickets {
+  display: flex;
+}
+
+#section {
+  max-width: 15%;
+}
+
+.section {
+  display: flex;
+}
+
+.ticketRow {
+  display:flex;
+}
+
+#ticketRow {
+  max-width: 15%;
+}
+
+.ticketPlace {
+  display:flex;
+}
+
+#ticketPlace {
+  max-width: 15%;
+}
