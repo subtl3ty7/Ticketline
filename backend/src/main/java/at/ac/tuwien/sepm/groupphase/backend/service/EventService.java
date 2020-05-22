@@ -1,5 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.service;
 
+import at.ac.tuwien.sepm.groupphase.backend.entity.Artist;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface EventService {
     Event findByEventCode(String eventCode);
 
     void deletebyEventCode(String eventCode);
+
+    List<Event> findEventsByArtistId(Long artistId);
 }

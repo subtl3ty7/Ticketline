@@ -1,5 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
+import at.ac.tuwien.sepm.groupphase.backend.entity.Artist;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
@@ -10,6 +11,7 @@ import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
 import at.ac.tuwien.sepm.groupphase.backend.util.validation.EventValidator;
+import at.ac.tuwien.sepm.groupphase.backend.util.validation.impl.ArtistValidatorImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +29,15 @@ public class CustomEventService implements EventService {
     private final EventRepository eventRepository;
     private final EventLocationRepository eventLocationRepository;
     private final EventValidator validator;
+    private final ArtistValidatorImpl artistValidator;
 
 
     @Autowired
-    public CustomEventService(EventRepository eventRepository, EventValidator validator, EventLocationRepository eventLocationRepository) {
+    public CustomEventService(EventRepository eventRepository, EventValidator validator, EventLocationRepository eventLocationRepository, ArtistValidatorImpl artistValidator) {
         this.eventRepository = eventRepository;
         this.validator = validator;
         this.eventLocationRepository = eventLocationRepository;
+        this.artistValidator = artistValidator;
     }
 
     @Override
@@ -104,5 +108,22 @@ public class CustomEventService implements EventService {
         validator.validateExists(eventCode).throwIfViolated();
         Event event = eventRepository.findEventByEventCode(eventCode);
         eventRepository.delete(event);
+    }
+
+    @Override
+    public List<Event> findEventsByArtistId(Long artistId) {
+        artistValidator.validateId(artistId).throwIfViolated();
+        List<Event> allEvents = eventRepository.findAll();
+        List<Event> result = new ArrayList<>();
+        for (Event e: allEvents) {
+            List<Artist> artists = e.getArtists();
+            for (Artist a: artists) {
+                if (a.getId().equals(artistId)) {
+                    result.add(e);
+                    break;
+                }
+            }
+        }
+        return result;
     }
 }

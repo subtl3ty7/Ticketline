@@ -13,6 +13,7 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
 import at.ac.tuwien.sepm.groupphase.backend.repository.*;
 import at.ac.tuwien.sepm.groupphase.backend.security.JwtTokenizer;
+import at.ac.tuwien.sepm.groupphase.backend.service.ArtistService;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventLocationService;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -94,6 +95,12 @@ public class TicketEndpointTest implements TestData {
     @Autowired
     private ResourceLoader resourceLoader;
 
+    @Autowired
+    private ArtistRepository artistRepository;
+
+    @Autowired
+    private ArtistService artistService;
+
     private DetailedTicketDto detailedTicketDto;
 
     @Test
@@ -102,7 +109,7 @@ public class TicketEndpointTest implements TestData {
 
         userRepository.save(USER_TICKET);
         EventDataGenerator eventDataGenerator = new EventDataGenerator(sectionRepository, seatRepository,
-            showRepository, eventService, eventLocationService, entityManagerFactory, resourceLoader);
+            showRepository, eventService, eventLocationService, entityManagerFactory, resourceLoader, artistRepository, artistService);
         eventDataGenerator.generate();
 
         detailedTicketDto = DetailedTicketDto.DetailedTicketDtoBuilder.aDetailedTicketDto(

@@ -76,8 +76,7 @@ label {
 }
 
 html, body { min-height: 100%; }
-body, h1, h2, h3, h4, h5, h6, p, a, label {
-  margin: 0 !important;
+body, h1, h2, h3, h4, h5, h6, p, a {
   font-family: Segue UI, Roboto, "Helvetica Neue", sans-serif !important;
 }
 body {
@@ -214,7 +213,7 @@ p {
 }
 
 label {
-  margin-bottom: 5px;
+  margin-bottom: 20px;
 }
 
 .main-body {

@@ -20,3 +20,13 @@
 .artist-row {
   height: 100%;
 }
+
+.advanced-search {
+  text-align: right;
+  margin-top: 5px;
+  font-size: 18px;
+}
+
+a {
+  color: #FBFBFB;
+}

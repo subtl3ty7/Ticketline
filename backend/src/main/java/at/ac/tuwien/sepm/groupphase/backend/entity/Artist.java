@@ -1,10 +1,12 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
 import lombok.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name = "artist")
@@ -14,11 +16,15 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 @ToString
+@Transactional
 public class Artist {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToMany(mappedBy = "artists")
+    private List<Event> performsAt;
 
     @NotNull
     @Size(min=1, max=100)

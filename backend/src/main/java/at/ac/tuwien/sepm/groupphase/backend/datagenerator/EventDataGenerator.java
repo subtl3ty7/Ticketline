@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.datagenerator;
 import at.ac.tuwien.sepm.groupphase.backend.entity.*;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.*;
+import at.ac.tuwien.sepm.groupphase.backend.service.ArtistService;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventLocationService;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
 import org.hibernate.Session;
@@ -30,21 +31,24 @@ public class EventDataGenerator {
     private final SectionRepository sectionRepository;
     private final ShowRepository showRepository;
     private final SeatRepository seatRepository;
+    private final ArtistRepository artistRepository;
     private final EventService eventService;
     private final EventLocationService eventLocationService;
+    private final ArtistService artistService;
     private final EntityManagerFactory entityManagerFactory;
     private final ResourceLoader resourceLoader;
 
 
     private final static int numberOfEventLocations = 5;
     private static final int numberOfEvents = 15;
+    private static final int numberOfArtists = 5;
 
     public EventDataGenerator(SectionRepository sectionRepository,
                               SeatRepository seatRepository, ShowRepository showRepository,
                               EventService eventService,
                               EventLocationService eventLocationService,
                               EntityManagerFactory entityManagerFactory,
-                              ResourceLoader resourceLoader
+                              ResourceLoader resourceLoader, ArtistRepository artistRepository, ArtistService artistService
     ) {
         this.sectionRepository = sectionRepository;
         this.showRepository = showRepository;
@@ -53,6 +57,8 @@ public class EventDataGenerator {
         this.eventLocationService = eventLocationService;
         this.entityManagerFactory = entityManagerFactory;
         this.resourceLoader = resourceLoader;
+        this.artistRepository = artistRepository;
+        this.artistService = artistService;
     }
 
     private Session getSession() {
@@ -82,6 +88,13 @@ public class EventDataGenerator {
             throw new NotFoundException("No Event Locations in argument list. Needs to contain at least one.");
         }
 
+        generateArtists();
+        List<Artist> artists = artistService.getAllArtists();
+
+        if(artists.isEmpty()) {
+            throw new NotFoundException("No Artists in argument list. Needs to contain at least one.");
+        }
+
         List<Event> events = new ArrayList<>();
         for(int i=0; i<numberOfEvents; i++) {
             int eventLocationIndex = i;
@@ -90,6 +103,13 @@ public class EventDataGenerator {
             }
 
             String imgName = "event_img" + i + ".jpg";
+
+            List<Artist> addedArtists = new ArrayList<>();
+            int artistIndex = i;
+            if (artistIndex >= artists.size()) {
+                artistIndex = artists.size()-1;
+            }
+            addedArtists.add(artists.get(artistIndex));
 
             Event event = Event.builder()
                 .category("Talk")
@@ -103,6 +123,7 @@ public class EventDataGenerator {
                 .totalTicketsSold(5*i*i*i)
                 .type("Of the cool type")
                 .shows(generateShows(eventLocations.get(eventLocationIndex)))
+                .artists(addedArtists)
                 .build();
             event = eventService.createNewEvent(event);
             events.add(event);
@@ -154,6 +175,24 @@ public class EventDataGenerator {
         return eventLocations;
     }
 
+    private List<Artist> generateArtists() {
+        List<Artist> artists = new ArrayList<>();
+        if (artistRepository.findAllByOrderByLastNameAscFirstNameAsc().size() > 0) {
+            LOGGER.debug("artist already generated");
+        } else {
+            LOGGER.debug("generating {} message entries", numberOfArtists);
+            for (int i = 0; i < numberOfArtists; i++) {
+                Artist artist = Artist.ArtistBuilder.anArtist()
+                    .id((long) i)
+                    .withFirstName(((char) (65 + (i%26))) + "test")
+                    .withLastName("Person")
+                    .build();
+                LOGGER.debug("saving artist {}", artist);
+                artistRepository.save(artist);
+            }
+        }
+        return artists;
+    }
 
     private List<Section> generateSections() {
         int numberOfSections = 4;
@@ -215,7 +254,7 @@ public class EventDataGenerator {
             //BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             String encodedString = Base64.getEncoder().encodeToString(inputStream.readAllBytes());
             //String contents = reader.lines()
-             //   .collect(Collectors.joining(System.lineSeparator()));
+            //   .collect(Collectors.joining(System.lineSeparator()));
             encodedString = "data:image/" + getFileExtension(imgName) + ";base64," + encodedString;
             return encodedString;
         } catch (IOException e) {
