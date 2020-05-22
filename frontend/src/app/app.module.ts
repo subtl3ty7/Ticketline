@@ -71,6 +71,7 @@ import { TicketPurchaseComponent } from './components/ticket-purchase/ticket-pur
 import {MatStepperModule} from '@angular/material/stepper';
 import { ChooseTicketComponent } from './components/ticket-purchase/choose-ticket/choose-ticket.component';
 import { PaymentMethodOverviewComponent } from './components/ticket-purchase/payment-method-overview/payment-method-overview.component';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -146,7 +147,8 @@ import { PaymentMethodOverviewComponent } from './components/ticket-purchase/pay
     MatNativeDateModule,
     MatPaginatorModule,
     FlexModule,
-    MatStepperModule
+    MatStepperModule,
+    MatSelectModule
   ],
   providers: [httpInterceptorProviders, MatDatepickerModule, MatNativeDateModule, ChooseTicketComponent],
   bootstrap: [AppComponent]

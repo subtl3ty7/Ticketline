@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 
 export enum TicketState {
-  PURCHASE,
-  RESERVE
+  PURCHASED,
+  RESERVED,
+  PROCESSING,
+  BEGIN
 }
 
 @Injectable({
@@ -11,21 +13,25 @@ export enum TicketState {
 export class TicketPurchaseSharedServiceService {
 
   ticketState: TicketState;
-  isPurchased = this.methodIsPurchase(this.ticketState);
 
-  constructor() { }
-
-  public methodIsPurchase(ticketState: TicketState) {
-    // tslint:disable-next-line:triple-equals
-    return ticketState == TicketState.PURCHASE;
+  constructor() {
+    this.ticketState = TicketState.BEGIN;
   }
 
-  public isPurchase(ticketState: TicketState) {
-    return this.ticketState = TicketState.PURCHASE;
+  public isProcessing() {
+    return this.ticketState === TicketState.PROCESSING;
   }
 
-  public isReserve(ticketState: TicketState) {
-    return this.ticketState = TicketState.RESERVE;
+  public isPurchased() {
+    return this.ticketState === TicketState.PURCHASED;
+  }
+
+  public isReserved() {
+    return this.ticketState === TicketState.RESERVED;
+  }
+
+  public isBegin() {
+    return this.ticketState === TicketState.BEGIN;
   }
 
 }

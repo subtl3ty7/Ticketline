@@ -7,39 +7,37 @@
 
   <div class="card-body">
   <mat-horizontal-stepper [linear]="isLinear" #stepper>
-  <mat-step [stepControl]="firstFormGroup">
+  <mat-step [stepControl]="firstFormGroup" *ngIf="!ticketPurchaseSharingService.isReserved()">
+    <form [formGroup]="firstFormGroup">
       <ng-template matStepLabel>Choose Ticket</ng-template>
-    <app-choose-ticket></app-choose-ticket>
+    <app-choose-ticket [ticketPurchaseSharingService]="ticketPurchaseSharingService" [ticket]= "ticket" [firstFormGroup]="firstFormGroup"></app-choose-ticket>
+    </form>
   </mat-step>
 
-
-
-    <mat-step [stepControl]="secondFormGroup" *ngIf="ticketPurchaseSharingService.methodIsPurchase(ticketPurchaseSharingService.ticketState)">
+    <mat-step [stepControl]="secondFormGroup" *ngIf="!ticketPurchaseSharingService.isReserved()">
       <ng-template matStepLabel>Payment Method</ng-template>
-    <app-payment-method-overview></app-payment-method-overview>
+    <app-payment-method-overview [ticketPurchaseSharingService]="ticketPurchaseSharingService" [ticket] ="ticket"></app-payment-method-overview>
   </mat-step>
+
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
 
 
-
-
-
-    <div class="messageWhenPurchased" *ngIf="ticketPurchaseSharingService.methodIsPurchase(ticketPurchaseSharingService.ticketState)">
+    <div class="messageWhenPurchased" *ngIf="ticketPurchaseSharingService.isPurchased()">
       <h2> Danke für Ihren Einkauf!</h2>
       <br>
-      <h4> Ticket(s):</h4>
+      <h4> Ticket(s): {{ticket.ticketCode}}</h4>
       <br>
-      <button type="button" class="btn btn-secondary">Rechung herunterladen</button>
+      <button type="button" class="btn btn-secondary">Rechnung herunterladen</button>
       <br>
       <br>
     </div>
 
 
-    <div class="messageWhenPurchased" *ngIf="!ticketPurchaseSharingService.methodIsPurchase(ticketPurchaseSharingService.ticketState)">
+    <div class="messageWhenPurchased" *ngIf="ticketPurchaseSharingService.isReserved()">
       <h2> Danke für Ihre Reservierung!</h2>
       <br>
-      <h4> Reservierung(en):</h4>
+      <h4> Reservierung(en): {{ticket.ticketCode}}</h4>
       <br>
       <button type="button" class="btn btn-secondary">Rechnung herunterladen</button>
       <br>

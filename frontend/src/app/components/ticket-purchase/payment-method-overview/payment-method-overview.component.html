@@ -7,43 +7,45 @@
 <div class="overview">
   <div class="eventName">
     <h5 class="h5_bold">Veranstaltung: </h5>
-    <p>Dua Lipa - Live in Concert</p>
+    <p>{{event.name}}</p>
   </div>
 <br>
   <div class="artistName">
     <h5 class="h5_bold">Künstler(in): </h5>
-    <p>Dua Lipa</p>
+    <div *ngFor="let artist of event.artists">
+      <p>{{artist}}</p>
+    </div>
   </div>
 <br>
   <div class="datum">
     <h5 class="h5_bold">Datum:</h5>
-    <p>19.05.2020</p>
+    <p>{{show.startsAt | date }}</p>
   </div>
 <br>
   <div class="performanceTime">
-    <h5 class="h5_bold">Aufführung:</h5>
-    <p>18.30</p>
+    <h5 class="h5_bold">Aufführung: </h5>
+    <p>{{show.startsAt | date:'shortTime' }}</p>
   </div>
 <br>
   <div class="hall">
-    <h5 class="h5_bold">Saal:</h5>
-    <p>Halle F</p>
+    <h5 class="h5_bold">Saal: </h5>
+    <p>{{show.eventLocation[0].name}}</p>
   </div>
   <br>
 
   <div class="city">
     <h5 class="h5_bold">Ort:</h5>
-    <p>Wien</p>
+    <p>{{show.eventLocation[0].city}}</p>
   </div>
 <br>
   <div class="adress">
     <h5 class="h5_bold">Adresse:</h5>
-    <p>Roland-Rainer-Platz 1, 1150 Wien</p>
+    <p>{{show.eventLocation[0].street}}, {{show.eventLocation[0].plz}} {{show.eventLocation[0].city}} {{show.eventLocation[0].country}}</p>
   </div>
 <br>
-  <div class="seating">
+  <div class="seating" *ngIf="this.ticket.seat">
     <h5 class="h5_bold">Sitzplätze:</h5>
-    <p>Sektor B, Platz 3K-J</p>
+    <p>Platz {{this.ticket.seat.seatColumn}}{{this.ticket.seat.seatRow}}</p>
   </div>
   <br>
 </div>
@@ -72,7 +74,7 @@
   <input type="radio" class="custom-control-input" id="defaultGroupExample3" name="groupOfDefaultRadios">
   <label class="custom-control-label" for="defaultGroupExample3">Debit</label>
 </div>
-      <button type="button" mat-button matStepperNext class="btn btn-success">Jetzt zahlen</button>
+      <button type="button" mat-button matStepperNext class="btn btn-success" (click)="completePurchase()">Jetzt zahlen</button>
 
     </div>
 

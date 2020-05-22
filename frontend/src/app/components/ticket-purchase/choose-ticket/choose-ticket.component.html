@@ -1,4 +1,5 @@
-<div class="container">
+
+<div class="container" [formGroup]="firstFormGroup">
 
   <div class="row">
 
@@ -11,13 +12,14 @@
     <div class="numberOfTickets">
       <h3> Anzahl der Tickets: </h3>
 
-      <select class="form-control"  name="numberOfTickets" required="required" id="numberOfTickets">
-        <option value="1"> 1 </option>
-        <option value="2"> 2 </option>
-        <option value="3"> 3 </option>
-        <option value="4"> 4 </option>
-        <option value="5"> 5 </option>
-      </select> <br>
+      <mat-select class="form-control"  name="numberOfTickets" formControlName="ticketCountCtrl" required id="numberOfTickets">
+        <mat-option value="1"> 1 </mat-option>
+        <mat-option value="2"> 2 </mat-option>
+        <mat-option value="3"> 3 </mat-option>
+        <mat-option value="4"> 4 </mat-option>
+        <mat-option value="5"> 5 </mat-option>
+      </mat-select>
+      <br>
       <br>
 
     </div>
@@ -31,49 +33,31 @@
       <div class="section">
         <p> Sektion: </p>
 
-
-        <select class="form-control"  name="section" required="required" id="section">
-          <option value="A"> A </option>
-          <option value="B"> B </option>
-          <option value="C"> C </option>
-        </select> <br>
+        <mat-select class="form-control"  name="section" required="required" id="section" [(value)]="chosenSection">
+          <mat-option *ngFor="let section of eventLocation.sections" [value]="section" >
+            {{section.sectionName}}
+          </mat-option>
+        </mat-select> <br>
         <br>
       </div>
 
 
-      <div class="ticketRow">
-        <p> Reihe: </p>
-
-        <select class="form-control"  name="ticketRow" required="required" id="ticketRow">
-          <option value="1"> 1 </option>
-          <option value="2"> 2 </option>
-          <option value="3"> 3 </option>
-          <option value="4"> 4 </option>
-          <option value="5"> 5 </option>
-        </select> <br>
-        <br>
-      </div>
-
-
-      <div class="ticketPlace">
-
+      <div class="ticketRow" *ngIf="chosenSection">
         <p> Platz: </p>
 
-
-        <select class="form-control"  name="numberOfTickets" required="required" id="ticketPlace">
-          <option value="A"> A </option>
-          <option value="B"> B </option>
-          <option value="C"> C </option>
-          <option value="D"> D </option>
-          <option value="E"> E </option>
-        </select> <br>
+        <mat-select class="form-control"  name="ticketRow" required="required" id="ticketRow" [(value)]="chosenSeat">
+          <mat-option *ngFor="let seat of chosenSection.seats" [value]="seat">
+            {{seat.seatRow}}{{seat.seatColumn}}
+          </mat-option>
+        </mat-select> <br>
         <br>
       </div>
+
 
     </div>
 
     <div class="category">
-      <h3> Preiskategorie:</h3>
+      <h3> Preise:</h3>
       <p> Kategorie A: 78.00$</p>
       <P> Kategorie B: 89.50$</P>
       <P> Kategorie C: 94.79$</P>
@@ -84,12 +68,9 @@
       <h3> Preis: 78.00 EUR </h3>
     </div>
 
-    <button type="button" mat-button matStepperNext class="btn btn-success" (click)="ticketPurchaseSharingService.isPurchase(ticketPurchaseSharingService.ticketState)">Jetzt kaufen</button>
+    <button type="button" mat-button matStepperNext class="btn btn-success" (click)="nextStep(ticketState.PROCESSING)">Jetzt kaufen</button>
     <br>
-    <button type="button" mat-button matStepperNext class="btn btn-secondary" (click)="ticketPurchaseSharingService.isReserve(ticketPurchaseSharingService.ticketState)">Reservieren</button>
-
-
-
+    <button type="button" mat-button matStepperNext class="btn btn-secondary" (click)="nextStep(ticketState.RESERVED)">Reservieren</button>
 
   </div>
 
