@@ -111,6 +111,7 @@ public class ValidationMessage {
             put("price_null", "Price can not be null.");
             put("ticket_notExist", "Ticket is not found in the database.");
             put("ticket_purchased", "Ticket is not purchased yet.");
+            put("ticket_reserved", "Ticket is already purchased.");
 
             //news
             put("newsCode_unique", "News code is already present in the database.");

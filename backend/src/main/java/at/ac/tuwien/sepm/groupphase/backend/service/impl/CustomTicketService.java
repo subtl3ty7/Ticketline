@@ -92,11 +92,9 @@ public class CustomTicketService implements TicketService {
 
             Seat seat = seatRepository.findSeatById(ticketEntity.getSeat().getId());
             ticketEntity.setSeat(seat);
-            seatRepository.save(seat);
 
             Show show = showRepository.findShowById(ticketEntity.getShow().getId());
             ticketEntity.setShow(show);
-            showRepository.save(show);
 
             validator.validateSave(ticketEntity).throwIfViolated();
             validator.validate(ticketEntity).throwIfViolated();
@@ -105,7 +103,7 @@ public class CustomTicketService implements TicketService {
             show.setTicketsAvailable(show.getTicketsAvailable() - 1);
             showRepository.save(show);
 
-            ticketEntity.getSeat().setFree(false);
+            seat.setFree(false);
             seatRepository.save(seat);
 
         return ticketEntity;
@@ -133,10 +131,29 @@ public class CustomTicketService implements TicketService {
         validator.validatePurchased(ticketCode).throwIfViolated();
 
         Ticket ticket1 = ticketRepository.findTicketByTicketCode(ticketCode);
+        Seat seat = ticket1.getSeat();
+        seat.setFree(true);
+        seatRepository.save(seat);
         ticketRepository.delete(ticket1);
         // do the money return  and invoices stuff
 
         LOGGER.info("Canceled ticket with ticketCode " + ticketCode);
+    }
+
+    @Override
+    public Ticket purchaseReservedTicket(String ticketCode) {
+        LOGGER.info("Validating ticket with ticketCode " + ticketCode);
+
+        validator.validateReserved(ticketCode).throwIfViolated();
+
+        Ticket ticket = ticketRepository.findTicketByTicketCode(ticketCode);
+        ticket.setPurchased(true);
+        ticket.setReserved(false);
+        ticketRepository.save(ticket);
+
+        LOGGER.info("Purchased ticket " + ticket);
+
+        return ticket;
     }
 
 
