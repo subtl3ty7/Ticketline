@@ -226,8 +226,10 @@ label {
 
 //Prevent text overflow (only works when max-width is set, thus does not work on elements that can expand infinitely)
 .prevent-overflow {
-  overflow-y: scroll;
-  white-space: normal;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  float: left;
 }
 //Prevent text overflow (only works when max-width is set, thus does not work on elements that can expand infinitely)
 .prevent-overflow-inline {

@@ -1,23 +1,26 @@
 @import '../top-events/top-events.component.css';
 
 .card-body, .card {
-  background-color: white;
 }
 
 .card-title-font {
-  color: black;
+  color: white;
 }
 
 .card-text-font {
-  color: black;
+  color: white;
   font-size: 20px;
   font-family: Segue UI, Roboto, "Helvetica Neue", sans-serif
 }
 
 .card-text {
-  max-height: 100px;
+  max-height: 70px;
 }
 
 .card {
-  padding-bottom: 30px;
+  padding-bottom: 15px;
+}
+
+.zoom:hover {
+  transform: scale(1.09);
 }

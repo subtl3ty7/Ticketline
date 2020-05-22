@@ -73,8 +73,8 @@ public class NewsDataGenerator {
                 .publishedAt(null)
                 .stopsBeingRelevantAt(LocalDateTime.now().plusWeeks(i))
                 .title("News " + i)
-                .summary("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ac viverra massa, tincidunt dapibus massa. Nulla sit amet dui eu lorem malesuada convallis. Etiam lacinia, nisi ac tempus scelerisque, purus lectus lacinia felis, non interdum orci nibh nec nibh. Donec nec leo elementum, ultricies nulla a, fermentum mi.")
-                .text("All of them are good, actually")
+                .summary(resources.getText("news_summary.txt"))
+                .text(resources.getText("news_text.txt"))
                 .seenBy(customers.subList(i*splitUp, (i+1)*splitUp))
                 .build();
             newsService.createNewNewsEntry(newsEntry);
