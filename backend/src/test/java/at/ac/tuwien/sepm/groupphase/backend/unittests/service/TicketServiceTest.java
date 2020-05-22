@@ -34,40 +34,38 @@ public class TicketServiceTest implements TestData {
     private TicketRepository ticketRepository;
 
     @Autowired
-    private ShowRepository showRepository;
-
-    @Autowired
-    private SeatRepository seatRepository;
-
-    @Autowired
     private UserRepository userRepository;
 
     private Ticket ticket = Ticket.builder()
         .ticketId(ID)
         .ticketCode(USER_CODE)
-        .isPurchased(false)
         .purchaseDate(START)
         .price(TOTAL)
         .userCode(USER_CODE)
-        .seat(SEATS.get(0))
-        .show(SHOWS.get(0))
         .build();
 
     @BeforeEach
     public void beforeEach() {
         ticketRepository.deleteAll();
         userRepository.deleteAll();
-        seatRepository.deleteAll();
-        showRepository.deleteAll();
         ticket = Ticket.builder()
             .ticketId(ID)
             .ticketCode(USER_CODE)
-            .isPurchased(false)
             .purchaseDate(START)
             .price(TOTAL)
             .userCode(USER_CODE)
-            .seat(SEATS.get(0))
-            .show(SHOWS.get(0))
             .build();
+    }
+
+    @Test
+    public void given2Tickets_whenGetAllOfUser_thenListWithTicketsElement() {
+        userRepository.save(USER_TICKET);
+        ticketRepository.save(ticket);
+        ticket.setTicketId(2L);
+        ticket.setTicketCode("code12");
+        ticketRepository.save(ticket);
+
+        assertEquals(2, ticketService.allTicketsOfUser(ticket.getUserCode()).size());
+
     }
 }
