@@ -1,4 +1,5 @@
 import {Show} from './show';
+import {Artist} from './artist';
 
 export class DetailedEvent {
   public eventCode: string;
@@ -9,7 +10,7 @@ export class DetailedEvent {
   public startPrice: number;
   public photo: number;
   public shows: Show[];
-  public artists: string[];
+  public artists: Artist[];
   public type: string;
   public category: string;
   public prices: number[];
