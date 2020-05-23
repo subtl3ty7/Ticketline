@@ -3,6 +3,8 @@ import {Artist} from '../../dtos/artist';
 import {AuthService} from '../../services/auth.service';
 import {ArtistService} from '../../services/artist.service';
 import {ActivatedRoute} from '@angular/router';
+import {EventLocationService} from '../../services/event-location.service';
+import {EventLocation} from '../../dtos/event-location';
 
 export enum SearchEntity {
   ARTIST = 'Artist',
@@ -19,13 +21,37 @@ export class SearchShared {
   public searchEntity: string;
   public entities: object[];
   
-  constructor(public authService: AuthService, private artistService: ArtistService) { }
+  constructor(public authService: AuthService, private artistService: ArtistService, private eventLocationService: EventLocationService) { }
 
   public getArtistsByFirstAndLastName(firstName: string, lastName: string) {
     console.log('loading all artists with first name containing "' + firstName + '" and last name containing "' + lastName + '"');
     this.artistService.getArtistsByFirstAndLastName(firstName, lastName).subscribe(
       (artists: Artist[]) => {
         this.entities = artists;
+      },
+      error => {
+        this.entities = null;
+      }
+    );
+  }
+
+  public getLocationByName(locationTerm: string) {
+    console.log('loading all locations with name containing "' + locationTerm + '"');
+    this.eventLocationService.getLocationsByName(locationTerm).subscribe(
+      (eventLocations: EventLocation[]) => {
+        this.entities = eventLocations;
+      },
+      error => {
+        this.entities = null;
+      }
+    );
+  }
+
+  getLocationsAdvanced(name: string, street: string, city: string, country: string, plz: string) {
+    console.log('loading all locations with name containing "' + name + '", street containing "' + street + '", city containing "' + city + '", country containing "' + country + '" and plz containing "' + plz + '"');
+    this.eventLocationService.getLocationsAdvanced(name, street, city, country, plz).subscribe(
+      (eventLocations: EventLocation[]) => {
+        this.entities = eventLocations;
       },
       error => {
         this.entities = null;

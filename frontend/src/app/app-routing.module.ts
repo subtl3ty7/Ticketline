@@ -23,6 +23,7 @@ import {ResetPasswordAuthComponent} from './components/reset-password/reset-pass
 import {TicketPurchaseComponent} from './components/ticket-purchase/ticket-purchase.component';
 import {SearchComponent} from './components/search/search.component';
 import {ArtistAdvancedComponent} from './components/search/artist/artist-advanced/artist-advanced.component';
+import {LocationAdvancedComponent} from './components/search/location/location-advanced/location-advanced.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -48,7 +49,8 @@ const routes: Routes = [
   {path: 'reset-password', component: ResetPasswordComponent},
   {path: 'reset-password/:rc', component: ResetPasswordAuthComponent},
   {path: 'ticket-purchase', canActivate: [LoggedInGuard], component: TicketPurchaseComponent},
-  {path: 'search/artist-advanced', component: ArtistAdvancedComponent}];
+  {path: 'search/artist-advanced', component: ArtistAdvancedComponent},
+  {path: 'search/location-advanced', component: LocationAdvancedComponent}];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

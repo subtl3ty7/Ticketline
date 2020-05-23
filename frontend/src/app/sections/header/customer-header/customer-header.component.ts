@@ -49,6 +49,9 @@ export class CustomerHeaderComponent implements OnInit {
         break;
       case SearchEntity.LOCATION:
         this.searchShared.searchEntity = 'Location';
+        const locationTerm = sessionStorage.getItem('searchTerm');
+        console.log('location name: ' + locationTerm);
+        this.searchShared.getLocationByName(locationTerm);
         break;
       case SearchEntity.SHOW:
         this.searchShared.searchEntity = 'Show';
