@@ -53,12 +53,11 @@ public class NewsValidatorImpl implements NewsValidator {
     }
 
     @Override
-    public Constraints validateUserCode(String userCode) {
+    public Constraints validateUser(AbstractUser user) {
         Constraints constraints = new Constraints();
-        constraints.add("userCode_notNull", userCode != null);
+        constraints.add("user_notNull", user != null);
         if(!constraints.isViolated()) {
-            AbstractUser user = userRepository.findAbstractUserByUserCode(userCode);
-            constraints.add("user_exists", user != null);
+            constraints.add("user_exists", userRepository.findAbstractUserByUserCode(user.getUserCode()) != null);
             if(!constraints.isViolated()) {
                 constraints.add("user_isLogged", user.isLogged());
                 constraints.add("user_isCustomer", user instanceof Customer);

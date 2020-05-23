@@ -38,14 +38,13 @@ public class Show implements Serializable {
     private int ticketsAvailable;
 
     @ToString.Exclude
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "SHOW_ID", referencedColumnName = "ID")
-    private List<EventLocation> eventLocation;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "EVENT_LOCATION_COPY_ID", referencedColumnName = "ID")
+    private EventLocationCopy eventLocationCopy;
+
+    @Column(name = "EVENT_LOCATION_ORIGINAL_ID")
+    private Long eventLocationOriginalId;
 
     public Show(){
-    }
-
-    public Show(List<Seat> freeSeats, String eventCode) {
-        this.eventCode = eventCode;
     }
 }
