@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocationOriginal;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Seat;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Section;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventLocationRepository;
@@ -26,7 +27,7 @@ public class CustomEventLocationService implements EventLocationService {
 
     @Override
     public List<Seat> getAllSeatsByEventLocationId(Long id) {
-        EventLocation eventLocation = eventLocationRepository.findEventLocationById(id);
+        EventLocationOriginal eventLocation = eventLocationRepository.findEventLocationById(id);
         List<Seat> seats = new ArrayList<>();
         for(Section section: eventLocation.getSections()) {
             seats.addAll(section.getSeats());
@@ -35,14 +36,15 @@ public class CustomEventLocationService implements EventLocationService {
     }
 
     @Override
-    public List<EventLocation> getAllEventLocations() {
-        List<EventLocation> eventLocations = eventLocationRepository.findAllByShowIdIsNull();
+    public List<EventLocationOriginal> getAllEventLocations() {
+        List<EventLocationOriginal> eventLocations = eventLocationRepository.findAll();
         return eventLocations;
     }
 
     @Override
-    public EventLocation save(EventLocation eventLocation) {
+    public EventLocationOriginal save(EventLocationOriginal eventLocation) {
         eventValidator.validate(eventLocation).throwIfViolated();
+        eventLocation.setShows(new ArrayList<>());
         return eventLocationRepository.save(eventLocation);
     }
 }

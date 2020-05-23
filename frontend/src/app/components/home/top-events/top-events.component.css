@@ -83,18 +83,13 @@ ol.carousel-indicators {
   filter: brightness(110%) contrast(110%);
 }
 .card:hover .card-body {
+  filter: contrast(110%);
   opacity: 1;
 }
 .card:hover .top-left {
   display: block;
 }
 
-
-.card-title {
-  color: white;
-  font-family: Calibri, "Segoe UI", serif;
-  font-size: 20px;
-}
 
 
 .zoom {
@@ -141,9 +136,7 @@ ol.carousel-indicators {
   transition: .1s;
   background-color: transparent;
   color: black;
-  border: none;
-  border-radius: 50px 50px 50px 50px;
-  padding: 30px 20px 20px 20px;
+  padding-bottom: 20px;
 }
 
 .title-button:hover {
@@ -172,4 +165,21 @@ ol.carousel-indicators {
   padding-left: 20px;
   visibility: hidden;
   opacity: 0;
+}
+
+.card-title-font {
+  color: white;
+  font-size: 25px;
+  font-weight: lighter;
+  font-family: Segue UI, Roboto, "Helvetica Neue", sans-serif
+}
+
+.event-button-font {
+  font-size: 25px;
+  font-weight: bold;
+  font-family: Segue UI, Roboto, "Helvetica Neue", sans-serif
+}
+
+.extra-pad {
+  padding-top: 10px
 }

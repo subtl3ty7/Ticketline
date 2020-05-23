@@ -1,0 +1,42 @@
+@import '../../home/top-events/top-events.component.css';
+
+.author-font {
+  font-size: 25px;
+  font-family: Segue UI, Roboto, "Helvetica Neue", sans-serif
+}
+
+.title-headline {
+  padding-bottom: 30px;
+}
+
+.container {
+  padding: 20px 0px 0px 20px;
+  margin: 0px;
+}
+
+.image-crop-big {
+  width: 100%;
+  height: 500px;
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+
+.custom-border-width {
+  border-width: 10px!important;
+}
+
+.news-text-font {
+  font-size: 25px;
+  font-family: Segue UI, Roboto, "Helvetica Neue", sans-serif;
+  white-space: pre-wrap;
+  line-height: 130%;
+}
+
+
+.news-summary-font {
+  font-size: 25px;
+  font-family: Segue UI, Roboto, "Helvetica Neue", sans-serif;
+  font-weight: bold;
+  white-space: pre-wrap;
+  line-height: 130%;
+}

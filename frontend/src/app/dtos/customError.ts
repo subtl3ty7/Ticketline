@@ -1,4 +1,4 @@
-export class BackendError {
+export class CustomError {
   public timestamp: Date;
   public status: number;
   public error: string;

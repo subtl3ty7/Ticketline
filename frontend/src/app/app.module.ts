@@ -62,7 +62,6 @@ import { FaqComponent } from './components/faq/faq.component';
 import { HomeComponent } from './components/home/home.component';
 import { TopTenEventsComponent } from './components/top-ten-events/top-ten-events.component';
 import { HeaderComponent } from './sections/header/header.component';
-import { CurrentNewsComponent } from './components/home/current-news/current-news.component';
 import { TopEventsListComponent } from './components/top-ten-events/top-events-list/top-events-list.component';
 import { SearchComponent } from './components/search/search.component';
 import { ArtistComponent } from './components/search/artist/artist.component';
@@ -77,7 +76,12 @@ import { ChooseTicketComponent } from './components/ticket-purchase/choose-ticke
 import { PaymentMethodOverviewComponent } from './components/ticket-purchase/payment-method-overview/payment-method-overview.component';
 import {MatSelectModule} from '@angular/material/select';
 import { ChartComponent } from './components/top-ten-events/chart/chart.component';
-import { ErrorComponent } from './components/error/error.component';
+import { LatestNewsComponent } from './components/home/latest-news/latest-news.component';
+import { NewsDetailsComponent } from './components/news-details/news-details.component';
+import { NewsDetailsInnerComponent } from './components/news-details/news-details-inner/news-details-inner.component';
+import { ErrorNotificationComponent } from './sections/error-notification/error-notification.component';
+import { NewsListComponent } from './components/news-list/news-list.component';
+import { NewsListInnerComponent } from './components/news-list/news-list-inner/news-list-inner.component';
 import { SearchShared} from './components/search/search-shared';
 
 @NgModule({
@@ -123,7 +127,6 @@ import { SearchShared} from './components/search/search-shared';
     HomeComponent,
     TopTenEventsComponent,
     HeaderComponent,
-    CurrentNewsComponent,
     TopEventsListComponent,
     ResetPasswordComponent,
     ResetPasswordAuthComponent,
@@ -131,7 +134,12 @@ import { SearchShared} from './components/search/search-shared';
     ChooseTicketComponent,
     PaymentMethodOverviewComponent,
     ChartComponent,
-    ErrorComponent,
+    LatestNewsComponent,
+    NewsDetailsComponent,
+    NewsDetailsInnerComponent,
+    ErrorNotificationComponent,
+    NewsListComponent,
+    NewsListInnerComponent,
     TopEventsListComponent,
     SearchComponent,
     ArtistComponent,

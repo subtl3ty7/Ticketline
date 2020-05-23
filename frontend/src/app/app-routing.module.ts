@@ -20,6 +20,8 @@ import {HomeComponent} from './components/home/home.component';
 import {NotAdminGuard} from './guards/not-admin.guard';
 import {ResetPasswordComponent} from './components/reset-password/reset-password.component';
 import {ResetPasswordAuthComponent} from './components/reset-password/reset-password-auth/reset-password-auth.component';
+import {NewsDetailsComponent} from './components/news-details/news-details.component';
+import {NewsListComponent} from './components/news-list/news-list.component';
 import {TicketPurchaseComponent} from './components/ticket-purchase/ticket-purchase.component';
 import {SearchComponent} from './components/search/search.component';
 
@@ -46,6 +48,8 @@ const routes: Routes = [
   {path: 'top-ten-events', component: TopTenEventsComponent},
   {path: 'reset-password', component: ResetPasswordComponent},
   {path: 'reset-password/:rc', component: ResetPasswordAuthComponent},
+  {path: 'news/:nc', canActivate: [LoggedInGuard], component: NewsDetailsComponent},
+  {path: 'news-list', canActivate: [], component: NewsListComponent},
   {path: 'ticket-purchase', canActivate: [LoggedInGuard], component: TicketPurchaseComponent}];
 
 @NgModule({
