@@ -32,9 +32,9 @@ public class CustomArtistService implements ArtistService {
     }
 
     @Override
-    public List<Artist> findAllArtists() {
+    public List<Artist> getAllArtists() {
         LOGGER.debug("Find all artists");
-        return artistRepository.findAll();
+        return artistRepository.findAllByOrderByLastNameAscFirstNameAsc();
     }
 
     @Override

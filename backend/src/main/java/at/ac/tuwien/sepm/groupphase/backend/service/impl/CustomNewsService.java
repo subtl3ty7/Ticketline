@@ -6,11 +6,13 @@ import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.NewsRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.NewsService;
+import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
 import at.ac.tuwien.sepm.groupphase.backend.util.validation.NewsValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
@@ -23,50 +25,58 @@ public class CustomNewsService implements NewsService {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final NewsRepository newsRepository;
     private final UserRepository userRepository;
+    private final UserService userService;
     private final NewsValidator validator;
 
     @Autowired
-    public CustomNewsService(NewsRepository newsRepository, UserRepository userRepository, NewsValidator validator) {
+    public CustomNewsService(NewsRepository newsRepository, UserRepository userRepository, UserService userService, NewsValidator validator) {
         this.newsRepository = newsRepository;
         this.userRepository = userRepository;
+        this.userService = userService;
         this.validator = validator;
     }
 
     @Override
-    public List<News> findLatestSixUnseenNewsByCustomer(String userCode) {
-        validator.validateUserCode(userCode).throwIfViolated();
-        Customer customer = (Customer) userRepository.findAbstractUserByUserCode(userCode);
+    public List<News> findLatestUnseen(Authentication auth, Integer limit) {
+        AbstractUser user = userService.getAuthenticatedUser(auth);
+        validator.validateUser(user).throwIfViolated();
+        Customer customer = (Customer) user;
         List<News> news = newsRepository.findAllBySeenByNotContainsOrderByPublishedAtDesc(customer);
-        if(news.isEmpty()) {
-            throw new NotFoundException("Could not find Unseen News");
-        }
-        if (news.size() > 6) {
-            return news.subList(0, 6);
-        } else {
+        if(limit == null || news.size() <= limit) {
+            //return all
             return news;
+        } else {
+            //return sublist
+            return news.subList(0, limit);
         }
     }
 
     @Override
-    public List<News> findLatestSix() {
+    public List<News> findSeenNews(Authentication auth, Integer limit) {
+        AbstractUser user = userService.getAuthenticatedUser(auth);
+        validator.validateUser(user).throwIfViolated();
+        Customer customer = (Customer) user;
+        List<News> news = newsRepository.findAllBySeenByContainsOrderByPublishedAtDesc(customer);
+        if(limit == null || news.size() <= limit) {
+            //return all
+            return news;
+        } else {
+            //return sublist
+            return news.subList(0, limit);
+        }
+    }
+
+
+    @Override
+    public List<News> findLatest(Integer limit) {
         List<News> news = newsRepository.findAllByOrderByPublishedAtDesc();
-        if (news.size() > 6) {
-            return news.subList(0, 6);
-        } else {
+        if(limit == null || news.size() <= limit) {
+            //return all
             return news;
+        } else {
+            //return sublist
+            return news.subList(0, limit);
         }
-    }
-
-    @Override
-    public List<News> findAllNews() {
-        return newsRepository.findAll();
-    }
-
-    @Override
-    public List<News> findSeenNews(String userCode) {
-        validator.validateUserCode(userCode).throwIfViolated();
-        Customer customer = (Customer) userRepository.findAbstractUserByUserCode(userCode);
-        return newsRepository.findAllBySeenByContainsOrderByPublishedAtDesc(customer);
     }
 
     @Override
@@ -81,12 +91,23 @@ public class CustomNewsService implements NewsService {
     }
 
     @Override
-    public News findByNewsCode(String newsCode) {
+    public News findByNewsCode(String newsCode, Authentication auth) {
+        AbstractUser user = userService.getAuthenticatedUser(auth);
+        validator.validateUser(user).throwIfViolated();
+        Customer customer = (Customer) user;
         News news = newsRepository.findByNewsCode(newsCode);
         if (news==null) {
             throw new NotFoundException("Could not find this News entry");
+        } else {
+            //if news entry was found, then mark the news entry as seen by the customer
+            this.markAsSeen(customer, news);
         }
         return news;
+    }
+
+    private void markAsSeen(Customer customer, News news) {
+        news.getSeenBy().add(customer);
+        newsRepository.save(news);
     }
 
     private String getNewNewsCode() {

@@ -2,6 +2,7 @@ package at.ac.tuwien.sepm.groupphase.backend.unittests.repository;
 
 import at.ac.tuwien.sepm.groupphase.backend.basetest.TestData;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocationOriginal;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventLocationRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,7 @@ public class EventLocationRepositoryTest implements TestData {
     @Autowired
     EventLocationRepository eventLocationRepository;
 
-    private EventLocation eventLocation = EventLocation.builder()
+    private EventLocationOriginal eventLocation = EventLocationOriginal.builder()
         .id(ID)
         .name(FNAME)
         .eventLocationDescription(DESC)
@@ -37,7 +38,7 @@ public class EventLocationRepositoryTest implements TestData {
     @BeforeEach
     public void beforeEach() {
         eventLocationRepository.deleteAll();
-        eventLocation = EventLocation.builder()
+        eventLocation = EventLocationOriginal.builder()
             .id(ID)
             .name(FNAME)
             .eventLocationDescription(DESC)
@@ -65,7 +66,7 @@ public class EventLocationRepositoryTest implements TestData {
 
         assertAll(
             () -> assertEquals(1, eventLocationRepository.findAll().size()),
-            () -> assertEquals(1, eventLocationRepository.findAllByShowIdIsNull().size())
+            () -> assertEquals(1, eventLocationRepository.findAll().size())
         );
     }
 }

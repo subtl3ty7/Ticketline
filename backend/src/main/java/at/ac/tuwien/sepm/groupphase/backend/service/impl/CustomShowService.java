@@ -28,7 +28,7 @@ public class CustomShowService implements ShowService {
     public List<Seat> getAllSeatsByShowId(Long id) {
         List<Seat> seats = new ArrayList<>();
         Show show = showRepository.findShowById(id);
-        for(Section section: show.getEventLocation().get(0).getSections() ) {
+        for(Section section: show.getEventLocationCopy().getSections() ) {
             seats.addAll(section.getSeats());
         }
         return seats;

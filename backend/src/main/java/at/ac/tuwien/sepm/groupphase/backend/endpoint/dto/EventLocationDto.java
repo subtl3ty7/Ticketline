@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint.dto;
 
 import lombok.*;
+
 import java.util.List;
 
 @Getter
@@ -11,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 public class EventLocationDto {
     private Long id;
-    private Long showId;
+    private Long parentId;
     private String name;
     private String eventLocationDescription;
     private String street;
@@ -19,5 +20,6 @@ public class EventLocationDto {
     private String city;
     private String country;
     private List<SectionDto> sections;
+    private List<SimpleShowDto> shows;
     private int capacity;
 }
