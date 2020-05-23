@@ -67,11 +67,11 @@ public class NewsEndpoint {
     @ResponseStatus(HttpStatus.CREATED)
     @GetMapping(value = "/latest-unseen")
     @ApiOperation(
-        value = "Get the latest 6 News Entries for a Customer",
+        value = "Get the latest News Entries for a Customer",
         notes = "This only returns News Entries the Customer has not seen yet",
         authorizations = {@Authorization(value = "apiKey")})
     @ApiResponse(code = 200, message = "Successfully retrieved News Entries")
-    public List<NewsDto> getLatest6Unseen(Authentication auth) {
+    public List<NewsDto> getLatestUnseen(Authentication auth) {
         LOGGER.info("GET /api/v1/news/latest6Unseen/" + auth);
         return newsMapper.newsToNewsDto(
             newsService.findLatestUnseen(auth)
@@ -96,10 +96,10 @@ public class NewsEndpoint {
     @ResponseStatus(HttpStatus.CREATED)
     @GetMapping(value = "/latest")
     @ApiOperation(
-        value = "Get the latest 6 News Entries",
-        notes = "Get the latest 6 News Entries")
+        value = "Get the latest News Entries",
+        notes = "Get the latest News Entries")
     @ApiResponse(code = 200, message = "Successfully retrieved News Entries")
-    public List<NewsDto> getLatest6() {
+    public List<NewsDto> getLatest() {
         LOGGER.info("GET /api/v1/news/latest6/");
 
         return newsMapper.newsToNewsDto(

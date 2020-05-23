@@ -70,6 +70,7 @@ import { ChartComponent } from './components/top-ten-events/chart/chart.componen
 import { ErrorComponent } from './components/error/error.component';
 import { LatestNewsComponent } from './components/home/latest-news/latest-news.component';
 import { NewsDetailsComponent } from './components/news-details/news-details.component';
+import { NewsDetailsInnerComponent } from './components/news-details/news-details-inner/news-details-inner.component';
 
 @NgModule({
   declarations: [
@@ -121,7 +122,8 @@ import { NewsDetailsComponent } from './components/news-details/news-details.com
     ChartComponent,
     ErrorComponent,
     LatestNewsComponent,
-    NewsDetailsComponent
+    NewsDetailsComponent,
+    NewsDetailsInnerComponent
   ],
   imports: [
     BrowserModule,

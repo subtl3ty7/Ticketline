@@ -1,13 +1,13 @@
 package at.ac.tuwien.sepm.groupphase.backend.util;
 
+import com.google.common.io.CharStreams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 @Component
@@ -35,13 +35,16 @@ public class Resources {
     public String getText(String fileName) {
         try {
             InputStream inputStream = resourceLoader.getResource("classpath:text/" + fileName).getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            StringBuffer sb = new StringBuffer();
-            String str;
-            while((str = reader.readLine())!= null){
-                sb.append(str);
+            StringBuilder textBuilder = new StringBuilder();
+            try (Reader reader = new BufferedReader(new InputStreamReader
+                (inputStream, Charset.forName(StandardCharsets.UTF_8.name())))) {
+                int c = 0;
+                while ((c = reader.read()) != -1) {
+                    textBuilder.append((char) c);
+                }
+                String ret = textBuilder.toString();
+                return ret;
             }
-            return sb.toString();
         } catch (IOException e) {
             throw new RuntimeException("Couldn't load Text File.", e);
         } catch (NullPointerException e) {
