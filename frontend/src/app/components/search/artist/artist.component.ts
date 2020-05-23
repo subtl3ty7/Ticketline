@@ -24,7 +24,7 @@ export class ArtistComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('artist search');
-    const searchTerm = localStorage.getItem('searchTerm').split(' ', 2);
+    const searchTerm = sessionStorage.getItem('searchTerm').split(' ', 2);
     this.firstName = searchTerm[0];
     this.lastName = searchTerm[1];
     document.body.style.backgroundImage = null;
