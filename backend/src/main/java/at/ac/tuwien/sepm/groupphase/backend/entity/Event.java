@@ -65,12 +65,7 @@ public class Event implements Serializable {
     private List<Show> shows;
 
     @ToString.Exclude
-    @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(
-        name = "event_artist_performance",
-        joinColumns = @JoinColumn(name = "event_id"),
-        inverseJoinColumns = @JoinColumn(name = "artist_id"))
     private List<Artist> artists;
 
     @Column

@@ -183,7 +183,6 @@ public class EventDataGenerator {
             LOGGER.debug("generating {} message entries", numberOfArtists);
             for (int i = 0; i < numberOfArtists; i++) {
                 Artist artist = Artist.ArtistBuilder.anArtist()
-                    .id((long) i)
                     .withFirstName(((char) (65 + (i%26))) + "test")
                     .withLastName("Person")
                     .build();

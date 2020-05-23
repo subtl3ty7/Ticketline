@@ -6,6 +6,7 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
+import at.ac.tuwien.sepm.groupphase.backend.repository.ArtistRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventLocationRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
@@ -30,14 +31,16 @@ public class CustomEventService implements EventService {
     private final EventLocationRepository eventLocationRepository;
     private final EventValidator validator;
     private final ArtistValidatorImpl artistValidator;
+    private final ArtistRepository artistRepository;
 
 
     @Autowired
-    public CustomEventService(EventRepository eventRepository, EventValidator validator, EventLocationRepository eventLocationRepository, ArtistValidatorImpl artistValidator) {
+    public CustomEventService(EventRepository eventRepository, EventValidator validator, EventLocationRepository eventLocationRepository, ArtistValidatorImpl artistValidator, ArtistRepository artistRepository) {
         this.eventRepository = eventRepository;
         this.validator = validator;
         this.eventLocationRepository = eventLocationRepository;
         this.artistValidator = artistValidator;
+        this.artistRepository = artistRepository;
     }
 
     @Override
@@ -112,18 +115,9 @@ public class CustomEventService implements EventService {
 
     @Override
     public List<Event> findEventsByArtistId(Long artistId) {
-        artistValidator.validateId(artistId).throwIfViolated();
-        List<Event> allEvents = eventRepository.findAll();
-        List<Event> result = new ArrayList<>();
-        for (Event e: allEvents) {
-            List<Artist> artists = e.getArtists();
-            for (Artist a: artists) {
-                if (a.getId().equals(artistId)) {
-                    result.add(e);
-                    break;
-                }
-            }
-        }
-        return result;
+        //artistValidator.validate(artist).throwIfViolated();
+        Artist artist = artistRepository.findArtistById(artistId);
+        return eventRepository.findEventsByArtistsContaining(artist);
+
     }
 }

@@ -38,4 +38,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
      * @return a single event which has the corresponding event code
      */
     Event findEventByEventCode(String eventCode);
+
+    List<Event> findEventsByArtistsContaining(Artist artist);
 }
