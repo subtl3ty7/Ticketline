@@ -221,3 +221,18 @@ label {
   max-width: 1320px;
   padding-bottom: 10px;
 }
+
+//Prevent text overflow (only works when max-width is set, thus does not work on elements that can expand infinitely)
+.prevent-overflow {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  float: left;
+}
+//Prevent text overflow (only works when max-width is set, thus does not work on elements that can expand infinitely)
+.prevent-overflow-inline {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}

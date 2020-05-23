@@ -1,9 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.Artist;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
-import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
+import at.ac.tuwien.sepm.groupphase.backend.entity.*;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.ArtistRepository;
@@ -76,8 +73,10 @@ public class CustomEventService implements EventService {
 
         //Give shows new EventLocation Entities (copies of existing ones) to make sure they all can have different seating assignments
         for(Show show: event.getShows()) {
-            EventLocation eventLocation = eventLocationRepository.findEventLocationById(show.getEventLocation().get(0).getId());
-            show.setEventLocation(List.of(new EventLocation(eventLocation)));
+            EventLocationOriginal eventLocation = eventLocationRepository.findEventLocationById(show.getEventLocationOriginalId());
+            EventLocationCopy eventLocationCopy = new EventLocationCopy(eventLocation);
+            eventLocationCopy.setParentId(eventLocation.getId());
+            show.setEventLocationCopy(eventLocationCopy);
         }
 
         return eventRepository.save(event);
