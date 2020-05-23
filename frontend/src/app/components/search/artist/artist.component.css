@@ -15,19 +15,8 @@
 
 .artist-name {
   font-size: 25px;
-  font-weight: bold;
 }
 
 .artist-row {
   height: 100%;
-}
-
-.advanced-search {
-  text-align: right;
-  margin-top: 5px;
-  font-size: 18px;
-}
-
-a {
-  color: #FBFBFB;
 }

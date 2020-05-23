@@ -62,6 +62,7 @@ import { FaqComponent } from './components/faq/faq.component';
 import { HomeComponent } from './components/home/home.component';
 import { TopTenEventsComponent } from './components/top-ten-events/top-ten-events.component';
 import { HeaderComponent } from './sections/header/header.component';
+import { CurrentNewsComponent } from './components/home/current-news/current-news.component';
 import { TopEventsListComponent } from './components/top-ten-events/top-events-list/top-events-list.component';
 import { SearchComponent } from './components/search/search.component';
 import { ArtistComponent } from './components/search/artist/artist.component';
@@ -76,16 +77,8 @@ import { ChooseTicketComponent } from './components/ticket-purchase/choose-ticke
 import { PaymentMethodOverviewComponent } from './components/ticket-purchase/payment-method-overview/payment-method-overview.component';
 import {MatSelectModule} from '@angular/material/select';
 import { ChartComponent } from './components/top-ten-events/chart/chart.component';
-import { LatestNewsComponent } from './components/home/latest-news/latest-news.component';
-import { NewsDetailsComponent } from './components/news-details/news-details.component';
-import { NewsDetailsInnerComponent } from './components/news-details/news-details-inner/news-details-inner.component';
-import { ErrorNotificationComponent } from './sections/error-notification/error-notification.component';
-import { NewsListComponent } from './components/news-list/news-list.component';
-import { NewsListInnerComponent } from './components/news-list/news-list-inner/news-list-inner.component';
+import { ErrorComponent } from './components/error/error.component';
 import { SearchShared} from './components/search/search-shared';
-import { ArtistAdvancedComponent } from './components/search/artist/artist-advanced/artist-advanced.component';
-import { LocationAdvancedComponent } from './components/search/location/location-advanced/location-advanced.component';
-import { DropdownCountryComponent } from './components/search/location/location-advanced/dropdown-country/dropdown-country.component';
 
 @NgModule({
   declarations: [
@@ -130,6 +123,7 @@ import { DropdownCountryComponent } from './components/search/location/location-
     HomeComponent,
     TopTenEventsComponent,
     HeaderComponent,
+    CurrentNewsComponent,
     TopEventsListComponent,
     ResetPasswordComponent,
     ResetPasswordAuthComponent,
@@ -137,21 +131,13 @@ import { DropdownCountryComponent } from './components/search/location/location-
     ChooseTicketComponent,
     PaymentMethodOverviewComponent,
     ChartComponent,
-    LatestNewsComponent,
-    NewsDetailsComponent,
-    NewsDetailsInnerComponent,
-    ErrorNotificationComponent,
-    NewsListComponent,
-    NewsListInnerComponent,
+    ErrorComponent,
     TopEventsListComponent,
     SearchComponent,
     ArtistComponent,
     EventComponent,
     LocationComponent,
-    ShowComponent,
-    ArtistAdvancedComponent,
-    LocationAdvancedComponent,
-    DropdownCountryComponent
+    ShowComponent
   ],
   imports: [
     BrowserModule,

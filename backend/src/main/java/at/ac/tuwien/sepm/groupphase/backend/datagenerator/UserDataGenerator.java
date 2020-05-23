@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @Profile("generateData")
 public class UserDataGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    private static final int NUMBER_OF_CUSTOMERS_TO_GENERATE = 10;
+    private static final int NUMBER_OF_CUSTOMERS_TO_GENERATE = 100;
     private static final int NUMBER_OF_ADMINISTRATORS_TO_GENERATE = 2;
     private static final String TEST_USER_FIRST_NAME = "Name";
     private static final String TEST_USER_LAST_NAME = "Surname";

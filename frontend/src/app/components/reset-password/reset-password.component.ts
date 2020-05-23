@@ -14,7 +14,7 @@ export class ResetPasswordComponent implements OnInit {
   formResetPassword: FormGroup;
   // After first submission attempt, form validation will start
   submitted: boolean = false;
-  // CustomError flag
+  // BackendError flag
   error: boolean = false;
   errorMessage: string = '';
 
@@ -54,7 +54,7 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   /**
-   * CustomError flag will be deactivated, which clears the error message
+   * BackendError flag will be deactivated, which clears the error message
    */
   vanishError() {
     this.error = false;

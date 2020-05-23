@@ -1,7 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.util.validation.impl;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.*;
-import at.ac.tuwien.sepm.groupphase.backend.repository.ArtistRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventLocationRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
 import at.ac.tuwien.sepm.groupphase.backend.util.Constraints;
@@ -20,14 +19,13 @@ public class EventValidatorImpl implements EventValidator {
 
     private final EventRepository eventRepository;
     private final EventLocationRepository eventLocationRepository;
-    private final ArtistRepository artistRepository;
 
     @Autowired
-    public EventValidatorImpl(EventRepository eventRepository, EventLocationRepository eventLocationRepository, ArtistRepository artistRepository) {
+    public EventValidatorImpl(EventRepository eventRepository, EventLocationRepository eventLocationRepository) {
         this.eventRepository = eventRepository;
         this.eventLocationRepository = eventLocationRepository;
-        this.artistRepository = artistRepository;
     }
+
 
     @Override
     public Constraints validate(Event event) {
@@ -70,8 +68,18 @@ public class EventValidatorImpl implements EventValidator {
         Constraints constraints = new Constraints();
         constraints.add(AccesoryValidator.validateJavaxConstraints(show));
         constraints.add("show_idNull", show.getId()==null);
-        if(show.getId() != null) {
-            constraints.add("eventLocation_exists", show.getEventLocationOriginalId() != null && eventLocationRepository.findEventLocationById(show.getEventLocationOriginalId()) != null);
+        constraints.add( "eventLocation_given", show.getEventLocation() != null);
+        if(!constraints.isViolated()) {
+            constraints.add("eventLocation_given", show.getEventLocation().size() > 0);
+            constraints.add("eventLocation_onlyOne", show.getEventLocation().size() <= 1);
+            constraints.add("eventLocation_exists", show.getEventLocation().size() == 1 && show.getEventLocation().get(0) != null && show.getEventLocation().get(0).getId() != null);
+        }
+        if(!constraints.isViolated()) {
+            EventLocation eventLocation = eventLocationRepository.findEventLocationById(show.getEventLocation().get(0).getId());
+            constraints.add("eventLocation_exists", eventLocation != null);
+            if(!constraints.isViolated()) {
+                constraints.add("eventLocation_unassigned", eventLocation.getShowId() == null);
+            }
         }
         return constraints;
     }
@@ -79,14 +87,10 @@ public class EventValidatorImpl implements EventValidator {
     @Override
     public Constraints validate(EventLocation eventLocation) {
         Constraints constraints = new Constraints();
-        constraints.add("eventLocation_notNull", eventLocation != null);
-        if (eventLocation != null) {
-            constraints.add(AccesoryValidator.validateJavaxConstraints(eventLocation));
-            constraints.add("eventLocation_sectionsNotNull", eventLocation.getSections() != null);
-            if (eventLocation.getSections() != null) {
-                constraints.add("eventLocation_capacity", eventLocation.getCapacity() >= getCapacitySum(eventLocation));
-                constraints.add(validateSections(eventLocation.getSections()));
-            }
+        constraints.add(AccesoryValidator.validateJavaxConstraints(eventLocation));
+        if(eventLocation.getSections() != null) {
+            constraints.add("eventLocation_capacity", eventLocation.getCapacity() >= getCapacitySum(eventLocation));
+            constraints.add(validateSections(eventLocation.getSections()));
         }
         return constraints;
     }
@@ -129,12 +133,5 @@ public class EventValidatorImpl implements EventValidator {
             sum += section.getCapacity();
         }
         return sum;
-    }
-
-    @Override
-    public Constraints validateExists(Long artistId) {
-        Constraints constraints = new Constraints();
-        constraints.add("artist_exists", artistRepository.findArtistById(artistId) != null);
-        return constraints;
     }
 }

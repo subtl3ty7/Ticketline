@@ -76,7 +76,8 @@ label {
 }
 
 html, body { min-height: 100%; }
-body, h1, h2, h3, h4, h5, h6, p, a {
+body, h1, h2, h3, h4, h5, h6, p, a, label {
+  margin: 0 !important;
   font-family: Segue UI, Roboto, "Helvetica Neue", sans-serif !important;
 }
 body {
@@ -213,26 +214,11 @@ p {
 }
 
 label {
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 }
 
 .main-body {
   top: -20px;
   max-width: 1320px;
   padding-bottom: 10px;
-}
-
-//Prevent text overflow (only works when max-width is set, thus does not work on elements that can expand infinitely)
-.prevent-overflow {
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  float: left;
-}
-//Prevent text overflow (only works when max-width is set, thus does not work on elements that can expand infinitely)
-.prevent-overflow-inline {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
 }

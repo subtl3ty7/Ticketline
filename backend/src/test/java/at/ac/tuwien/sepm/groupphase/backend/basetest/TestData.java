@@ -62,7 +62,7 @@ public interface TestData {
     List<Show> SHOWS = new ArrayList<>() {
         {
             add(Show.builder()
-                .id(ID).eventCode(USER_CODE).startsAt(START).endsAt(END).ticketsSold(TOTAL).ticketsAvailable(TOTAL).eventLocationOriginalId(LOCATIONID).build());
+                .id(ID).eventCode(USER_CODE).startsAt(START).endsAt(END).ticketsSold(TOTAL).ticketsAvailable(TOTAL).eventLocation(LOCATIONS).build());
         }
     };
     int TOTAL = 500;
@@ -78,7 +78,13 @@ public interface TestData {
                 .id(ID).sectionName(FNAME).eventLocationId(ID).sectionDescription(DESC).capacity(TOTAL).seats(SEATS).build());
         }
     };
-    Long LOCATIONID = 1L;
+
+    List<EventLocation> LOCATIONS = new ArrayList<>() {
+        {
+            add(EventLocation.builder()
+                .id(ID).showId(ID).name(FNAME).eventLocationDescription(DESC).street(STREET).city(CITY).country(COUNTRY).plz(PLZ).sections(SECTIONS).capacity(TOTAL).build());
+        }
+    };
     String COLUMN = "A";
     String ROW = "1";
     List<Seat> SEATS = new ArrayList<>() {

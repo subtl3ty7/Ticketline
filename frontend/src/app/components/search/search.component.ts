@@ -17,8 +17,8 @@ export class SearchComponent implements OnInit {
   currentEntity: string;
 
   ngOnInit(): void {
-    this.currentTerm = sessionStorage.getItem('searchTerm');
-    this.currentEntity = sessionStorage.getItem('searchEntity');
+    this.currentTerm = localStorage.getItem('searchTerm');
+    this.currentEntity = localStorage.getItem('searchEntity');
     this.searchShared.searchEntity = this.currentEntity;
     console.log('entity: ' + this.currentEntity + '; term: ' + this.currentTerm);
     this.isCollapsed = true;

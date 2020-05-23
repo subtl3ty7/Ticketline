@@ -32,31 +32,21 @@ export class GuestHeaderComponent implements OnInit {
 
   searchEntity(searchTerm: string, s: SearchEntity) {
     console.log('navigating to search with searchTerm: ' + searchTerm + ' and searchEntity: ' + s);
-    sessionStorage.setItem('searchTerm', searchTerm);
-    sessionStorage.setItem('searchEntity', s.toString());
-    sessionStorage.setItem('isAdvancedSearchActive', String(false));
+    localStorage.setItem('searchTerm', searchTerm);
+    localStorage.setItem('searchEntity', s.toString());
     switch (s) {
       case SearchEntity.ARTIST:
-        this.searchShared.searchEntity = 'Artist';
-        const term = sessionStorage.getItem('searchTerm').split(' ', 2);
+        const term = localStorage.getItem('searchTerm').split(' ', 2);
         const firstName = term[0];
         const lastName = term[1];
         console.log('first name: ' + firstName + ', last name: ' + lastName);
         this.searchShared.getArtistsByFirstAndLastName(firstName, lastName);
         break;
       case SearchEntity.EVENT:
-        this.searchShared.searchEntity = 'Event';
-        const eventTerm = sessionStorage.getItem('searchTerm');
-        console.log('event name: ' + eventTerm);
         break;
       case SearchEntity.LOCATION:
-        this.searchShared.searchEntity = 'Location';
-        const locationTerm = sessionStorage.getItem('searchTerm');
-        console.log('location name: ' + locationTerm);
-        this.searchShared.getLocationByName(locationTerm);
         break;
       case SearchEntity.SHOW:
-        this.searchShared.searchEntity = 'Show';
         break;
     }
     this.isSearchActive = false;

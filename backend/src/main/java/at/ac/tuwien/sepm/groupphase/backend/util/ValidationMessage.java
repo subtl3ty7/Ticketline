@@ -1,8 +1,11 @@
 package at.ac.tuwien.sepm.groupphase.backend.util;
 
+import at.ac.tuwien.sepm.groupphase.backend.exception.CustomConstraintViolationException;
+import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.validation.ConstraintViolation;
 import java.lang.invoke.MethodHandles;
 import java.util.*;
 
@@ -14,9 +17,9 @@ public class ValidationMessage {
 
     private static final String defaultConstraintMessage = "Input violates an(other) unknown constraint.";
     /**
-     * maps constraint name to  a user-friendly message on wrong input (should not reveal any implementation details)
+     * maps constraint name to  a user-friendly hint on wrong input (should not reveal any implementation details)
      */
-    private static final Map<String, String> constraintMessageMap = new HashMap<>() {
+    private static final Map<String, String> constraintHintMap = new HashMap<>() {
         {
             //user
             put("user_id", "Id has to be unique and not null.");
@@ -124,46 +127,42 @@ public class ValidationMessage {
         }
     };
 
-    private Map<String, String> constraintMessages;
+    private List<String> messages;
+
+    public ValidationMessage() {
+        this.messages = new ArrayList<>();
+    }
 
     public ValidationMessage(Constraints constraints) {
-        this.constraintMessages = new HashMap<>();
+        this.messages = new ArrayList<>();
         this.add(constraints);
     }
 
-    private void add(Constraints constraints) {
+    public void add(Constraints constraints) {
         for(Map.Entry<String, Integer> entry: constraints.getViolated().entrySet()) {
-            String message = mapConstraintToMessage(entry.getKey());
+            String message = mapConstraintToAdvice(entry.getKey());
             if(entry.getValue() > 1) {
                 message += " (Appeared " + entry.getValue() + " times)";
             }
-            constraintMessages.put(entry.getKey(), message);
+            messages.add(message);
         }
     }
 
-    private String mapConstraintToMessage(String constraint) {
-        if(constraintMessageMap.get(constraint)!=null) {
-            return constraintMessageMap.get(constraint);
+    private String mapConstraintToAdvice(String constraint) {
+        if(constraintHintMap.get(constraint)!=null) {
+            return constraintHintMap.get(constraint);
         } else {
             return defaultConstraintMessage;
         }
     }
 
     public List<String> getMessages() {
-        List<String> messages = new ArrayList<>();
-        for(String message: constraintMessages.values()) {
-            messages.add(message);
-        }
         return messages;
-    }
-
-    public Map<String, String> getConstraintMessages() {
-        return constraintMessages;
     }
 
     public String getMessage() {
         String message = "";
-        for(String m: getMessages()) {
+        for(String m: messages) {
             message += m + "\n";
         }
         return message;

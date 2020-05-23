@@ -18,7 +18,7 @@ public interface ArtistService {
      * Find all artists in the database
      * @return a list of artist entities
      */
-    List<Artist> getAllArtists();
+    List<Artist> findAllArtists();
 
     /**
      * Save an artist in the database
