@@ -1,6 +1,5 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocationOriginal;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Seat;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Section;
@@ -49,8 +48,8 @@ public class CustomEventLocationService implements EventLocationService {
     }
 
     @Override
-    public List<EventLocation> findEventLocationsByName(String locationName) {
-        List<EventLocation> eventLocations = eventLocationRepository.findAllByNameContainingIgnoreCase(locationName);
+    public List<EventLocationOriginal> findEventLocationsByName(String locationName) {
+        List<EventLocationOriginal> eventLocations = eventLocationRepository.findAllByNameContainingIgnoreCase(locationName);
         return eventLocations;
     }
 }

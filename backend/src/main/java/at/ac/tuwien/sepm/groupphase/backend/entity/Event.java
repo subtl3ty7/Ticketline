@@ -62,10 +62,12 @@ public class Event implements Serializable {
     @ToString.Exclude
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "event_code", referencedColumnName = "event_code")
+    @Fetch(FetchMode.SELECT) //only way to fetch more than two collections with type eager ...
     private List<Show> shows;
 
     @ToString.Exclude
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SELECT) //only way to fetch more than two collections with type eager ...
     private List<Artist> artists;
 
     @Column

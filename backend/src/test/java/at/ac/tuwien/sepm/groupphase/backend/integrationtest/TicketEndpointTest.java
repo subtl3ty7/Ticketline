@@ -104,7 +104,7 @@ public class TicketEndpointTest implements TestData {
 
         userRepository.save(USER_TICKET);
         EventDataGenerator eventDataGenerator = new EventDataGenerator(sectionRepository, seatRepository,
-            showRepository, eventService, eventLocationService, entityManagerFactory, resources, artistRepository, artistService);
+            showRepository, eventService, eventLocationService, entityManagerFactory, artistRepository, artistService, resources);
         eventDataGenerator.generate();
 
         detailedTicketDto = DetailedTicketDto.DetailedTicketDtoBuilder.aDetailedTicketDto(

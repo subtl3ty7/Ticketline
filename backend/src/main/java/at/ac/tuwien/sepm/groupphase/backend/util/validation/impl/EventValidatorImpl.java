@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.util.validation.impl;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.*;
+import at.ac.tuwien.sepm.groupphase.backend.repository.ArtistRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventLocationRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
 import at.ac.tuwien.sepm.groupphase.backend.util.Constraints;
@@ -19,13 +20,14 @@ public class EventValidatorImpl implements EventValidator {
 
     private final EventRepository eventRepository;
     private final EventLocationRepository eventLocationRepository;
+    private final ArtistRepository artistRepository;
 
     @Autowired
-    public EventValidatorImpl(EventRepository eventRepository, EventLocationRepository eventLocationRepository) {
+    public EventValidatorImpl(EventRepository eventRepository, EventLocationRepository eventLocationRepository, ArtistRepository artistRepository) {
         this.eventRepository = eventRepository;
         this.eventLocationRepository = eventLocationRepository;
+        this.artistRepository = artistRepository;
     }
-
 
     @Override
     public Constraints validate(Event event) {
@@ -127,5 +129,12 @@ public class EventValidatorImpl implements EventValidator {
             sum += section.getCapacity();
         }
         return sum;
+    }
+
+    @Override
+    public Constraints validateExists(Long artistId) {
+        Constraints constraints = new Constraints();
+        constraints.add("artist_exists", artistRepository.findArtistById(artistId) != null);
+        return constraints;
     }
 }

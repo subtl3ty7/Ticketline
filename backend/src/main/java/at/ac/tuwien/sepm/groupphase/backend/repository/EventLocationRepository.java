@@ -1,6 +1,5 @@
 package at.ac.tuwien.sepm.groupphase.backend.repository;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocationOriginal;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -28,5 +27,5 @@ public interface EventLocationRepository extends JpaRepository<EventLocationOrig
      *
      * @return a list of event locations with specified location name.
      */
-    List<EventLocation> findAllByNameContainingIgnoreCase(String locationName);
+    List<EventLocationOriginal> findAllByNameContainingIgnoreCase(String locationName);
 }

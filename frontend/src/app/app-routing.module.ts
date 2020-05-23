@@ -37,7 +37,7 @@ const routes: Routes = [
   {path: 'user-details/:uc', canActivate: [AdminGuard], component: UserDetailsContainerComponent},
   {path: 'user-details/:uc/reset-password', canActivate: [AdminGuard], component: UserDetailsContainerComponent},
   {path: 'create-user', canActivate: [AdminGuard], component: CreateUserContainerComponent},
-  {path: 'event-details/:ec', canActivate: [AdminGuard], component: EventDetailsContainerComponent},
+  {path: 'events/:ec', canActivate: [AdminGuard], component: EventDetailsContainerComponent},
   {path: 'my-profile', canActivate: [LoggedInGuard], redirectTo: 'my-profile/my-info'},
   {path: 'my-profile/:tabId', canActivate: [LoggedInGuard], component: MyProfileContainerComponent},
   {path: 'registration', canActivate: [NotLoggedInGuard], component: RegistrationComponent},
@@ -52,7 +52,7 @@ const routes: Routes = [
   {path: 'reset-password/:rc', component: ResetPasswordAuthComponent},
   {path: 'news/:nc', canActivate: [LoggedInGuard], component: NewsDetailsComponent},
   {path: 'news-list', canActivate: [], component: NewsListComponent},
-  {path: 'ticket-purchase', canActivate: [LoggedInGuard], component: TicketPurchaseComponent}];
+  {path: 'ticket-purchase', canActivate: [LoggedInGuard], component: TicketPurchaseComponent},
   {path: 'ticket-purchase', canActivate: [LoggedInGuard], component: TicketPurchaseComponent},
   {path: 'search/artist-advanced', component: ArtistAdvancedComponent},
   {path: 'search/location-advanced', component: LocationAdvancedComponent}];

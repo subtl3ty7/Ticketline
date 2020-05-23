@@ -21,7 +21,7 @@ public class DetailedEventDto {
     private String description;
     private int startPrice;
     private String photo;
-    private List<Artist> artists;
+    private List<ArtistDto> artists;
     @ToString.Exclude
     private List<Show> shows;
     private String type;

@@ -65,7 +65,7 @@ public class EventLocationEndpoint {
     })
     public ResponseEntity<List<SimpleEventDto>> findEventLocationsByName(@RequestParam String name) {
         LOGGER.info("GET /api/v1/eventLocations/?locationName=" + name);
-        List<EventLocationDto> result = eventLocationMapper.eventLocationToEventLocationDto(eventLocationService.findEventLocationsByName(name));
+        List<EventLocationDto> result = eventLocationMapper.eventLocationOriginalToEventLocationDto(eventLocationService.findEventLocationsByName(name));
         return new ResponseEntity(result, HttpStatus.OK);
     }
 }

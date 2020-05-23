@@ -9,7 +9,6 @@ import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
 import at.ac.tuwien.sepm.groupphase.backend.util.validation.EventValidator;
-import at.ac.tuwien.sepm.groupphase.backend.util.validation.impl.ArtistValidatorImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,16 +26,14 @@ public class CustomEventService implements EventService {
     private final EventRepository eventRepository;
     private final EventLocationRepository eventLocationRepository;
     private final EventValidator validator;
-    private final ArtistValidatorImpl artistValidator;
     private final ArtistRepository artistRepository;
 
 
     @Autowired
-    public CustomEventService(EventRepository eventRepository, EventValidator validator, EventLocationRepository eventLocationRepository, ArtistValidatorImpl artistValidator, ArtistRepository artistRepository) {
+    public CustomEventService(EventRepository eventRepository, EventValidator validator, EventLocationRepository eventLocationRepository, ArtistRepository artistRepository) {
         this.eventRepository = eventRepository;
         this.validator = validator;
         this.eventLocationRepository = eventLocationRepository;
-        this.artistValidator = artistValidator;
         this.artistRepository = artistRepository;
     }
 
@@ -114,7 +111,7 @@ public class CustomEventService implements EventService {
 
     @Override
     public List<Event> findEventsByArtistId(Long artistId) {
-        //artistValidator.validate(artist).throwIfViolated();
+        validator.validateExists(artistId).throwIfViolated();
         Artist artist = artistRepository.findArtistById(artistId);
         return eventRepository.findEventsByArtistsContaining(artist);
 

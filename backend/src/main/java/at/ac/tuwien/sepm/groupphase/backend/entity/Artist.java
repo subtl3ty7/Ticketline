@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
 import lombok.*;
+import org.hibernate.FetchMode;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
@@ -23,7 +24,7 @@ public class Artist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany(mappedBy = "artists")
+    @ManyToMany(mappedBy = "artists", fetch = FetchType.EAGER)
     private List<Event> performsAt;
 
     @NotNull
