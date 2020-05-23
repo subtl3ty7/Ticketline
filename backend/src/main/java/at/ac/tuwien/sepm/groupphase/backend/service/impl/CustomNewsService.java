@@ -37,40 +37,46 @@ public class CustomNewsService implements NewsService {
     }
 
     @Override
-    public List<News> findLatestUnseen(Authentication auth) {
+    public List<News> findLatestUnseen(Authentication auth, Integer limit) {
         AbstractUser user = userService.getAuthenticatedUser(auth);
         validator.validateUser(user).throwIfViolated();
         Customer customer = (Customer) user;
         List<News> news = newsRepository.findAllBySeenByNotContainsOrderByPublishedAtDesc(customer);
-        if (news.size() > 6) {
-            return news.subList(0, 6);
-        } else {
+        if(limit == null || news.size() <= limit) {
+            //return all
             return news;
+        } else {
+            //return sublist
+            return news.subList(0, limit);
         }
     }
 
     @Override
-    public List<News> findSeenNews(Authentication auth) {
+    public List<News> findSeenNews(Authentication auth, Integer limit) {
         AbstractUser user = userService.getAuthenticatedUser(auth);
         validator.validateUser(user).throwIfViolated();
         Customer customer = (Customer) user;
-        return newsRepository.findAllBySeenByContainsOrderByPublishedAtDesc(customer);
-    }
-
-
-    @Override
-    public List<News> findLatest() {
-        List<News> news = newsRepository.findAllByOrderByPublishedAtDesc();
-        if (news.size() > 6) {
-            return news.subList(0, 6);
-        } else {
+        List<News> news = newsRepository.findAllBySeenByContainsOrderByPublishedAtDesc(customer);
+        if(limit == null || news.size() <= limit) {
+            //return all
             return news;
+        } else {
+            //return sublist
+            return news.subList(0, limit);
         }
     }
 
+
     @Override
-    public List<News> findAllNews() {
-        return newsRepository.findAll();
+    public List<News> findLatest(Integer limit) {
+        List<News> news = newsRepository.findAllByOrderByPublishedAtDesc();
+        if(limit == null || news.size() <= limit) {
+            //return all
+            return news;
+        } else {
+            //return sublist
+            return news.subList(0, limit);
+        }
     }
 
     @Override
@@ -85,12 +91,23 @@ public class CustomNewsService implements NewsService {
     }
 
     @Override
-    public News findByNewsCode(String newsCode) {
+    public News findByNewsCode(String newsCode, Authentication auth) {
+        AbstractUser user = userService.getAuthenticatedUser(auth);
+        validator.validateUser(user).throwIfViolated();
+        Customer customer = (Customer) user;
         News news = newsRepository.findByNewsCode(newsCode);
         if (news==null) {
             throw new NotFoundException("Could not find this News entry");
+        } else {
+            //if news entry was found, then mark the news entry as seen by the customer
+            this.markAsSeen(customer, news);
         }
         return news;
+    }
+
+    private void markAsSeen(Customer customer, News news) {
+        news.getSeenBy().add(customer);
+        newsRepository.save(news);
     }
 
     private String getNewNewsCode() {

@@ -46,7 +46,7 @@ public class NewsDataGenerator {
 
     @PostConstruct
     private void generate() {
-        if(newsService.findAllNews().size() > 0) {
+        if(newsService.findLatest(null).size() > 0) {
             LOGGER.info("News Test Data already generated");
         } else {
             LOGGER.info("Generating News Test Data");

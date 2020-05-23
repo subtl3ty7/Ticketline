@@ -1,18 +1,20 @@
-<div *ngIf="unseenNews">
-  <div class="title-button" routerLink="/top-ten-events">
-    <div class="row col-12">
-      <h1 class="title-headline">Aktuelle News</h1>
-      <h5 class="title-hover"><i class="fa fa-caret-right" style="font-size: 40px"></i></h5>
-    </div>
+<div class="title-button" routerLink="/news-list">
+  <div class="row col-12">
+    <h1 class="title-headline">Aktuelle News</h1>
+    <h5 class="title-hover"><i class="fa fa-caret-right" style="font-size: 40px"></i></h5>
   </div>
+</div>
 
-  <div *ngFor="let threeNews of unseenNews">
+<app-error-notification *ngIf="error" [error]="error"></app-error-notification>
+
+<div *ngIf="latestNews">
+  <div *ngFor="let threeNews of latestNews">
     <div class="row">
 
       <!--The three News inside of a row-->
       <div class="zoom col-md-4"
            *ngFor="let newsEntry of threeNews"
-           routerLink="/news-details/{{newsEntry.newsCode}}"
+           routerLink="/news/{{newsEntry.newsCode}}"
            style="padding: 10px">
         <div class="card">
           <img class="card-img-top img-fluid image-crop-big"

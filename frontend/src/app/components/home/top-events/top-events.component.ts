@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {EventService} from '../../../services/event.service';
 import {SimpleEvent} from '../../../dtos/simple-event';
 import {HttpErrorResponse} from '@angular/common/http';
-import {BackendError} from '../../../dtos/backend-error';
+import {CustomError} from '../../../dtos/customError';
 
 @Component({
   selector: 'app-top-events',

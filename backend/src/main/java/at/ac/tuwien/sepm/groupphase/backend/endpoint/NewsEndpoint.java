@@ -56,25 +56,25 @@ public class NewsEndpoint {
         notes = "Get News Entry by newsCode",
         authorizations = {@Authorization(value = "apiKey")})
     @ApiResponse(code = 200, message = "Successfully retrieved News Entry")
-    public NewsDto get(@PathVariable String newsCode) {
+    public NewsDto get(@PathVariable String newsCode, Authentication auth) {
         LOGGER.info("GET /api/v1/news/" + newsCode);
 
         return newsMapper.newsToNewsDto(
-            newsService.findByNewsCode(newsCode)
+            newsService.findByNewsCode(newsCode, auth)
         );
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @GetMapping(value = "/latest-unseen")
+    @GetMapping(value = "/unseen")
     @ApiOperation(
         value = "Get the latest News Entries for a Customer",
         notes = "This only returns News Entries the Customer has not seen yet",
         authorizations = {@Authorization(value = "apiKey")})
     @ApiResponse(code = 200, message = "Successfully retrieved News Entries")
-    public List<NewsDto> getLatestUnseen(Authentication auth) {
-        LOGGER.info("GET /api/v1/news/latest6Unseen/" + auth);
+    public List<NewsDto> getLatestUnseen(Integer limit, Authentication auth) {
+        LOGGER.info("GET /api/v1/news/latest-unseen?limit=" + limit);
         return newsMapper.newsToNewsDto(
-            newsService.findLatestUnseen(auth)
+            newsService.findLatestUnseen(auth, limit)
         );
     }
 
@@ -85,40 +85,26 @@ public class NewsEndpoint {
         notes = "Get all News Entries that this customer has already seen",
         authorizations = {@Authorization(value = "apiKey")})
     @ApiResponse(code = 200, message = "Successfully retrieved News Entries")
-    public List<NewsDto> getSeen(Authentication auth) {
-        LOGGER.info("GET /api/v1/news/latest6/" + auth);
+    public List<NewsDto> getSeen(Integer limit, Authentication auth ) {
+        LOGGER.info("GET /api/v1/news/seen?limit=" + limit);
 
         return newsMapper.newsToNewsDto(
-            newsService.findSeenNews(auth)
+            newsService.findSeenNews(auth, limit)
         );
     }
 
+    @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
     @ResponseStatus(HttpStatus.CREATED)
     @GetMapping(value = "/latest")
     @ApiOperation(
         value = "Get the latest News Entries",
         notes = "Get the latest News Entries")
     @ApiResponse(code = 200, message = "Successfully retrieved News Entries")
-    public List<NewsDto> getLatest() {
-        LOGGER.info("GET /api/v1/news/latest6/");
+    public List<NewsDto> getLatest(Integer limit) {
+        LOGGER.info("GET /api/v1/news/latest?limit=" + limit);
 
         return newsMapper.newsToNewsDto(
-            newsService.findLatest()
-        );
-    }
-
-    @ResponseStatus(HttpStatus.CREATED)
-    @GetMapping(value = "/all")
-    @ApiOperation(
-        value = "Get all News Entries",
-        notes = "Get all News Entries",
-        authorizations = {@Authorization(value = "apiKey")})
-    @ApiResponse(code = 200, message = "Successfully retrieved News Entries")
-    public List<NewsDto> getAll() {
-        LOGGER.info("GET /api/v1/news/all");
-
-        return newsMapper.newsToNewsDto(
-            newsService.findAllNews()
+            newsService.findLatest(limit)
         );
     }
 

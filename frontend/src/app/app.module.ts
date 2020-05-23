@@ -67,10 +67,12 @@ import { TopEventsListComponent } from './components/top-ten-events/top-events-l
 import { ResetPasswordComponent} from './components/reset-password/reset-password.component';
 import { ResetPasswordAuthComponent } from './components/reset-password/reset-password-auth/reset-password-auth.component';
 import { ChartComponent } from './components/top-ten-events/chart/chart.component';
-import { ErrorComponent } from './components/error/error.component';
 import { LatestNewsComponent } from './components/home/latest-news/latest-news.component';
 import { NewsDetailsComponent } from './components/news-details/news-details.component';
 import { NewsDetailsInnerComponent } from './components/news-details/news-details-inner/news-details-inner.component';
+import { ErrorNotificationComponent } from './sections/error-notification/error-notification.component';
+import { NewsListComponent } from './components/news-list/news-list.component';
+import { NewsListInnerComponent } from './components/news-list/news-list-inner/news-list-inner.component';
 
 @NgModule({
   declarations: [
@@ -120,10 +122,12 @@ import { NewsDetailsInnerComponent } from './components/news-details/news-detail
     ResetPasswordComponent,
     ResetPasswordAuthComponent,
     ChartComponent,
-    ErrorComponent,
     LatestNewsComponent,
     NewsDetailsComponent,
-    NewsDetailsInnerComponent
+    NewsDetailsInnerComponent,
+    ErrorNotificationComponent,
+    NewsListComponent,
+    NewsListInnerComponent
   ],
   imports: [
     BrowserModule,

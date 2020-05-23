@@ -1,14 +1,13 @@
-<app-error *ngIf="error" [error]="error"></app-error>
+<div class="title-button" routerLink="/top-ten-events">
+  <div class="row col-12">
+    <h1 class="title-headline">Top Veranstaltungen</h1>
+    <h5 class="title-hover"><i class="fa fa-caret-right" style="font-size: 40px"></i></h5>
+  </div>
+</div>
+
+<app-error-notification *ngIf="error" [error]="error"></app-error-notification>
 
 <div *ngIf="events && events.length > 0">
-    <div class="title-button" routerLink="/top-ten-events">
-      <div class="row col-12">
-        <h1 class="title-headline">Top Veranstaltungen</h1>
-        <h5 class="title-hover"><i class="fa fa-caret-right" style="font-size: 40px"></i></h5>
-      </div>
-    </div>
-
-
   <!--Carousel Wrapper-->
   <div id="multi-item-example" class="my-slider carousel slide carousel-multi-item" data-ride="carousel">
 

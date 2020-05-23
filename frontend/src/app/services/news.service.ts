@@ -14,9 +14,14 @@ export class NewsService {
   constructor(private httpClient: HttpClient, private globals: Globals) {
   }
 
-  getLatestUnseen(): Observable<News[]> {
-    console.log('Load latest 6 news that the customer has not seen yet.');
-    return this.httpClient.get<News[]>(this.eventBaseUri + '/latest-unseen');
+  getUnseen(limit: number): Observable<News[]> {
+    console.log('Load latest news that the customer has not seen yet.');
+    return this.httpClient.get<News[]>(this.eventBaseUri + '/unseen?limit=' + limit);
+  }
+
+  getLatest(limit: number): Observable<News[]> {
+    console.log('Load latest news.');
+    return this.httpClient.get<News[]>(this.eventBaseUri + '/latest?limit=' + limit);
   }
 
   getNewsEntry(newsCode: string): Observable<News> {
