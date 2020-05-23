@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint.dto;
 
 import lombok.*;
+
 import java.util.List;
 
 @Getter
@@ -9,9 +10,10 @@ import java.util.List;
 @Builder
 @ToString
 @NoArgsConstructor
-public class EventLocationDto {
+public class EventLocationCopyDto {
     private Long id;
     private Long showId;
+    private Long parentId;
     private String name;
     private String eventLocationDescription;
     private String street;
