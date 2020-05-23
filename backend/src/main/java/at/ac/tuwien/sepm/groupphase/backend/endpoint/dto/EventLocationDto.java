@@ -10,9 +10,8 @@ import java.util.List;
 @Builder
 @ToString
 @NoArgsConstructor
-public class EventLocationCopyDto {
+public class EventLocationDto {
     private Long id;
-    private Long showId;
     private Long parentId;
     private String name;
     private String eventLocationDescription;
@@ -21,5 +20,6 @@ public class EventLocationCopyDto {
     private String city;
     private String country;
     private List<SectionDto> sections;
+    private List<SimpleShowDto> shows;
     private int capacity;
 }

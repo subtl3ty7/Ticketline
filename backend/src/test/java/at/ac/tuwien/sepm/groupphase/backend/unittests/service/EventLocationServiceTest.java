@@ -37,7 +37,7 @@ public class EventLocationServiceTest implements TestData {
         .seats(SEATS)
         .build();
 
-    private EventLocation eventLocation = EventLocation.builder()
+    private EventLocationOriginal eventLocation = EventLocationOriginal.builder()
         .id(ID)
         .name(FNAME)
         .eventLocationDescription(DESC)
@@ -59,7 +59,7 @@ public class EventLocationServiceTest implements TestData {
             .capacity(TOTAL)
             .seats(SEATS)
             .build();
-        eventLocation = EventLocation.builder()
+        eventLocation = EventLocationOriginal.builder()
             .id(ID)
             .name(FNAME)
             .eventLocationDescription(DESC)

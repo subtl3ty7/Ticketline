@@ -69,18 +69,8 @@ public class EventValidatorImpl implements EventValidator {
         Constraints constraints = new Constraints();
         constraints.add(AccesoryValidator.validateJavaxConstraints(show));
         constraints.add("show_idNull", show.getId()==null);
-        constraints.add( "eventLocation_given", show.getEventLocation() != null);
-        if(!constraints.isViolated()) {
-            constraints.add("eventLocation_given", show.getEventLocation().size() > 0);
-            constraints.add("eventLocation_onlyOne", show.getEventLocation().size() <= 1);
-            constraints.add("eventLocation_exists", show.getEventLocation().size() == 1 && show.getEventLocation().get(0) != null && show.getEventLocation().get(0).getId() != null);
-        }
-        if(!constraints.isViolated()) {
-            EventLocation eventLocation = eventLocationRepository.findEventLocationById(show.getEventLocation().get(0).getId());
-            constraints.add("eventLocation_exists", eventLocation != null);
-            if(!constraints.isViolated()) {
-                constraints.add("eventLocation_unassigned", eventLocation.getShowId() == null);
-            }
+        if(show.getId() != null) {
+            constraints.add("eventLocation_exists", show.getEventLocationOriginalId() != null && eventLocationRepository.findEventLocationById(show.getEventLocationOriginalId()) != null);
         }
         return constraints;
     }
@@ -88,10 +78,14 @@ public class EventValidatorImpl implements EventValidator {
     @Override
     public Constraints validate(EventLocation eventLocation) {
         Constraints constraints = new Constraints();
-        constraints.add(AccesoryValidator.validateJavaxConstraints(eventLocation));
-        if(eventLocation.getSections() != null) {
-            constraints.add("eventLocation_capacity", eventLocation.getCapacity() >= getCapacitySum(eventLocation));
-            constraints.add(validateSections(eventLocation.getSections()));
+        constraints.add("eventLocation_notNull", eventLocation != null);
+        if (eventLocation != null) {
+            constraints.add(AccesoryValidator.validateJavaxConstraints(eventLocation));
+            constraints.add("eventLocation_sectionsNotNull", eventLocation.getSections() != null);
+            if (eventLocation.getSections() != null) {
+                constraints.add("eventLocation_capacity", eventLocation.getCapacity() >= getCapacitySum(eventLocation));
+                constraints.add(validateSections(eventLocation.getSections()));
+            }
         }
         return constraints;
     }

@@ -11,14 +11,11 @@ import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManagerFactory;
-import java.io.*;
 import java.lang.invoke.MethodHandles;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -73,7 +70,7 @@ public class EventDataGenerator {
 
     private List<Event> generateEvents() {
         generateEventLocations(true);
-        List<EventLocation> eventLocations = eventLocationService.getAllEventLocations();
+        List<EventLocationOriginal> eventLocations = eventLocationService.getAllEventLocations();
 
         if(eventLocations.isEmpty()) {
             throw new NotFoundException("No Event Locations in argument list. Needs to contain at least one.");
@@ -121,7 +118,7 @@ public class EventDataGenerator {
                 .endsAt(LocalDateTime.now())
                 .ticketsAvailable(1000)
                 .ticketsSold(300)
-                .eventLocation(List.of(eventLocation))
+                .eventLocationOriginalId(eventLocation.getId())
                 .build();
             shows.add(show);
         }
@@ -130,12 +127,12 @@ public class EventDataGenerator {
     }
 
 
-    private List<EventLocation> generateEventLocations(boolean doSave) {
+    private List<EventLocationOriginal> generateEventLocations(boolean doSave) {
 
-        List<EventLocation> eventLocations = new ArrayList<>();
+        List<EventLocationOriginal> eventLocations = new ArrayList<>();
         for(int i=0; i<numberOfEventLocations; i++) {
             List<Section> sections = generateSections();
-            EventLocation eventLocation = EventLocation.builder()
+            EventLocationOriginal eventLocation = EventLocationOriginal.builder()
                 .name("Stephansplatz " + i)
                 .city("Vienna")
                 .country("Austria")

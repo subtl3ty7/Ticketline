@@ -49,7 +49,7 @@ public class EventLocationEndpoint {
     })
     public ResponseEntity<List<SimpleEventDto>> requestAllEventLocations() {
         LOGGER.info("GET /api/v1/eventLocations/all");
-        List<EventLocationDto> result = eventLocationMapper.eventLocationToEventLocationDto(eventLocationService.getAllEventLocations());
+        List<EventLocationDto> result = eventLocationMapper.eventLocationOriginalToEventLocationDto(eventLocationService.getAllEventLocations());
         return new ResponseEntity(result, HttpStatus.OK);
     }
 

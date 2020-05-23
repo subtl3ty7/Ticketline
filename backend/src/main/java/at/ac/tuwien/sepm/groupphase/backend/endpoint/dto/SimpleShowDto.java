@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint.dto;
 
 import lombok.*;
+
 import java.time.LocalDateTime;
 
 @Getter
@@ -9,13 +10,11 @@ import java.time.LocalDateTime;
 @Builder
 @ToString
 @NoArgsConstructor
-public class ShowDto {
+public class SimpleShowDto {
     private Long id;
     private String eventCode;
     private LocalDateTime startsAt;
     private LocalDateTime endsAt;
     private int ticketsSold;
     private int ticketsAvailable;
-    @ToString.Exclude
-    private EventLocationDto eventLocation;
 }

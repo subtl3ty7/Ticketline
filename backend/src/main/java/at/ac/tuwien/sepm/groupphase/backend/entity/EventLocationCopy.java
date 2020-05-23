@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
 import lombok.*;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -12,59 +13,29 @@ import java.util.List;
 @Setter
 @ToString
 @AllArgsConstructor
-@Builder(toBuilder = true)
 @Entity
-public class EventLocation implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,  orphanRemoval = true)
-    @JoinColumn(name = "PARENT_ID", referencedColumnName = "ID")
-    private List<EventLocation> copies;
-
+public class EventLocationCopy extends EventLocation  {
     @Column(name = "PARENT_ID")
     private Long parentId;
 
-    @Column(name = "SHOW_ID")
-    private Long showId;
+    public EventLocationCopy() {}
 
-    @NotNull
-    @Size(min=1, max = 100)
-    @Column(nullable = false, length = 100)
-    private String name;
-
-    @Size(max = 1000)
-    @Column(length = 1000)
-    private String eventLocationDescription;
-
-    @Size(max = 1000)
-    @Column(length = 1000)
-    private String street;
-
-    @Size(max = 50)
-    @Column(length = 50)
-    private String plz;
-
-    @Size(max = 1000)
-    @Column(length = 1000)
-    private String city;
-
-    @Size(max = 100)
-    @Column(length = 100)
-    private String country;
-
-    @ToString.Exclude
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,  orphanRemoval = true)
-    @JoinColumn(name = "EVENT_LOCATION_ID", referencedColumnName = "ID")
-    private List<Section> sections;
-
-    @Column
-    private int capacity;
-
-    public EventLocation() {}
-
-    public EventLocation(EventLocation eventLocation) {
+    public EventLocationCopy(EventLocation eventLocation) {
+        this.setParentId(eventLocation.getId());
+        this.setCity(eventLocation.getCity());
+        this.setCountry(eventLocation.getCountry());
+        this.setCapacity(eventLocation.getCapacity());
+        this.setPlz(eventLocation.getPlz());
+        this.setEventLocationDescription(eventLocation.getEventLocationDescription());
+        this.setName(eventLocation.getName());
+        this.setStreet(eventLocation.getStreet());
+        this.setSections(new ArrayList<>());
+        for(Section section: eventLocation.getSections()) {
+            this.getSections().add(new Section(section));
+        }
+    }
+    /*
+    public EventLocationCopy(EventLocationCopy eventLocation) {
         this.city = eventLocation.getCity();
         this.country = eventLocation.getCountry();
         this.capacity = eventLocation.getCapacity();
@@ -77,4 +48,5 @@ public class EventLocation implements Serializable {
             this.sections.add(new Section(section));
         }
     }
+    */
 }
