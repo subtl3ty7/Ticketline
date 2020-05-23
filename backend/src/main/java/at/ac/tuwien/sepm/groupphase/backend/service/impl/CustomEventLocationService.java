@@ -45,4 +45,10 @@ public class CustomEventLocationService implements EventLocationService {
         eventValidator.validate(eventLocation).throwIfViolated();
         return eventLocationRepository.save(eventLocation);
     }
+
+    @Override
+    public List<EventLocation> findEventLocationsByName(String locationName) {
+        List<EventLocation> eventLocations = eventLocationRepository.findAllByNameContainingIgnoreCase(locationName);
+        return eventLocations;
+    }
 }

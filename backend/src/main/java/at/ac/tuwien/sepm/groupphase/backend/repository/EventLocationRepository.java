@@ -23,4 +23,11 @@ public interface EventLocationRepository extends JpaRepository<EventLocation, Lo
      * @return a list of event locations with no shows.
      */
     List<EventLocation> findAllByShowIdIsNull();
+
+    /**
+     * Find all event locations containing certain location name.
+     *
+     * @return a list of event locations with specified location name.
+     */
+    List<EventLocation> findAllByNameContainingIgnoreCase(String locationName);
 }
