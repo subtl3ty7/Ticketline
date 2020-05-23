@@ -36,6 +36,12 @@ public class Section implements Serializable {
     private List<Seat> seats;
 
     @Column
+    private String priceCategory;
+
+    @Column
+    private double price;
+
+    @Column
     private int capacity;
 
     public Section() {
@@ -47,7 +53,7 @@ public class Section implements Serializable {
         this.capacity = section.getCapacity();
         this.seats = new ArrayList<>();
         for(Seat seat: section.getSeats()) {
-            this.seats.add(new Seat(seat));
+            this.seats.add(new Seat(seat, section.getPrice()));
         }
     }
 }

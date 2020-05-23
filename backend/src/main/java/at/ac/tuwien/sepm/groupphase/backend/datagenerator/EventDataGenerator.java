@@ -202,6 +202,8 @@ public class EventDataGenerator {
             Section section = Section.builder()
                 .sectionName("Section Bla" + i)
                 .sectionDescription("BlaDescription")
+                .priceCategory("Low")
+                .price(9.99)
                 .seats(seats)
                 .capacity(seats.size()+i)
                 .build();
