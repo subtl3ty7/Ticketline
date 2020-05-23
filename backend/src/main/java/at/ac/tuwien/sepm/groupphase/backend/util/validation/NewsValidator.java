@@ -1,6 +1,5 @@
 package at.ac.tuwien.sepm.groupphase.backend.util.validation;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
 import at.ac.tuwien.sepm.groupphase.backend.entity.News;
@@ -11,5 +10,5 @@ public interface NewsValidator {
 
     Constraints validate(News news);
 
-    Constraints validateUser(AbstractUser user);
+    Constraints validateUserCode(String userCode);
 }

@@ -1,9 +1,10 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.*;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
-import at.ac.tuwien.sepm.groupphase.backend.repository.ArtistRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventLocationRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
@@ -26,15 +27,13 @@ public class CustomEventService implements EventService {
     private final EventRepository eventRepository;
     private final EventLocationRepository eventLocationRepository;
     private final EventValidator validator;
-    private final ArtistRepository artistRepository;
 
 
     @Autowired
-    public CustomEventService(EventRepository eventRepository, EventValidator validator, EventLocationRepository eventLocationRepository, ArtistRepository artistRepository) {
+    public CustomEventService(EventRepository eventRepository, EventValidator validator, EventLocationRepository eventLocationRepository) {
         this.eventRepository = eventRepository;
         this.validator = validator;
         this.eventLocationRepository = eventLocationRepository;
-        this.artistRepository = artistRepository;
     }
 
     @Override
@@ -70,10 +69,8 @@ public class CustomEventService implements EventService {
 
         //Give shows new EventLocation Entities (copies of existing ones) to make sure they all can have different seating assignments
         for(Show show: event.getShows()) {
-            EventLocationOriginal eventLocation = eventLocationRepository.findEventLocationById(show.getEventLocationOriginalId());
-            EventLocationCopy eventLocationCopy = new EventLocationCopy(eventLocation);
-            eventLocationCopy.setParentId(eventLocation.getId());
-            show.setEventLocationCopy(eventLocationCopy);
+            EventLocation eventLocation = eventLocationRepository.findEventLocationById(show.getEventLocation().get(0).getId());
+            show.setEventLocation(List.of(new EventLocation(eventLocation)));
         }
 
         return eventRepository.save(event);
@@ -107,13 +104,5 @@ public class CustomEventService implements EventService {
         validator.validateExists(eventCode).throwIfViolated();
         Event event = eventRepository.findEventByEventCode(eventCode);
         eventRepository.delete(event);
-    }
-
-    @Override
-    public List<Event> findEventsByArtistId(Long artistId) {
-        validator.validateExists(artistId).throwIfViolated();
-        Artist artist = artistRepository.findArtistById(artistId);
-        return eventRepository.findEventsByArtistsContaining(artist);
-
     }
 }

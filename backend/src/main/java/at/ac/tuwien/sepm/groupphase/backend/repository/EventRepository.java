@@ -1,6 +1,5 @@
 package at.ac.tuwien.sepm.groupphase.backend.repository;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.Artist;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -38,6 +37,4 @@ public interface EventRepository extends JpaRepository<Event, Long> {
      * @return a single event which has the corresponding event code
      */
     Event findEventByEventCode(String eventCode);
-
-    List<Event> findEventsByArtistsContaining(Artist artist);
 }

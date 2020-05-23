@@ -4,20 +4,24 @@ import at.ac.tuwien.sepm.groupphase.backend.basetest.TestData;
 import at.ac.tuwien.sepm.groupphase.backend.config.properties.SecurityProperties;
 import at.ac.tuwien.sepm.groupphase.backend.datagenerator.EventDataGenerator;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.DetailedTicketDto;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleEventDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleTicketDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.TicketMapper;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
 import at.ac.tuwien.sepm.groupphase.backend.repository.*;
 import at.ac.tuwien.sepm.groupphase.backend.security.JwtTokenizer;
-import at.ac.tuwien.sepm.groupphase.backend.service.ArtistService;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventLocationService;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
-import at.ac.tuwien.sepm.groupphase.backend.util.Resources;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -88,13 +92,7 @@ public class TicketEndpointTest implements TestData {
     private EntityManagerFactory entityManagerFactory;
 
     @Autowired
-    private Resources resources;
-
-    @Autowired
-    private ArtistRepository artistRepository;
-
-    @Autowired
-    private ArtistService artistService;
+    private ResourceLoader resourceLoader;
 
     private DetailedTicketDto detailedTicketDto;
 
@@ -104,7 +102,7 @@ public class TicketEndpointTest implements TestData {
 
         userRepository.save(USER_TICKET);
         EventDataGenerator eventDataGenerator = new EventDataGenerator(sectionRepository, seatRepository,
-            showRepository, eventService, eventLocationService, entityManagerFactory, artistRepository, artistService, resources);
+            showRepository, eventService, eventLocationService, entityManagerFactory, resourceLoader);
         eventDataGenerator.generate();
 
         detailedTicketDto = DetailedTicketDto.DetailedTicketDtoBuilder.aDetailedTicketDto(

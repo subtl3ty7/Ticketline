@@ -1,6 +1,5 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint.dto;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.Artist;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,7 +20,6 @@ public class DetailedEventDto {
     private String description;
     private int startPrice;
     private String photo;
-    private List<ArtistDto> artists;
     @ToString.Exclude
     private List<Show> shows;
     private String type;
@@ -39,7 +37,6 @@ public class DetailedEventDto {
         private String description;
         private int startPrice;
         private List<Show> shows;
-        private List<Artist> artists;
         private String type;
         private String category;
         private List<Integer> prices;
@@ -47,9 +44,9 @@ public class DetailedEventDto {
         private String photo;
 
         private DetailedEventDtoBuilder(String eventCode, LocalDateTime startsAt, String name,
-                                        String description, int startPrice, LocalDateTime endsAt,
-                                        String photo, List<Show> shows, List<Artist> artists, String type,
-                                        String category, List<Integer> prices, int totalTicketsSold) {
+                                      String description, int startPrice, LocalDateTime endsAt,
+                                      String photo, List<Show> shows, List<String> artists, String type,
+                                      String category, List<Integer> prices, int totalTicketsSold) {
             this.eventCode = eventCode;
             this.startsAt = startsAt;
             this.name = name;
@@ -58,7 +55,6 @@ public class DetailedEventDto {
             this.endsAt = endsAt;
             this.photo = photo;
             this.shows = shows;
-            this.artists = artists;
             this.type = type;
             this.category = category;
             this.prices = prices;
@@ -66,9 +62,9 @@ public class DetailedEventDto {
         }
 
         public static DetailedEventDto.DetailedEventDtoBuilder aDetailedEventDto(String eventCode, LocalDateTime startsAt, String name,
-                                                                                 String description, int startPrice, LocalDateTime endsAt,
-                                                                                 String photo, List<Show> shows, List<Artist> artists, String type,
-                                                                                 String category, List<Integer> prices, int totalTicketsSold) {
+                                                                           String description, int startPrice, LocalDateTime endsAt,
+                                                                           String photo, List<Show> shows, List<String> artists, String type,
+                                                                           String category, List<Integer> prices, int totalTicketsSold) {
 
             return new DetailedEventDto.DetailedEventDtoBuilder(eventCode, startsAt, name, description, startPrice, endsAt, photo, shows, artists,
                 type, category, prices, totalTicketsSold);

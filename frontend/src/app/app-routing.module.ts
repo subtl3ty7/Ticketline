@@ -20,12 +20,8 @@ import {HomeComponent} from './components/home/home.component';
 import {NotAdminGuard} from './guards/not-admin.guard';
 import {ResetPasswordComponent} from './components/reset-password/reset-password.component';
 import {ResetPasswordAuthComponent} from './components/reset-password/reset-password-auth/reset-password-auth.component';
-import {NewsDetailsComponent} from './components/news-details/news-details.component';
-import {NewsListComponent} from './components/news-list/news-list.component';
 import {TicketPurchaseComponent} from './components/ticket-purchase/ticket-purchase.component';
 import {SearchComponent} from './components/search/search.component';
-import {ArtistAdvancedComponent} from './components/search/artist/artist-advanced/artist-advanced.component';
-import {LocationAdvancedComponent} from './components/search/location/location-advanced/location-advanced.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -37,7 +33,7 @@ const routes: Routes = [
   {path: 'user-details/:uc', canActivate: [AdminGuard], component: UserDetailsContainerComponent},
   {path: 'user-details/:uc/reset-password', canActivate: [AdminGuard], component: UserDetailsContainerComponent},
   {path: 'create-user', canActivate: [AdminGuard], component: CreateUserContainerComponent},
-  {path: 'events/:ec', canActivate: [AdminGuard], component: EventDetailsContainerComponent},
+  {path: 'event-details/:ec', canActivate: [AdminGuard], component: EventDetailsContainerComponent},
   {path: 'my-profile', canActivate: [LoggedInGuard], redirectTo: 'my-profile/my-info'},
   {path: 'my-profile/:tabId', canActivate: [LoggedInGuard], component: MyProfileContainerComponent},
   {path: 'registration', canActivate: [NotLoggedInGuard], component: RegistrationComponent},
@@ -50,12 +46,7 @@ const routes: Routes = [
   {path: 'top-ten-events', component: TopTenEventsComponent},
   {path: 'reset-password', component: ResetPasswordComponent},
   {path: 'reset-password/:rc', component: ResetPasswordAuthComponent},
-  {path: 'news/:nc', canActivate: [LoggedInGuard], component: NewsDetailsComponent},
-  {path: 'news-list', canActivate: [], component: NewsListComponent},
-  {path: 'ticket-purchase', canActivate: [LoggedInGuard], component: TicketPurchaseComponent},
-  {path: 'ticket-purchase', canActivate: [LoggedInGuard], component: TicketPurchaseComponent},
-  {path: 'search/artist-advanced', component: ArtistAdvancedComponent},
-  {path: 'search/location-advanced', component: LocationAdvancedComponent}];
+  {path: 'ticket-purchase', canActivate: [LoggedInGuard], component: TicketPurchaseComponent}];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

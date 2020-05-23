@@ -22,7 +22,7 @@ public class ShowMappingTest implements TestData {
         .eventCode(USER_CODE)
         .ticketsAvailable(TOTAL)
         .ticketsSold(TOTAL)
-        .eventLocationOriginalId(LOCATIONID)
+        .eventLocation(LOCATIONS)
         .build();
 
 
