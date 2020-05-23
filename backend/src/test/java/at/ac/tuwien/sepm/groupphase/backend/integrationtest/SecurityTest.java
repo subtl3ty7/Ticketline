@@ -129,7 +129,7 @@ public class SecurityTest implements TestData {
     }
 
     @Test
-    public void givenUserLoggedIn_whenPost_then403() throws Exception {
+    public void givenUserLoggedIn_whenPost_then500() throws Exception {
         message.setPublishedAt(null);
         MessageInquiryDto messageInquiryDto = messageMapper.messageToMessageInquiryDto(message);
         String body = objectMapper.writeValueAsString(messageInquiryDto);
@@ -142,6 +142,6 @@ public class SecurityTest implements TestData {
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
 
-        assertEquals(HttpStatus.FORBIDDEN.value(), response.getStatus());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.value(), response.getStatus());
     }
 }

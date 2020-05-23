@@ -102,6 +102,7 @@ public class TicketEndpoint {
         LOGGER.info("Sending API Response: [" + response.getBody() + ", " + response.getStatusCode() + "]");
         return response;
     }
+
     @DeleteMapping(value = "/cancelPurchased/{ticketCode}")
     @ApiOperation(
         value = "Cancel purchased ticket.",
@@ -118,6 +119,41 @@ public class TicketEndpoint {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping(value = "/purchaseReserved/{ticketCode}")
+    @ApiOperation(
+        value = "Purchasing a reserved ticket.",
+        notes = "Purchasing a reserved ticket.",
+        authorizations = {@Authorization(value = "apiKey")})
+    @ApiResponses({
+        @ApiResponse(code = 201, message = "Ticket is successfully purchased"),
+        @ApiResponse(code = 400, message = "Ticket is already purchased"),
+        @ApiResponse(code = 500, message = "Connection Refused"),
+    })
+    public ResponseEntity<String> purchaseReservedTicket(@PathVariable String ticketCode) {
+        LOGGER.info("POST /api/v1/tickets/purchaseReserved/" + ticketCode);
+        Ticket ticket = ticketService.purchaseReservedTicket(ticketCode);
 
+        ResponseEntity response = new ResponseEntity(ticketMapper.ticketToSimpleTicketDto(ticket), HttpStatus.CREATED);
+
+        LOGGER.info("Sending API Response: [" + response.getBody() + ", " + response.getStatusCode() + "]");
+        return response;
+    }
+
+
+    @DeleteMapping(value = "/cancelReserved/{ticketCode}")
+    @ApiOperation(
+        value = "Cancel reserved ticket.",
+        notes = "Cancel reserved ticket.",
+        authorizations = {@Authorization(value = "apiKey")})
+    @ApiResponses({
+        @ApiResponse(code = 204, message = "Reservation is successfully cancelled"),
+        @ApiResponse(code = 404, message = "Reservation is not found"),
+        @ApiResponse(code = 500, message = "Connection Refused"),
+    })
+    public ResponseEntity<Void> cancelReservedTicket(@PathVariable String ticketCode) {
+        LOGGER.info("DELETE /api/v1/tickets/cancelReserved/" + ticketCode);
+        ticketService.cancelReservedTicket(ticketCode);
+        return ResponseEntity.noContent().build();
+    }
 
 }

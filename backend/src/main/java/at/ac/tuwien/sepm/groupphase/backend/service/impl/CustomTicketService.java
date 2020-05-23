@@ -64,7 +64,7 @@ public class CustomTicketService implements TicketService {
         String ticketCode = "";
         int i;
         for(i=0; i<maxAttempts; i++) {
-            ticketCode = CodeGenerator.generateUserCode();
+            ticketCode = CodeGenerator.generateTicketCode();
             if(!validator.validateTicketCode(ticketCode).isViolated()) {
                 break;
             }
@@ -88,14 +88,15 @@ public class CustomTicketService implements TicketService {
             LocalDateTime now = LocalDateTime.now();
             ticketEntity.setPurchaseDate(now);
 
+            validator.validateBefore(ticketEntity).throwIfViolated();
+
             Seat seat = seatRepository.findSeatById(ticketEntity.getSeat().getId());
             ticketEntity.setSeat(seat);
-            seatRepository.save(seat);
 
             Show show = showRepository.findShowById(ticketEntity.getShow().getId());
             ticketEntity.setShow(show);
-            showRepository.save(show);
 
+            ticketEntity.setPrice(50);
             validator.validateSave(ticketEntity).throwIfViolated();
             validator.validate(ticketEntity).throwIfViolated();
 
@@ -103,7 +104,7 @@ public class CustomTicketService implements TicketService {
             show.setTicketsAvailable(show.getTicketsAvailable() - 1);
             showRepository.save(show);
 
-            ticketEntity.getSeat().setFree(false);
+            seat.setFree(false);
             seatRepository.save(seat);
 
         return ticketEntity;
@@ -128,14 +129,46 @@ public class CustomTicketService implements TicketService {
     @Override
     public void cancelPurchasedTicket(String ticketCode) throws ValidationException, DataAccessException{
         LOGGER.info("Validating ticket with ticketCode " + ticketCode);
-        validator.validateTicketCode(ticketCode).throwIfViolated();
+        validator.validatePurchased(ticketCode).throwIfViolated();
 
         Ticket ticket1 = ticketRepository.findTicketByTicketCode(ticketCode);
+        Seat seat = ticket1.getSeat();
+        seat.setFree(true);
+        seatRepository.save(seat);
         ticketRepository.delete(ticket1);
         // do the money return  and invoices stuff
 
         LOGGER.info("Canceled ticket with ticketCode " + ticketCode);
     }
 
+    @Override
+    public Ticket purchaseReservedTicket(String ticketCode) {
+        LOGGER.info("Validating ticket with ticketCode " + ticketCode);
 
+        validator.validateReserved(ticketCode).throwIfViolated();
+
+        Ticket ticket = ticketRepository.findTicketByTicketCode(ticketCode);
+        ticket.setPurchased(true);
+        ticket.setReserved(false);
+        ticketRepository.save(ticket);
+
+        LOGGER.info("Purchased ticket " + ticket);
+
+        return ticket;
+    }
+
+    @Override
+    public void cancelReservedTicket(String ticketCode) {
+        LOGGER.info("Validating reservation with ticketCode: " + ticketCode);
+        validator.validateReserved(ticketCode).throwIfViolated();
+
+        Ticket chosenTicket = ticketRepository.findTicketByTicketCode(ticketCode);
+
+        Seat seat = chosenTicket.getSeat();
+        seat.setFree(true);
+        seatRepository.save(seat);
+
+        ticketRepository.delete(chosenTicket);
+        LOGGER.info("Reservation with the ticket code" + ticketCode +  " cancelled!");
+    }
 }

@@ -1,0 +1,82 @@
+<!-- Group of default radios - option 1 -->
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <h2>Zahlungsübersicht</h2>
+
+<div class="overview">
+  <div class="eventName">
+    <h5 class="h5_bold">Veranstaltung: </h5>
+    <p>{{event.name}}</p>
+  </div>
+<br>
+  <div class="artistName">
+    <h5 class="h5_bold">Künstler(in): </h5>
+    <div *ngFor="let artist of event.artists">
+      <p>{{artist}}</p>
+    </div>
+  </div>
+<br>
+  <div class="datum">
+    <h5 class="h5_bold">Datum:</h5>
+    <p>{{show.startsAt | date }}</p>
+  </div>
+<br>
+  <div class="performanceTime">
+    <h5 class="h5_bold">Aufführung: </h5>
+    <p>{{show.startsAt | date:'shortTime' }}</p>
+  </div>
+<br>
+  <div class="hall">
+    <h5 class="h5_bold">Saal: </h5>
+    <p>{{show.eventLocation[0].name}}</p>
+  </div>
+  <br>
+
+  <div class="city">
+    <h5 class="h5_bold">Ort:</h5>
+    <p>{{show.eventLocation[0].city}}</p>
+  </div>
+<br>
+  <div class="adress">
+    <h5 class="h5_bold">Adresse:</h5>
+    <p>{{show.eventLocation[0].street}}, {{show.eventLocation[0].plz}} {{show.eventLocation[0].city}} {{show.eventLocation[0].country}}</p>
+  </div>
+<br>
+  <div class="seating" *ngIf="this.ticket.seat">
+    <h5 class="h5_bold">Sitzplätze:</h5>
+    <p>Platz {{this.ticket.seat.seatColumn}}{{this.ticket.seat.seatRow}}</p>
+  </div>
+  <br>
+</div>
+  </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-auto">
+      <h3>Zahlungsmethode</h3>
+
+
+<div class="custom-control custom-radio">
+  <input type="radio" class="custom-control-input" id="defaultGroupExample1" name="groupOfDefaultRadios">
+  <label class="custom-control-label" for="defaultGroupExample1">Paypal</label>
+</div>
+
+<!-- Group of default radios - option 2 -->
+<div class="custom-control custom-radio">
+  <input type="radio" class="custom-control-input" id="defaultGroupExample2" name="groupOfDefaultRadios" checked>
+  <label class="custom-control-label" for="defaultGroupExample2">Kreditkarte</label>
+</div>
+
+<!-- Group of default radios - option 3 -->
+<div class="custom-control custom-radio">
+  <input type="radio" class="custom-control-input" id="defaultGroupExample3" name="groupOfDefaultRadios">
+  <label class="custom-control-label" for="defaultGroupExample3">Debit</label>
+</div>
+      <button type="button" mat-button matStepperNext class="btn btn-success" (click)="completePurchase()">Jetzt zahlen</button>
+
+    </div>
+
+  </div>
+</div>

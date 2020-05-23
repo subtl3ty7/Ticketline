@@ -11,7 +11,6 @@ import {UserDetailsContainerComponent} from './components/admin-home/admin-tabs/
 import {CreateUserContainerComponent} from './components/admin-home/admin-tabs/users-tab/create-user-container/root/create-user-container.component';
 import {MyProfileContainerComponent} from './components/my-profile/root/my-profile-container.component';
 import {RegistrationComponent} from './components/registration/registration.component';
-import {EventSearchComponent} from './components/event-search/event-search.component';
 import {EventDetailsUserViewComponent} from './components/event-details/event-details-user-view';
 import {EventDetailsContainerComponent} from './components/admin-home/admin-tabs/events-tab/event-details-container/root/event-details-container.component';
 import {CreateEventContainerComponent} from './components/admin-home/admin-tabs/events-tab/create-event-container/root/create-event-container.component';
@@ -23,6 +22,8 @@ import {ResetPasswordComponent} from './components/reset-password/reset-password
 import {ResetPasswordAuthComponent} from './components/reset-password/reset-password-auth/reset-password-auth.component';
 import {NewsDetailsComponent} from './components/news-details/news-details.component';
 import {NewsListComponent} from './components/news-list/news-list.component';
+import {TicketPurchaseComponent} from './components/ticket-purchase/ticket-purchase.component';
+import {SearchComponent} from './components/search/search.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -40,15 +41,16 @@ const routes: Routes = [
   {path: 'registration', canActivate: [NotLoggedInGuard], component: RegistrationComponent},
   {path: 'create-event', canActivate: [AdminGuard], component: CreateEventContainerComponent},
   {path: 'create-user', canActivate: [AdminGuard], component: CreateUserContainerComponent},
-  {path: 'event-search', canActivate: [], component: EventSearchComponent},
-  {path: 'events/:eventCode', canActivate: [LoggedInGuard], component: EventDetailsUserViewComponent},
+  {path: 'event-details/:eventCode', canActivate: [LoggedInGuard], component: EventDetailsUserViewComponent},
   {path: 'faq', canActivate: [], component: FaqComponent},
+  {path: 'top-ten-events', component: TopTenEventsComponent},
+  {path: 'search', canActivate: [], component: SearchComponent},
   {path: 'top-ten-events', component: TopTenEventsComponent},
   {path: 'reset-password', component: ResetPasswordComponent},
   {path: 'reset-password/:rc', component: ResetPasswordAuthComponent},
   {path: 'news/:nc', canActivate: [LoggedInGuard], component: NewsDetailsComponent},
   {path: 'news-list', canActivate: [], component: NewsListComponent},
-];
+  {path: 'ticket-purchase', canActivate: [LoggedInGuard], component: TicketPurchaseComponent}];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

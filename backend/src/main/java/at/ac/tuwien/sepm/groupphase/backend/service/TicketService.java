@@ -10,4 +10,6 @@ public interface TicketService {
     Ticket save(Ticket ticketEntity);
     List<Ticket> reserveTickets(List<Ticket> tickets);
     void cancelPurchasedTicket(String ticketCode);
+    Ticket purchaseReservedTicket(String ticketCode);
+    void cancelReservedTicket(String ticketCode);
 }

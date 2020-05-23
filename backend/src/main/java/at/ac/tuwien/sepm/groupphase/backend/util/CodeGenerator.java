@@ -49,6 +49,12 @@ public abstract class CodeGenerator {
         return generateCode(eventCodeLength, type).toUpperCase();
     }
 
+    public static String generateTicketCode() {
+        int eventCodeLength = 6;
+        char type = 'T';
+        return generateCode(eventCodeLength, type).toUpperCase();
+    }
+
     public static String generateResetPasswordCode() {
         int resetPasswordCodeLength = 25;
         char type = 'R';
