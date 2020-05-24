@@ -13,6 +13,7 @@ export class ErrorNotificationComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkForBadError();
+    console.log(this.error);
   }
 
   vanishError() {
