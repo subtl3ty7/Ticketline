@@ -2,7 +2,9 @@ package at.ac.tuwien.sepm.groupphase.backend.security;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
+import at.ac.tuwien.sepm.groupphase.backend.entity.ResetPassword;
 import at.ac.tuwien.sepm.groupphase.backend.entity.UserAttempts;
+import at.ac.tuwien.sepm.groupphase.backend.repository.ResetPasswordRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserAttemptsRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import org.slf4j.Logger;
@@ -26,6 +28,8 @@ public class AuthenticationEventListener implements ApplicationListener<Abstract
     UserAttemptsRepository userAttemptsRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    ResetPasswordRepository resetPasswordRepository;
 
 
     @Override
@@ -51,6 +55,10 @@ public class AuthenticationEventListener implements ApplicationListener<Abstract
                     UserAttempts userAttempts = userAttemptsRepository.findUserAttemptsByEmail(email);
                     userAttempts.setAttempts(0);
                     userAttemptsRepository.save(userAttempts);
+                }
+                ResetPassword resetPassword = resetPasswordRepository.findByEmail(email);
+                if (resetPassword != null) {
+                    resetPasswordRepository.delete(resetPassword);
                 }
             }
 

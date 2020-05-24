@@ -46,6 +46,7 @@ public class ValidationMessage {
             put("user_isUnblocked", "Needs to be unblocked to get blocked.");
             put("user_iBlocked", "Needs to be blocked to get unblocked.");
             put("user_isSelf", "User is not the self");
+            put("user_isSelf_or_auth_isAdmin", "Either user is not self or the user does not have enough rights for this action.");
 
 
             //seat

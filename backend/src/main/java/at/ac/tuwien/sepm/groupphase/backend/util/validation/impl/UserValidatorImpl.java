@@ -7,12 +7,15 @@ import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.util.Constraints;
 import at.ac.tuwien.sepm.groupphase.backend.util.validation.UserValidator;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.regex.Pattern;
 
 @Component
@@ -120,6 +123,17 @@ public class UserValidatorImpl implements UserValidator {
     }
 
     @Override
+    public Constraints validateChangePasswordCustomer(String email, String newPassword) {
+        Constraints constraints = new Constraints();
+        AbstractUser user = userRepository.findAbstractUserByEmail(email);
+        constraints.add("user_exists", user != null);
+        constraints.add("user_isCustomer", user instanceof Customer);
+        constraints.add("user_isSelf_or_auth_isAdmin", (user != null && validateUserIdentityWithGivenEmail(user.getEmail())) || validateIdentityIsAdmin());
+        constraints.add(validatePasswordEncoded(newPassword));
+        return constraints;
+    }
+
+    @Override
     public boolean validateUserIdentityWithGivenEmail(String email) {
         String emailOfAuthenticatedUser = "";
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -134,5 +148,16 @@ public class UserValidatorImpl implements UserValidator {
             }
         }
         return email.compareTo(emailOfAuthenticatedUser) == 0;
+    }
+
+    private boolean validateIdentityIsAdmin() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        List<GrantedAuthority> grantedAuthorities = (List<GrantedAuthority>) authentication.getAuthorities();
+        for (GrantedAuthority authority : grantedAuthorities) {
+            if (authority.getAuthority().compareTo("ROLE_ADMIN") == 0) {
+                return true;
+            }
+        }
+        return false;
     }
 }

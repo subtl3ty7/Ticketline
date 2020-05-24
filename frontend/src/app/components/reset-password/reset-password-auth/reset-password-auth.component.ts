@@ -11,7 +11,7 @@ import {AuthRequest} from '../../../dtos/auth-request';
   styleUrls: ['./reset-password-auth.component.css']
 })
 export class ResetPasswordAuthComponent implements OnInit {
-  error: boolean = false;
+  error;
   errorMessage: string = '';
   private resetPasswordCode: string;
   constructor(private userService: UserService,
@@ -28,18 +28,12 @@ export class ResetPasswordAuthComponent implements OnInit {
     });
     this.userService.resetPasswordAuth(this.resetPasswordCode).subscribe(
       (userLogin: UserLogin) => {
-        const authRequest: AuthRequest = new AuthRequest(userLogin.email, 'Password');
+        console.log(userLogin);
+        const authRequest: AuthRequest = new AuthRequest(userLogin.email, userLogin.password);
         this.authenticateUser(authRequest);
       },
-      error => {
-        console.log('Could not send request due to:');
-        console.log(error);
-        this.error = true;
-        if (typeof error.error === 'object') {
-          this.errorMessage = error.error.error;
-        } else {
-          this.errorMessage = error.error;
-        }
+      (error) => {
+        this.error = error;
       }
     );
   }
@@ -52,15 +46,8 @@ export class ResetPasswordAuthComponent implements OnInit {
         this.router.navigate(['/home']);
         document.body.style.backgroundImage = null;
       },
-      error => {
-        console.log('Could not log in due to:');
-        console.log(error);
-        this.error = true;
-        if (typeof error.error === 'object') {
-          this.errorMessage = error.error.error;
-        } else {
-          this.errorMessage = error.error;
-        }
+      (error) => {
+        this.error = error;
       }
     );
   }
