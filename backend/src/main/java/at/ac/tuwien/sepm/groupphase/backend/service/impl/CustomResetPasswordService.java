@@ -80,6 +80,7 @@ public class CustomResetPasswordService implements ResetPasswordService {
         String password = generateRandomPassword();
         AbstractUser user = this.userRepository.findAbstractUserByEmail(email);
         user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
         return password;
     }
 
