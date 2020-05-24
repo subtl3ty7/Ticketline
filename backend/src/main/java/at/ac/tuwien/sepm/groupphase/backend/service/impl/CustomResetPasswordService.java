@@ -2,6 +2,7 @@ package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
 import at.ac.tuwien.sepm.groupphase.backend.entity.ResetPassword;
+import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.ResetPasswordRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.EmailService;
@@ -60,7 +61,7 @@ public class CustomResetPasswordService implements ResetPasswordService {
     public String getResetPasswordEmailWithCode(String resetPasswordCode) {
         ResetPassword resetPassword = resetPasswordRepository.findByResetPasswordCode(resetPasswordCode);
         if(resetPassword == null) {
-            throw new NullPointerException("Can not find reset password code!");
+            throw new NotFoundException("Can not find reset password code!");
         }
         return resetPassword.getEmail();
     }
