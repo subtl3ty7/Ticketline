@@ -1,0 +1,13 @@
+.reset-search:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.reset-search {
+  margin-top: 10px;
+}
+
+.apply-filter {
+  text-align: right;
+  float: right;
+}

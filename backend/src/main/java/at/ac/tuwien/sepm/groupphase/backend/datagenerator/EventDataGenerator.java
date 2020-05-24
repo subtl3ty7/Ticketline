@@ -3,20 +3,20 @@ package at.ac.tuwien.sepm.groupphase.backend.datagenerator;
 import at.ac.tuwien.sepm.groupphase.backend.entity.*;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.*;
+import at.ac.tuwien.sepm.groupphase.backend.service.ArtistService;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventLocationService;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
+import at.ac.tuwien.sepm.groupphase.backend.util.Resources;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManagerFactory;
-import java.io.*;
 import java.lang.invoke.MethodHandles;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -30,21 +30,25 @@ public class EventDataGenerator {
     private final SectionRepository sectionRepository;
     private final ShowRepository showRepository;
     private final SeatRepository seatRepository;
+    private final ArtistRepository artistRepository;
     private final EventService eventService;
     private final EventLocationService eventLocationService;
+    private final ArtistService artistService;
     private final EntityManagerFactory entityManagerFactory;
-    private final ResourceLoader resourceLoader;
+    private final Resources resources;
 
 
     private final static int numberOfEventLocations = 5;
     private static final int numberOfEvents = 15;
+    private static final int numberOfArtists = 5;
 
+    @Autowired
     public EventDataGenerator(SectionRepository sectionRepository,
                               SeatRepository seatRepository, ShowRepository showRepository,
                               EventService eventService,
                               EventLocationService eventLocationService,
                               EntityManagerFactory entityManagerFactory,
-                              ResourceLoader resourceLoader
+                              ArtistRepository artistRepository, ArtistService artistService, Resources resources
     ) {
         this.sectionRepository = sectionRepository;
         this.showRepository = showRepository;
@@ -52,7 +56,9 @@ public class EventDataGenerator {
         this.eventService = eventService;
         this.eventLocationService = eventLocationService;
         this.entityManagerFactory = entityManagerFactory;
-        this.resourceLoader = resourceLoader;
+        this.resources = resources;
+        this.artistRepository = artistRepository;
+        this.artistService = artistService;
     }
 
     private Session getSession() {
@@ -76,10 +82,17 @@ public class EventDataGenerator {
 
     private List<Event> generateEvents() {
         generateEventLocations(true);
-        List<EventLocation> eventLocations = eventLocationService.getAllEventLocations();
+        List<EventLocationOriginal> eventLocations = eventLocationService.getAllEventLocations();
 
         if(eventLocations.isEmpty()) {
             throw new NotFoundException("No Event Locations in argument list. Needs to contain at least one.");
+        }
+
+        generateArtists();
+        List<Artist> artists = artistService.getAllArtists();
+
+        if(artists.isEmpty()) {
+            throw new NotFoundException("No Artists in argument list. Needs to contain at least one.");
         }
 
         List<Event> events = new ArrayList<>();
@@ -91,6 +104,13 @@ public class EventDataGenerator {
 
             String imgName = "event_img" + i + ".jpg";
 
+            List<Artist> addedArtists = new ArrayList<>();
+            int artistIndex = i;
+            if (artistIndex >= artists.size()) {
+                artistIndex = artists.size()-1;
+            }
+            addedArtists.add(artists.get(artistIndex));
+
             Event event = Event.builder()
                 .category("Talk")
                 .description("Interesting debate!")
@@ -98,11 +118,12 @@ public class EventDataGenerator {
                 .endsAt(LocalDateTime.now())
                 .eventCode("E1234" + i)
                 .name("Event " + i)
-                .photo(getImage(imgName))
+                .photo(resources.getImageEncoded(imgName))
                 .prices(List.of(1,2,3))
                 .totalTicketsSold(5*i*i*i)
                 .type("Of the cool type")
                 .shows(generateShows(eventLocations.get(eventLocationIndex)))
+                .artists(addedArtists)
                 .build();
             event = eventService.createNewEvent(event);
             events.add(event);
@@ -123,7 +144,7 @@ public class EventDataGenerator {
                 .endsAt(LocalDateTime.now())
                 .ticketsAvailable(1000)
                 .ticketsSold(300)
-                .eventLocation(List.of(eventLocation))
+                .eventLocationOriginalId(eventLocation.getId())
                 .build();
             shows.add(show);
         }
@@ -132,12 +153,12 @@ public class EventDataGenerator {
     }
 
 
-    private List<EventLocation> generateEventLocations(boolean doSave) {
+    private List<EventLocationOriginal> generateEventLocations(boolean doSave) {
 
-        List<EventLocation> eventLocations = new ArrayList<>();
+        List<EventLocationOriginal> eventLocations = new ArrayList<>();
         for(int i=0; i<numberOfEventLocations; i++) {
             List<Section> sections = generateSections();
-            EventLocation eventLocation = EventLocation.builder()
+            EventLocationOriginal eventLocation = EventLocationOriginal.builder()
                 .name("Stephansplatz " + i)
                 .city("Vienna")
                 .country("Austria")
@@ -154,6 +175,23 @@ public class EventDataGenerator {
         return eventLocations;
     }
 
+    private List<Artist> generateArtists() {
+        List<Artist> artists = new ArrayList<>();
+        if (artistRepository.findAllByOrderByLastNameAscFirstNameAsc().size() > 0) {
+            LOGGER.debug("artist already generated");
+        } else {
+            LOGGER.debug("generating {} message entries", numberOfArtists);
+            for (int i = 0; i < numberOfArtists; i++) {
+                Artist artist = Artist.ArtistBuilder.anArtist()
+                    .withFirstName(((char) (65 + (i%26))) + "test")
+                    .withLastName("Person")
+                    .build();
+                LOGGER.debug("saving artist {}", artist);
+                artistRepository.save(artist);
+            }
+        }
+        return artists;
+    }
 
     private List<Section> generateSections() {
         int numberOfSections = 4;
@@ -164,6 +202,8 @@ public class EventDataGenerator {
             Section section = Section.builder()
                 .sectionName("Section Bla" + i)
                 .sectionDescription("BlaDescription")
+                .priceCategory("Low")
+                .price(9.99)
                 .seats(seats)
                 .capacity(seats.size()+i)
                 .build();
@@ -209,28 +249,4 @@ public class EventDataGenerator {
         return sum;
     }
 
-    private String getImage(String imgName) {
-        try {
-            InputStream inputStream = resourceLoader.getResource("classpath:" + imgName).getInputStream();
-            //BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            String encodedString = Base64.getEncoder().encodeToString(inputStream.readAllBytes());
-            //String contents = reader.lines()
-             //   .collect(Collectors.joining(System.lineSeparator()));
-            encodedString = "data:image/" + getFileExtension(imgName) + ";base64," + encodedString;
-            return encodedString;
-        } catch (IOException e) {
-            throw new RuntimeException("Couldn't load Image File for EventDataGenerator.", e);
-        } catch (NullPointerException e) {
-            throw new RuntimeException("Couldn't load Image File for EventDataGenerator.", e);
-        }
-    }
-
-    private String getFileExtension(String imgName) {
-        if(!imgName.contains(".")) {
-            throw new RuntimeException("Could not retrieve file extension of filename ." + imgName);
-        }
-        int dotIndex = imgName.indexOf('.');
-        String fileExtension = imgName.substring(dotIndex+1);
-        return fileExtension;
-    }
 }

@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.DetailedEventDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleEventDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EventMapper;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Artist;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -76,7 +77,7 @@ public class EventEndpoint {
     public DetailedEventDto create(@Valid @RequestBody DetailedEventDto eventDto) {
         LOGGER.info("POST /api/v1/events body: {}", eventDto);
         return eventMapper.eventToDetailedEventDto(
-           eventService.createNewEvent(eventMapper.detailedEventDtoToEvent(eventDto)));
+            eventService.createNewEvent(eventMapper.detailedEventDtoToEvent(eventDto)));
     }
 
 
@@ -127,6 +128,23 @@ public class EventEndpoint {
         LOGGER.info("DELETE /api/v1/events/" + eventCode);
         eventService.deletebyEventCode(eventCode);
         return ResponseEntity.noContent().build();
+    }
+
+    @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
+    @GetMapping(value = "")
+    @ApiOperation(
+        value = "Get all events",
+        notes = "Get all events without details",
+        authorizations = {@Authorization(value = "apiKey")})
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "Events are successfully retrieved"),
+        @ApiResponse(code = 404, message = "No Event is found"),
+        @ApiResponse(code = 500, message = "Connection Refused"),
+    })
+    public ResponseEntity<List<SimpleEventDto>> findEventByArtistId(@Valid @RequestParam Long artistId) {
+        LOGGER.info("GET /api/v1/events?artistId=" + artistId);
+        List<SimpleEventDto> result = eventMapper.eventToSimpleEventDto(eventService.findEventsByArtistId(artistId));
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 }

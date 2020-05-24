@@ -8,4 +8,5 @@ public interface EventValidator {
     Constraints validate(EventLocation eventLocation);
     Constraints validateExists(String eventCode);
     Constraints validate(Event event);
+    Constraints validateExists(Long artistId);
 }

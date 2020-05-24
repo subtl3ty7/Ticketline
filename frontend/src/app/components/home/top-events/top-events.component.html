@@ -1,14 +1,13 @@
-<app-error *ngIf="error" [error]="error"></app-error>
+<div class="title-button" routerLink="/top-ten-events">
+  <div class="row col-12">
+    <h1 class="title-headline">Top Veranstaltungen</h1>
+    <h5 class="title-hover"><i class="fa fa-caret-right" style="font-size: 40px"></i></h5>
+  </div>
+</div>
 
-<div class="container" *ngIf="events && events.length > 0">
-    <div class="title-button" routerLink="/top-ten-events">
-      <div class="row col-12">
-        <h1 class="title-headline">Top Veranstaltungen</h1>
-        <h5 class="title-hover"><i class="fa fa-caret-right" style="font-size: 40px"></i></h5>
-      </div>
-    </div>
+<app-error-notification *ngIf="error" [error]="error"></app-error-notification>
 
-
+<div *ngIf="events && events.length > 0">
   <!--Carousel Wrapper-->
   <div id="multi-item-example" class="my-slider carousel slide carousel-multi-item" data-ride="carousel">
 
@@ -45,7 +44,7 @@
                    src="{{event.photo}}">
               <div class="card-body">
                 <div class = "card-title row">
-                  <h4 class="col-sm" style="padding-top: 10px">{{event.name}}</h4>
+                  <div class="col-sm extra-pad card-title-font prevent-overflow-inline">{{event.name}}</div>
                   <button *ngIf="event === threeEvents[0]"
                           class="btn default event-button col-sm"
                           routerLinkActive="active" style="margin-right: 20px">
@@ -84,6 +83,4 @@
 
   </div>
 </div>
-
-<!--<img class="image-crop" src="https://www.mch-group.com/-/media/mch-group/Images/Content/News/Blog/2017/2017-04/mch-group-live-marketing-aktivierung.jpg" />-->
 

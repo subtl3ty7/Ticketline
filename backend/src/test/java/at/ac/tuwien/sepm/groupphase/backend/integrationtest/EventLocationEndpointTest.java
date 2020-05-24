@@ -3,12 +3,8 @@ package at.ac.tuwien.sepm.groupphase.backend.integrationtest;
 import at.ac.tuwien.sepm.groupphase.backend.basetest.TestData;
 import at.ac.tuwien.sepm.groupphase.backend.config.properties.SecurityProperties;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.EventLocationDto;
-import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleEventDto;
-import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EventLocationMapper;
-import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EventMapper;
-import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocationOriginal;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventLocationRepository;
-import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
 import at.ac.tuwien.sepm.groupphase.backend.security.JwtTokenizer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -54,7 +50,7 @@ public class EventLocationEndpointTest implements TestData {
     @Autowired
     private SecurityProperties securityProperties;
 
-    private EventLocation eventLocation = EventLocation.builder()
+    private EventLocationOriginal eventLocation = EventLocationOriginal.builder()
         .id(ID)
         .name(FNAME)
         .eventLocationDescription(DESC)
@@ -69,7 +65,7 @@ public class EventLocationEndpointTest implements TestData {
     @BeforeEach
     public void beforeEach() {
         eventLocationRepository.deleteAll();
-        eventLocation = EventLocation.builder()
+        eventLocation = EventLocationOriginal.builder()
             .id(ID)
             .name(FNAME)
             .eventLocationDescription(DESC)
