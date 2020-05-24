@@ -58,14 +58,14 @@
 
     <div class="category">
       <h3> Preise:</h3>
-      <p> Kategorie A: 78.00$</p>
-      <P> Kategorie B: 89.50$</P>
-      <P> Kategorie C: 94.79$</P>
+      <p *ngFor="let s of eventLocation.sections">
+        {{s.sectionName}}: €{{s.price}}
+      </p>
 
     </div>
 
     <div class="finalPrice">
-      <h3> Preis: 78.00 EUR </h3>
+      <h3> Preis: <span *ngIf = "chosenSection">€{{chosenSection.price}} </span></h3>
     </div>
 
     <button type="button" mat-button matStepperNext class="btn btn-success" (click)="nextStep(ticketState.PROCESSING)">Jetzt kaufen</button>

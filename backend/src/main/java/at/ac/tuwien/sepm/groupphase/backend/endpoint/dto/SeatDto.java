@@ -14,4 +14,5 @@ public class SeatDto {
     private String seatRow;
     private String seatColumn;
     private boolean isFree;
+    private double price;
 }

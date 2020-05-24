@@ -17,5 +17,6 @@ public class ShowDto {
     private int ticketsSold;
     private int ticketsAvailable;
     @ToString.Exclude
-    private EventLocationDto eventLocation;
+    private EventLocationDto eventLocationCopy;
+    private Long eventLocationOriginalId;
 }

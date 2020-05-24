@@ -6,4 +6,5 @@ export class Section {
   public sectionName: string;
   private description: string;
   public seats: Seat[];
+  public price: number;
 }

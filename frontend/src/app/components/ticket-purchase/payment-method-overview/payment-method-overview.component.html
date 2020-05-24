@@ -13,7 +13,7 @@
   <div class="artistName">
     <h5 class="h5_bold">Künstler(in): </h5>
     <div *ngFor="let artist of event.artists">
-      <p>{{artist}}</p>
+      <p>{{artist.firstName}} {{artist.lastName}}</p>
     </div>
   </div>
 <br>
@@ -29,18 +29,18 @@
 <br>
   <div class="hall">
     <h5 class="h5_bold">Saal: </h5>
-    <p>{{show.eventLocation[0].name}}</p>
+    <p>{{show.eventLocationCopy.name}}</p>
   </div>
   <br>
 
   <div class="city">
     <h5 class="h5_bold">Ort:</h5>
-    <p>{{show.eventLocation[0].city}}</p>
+    <p>{{show.eventLocationCopy.city}}</p>
   </div>
 <br>
   <div class="adress">
     <h5 class="h5_bold">Adresse:</h5>
-    <p>{{show.eventLocation[0].street}}, {{show.eventLocation[0].plz}} {{show.eventLocation[0].city}} {{show.eventLocation[0].country}}</p>
+    <p>{{show.eventLocationCopy.street}}, {{show.eventLocationCopy.plz}} {{show.eventLocationCopy.city}} {{show.eventLocationCopy.country}}</p>
   </div>
 <br>
   <div class="seating" *ngIf="this.ticket.seat">
