@@ -28,7 +28,8 @@ export class ResetPasswordAuthComponent implements OnInit {
     });
     this.userService.resetPasswordAuth(this.resetPasswordCode).subscribe(
       (userLogin: UserLogin) => {
-        const authRequest: AuthRequest = new AuthRequest(userLogin.email, 'Password');
+        console.log(userLogin);
+        const authRequest: AuthRequest = new AuthRequest(userLogin.email, userLogin.password);
         this.authenticateUser(authRequest);
       },
       error => {
