@@ -1,14 +1,24 @@
-<div class="flex" *ngIf="wrapper.state !== state.DELETING">
+<app-error-notification *ngIf="error" [error]="error"></app-error-notification>
+<div class="flex" *ngIf="wrapper.state !== state.DELETING && !error">
   <div class="center-block">
     <div *ngIf="wrapper.state === state.READY">
+      <div class="top-button-wrapper">
       <div class="edit-button-wrapper">
       <span id="userInfoForm_editButton"
             class="edit-button"
             (click)="openEditMode()">
-        Edit
+        Edit My Info
       </span>
       </div>
 
+      <div class="password-button-wrapper">
+      <span id="userInfoForm_PasswordButton"
+            class="password-button"
+            (click)="openPasswordMode()">
+        Change Password
+      </span>
+      </div>
+      </div>
       <app-profile-info [currentUser]="wrapper.model">
       </app-profile-info>
       <div class="delete-button-wrapper">
@@ -22,7 +32,7 @@
   </div>
 </div>
 
-<div *ngIf="wrapper.state === state.EDIT">
+<div *ngIf="wrapper.state === state.EDIT && !error">
   <app-edit-profile [wrapper]= "wrapper">
     <div class="button-wrapper">
       <button id="userInfoForm_saveButton"
@@ -39,4 +49,23 @@
       </button>
     </div>
   </app-edit-profile>
+</div>
+
+<div *ngIf="wrapper.state === state.PASSWORD && !error">
+  <app-change-password [changePassword]= "changePassword">
+    <div class="button-wrapper">
+      <button id="userInfoForm_changeButton"
+              class="save-button"
+              (click)="savePassword()"
+              mat-raised-button color="warn">
+        <span class="save-button-label">Change</span>
+      </button>
+
+      <button id="userInfoForm_cancelButton"
+              class="cancel-button"
+              (click)="closePasswordMode()">
+        <span class="cancel-button-label">Cancel</span>
+      </button>
+    </div>
+  </app-change-password>
 </div>

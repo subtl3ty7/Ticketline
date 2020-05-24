@@ -21,7 +21,11 @@
 }
 .edit-button-wrapper {
   padding-top: 25px;
-  padding-left: 75%;
+}
+
+.password-button-wrapper {
+  padding-top: 25px;
+  padding-left: 50%;
 }
 
 .delete-button-wrapper {
@@ -29,10 +33,11 @@
   padding-left: 55%;
 }
 
-.edit-button {
+
+.edit-button, .password-button {
   height: 18px;
   cursor: pointer;
-  font-family: Verdana;
+  font-family: SansSerif, sans-serif;
   font-size: 18px;
   font-weight: normal;
   font-style: normal;
@@ -41,6 +46,7 @@
   letter-spacing: normal;
   text-align: right;
   color: #222222;
+  white-space: nowrap;
 }
 
 .delete-button {
@@ -63,6 +69,13 @@
   padding-top: 100px;
   width: 100%;
   margin: 0 auto;
+}
+
+.top-button-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-bottom: 5%;
 }
 
 .cancel-button {
