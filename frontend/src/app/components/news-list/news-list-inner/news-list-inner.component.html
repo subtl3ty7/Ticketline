@@ -1,1 +1,26 @@
-<p>news-list-inner works!</p>
+<div *ngIf="news">
+  <div *ngFor="let twoNews of news">
+    <div class="row">
+
+      <!--The three News inside of a row-->
+      <div class="zoom col-md-6"
+           *ngFor="let newsEntry of twoNews"
+           routerLink="/news/{{newsEntry.newsCode}}"
+           style="padding: 10px">
+        <div class="card">
+          <img class="card-img-top img-fluid image-crop-big"
+               src="{{newsEntry.photo}}">
+          <div class="card-body">
+            <div class = "card-title">
+              <div class="row justify-content-end card-title-date-font">{{formatDate(newsEntry.publishedAt)}}</div>
+              <div class="col-sm extra-pad card-title-font">{{newsEntry.title}}</div>
+            </div>
+            <div class = "card-text">
+              <div class="col-sm card-text-font">{{newsEntry.summary}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
