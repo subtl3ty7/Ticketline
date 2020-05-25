@@ -5,6 +5,7 @@ import {Observable, throwError} from 'rxjs';
 import {User} from '../dtos/user';
 import {catchError, tap} from 'rxjs/operators';
 import {UserLogin} from '../dtos/user-login';
+import {ChangePassword} from '../dtos/change-password';
 
 @Injectable({
   providedIn: 'root'
@@ -16,80 +17,59 @@ export class UserService {
   private userBaseUri: string = this.globals.backendUri + '/users';
   constructor(private httpClient: HttpClient, private globals: Globals) {
   }
-  private handleError(err: HttpErrorResponse) {
-    let errorMessage;
-    if (err.error instanceof ErrorEvent) {
-      errorMessage = `An error occured : ${err.error.message} `;
-    } else {
-      errorMessage = `Server returned code: ${err.status}, error message is: ${err.message}`;
-    }
-    console.error(errorMessage);
-    return throwError(errorMessage);
-  }
+
   getAllUsers(): Observable<User[]> {
     console.log('Load all users.');
-    return this.httpClient.get<User[]>(this.userBaseUri + '/all').pipe(
-      tap(data => console.log('All ' + JSON.stringify(data))),
-      catchError(this.handleError)
-    );
+    return this.httpClient.get<User[]>(this.userBaseUri + '/all');
   }
+
   getUserByUserCode(userCode: string): Observable<User> {
     console.log('Load user by UserCode');
-    return this.httpClient.get<User>(this.userBaseUri + '/' + userCode).pipe(
-      tap(data => console.log('User ' + JSON.stringify(data))),
-      catchError(this.handleError)
-    );
+    return this.httpClient.get<User>(this.userBaseUri + '/' + userCode);
   }
+
   getCurrentUser(): Observable<User> {
     console.log('Load user by UserCode');
-    return this.httpClient.get<User>(this.userBaseUri + '/my-profile').pipe(
-      tap(data => console.log('User ' + JSON.stringify(data))),
-      catchError(this.handleError)
-    );
+    return this.httpClient.get<User>(this.userBaseUri + '/my-profile');
   }
+
   save(user: User): Observable<User> {
     if (user.admin) {
-      return this.httpClient.post<User>(this.userBaseUri + '/administrators', user).pipe(
-        catchError(this.handleError)
-      );
+      return this.httpClient.post<User>(this.userBaseUri + '/administrators', user);
     }
     console.log('saving user in the database');
-    return this.httpClient.post<User>(this.userBaseUri + '/customers', user).pipe(
-      catchError(this.handleError)
-    );
+    return this.httpClient.post<User>(this.userBaseUri + '/customers', user);
   }
+
   update(user: User) {
     console.log('Updating user ' + user.userCode + ' in the database');
-      return this.httpClient.put(this.userBaseUri + '/update', user).pipe(
-        catchError(this.handleError)
-      );
+      return this.httpClient.put(this.userBaseUri + '/update', user);
   }
+
   delete(user: User) {
     console.log('Deleting user ' + user.userCode + ' in the database');
-    return this.httpClient.delete(this.userBaseUri + '/delete/' + user.userCode).pipe(
-      catchError(this.handleError)
-    );
+    return this.httpClient.delete(this.userBaseUri + '/delete/' + user.userCode);
   }
+
   blockUser(userCode: string) {
     console.log('Block user by UserCode');
-    return this.httpClient.get<User>(this.userBaseUri + '/block/' + userCode).pipe(
-      catchError(this.handleError)
-    );
+    return this.httpClient.get<User>(this.userBaseUri + '/block/' + userCode);
   }
+
   unblockUser(userCode: string) {
     console.log('Unblock user by UserCode');
-    return this.httpClient.get<User>(this.userBaseUri + '/unblock/' + userCode).pipe(
-      catchError(this.handleError)
-    );
+    return this.httpClient.get<User>(this.userBaseUri + '/unblock/' + userCode);
   }
+
   resetPasswordRequest(email: string) {
-    return this.httpClient.post(this.globals.backendUri + '/reset-password/' + email, {}).pipe(
-      catchError(this.handleError)
-    );
+    return this.httpClient.post(this.globals.backendUri + '/reset-password/' + email, {});
   }
+
   resetPasswordAuth(resetPasswordCode: string) {
-    return this.httpClient.get<UserLogin>(this.globals.backendUri + '/reset-password/' + resetPasswordCode).pipe(
-      catchError(this.handleError)
-    );
+    return this.httpClient.get<UserLogin>(this.globals.backendUri + '/reset-password/' + resetPasswordCode);
+  }
+
+  changePasswordCustomer(changePassword: ChangePassword) {
+    return this.httpClient.put(this.userBaseUri + '/change-password/', changePassword);
   }
 }

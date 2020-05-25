@@ -26,6 +26,7 @@ import {TicketPurchaseComponent} from './components/ticket-purchase/ticket-purch
 import {SearchComponent} from './components/search/search.component';
 import {ArtistAdvancedComponent} from './components/search/artist/artist-advanced/artist-advanced.component';
 import {LocationAdvancedComponent} from './components/search/location/location-advanced/location-advanced.component';
+import {ResetPasswordAdminContainerComponent} from './components/admin-home/admin-tabs/users-tab/reset-password-admin-container/root/reset-password-admin-container.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -35,15 +36,15 @@ const routes: Routes = [
   {path: 'administration', canActivate: [AdminGuard], redirectTo: 'administration/users'},
   {path: 'administration/:tabId', canActivate: [AdminGuard], component: AdminHomeComponent},
   {path: 'user-details/:uc', canActivate: [AdminGuard], component: UserDetailsContainerComponent},
-  {path: 'user-details/:uc/reset-password', canActivate: [AdminGuard], component: UserDetailsContainerComponent},
+  {path: 'user-details/:uc/reset-password', canActivate: [AdminGuard], component: ResetPasswordAdminContainerComponent},
   {path: 'create-user', canActivate: [AdminGuard], component: CreateUserContainerComponent},
-  {path: 'events/:ec', canActivate: [AdminGuard], component: EventDetailsContainerComponent},
+  {path: 'event-details/:ec', canActivate: [AdminGuard], component: EventDetailsContainerComponent},
   {path: 'my-profile', canActivate: [LoggedInGuard], redirectTo: 'my-profile/my-info'},
   {path: 'my-profile/:tabId', canActivate: [LoggedInGuard], component: MyProfileContainerComponent},
   {path: 'registration', canActivate: [NotLoggedInGuard], component: RegistrationComponent},
   {path: 'create-event', canActivate: [AdminGuard], component: CreateEventContainerComponent},
   {path: 'create-user', canActivate: [AdminGuard], component: CreateUserContainerComponent},
-  {path: 'event-details/:eventCode', canActivate: [LoggedInGuard], component: EventDetailsUserViewComponent},
+  {path: 'events/:eventCode', canActivate: [LoggedInGuard], component: EventDetailsUserViewComponent},
   {path: 'faq', canActivate: [], component: FaqComponent},
   {path: 'top-ten-events', component: TopTenEventsComponent},
   {path: 'search', canActivate: [], component: SearchComponent},

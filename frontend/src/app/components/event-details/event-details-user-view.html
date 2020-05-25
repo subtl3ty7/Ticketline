@@ -38,9 +38,9 @@
 
                 <table class="table table-responsive-lg table-hover  mb-0">
                   <tbody *ngFor="let s of event.shows">
-                  <tr *ngFor="let l of s.eventLocation">
+                  <tr>
                     <th scope="row"></th>
-                    <td>{{s.startsAt | date:'short'}} - {{s.endsAt | date:'short' }}, {{l.city}}, {{l.country}}</td>
+                    <td>{{s.startsAt | date:'short'}} - {{s.endsAt | date:'short' }}, {{s.eventLocationCopy.name}}, {{s.eventLocationCopy.city}}, {{s.eventLocationCopy.country}}</td>
                     <button type="button" class="btn btn-success btn-sm m-0" (click) = "openPurchase(s)">Tickets</button>
                   </tr>
                   </tbody>

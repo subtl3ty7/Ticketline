@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 
 
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.ChangePasswordDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserLoginDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.UserMapper;
@@ -213,5 +214,17 @@ public class UserEndpoint {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @PutMapping(value = "/change-password")
+    @ApiOperation(
+        value = "Change Password",
+        notes = "Change the Password of user",
+        authorizations = {@Authorization(value = "apiKey")}
+    )
+    @ApiResponse(code = 200, message = "Successfully retrieved user info")
+    public ResponseEntity<Void> changePassword(@RequestBody ChangePasswordDto changePasswordDto) {
+        LOGGER.info("PUT /api/v1/users/change-password");
+        userService.changePasswordCustomer(changePasswordDto.getEmail(), changePasswordDto.getNewPassword());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }

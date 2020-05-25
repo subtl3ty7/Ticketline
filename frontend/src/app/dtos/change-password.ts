@@ -1,8 +1,4 @@
 export class ChangePassword {
-  constructor(
-    userCode: string,
-    oldPassword: string,
-    newPassword: string
-  ) {
-  }
+  email: string;
+  newPassword: string;
 }
