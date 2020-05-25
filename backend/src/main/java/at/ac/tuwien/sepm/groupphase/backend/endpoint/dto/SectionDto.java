@@ -18,4 +18,5 @@ public class SectionDto {
     @ToString.Exclude
     private List<SeatDto> seats;
     private int capacity;
+    private double price;
 }

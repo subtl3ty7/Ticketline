@@ -103,5 +103,7 @@ public interface UserService extends UserDetailsService {
      */
     AbstractUser getAuthenticatedUser(Authentication auth);
 
+    void changePasswordCustomer(String email, String newPassword);
+
 
 }
