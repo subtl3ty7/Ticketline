@@ -1,18 +1,14 @@
-<div class="elements">
 
   <div class="info">
-    <span> Do you really want to delete your account? </span>
-    <span> This action can not be undone and you will lose all your Bonuspoints!</span>
+    Sind Sie sich sicher, dass Sie ihr Konto löschen wollen?
   </div>
 
+  <p style="margin-top: 10px"> In diesem Vorgang werden alle Ihre Daten (inkl. Prämienpunkte) unwiderruflich gelöscht.</p>
+
   <div class="button-wrapper" (click)="closeModal()">
-    <button mat-raised-button (click)="deleteAccount()"
-            color="warn"
-            class="confirm-button">
-      <span class="confirm-button-label">Confirm</span>
+    <button (click)="deleteAccount()"
+            class="btn btn-danger" style="white-space: nowrap; margin-bottom: 15px;">Ja, ich möchte mein Konto Löschen
     </button>
-    <button class="cancel-button" >
-      <span class="cancel-button-label">Cancel</span>
+    <button class="btn btn-secondary" style="white-space: nowrap">Nein, ich möchte meine Daten behalten
     </button>
   </div>
-</div>
