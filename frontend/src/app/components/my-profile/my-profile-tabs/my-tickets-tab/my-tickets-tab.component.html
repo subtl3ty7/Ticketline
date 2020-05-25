@@ -1,0 +1,18 @@
+<div class="center-block" *ngIf="tickets">
+  <div class="table-wrapper-scroll-y my-custom-scrollbar">
+    <table class="table table-responsive-lg table-hover mb-0">
+      <tbody>
+        <tr *ngFor="let ticket1 of tickets">
+          <th scope="row"></th>
+            <td> {{ticket1.showTime | date:'medium' }}, {{ ticket1.eventName }}</td>
+              <button type="button" class="btn btn-success btn-sm m-0"> Anzeigen </button>
+              <button type="button" class="btn btn-success btn-sm m-0"> PDF </button>
+        </tr>
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
+

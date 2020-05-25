@@ -90,6 +90,7 @@ import { ChangePasswordComponent } from './components/my-profile/my-profile-tabs
 import { ResetPasswordAdminContainerComponent } from './components/admin-home/admin-tabs/users-tab/reset-password-admin-container/root/reset-password-admin-container.component';
 import { ResetPasswordAdminComponent } from './components/admin-home/admin-tabs/users-tab/reset-password-admin-container/reset-password-admin/reset-password-admin.component';
 import { ResetPasswordAdminFormComponent } from './components/admin-home/admin-tabs/users-tab/reset-password-admin-container/reset-password-admin/reset-password-admin-form/reset-password-admin-form.component';
+import { MyTicketsTabComponent } from './components/my-profile/my-profile-tabs/my-tickets-tab/my-tickets-tab.component';
 
 @NgModule({
   declarations: [
@@ -159,7 +160,8 @@ import { ResetPasswordAdminFormComponent } from './components/admin-home/admin-t
     ChangePasswordComponent,
     ResetPasswordAdminContainerComponent,
     ResetPasswordAdminComponent,
-    ResetPasswordAdminFormComponent
+    ResetPasswordAdminFormComponent,
+    MyTicketsTabComponent
   ],
   imports: [
     BrowserModule,
