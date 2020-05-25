@@ -1,5 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.service;
 
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocationOriginal;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Seat;
 
@@ -9,5 +10,6 @@ public interface EventLocationService {
     List<Seat> getAllSeatsByEventLocationId(Long id);
     List<EventLocationOriginal> getAllEventLocations();
     EventLocationOriginal save(EventLocationOriginal eventLocation);
-    List<EventLocationOriginal> findEventLocationsByName(String locationName);
+
+    List<EventLocationOriginal> findAllFilteredEventLocations(String name, String city, String street, String country, String ply, String description);
 }

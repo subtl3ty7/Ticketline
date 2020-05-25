@@ -53,19 +53,30 @@ public class EventLocationEndpoint {
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
+
+
     @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
-    @GetMapping(value = "/search")
+    @GetMapping(value = "")
     @ApiOperation(
-        value = "All Event Locations",
-        notes = "Get all available Event Locations (simplified)")
+        value = "All Event Locations with given Name",
+        notes = "Get all Event Locations with the given Name",
+        authorizations = {@Authorization(value = "apiKey")})
     @ApiResponses({
-        @ApiResponse(code = 200, message = "EventLocations are successfully retrieved"),
+        @ApiResponse(code = 200, message = "Event Locations are successfully retrieved"),
         @ApiResponse(code = 404, message = "No EventLocation is found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<List<SimpleEventDto>> findEventLocationsByName(@RequestParam String name) {
-        LOGGER.info("GET /api/v1/eventLocations/?locationName=" + name);
-        List<EventLocationDto> result = eventLocationMapper.eventLocationOriginalToEventLocationDto(eventLocationService.findEventLocationsByName(name));
+    public ResponseEntity<List<EventLocationDto>> findEventLocationsByName(
+        @RequestParam(value = "name", required = false) String name,
+        @RequestParam(value = "description", required = false) String description,
+        @RequestParam(value = "street", required = false) String street,
+        @RequestParam(value = "city", required = false) String city,
+        @RequestParam(value = "country", required = false) String country,
+        @RequestParam(value = "plz", required = false) String plz) {
+        LOGGER.info("GET /api/v1/eventLocations?locationName=" + name + "&description=" + description + "&street=" + street + "&city=" + city + "&country=" + country + "&plz=" + plz);
+        List<EventLocationDto> result = eventLocationMapper.eventLocationOriginalToEventLocationDto(eventLocationService.findAllFilteredEventLocations(name, city, street, country, plz, description));
         return new ResponseEntity(result, HttpStatus.OK);
     }
+
+
 }
