@@ -34,4 +34,10 @@ public class CustomShowService implements ShowService {
         return seats;
     }
 
+    @Override
+    public Show findShowByShowId(Long id) {
+        return showRepository.findShowById(id);
+    }
+
+
 }

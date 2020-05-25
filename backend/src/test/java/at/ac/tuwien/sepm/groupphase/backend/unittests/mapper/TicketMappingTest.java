@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 @ActiveProfiles("test")
 public class TicketMappingTest implements TestData {
-
+/*
     private final Ticket ticket = Ticket.builder()
         .ticketId(ID)
         .ticketCode(USER_CODE)
@@ -93,5 +93,5 @@ public class TicketMappingTest implements TestData {
             () -> assertEquals(SEATS.get(0), ticket1.getSeat()),
             () -> assertEquals(SHOWS.get(0), ticket1.getShow())
         );
-    }
+    }*/
 }
