@@ -92,5 +92,21 @@ public interface TestData {
 
     String TICKETS_BASE_URI = BASE_URI + "/tickets";
 
-
+    String TYP_I = "purchase";
+    String PAY = "card";
+    LocalDateTime PURCHASE = LocalDateTime.of(2020,5,24,0,0,0);
+    int NUM = 1;
+    List<Ticket> TICKETS = new ArrayList<>() {
+        {
+            add(Ticket.builder()
+                .ticketId(ID)
+                .ticketCode(USER_CODE)
+                .isPurchased(false)
+                .isReserved(false)
+                .purchaseDate(START)
+                .price(TOTAL)
+                .userCode(USER_CODE)
+                .build());
+        }
+    };
 }
