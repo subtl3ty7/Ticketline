@@ -1,11 +1,12 @@
 <app-header></app-header>
 
-<app-error-notification *ngIf="error" [error]="error"></app-error-notification>
 
+<!-- Container the card is in -->
 <div class="container-fluid" style="padding-left: 5%; padding-right: 5%;">
   <div class="row">
     <div class="mx-auto" style="max-width: 1320px; width: 100%;">
 
+      <!-- Page card containing everything -->
       <div class="card main-body">
         <div class="card-header row align-items-center" style="margin: 0px">
             <h1 class="col-4 page-title">News</h1>
@@ -15,12 +16,12 @@
               <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                 <li class="nav-item align-self-center">
                   <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">
-                    <div class="row justify-content-center"  style="border-color: white">Alle</div>
+                    <div class="row justify-content-center nav-pill-font">Alle</div>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">
-                    <div class="row justify-content-center">Gelesen</div>
+                    <div class="row justify-content-center nav-pill-font">Gelesen</div>
                   </a>
                 </li>
               </ul>
@@ -28,12 +29,19 @@
             </div>
         </div>
 
-        <div class="card-body">
 
+
+        <div class="card-body">
           <!-- Tab content -->
           <div class="tab-content" id="pills-tabContent">
-            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">123</div>
-            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">456</div>
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+              <app-error-notification *ngIf="errorLatest" [error]="errorLatest"></app-error-notification>
+              <app-news-list-inner [news]="latestNews"></app-news-list-inner>
+            </div>
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+              <app-error-notification *ngIf="errorSeen" [error]="errorSeen"></app-error-notification>
+              <app-news-list-inner [news]="seenNews"></app-news-list-inner>
+            </div>
           </div>
 
 

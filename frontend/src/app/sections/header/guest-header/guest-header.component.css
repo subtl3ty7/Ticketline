@@ -20,6 +20,21 @@ li {
   width: 100%;
 }
 
+.entity-term {
+  margin: 0px;
+  background-color: white;
+  width: 100%;
+  color: black;
+  height: 75px;
+  border: 1px #202020 solid;
+  padding: 25px;
+  font-size: 20px;
+  z-index: 9999;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 result:hover {
   text-decoration: underline;
 }
@@ -32,6 +47,10 @@ result:hover {
   font-size: 20px;
   padding-top: 15px;
   padding-bottom: 15px;
+}
+
+.nav-link:hover {
+  cursor: pointer;
 }
 
 .navbar-custom {
@@ -186,15 +205,13 @@ result:hover {
 
   .form-inline {
     padding-left: 75px;
-    max-width: 1000px;
-    width: 50%;
+    width: 60%;
     padding-right: 25px;
     height: 75px;
   }
 
   .input-group {
     min-width: 100px;
-    max-width: 1000px;
     width: 100%;
     height: 75px;
   }

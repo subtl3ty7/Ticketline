@@ -32,7 +32,7 @@ public class ArtistEndpoint {
     }
 
     @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
-    @GetMapping(value = "/search")
+    @GetMapping(value = "", params = {"firstName", "lastName"})
     @ApiOperation(
         value = "Get artists by first and last name"
     )

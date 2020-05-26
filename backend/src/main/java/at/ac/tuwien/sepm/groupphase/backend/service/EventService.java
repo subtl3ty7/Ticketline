@@ -20,4 +20,6 @@ public interface EventService {
     void deletebyEventCode(String eventCode);
 
     List<Event> findEventsByArtistId(Long artistId);
+
+    List<Event> findEventsByName(String name);
 }

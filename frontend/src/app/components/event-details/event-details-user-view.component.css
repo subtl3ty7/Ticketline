@@ -55,4 +55,7 @@
   display: block;
 }
 
-
+.page-title {
+  padding-left: 20px;
+  margin: 0px;
+}

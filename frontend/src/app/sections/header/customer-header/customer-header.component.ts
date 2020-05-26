@@ -13,7 +13,7 @@ export class CustomerHeaderComponent implements OnInit {
   constructor(public authService: AuthService, public router: Router, private activatedRoute: ActivatedRoute, private searchShared: SearchShared) { }
   public isMobileLayout = false;
   isCollapsed: boolean;
-  isSearchActive: boolean;
+  isSearchActive: boolean; // indicates, if customer is currently entering a search term into the header
   searchTerm: string = '';
   searchedEntity = SearchEntity;
 
@@ -38,7 +38,7 @@ export class CustomerHeaderComponent implements OnInit {
     switch (s) {
       case SearchEntity.ARTIST:
         this.searchShared.searchEntity = 'Artist';
-        const term = sessionStorage.getItem('searchTerm').split(' ', 2);
+        const term = searchTerm.split(' ', 2);
         const firstName = term[0];
         const lastName = term[1];
         console.log('first name: ' + firstName + ', last name: ' + lastName);
@@ -46,10 +46,13 @@ export class CustomerHeaderComponent implements OnInit {
         break;
       case SearchEntity.EVENT:
         this.searchShared.searchEntity = 'Event';
+        const eventTerm = searchTerm;
+        console.log('event name: ' + eventTerm);
+        this.searchShared.getEventsByName(eventTerm);
         break;
       case SearchEntity.LOCATION:
         this.searchShared.searchEntity = 'Location';
-        const locationTerm = sessionStorage.getItem('searchTerm');
+        const locationTerm = searchTerm;
         console.log('location name: ' + locationTerm);
         this.searchShared.getLocationByName(locationTerm);
         break;
@@ -57,8 +60,8 @@ export class CustomerHeaderComponent implements OnInit {
         this.searchShared.searchEntity = 'Show';
         break;
     }
-    this.isSearchActive = false;
     this.router.navigate(['/search']);
+    this.isSearchActive = false;
   }
 
 }

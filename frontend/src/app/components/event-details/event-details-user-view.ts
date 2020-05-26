@@ -10,7 +10,7 @@ import {DetailedEvent} from '../../dtos/detailed-event';
   styleUrls: ['./event-details-user-view.component.css']
 })
 export class EventDetailsUserViewComponent implements OnInit {
-
+  error;
   event: DetailedEvent;
 
   constructor(private eventService: EventService,
@@ -23,7 +23,14 @@ export class EventDetailsUserViewComponent implements OnInit {
 
   public loadEvent(): void {
     const eventCode = this.route.snapshot.paramMap.get('eventCode');
-    this.eventService.getDetailedEventByUserCode(eventCode).subscribe(e => this.event = e);
+    this.eventService.getDetailedEventByUserCode(eventCode).subscribe(
+        (event: DetailedEvent) => {
+          this.event = event;
+        },
+        (error) => {
+          this.error = error;
+        }
+    );
   }
 
   openPurchase(show) {
