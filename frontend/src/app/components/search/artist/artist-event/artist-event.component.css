@@ -4,7 +4,7 @@
   box-shadow: 0px 3px 6px #00000029;
 }
 
-.event-button {
+.artist-button {
   float: right;
   border: 0;
   width: 160px;
@@ -28,7 +28,7 @@
   }
 }
 
-.event-button:hover {
+.artist-button:hover {
   color: #FBFBFB;
 }
 
@@ -69,8 +69,4 @@ a:hover {
 
 .event-block {
   width: 100%;
-}
-
-.header-row {
-  padding-top: 18px;
 }
