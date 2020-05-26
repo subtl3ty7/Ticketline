@@ -1,26 +1,28 @@
-<div id="profile-info-tab"
-     class="tab"
+<div class ="container">
+  <div id="profile-info-tab"
+     class="top-tab"
      [routerLink]="['/my-profile', 'my-info']"
      routerLinkActive="select-tab">
-  <span class="tab-label">Mein Profil</span>
-</div>
+    <span class="tab-label">Meine Info</span>
+  </div>
 
-<div id="profile-tickets-tab"
+  <div id="profile-tickets-tab"
      class="tab"
      [routerLink]="['/my-profile', 'my-tickets']"
      routerLinkActive="select-tab">
-  <span class="tab-label"
+    <span class="tab-label"
         [ngClass]="{'select-tab-label': globals.getProfileChoosenTab === 'my-tickets'}">
         Meine Buchungen
       </span>
-</div>
+  </div>
 
-<div id="profile-invoices-tab"
+  <div id="profile-invoices-tab"
      class="tab"
      [routerLink]="['/my-profile', 'my-invoices']"
      routerLinkActive="select-tab">
-  <span class="tab-label"
+    <span class="tab-label"
         [ngClass]="{'select-tab-label': globals.getProfileChoosenTab === 'my-invoices'}">
-        My Invoices
+        Meine Rechnungen
       </span>
+  </div>
 </div>
