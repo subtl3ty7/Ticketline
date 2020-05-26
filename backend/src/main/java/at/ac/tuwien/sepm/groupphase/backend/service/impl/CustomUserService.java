@@ -69,7 +69,7 @@ public class CustomUserService implements UserService {
                 grantedAuthorities = AuthorityUtils.createAuthorityList("ROLE_ADMIN", "ROLE_USER");
                 return new User(user.getEmail(),  user.getPassword(), grantedAuthorities);
             } else {
-                //If user is a basic user
+                //If user is a Customer
                 grantedAuthorities = AuthorityUtils.createAuthorityList("ROLE_USER");
                 //check for login attempts
                 UserAttempts userAttempts = userAttemptsRepository.findUserAttemptsByEmail(email);
