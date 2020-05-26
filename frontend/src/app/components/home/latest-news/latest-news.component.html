@@ -1,9 +1,11 @@
 <div class="title-button" routerLink="/news-list">
-  <div class="row col-12">
-    <h1 class="title-headline">Aktuelle News</h1>
-    <h5 class="title-hover"><i class="fa fa-caret-right" style="font-size: 40px"></i></h5>
+  <div class="row col-12 align-items-center">
+    <h1 class="title-headline">Neue News für dich</h1>
+    <i class="fa fa-caret-right title-caret"></i>
   </div>
 </div>
+
+<div class="gap"></div>
 
 <app-error-notification *ngIf="error" [error]="error"></app-error-notification>
 
@@ -12,19 +14,18 @@
     <div class="row">
 
       <!--The three News inside of a row-->
-      <div class="zoom col-md-4"
+      <div class="zoom col-4"
            *ngFor="let newsEntry of threeNews"
-           routerLink="/news/{{newsEntry.newsCode}}"
-           style="padding: 10px">
+           routerLink="/news/{{newsEntry.newsCode}}">
         <div class="card">
           <img class="card-img-top img-fluid image-crop-big"
                src="{{newsEntry.photo}}">
           <div class="card-body">
             <div class = "card-title">
-              <div class="col-sm extra-pad card-title-font prevent-overflow-inline">{{newsEntry.title}}</div>
+              <div class="col-sm card-title-font">{{newsEntry.title}}</div>
             </div>
-            <div class = "card-text prevent-overflow">
-              <div class="col-sm extra-pad card-text-font">{{newsEntry.summary}}</div>
+            <div class = "card-text">
+              <div class="col-sm card-text-font">{{newsEntry.summary}}</div>
             </div>
           </div>
         </div>

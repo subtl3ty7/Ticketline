@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface ShowService {
     List<Seat> getAllSeatsByShowId(Long id);
-    Show findShowByShowId(Long id);
+
+    List<Show> getShowsByEventLocationId(Long eventLocationId);
 }

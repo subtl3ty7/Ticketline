@@ -1,6 +1,6 @@
-<div class="card-header d-flex align-items-center">
+<div class="card-header">
   <div class="container" style="margin: 0; max-width: 1320px">
-    <div class="row">
+    <div class="row header-row">
       <div class="col-8">
         <h1 class="mb-0 ml-3 page-title">Ort suchen</h1>
       </div>
@@ -22,7 +22,7 @@
               </div>
             </div>
             <div class="col pr-5">
-              <button class="btn default location-button align-middle" style="margin-top: 25px;">
+              <button (click)="searchShows(l)" class="btn default location-button align-middle" style="margin-top: 25px;">
                 Aufführungen
               </button>
             </div>

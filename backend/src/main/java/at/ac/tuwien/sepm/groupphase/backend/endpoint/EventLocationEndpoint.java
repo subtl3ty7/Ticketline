@@ -54,7 +54,7 @@ public class EventLocationEndpoint {
     }
 
     @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
-    @GetMapping(value = "/search")
+    @GetMapping(value = "", params = "name")
     @ApiOperation(
         value = "All Event Locations",
         notes = "Get all available Event Locations (simplified)")
@@ -64,7 +64,7 @@ public class EventLocationEndpoint {
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
     public ResponseEntity<List<SimpleEventDto>> findEventLocationsByName(@RequestParam String name) {
-        LOGGER.info("GET /api/v1/eventLocations/?locationName=" + name);
+        LOGGER.info("GET /api/v1/eventLocations?locationName=" + name);
         List<EventLocationDto> result = eventLocationMapper.eventLocationOriginalToEventLocationDto(eventLocationService.findEventLocationsByName(name));
         return new ResponseEntity(result, HttpStatus.OK);
     }

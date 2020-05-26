@@ -58,7 +58,6 @@ public interface TestData {
     LocalDateTime END =
         LocalDateTime.of(2020, 11, 13, 18, 15, 0, 0);
     List<Integer> PRICES = List.of(30, 40);
-    List<String> ARTISTS = List.of("Artist1", "Artist2");
     List<Show> SHOWS = new ArrayList<>() {
         {
             add(Show.builder()
@@ -92,5 +91,6 @@ public interface TestData {
         .withUpdatedAt(UPD).withIsBlocked(false).withIsLogged(false).withPoints(POINTS).build();
 
     String TICKETS_BASE_URI = BASE_URI + "/tickets";
+
 
 }

@@ -35,9 +35,8 @@ public class CustomShowService implements ShowService {
     }
 
     @Override
-    public Show findShowByShowId(Long id) {
-        return showRepository.findShowById(id);
+    public List<Show> getShowsByEventLocationId(Long eventLocationId) {
+        return showRepository.findShowsByEventLocationOriginalId(eventLocationId);
     }
-
 
 }

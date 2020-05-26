@@ -1,11 +1,8 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 
-import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.DetailedEventDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.ShowDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.ShowMapper;
-import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.TicketMapper;
 import at.ac.tuwien.sepm.groupphase.backend.service.ShowService;
-import at.ac.tuwien.sepm.groupphase.backend.service.TicketService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -17,34 +14,35 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.invoke.MethodHandles;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1/shows")
 public class ShowEndpoint {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final ShowService showService;
     private final ShowMapper showMapper;
 
     @Autowired
-    public ShowEndpoint(ShowService showService, ShowMapper showMapper){
-        this.showMapper = showMapper;
+    public ShowEndpoint(ShowService showService, ShowMapper showMapper) {
         this.showService = showService;
+        this.showMapper = showMapper;
     }
 
     @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
-    @GetMapping(value = "/{showId}")
+    @GetMapping(value = "", params = "eventLocationId")
     @ApiOperation(
-        value = "Get show by its Id",
-        notes = "Get show by its Id")
+        value = "Get Shows by event location name"
+    )
     @ApiResponses({
-        @ApiResponse(code = 200, message = "Show is successfully retrieved"),
-        @ApiResponse(code = 404, message = "No show is found"),
+        @ApiResponse(code = 200, message = "Shows are successfully retrieved"),
+        @ApiResponse(code = 404, message = "No Show is found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<ShowDto> findByShowId(@PathVariable Long showId) {
-        LOGGER.info("GET /api/v1/shows/" + showId);
-        ShowDto result = showMapper.showToShowDto(showService.findShowByShowId(showId));
-        return new ResponseEntity(result, HttpStatus.OK);
+    public ResponseEntity<List<ShowDto>> findShowsByEventLocationName(@RequestParam Long eventLocationId) {
+        LOGGER.info("GET /api/v1/shows?eventLocationId=" + eventLocationId);
+        List<ShowDto> result = showMapper.showToShowDto(showService.getShowsByEventLocationId(eventLocationId));
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
 }

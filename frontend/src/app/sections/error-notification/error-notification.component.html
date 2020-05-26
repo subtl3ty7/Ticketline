@@ -1,6 +1,6 @@
-<div *ngIf="error" class="alert alert-warning alert-dismissible fade show" role="alert">
-  <strong>{{error.status}} {{error.error}}</strong>
-  <div *ngFor="let message of error.messages">
+<div *ngIf="customError" class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>{{customError.status}} {{customError.error}}</strong>
+  <div *ngFor="let message of customError.messages">
     {{message}}
   </div>
   <button type="button" (click)="vanishError()" class="close" data-dismiss="alert" aria-label="Close">
