@@ -4,6 +4,8 @@ import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.EventLocationDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleEventDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EventLocationMapper;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EventMapper;
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocationOriginal;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventLocationService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -66,15 +68,10 @@ public class EventLocationEndpoint {
         @ApiResponse(code = 404, message = "No EventLocation is found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<List<EventLocationDto>> findEventLocationsByName(
-        @RequestParam(value = "name", required = false) String name,
-        @RequestParam(value = "description", required = false) String description,
-        @RequestParam(value = "street", required = false) String street,
-        @RequestParam(value = "city", required = false) String city,
-        @RequestParam(value = "country", required = false) String country,
-        @RequestParam(value = "plz", required = false) String plz) {
-        LOGGER.info("GET /api/v1/eventLocations?locationName=" + name + "&description=" + description + "&street=" + street + "&city=" + city + "&country=" + country + "&plz=" + plz);
-        List<EventLocationDto> result = eventLocationMapper.eventLocationOriginalToEventLocationDto(eventLocationService.findAllFilteredEventLocations(name, city, street, country, plz, description));
+    public ResponseEntity<List<EventLocationDto>> findEventLocationsByName(EventLocationDto searchEventLocationDto) {
+        //LOGGER.info("GET /api/v1/eventLocations?locationName=" + name + "&description=" + description + "&street=" + street + "&city=" + city + "&country=" + country + "&plz=" + plz);
+        EventLocationOriginal searchEventLocation = eventLocationMapper.eventLocationDtoToEventLocationOriginal(searchEventLocationDto);
+        List<EventLocationDto> result = eventLocationMapper.eventLocationOriginalToEventLocationDto(eventLocationService.findAllFilteredEventLocations(searchEventLocation));
         return new ResponseEntity(result, HttpStatus.OK);
     }
 

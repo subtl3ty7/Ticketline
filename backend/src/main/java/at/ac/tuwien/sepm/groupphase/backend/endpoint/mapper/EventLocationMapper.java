@@ -24,4 +24,8 @@ public interface EventLocationMapper {
     @IterableMapping(qualifiedByName = "eventLocationOriginalToEventLocationDto")
     List<EventLocationDto> eventLocationOriginalToEventLocationDto(List<EventLocationOriginal> eventLocations);
 
+
+    @Named(value = "eventLocationDtoToEventLocationOriginal")
+    EventLocationOriginal eventLocationDtoToEventLocationOriginal(EventLocationDto eventLocation);
+
 }

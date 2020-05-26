@@ -49,7 +49,14 @@ public class CustomEventLocationService implements EventLocationService {
 
 
     @Override
-    public List<EventLocationOriginal> findAllFilteredEventLocations(String name, String city, String street, String country, String plz, String description) {
-        return eventLocationRepository.findAllByNameAndCityAndStreetAndCountryAndPlzAndEventLocationDescription(name, city, street, country, plz, description);
+    public List<EventLocationOriginal> findAllFilteredEventLocations(EventLocationOriginal searchEventLocation) {
+        return eventLocationRepository.findAllByNameAndCityAndStreetAndCountryAndPlzAndEventLocationDescription(
+            searchEventLocation.getName(),
+            searchEventLocation.getCity(),
+            searchEventLocation.getStreet(),
+            searchEventLocation.getCountry(),
+            searchEventLocation.getPlz(),
+            searchEventLocation.getEventLocationDescription()
+        );
     }
 }

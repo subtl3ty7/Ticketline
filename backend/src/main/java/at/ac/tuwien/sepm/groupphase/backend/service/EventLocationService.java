@@ -11,5 +11,5 @@ public interface EventLocationService {
     List<EventLocationOriginal> getAllEventLocations();
     EventLocationOriginal save(EventLocationOriginal eventLocation);
 
-    List<EventLocationOriginal> findAllFilteredEventLocations(String name, String city, String street, String country, String ply, String description);
+    List<EventLocationOriginal> findAllFilteredEventLocations(EventLocationOriginal searchEventLocation);
 }
