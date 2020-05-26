@@ -150,8 +150,8 @@ public class EventEndpoint {
     @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
     @GetMapping(value = "", params = "name")
     @ApiOperation(
-        value = "Get all events",
-        notes = "Get all events without details",
+        value = "Get all events by name",
+        notes = "Get all events by with details",
         authorizations = {@Authorization(value = "apiKey")})
     @ApiResponses({
         @ApiResponse(code = 200, message = "Events are successfully retrieved"),
