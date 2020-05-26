@@ -29,7 +29,7 @@ export class ChooseTicketComponent implements OnInit {
 
   ngOnInit(): void {
     this.show = JSON.parse(sessionStorage.getItem('show'));
-    this.eventLocation = this.show.eventLocation[0];
+    this.eventLocation = this.show.eventLocationCopy[0];
   }
 
   nextStep(ticketState: TicketState) {

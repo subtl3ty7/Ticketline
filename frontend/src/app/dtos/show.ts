@@ -7,5 +7,5 @@ export class Show {
   public endsAt: Date;
   public ticketsSold: number;
   public ticketsAvailable: number;
-  public eventLocation: EventLocation[];
+  public eventLocationCopy: EventLocation;
 }
