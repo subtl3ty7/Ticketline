@@ -7,6 +7,7 @@ import {UserService} from '../../services/user.service';
 import {AuthRequest} from '../../dtos/auth-request';
 import {User} from '../../dtos/user';
 import * as bcrypt from 'bcryptjs';
+import {Background} from '../../utils/background';
 
 @Component({
   selector: 'app-registration',
@@ -24,7 +25,8 @@ export class RegistrationComponent implements OnInit {
   maxDate: Date;
   private user: User;
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService, private router: Router) {
+  constructor(private formBuilder: FormBuilder, private userService: UserService, private router: Router, private background: Background) {
+    this.background.defineBackground();
     const currentDate = new Date();
     this.maxDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDay());
     this.registrationForm = this.formBuilder.group({
@@ -34,8 +36,6 @@ export class RegistrationComponent implements OnInit {
       email: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8)]]
     });
-    document.body.style.backgroundImage = 'url("assets/images/bg.png")';
-    document.body.style.backgroundColor = '#0c0d0f';
   }
 
   registerUser() {
@@ -79,4 +79,11 @@ export class RegistrationComponent implements OnInit {
     this.error = false;
   }
 
+  defineBackground() {
+    document.body.style.background = '#0c0d0f';
+    document.body.style.backgroundImage = 'url("assets/images/bg.png")';
+    document.body.style.backgroundRepeat = 'no-repeat';
+    document.body.style.backgroundPosition = 'top';
+    document.body.style.backgroundSize = '100%';
+  }
 }
