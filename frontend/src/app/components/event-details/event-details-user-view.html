@@ -1,7 +1,7 @@
 <app-customer-header></app-customer-header>
 <app-error-notification *ngIf="error" [error]="error"></app-error-notification>
 <!-- Container the card is in -->
-<div class="container-fluid" style="padding-left: 5%; padding-right: 5%;">
+<div *ngIf="event" class="container-fluid" style="padding-left: 5%; padding-right: 5%;">
   <div class="row">
     <div class="mx-auto" style="max-width: 1320px; width: 100%;">
 
