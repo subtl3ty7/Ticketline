@@ -113,7 +113,7 @@ public class EventDataGenerator {
 
             Event event = Event.builder()
                 .category("Talk")
-                .description("Interesting debate!")
+                .description(resources.getText("event_text.txt"))
                 .startsAt(LocalDateTime.now())
                 .endsAt(LocalDateTime.now())
                 .eventCode("E1234" + i)

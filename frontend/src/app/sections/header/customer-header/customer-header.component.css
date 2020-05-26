@@ -54,6 +54,7 @@ li {
   height: 46px;
   margin-left: 5px;
   margin-right: 5px;
+  opacity: 30%;
 }
 
 .header-row {
@@ -213,8 +214,7 @@ li {
 
   .form-inline {
     padding-left: 75px;
-    max-width: 1000px;
-    width: 50%;
+    width: 60%;
     padding-right: 25px;
     height: 75px;
   }

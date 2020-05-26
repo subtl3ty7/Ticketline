@@ -75,7 +75,7 @@
     <a class="navbar-brand ml-lg-5" routerLink="/home">Ticketline</a>
     <form class="form-inline">
       <div class="input-group" >
-        <div class="container" style="max-width: 1000px; width: 100%;">
+        <div class="container" style="width: 100%;">
           <div class="row" style="width: 100%; margin: 0">
             <div class="col" style="padding: 0; margin: 0;">
               <input class="form-control left" (keyup)="refreshSearchTerm($event)" (keyup.enter)="searchShared.searchEntity = searchedEntity.EVENT; searchEntity(searchTerm, searchedEntity.EVENT)" [ngModel]="searchTerm" autocomplete="off" name="term" type="text" placeholder="Veranstaltung suchen..." aria-label="Search">
