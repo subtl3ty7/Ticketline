@@ -1,8 +1,8 @@
 export class SimpleTicket {
   public id: number;
   public ticketCode: string;
-  public isPurchased: boolean;
-  public isReserved: boolean;
+  public purchased: boolean;
+  public reserved: boolean;
   public purchaseDate: string;
   public seatId: number;
   public price: number;
