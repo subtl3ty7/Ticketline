@@ -86,6 +86,8 @@ import { SearchShared} from './components/search/search-shared';
 import { ArtistAdvancedComponent } from './components/search/artist/artist-advanced/artist-advanced.component';
 import { LocationAdvancedComponent } from './components/search/location/location-advanced/location-advanced.component';
 import { DropdownCountryComponent } from './components/search/location/location-advanced/dropdown-country/dropdown-country.component';
+import { ArtistEventComponent } from './components/search/artist/artist-event/artist-event.component';
+import { LocationShowComponent } from './components/search/location/location-show/location-show.component';
 
 @NgModule({
   declarations: [
@@ -151,7 +153,9 @@ import { DropdownCountryComponent } from './components/search/location/location-
     ShowComponent,
     ArtistAdvancedComponent,
     LocationAdvancedComponent,
-    DropdownCountryComponent
+    DropdownCountryComponent,
+    ArtistEventComponent,
+    LocationShowComponent
   ],
   imports: [
     BrowserModule,
