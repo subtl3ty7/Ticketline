@@ -57,6 +57,9 @@ public class Ticket {
     @ManyToOne
     private Show show;
 
+    @ManyToOne
+    private Event event;
+
 
 
 }

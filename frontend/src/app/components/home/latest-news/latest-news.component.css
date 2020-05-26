@@ -1,16 +1,8 @@
 @import '../top-events/top-events.component.css';
 
 .card-body, .card {
-}
-
-.card-title-font {
-  color: white;
-}
-
-.card-text-font {
-  color: white;
-  font-size: 20px;
-  font-family: Segue UI, Roboto, "Helvetica Neue", sans-serif
+  background-color: white;
+  color: black;
 }
 
 .card-text {
@@ -19,13 +11,52 @@
 
 .card {
   padding-bottom: 15px;
+  margin: 0px;
+}
+
+.zoom {
+  padding: 0px;
 }
 
 .zoom:hover {
+  padding: 0px;
   transform: scale(1.09);
 }
 
-.title-button {
-  padding-top: 100px;
-  padding-bottom: 50px;
+.card-text-font {
+  color: black;
+  font-size: 20px;
+  font-family: Segue UI, Roboto, "Helvetica Neue", sans-serif;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  line-height: 30px; /* fallback */
+  height: 60px; /* fallback */
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.card {
+  margin: 10px;
+  padding-bottom: 15px;
+  -webkit-box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.32);
+  -moz-box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.32);
+  box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.32);
+}
+
+.card-title-font {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1; /* number of lines to show */
+  line-height: 40px; /* fallback */
+  height: 40px; /* fallback */
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 30px;
+  font-weight: bold;
+  color: black;
+}
+
+.gap {
+  padding: 20px;
 }

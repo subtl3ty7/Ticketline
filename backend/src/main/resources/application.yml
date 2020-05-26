@@ -29,8 +29,6 @@ security:
     prefix: "Bearer "
     login-uri: /api/v1/authentication
     white-list:
-      # REST Methods
-      - /api/v1/news/latest
       # Browser requests
       - /
       - /favicon.ico

@@ -8,4 +8,6 @@ export class SimpleTicket {
   public price: number;
   public userCode: string;
   public showId: number;
+  public eventName: string;
+  public showTime: Date;
 }

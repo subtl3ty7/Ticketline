@@ -90,8 +90,6 @@ ol.carousel-indicators {
   display: block;
 }
 
-
-
 .zoom {
   transition: transform .2s; /* Animation */
 }
@@ -133,26 +131,26 @@ ol.carousel-indicators {
 }
 
 .title-button {
-  transition: .1s;
-  background-color: transparent;
+  background-color: #EEEEF6;
   color: black;
   padding-bottom: 20px;
+  padding-top: 20px;
+  padding-left: 20px;
+  transition: all .2s ease-in-out;
 }
 
 .title-button:hover {
-  transform: scale(1.1);
   cursor: pointer;
   color: black;
-  transition: all 0.2s ease-in-out;
 }
 
 .title-headline {
-  transition: .1s;
+  transition: all .2s ease-in-out;
+  margin: 0px;
 }
 
 .title-button:hover .title-headline {
   padding-left: 50px;
-  transition: all 0.2s ease-in-out;
 }
 
 .title-button:hover .title-hover {
@@ -161,10 +159,16 @@ ol.carousel-indicators {
   opacity: 1;
 }
 
-.title-hover {
+.title-caret {
+  margin-top: 5px;
   padding-left: 20px;
-  visibility: hidden;
-  opacity: 0;
+  font-size: 40px;
+}
+
+.event-button-font {
+  font-size: 25px;
+  font-weight: bold;
+  font-family: Segue UI, Roboto, "Helvetica Neue", sans-serif
 }
 
 .card-title-font {
@@ -174,11 +178,6 @@ ol.carousel-indicators {
   font-family: Segue UI, Roboto, "Helvetica Neue", sans-serif
 }
 
-.event-button-font {
-  font-size: 25px;
-  font-weight: bold;
-  font-family: Segue UI, Roboto, "Helvetica Neue", sans-serif
-}
 
 .extra-pad {
   padding-top: 10px

@@ -11,4 +11,5 @@ export class DetailedTicket {
   public price: number;
   public userCode: string;
   public show: Show;
+  public event: Event;
 }
