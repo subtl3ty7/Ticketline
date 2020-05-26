@@ -159,7 +159,7 @@ import { ResetPasswordAdminFormComponent } from './components/admin-home/admin-t
     LocationAdvancedComponent,
     DropdownCountryComponent,
     ArtistEventComponent,
-    LocationShowComponent
+    LocationShowComponent,
     DropdownCountryComponent,
     ChangePasswordComponent,
     ResetPasswordAdminContainerComponent,
