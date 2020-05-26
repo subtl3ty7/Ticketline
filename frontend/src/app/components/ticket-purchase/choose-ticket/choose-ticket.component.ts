@@ -14,7 +14,7 @@ import {TicketService} from '../../../services/ticket.service';
   styleUrls: ['./choose-ticket.component.css']
 })
 export class ChooseTicketComponent implements OnInit {
-
+  private error;
   @Input() ticketPurchaseSharingService: TicketPurchaseSharedServiceService;
   private show: Show;
   @Input() ticket: DetailedTicket;
@@ -45,6 +45,10 @@ export class ChooseTicketComponent implements OnInit {
         this.tickets = [this.ticket];
         this.ticketService.reserve(this.tickets).subscribe();
       }
+    } else {
+      this.error = {
+        messages: ['Bitte wähle mindestens einen Platz aus.']
+      };
     }
   }
 }
