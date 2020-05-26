@@ -1,0 +1,113 @@
+<!--<div class="center-block">
+  <div style="padding-top: 15px;">
+  <span  style="margin-left: 75%;"><ng-content></ng-content></span>
+    <div>
+
+  <div class="info-wrapper">
+    <div class="info">
+      <div class="info-label"></div>
+      <div class="info-field">
+       Event name: {{ticket.eventName}}
+      </div>
+    </div>
+  </div>
+
+  <div class="info-wrapper">
+    <div class="info">
+      <div class="info-label"></div>
+      <div class="info-field">
+        Seat id: {{ticket.seatId}}
+      </div>
+    </div>
+  </div>
+
+  <div class="info-wrapper">
+    <div class="info">
+      <div class="info-label"></div>
+      <div class="info-field">
+        Price: {{ticket.price}}
+      </div>
+    </div>
+  </div>
+
+  <div class="info-wrapper">
+    <div class="info">
+      <div class="info-label"></div>
+      <div class="info-field">
+        Show time: {{ticket.showTime | date:'short'}}
+      </div>
+    </div>
+  </div>
+
+
+  <div style = "padding-left: 10px">
+  <button type="button" class="btn btn-outline-primary" style="white-space: nowrap; border-radius: 10px; text-align: center;" > PDF Herunterladen</button>
+    <button type="button" class="btn btn-outline-danger" style="white-space: nowrap; border-radius: 10px; text-align: center;" > Stornieren </button>
+  </div>
+
+
+</div>-->
+<div class="center-block">
+<div>
+      <div class="password-button-wrapper">
+      <ng-content></ng-content>
+      </div>
+
+  <div class="info-wrapper">
+    <div class="info">
+      <div class="info-label"></div>
+      <div class="info-field">
+        Event name: {{ticket.eventName}}
+      </div>
+    </div>
+  </div>
+
+  <div class="info-wrapper">
+    <div class="info">
+      <div class="info-label"></div>
+      <div class="info-field">
+        Seat id: {{ticket.seatId}}
+      </div>
+    </div>
+  </div>
+
+  <div class="info-wrapper">
+    <div class="info">
+      <div class="info-label"></div>
+      <div class="info-field">
+        Price: {{ticket.price}}
+      </div>
+    </div>
+  </div>
+
+  <div class="info-wrapper">
+    <div class="info">
+      <div class="info-label"></div>
+      <div class="info-field">
+        Show time: {{ticket.showTime | date:'short'}}
+      </div>
+    </div>
+  </div>
+
+      <div class="bottom-button-wrapper">
+        <div class="edit-button-wrapper">
+          <button id="userInfoForm_editButton"
+                class="btn btn-outline-primary" style="white-space: nowrap; border-radius: 10px"
+                >
+          PDF Herunterladen
+          </button>
+        </div>
+
+        <div class="delete-button-wrapper">
+        <span id="userInfoForm_deleteButton"
+            class="btn btn-outline-danger" style="white-space: nowrap; border-radius: 10px"
+            >
+        Stornieren
+        </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
