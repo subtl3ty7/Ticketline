@@ -1,6 +1,10 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
 
+import org.hibernate.annotations.ResultCheckStyle;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -8,7 +12,8 @@ import java.time.LocalDateTime;
 
 
 @Entity
-@Table(name = "application_user")
+@SQLDelete(sql = "UPDATE USER SET is_Deleted=true WHERE id = ?", check = ResultCheckStyle.COUNT)
+@Where(clause = "is_Deleted=false")
 @DiscriminatorValue("ADMIN_USER")
 public class Administrator extends AbstractUser {
 
