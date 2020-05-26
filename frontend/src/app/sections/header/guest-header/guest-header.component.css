@@ -34,6 +34,10 @@ result:hover {
   padding-bottom: 15px;
 }
 
+.nav-link:hover {
+  cursor: pointer;
+}
+
 .navbar-custom {
   min-height: 160px;
   box-shadow: 0px 3px 6px #00000029;
