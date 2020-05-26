@@ -48,7 +48,7 @@ export class TicketService {
   }
   getDetailedTicketsByUserCode(userCode: string): Observable<SimpleTicket[]> {
     console.log('Load all tickets by userCode');
-    return this.httpClient.get<SimpleTicket[]>(this.ticketBaseUri + '/' + 'U523IN').pipe(
+    return this.httpClient.get<SimpleTicket[]>(this.ticketBaseUri + '/' + userCode).pipe(
       catchError(this.handleError)
     );
   }

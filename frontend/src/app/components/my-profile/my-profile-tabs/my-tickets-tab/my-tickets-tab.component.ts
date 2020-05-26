@@ -12,6 +12,9 @@ import {ShowService} from '../../../../services/show.service';
 import {Observable} from 'rxjs';
 import {forEachComment} from 'tslint';
 import {DetailedEvent} from '../../../../dtos/detailed-event';
+import {User} from '../../../../dtos/user';
+import {MyProfileWrapper, State} from '../../my-profile-wrapper';
+import {UserService} from '../../../../services/user.service';
 
 @Component({
   selector: 'app-my-tickets-tab',
@@ -26,29 +29,45 @@ export class MyTicketsTabComponent implements OnInit {
   error = false;
   errorMessage = '';
   public dataSource: any;
+  public wrapper = new MyProfileWrapper();
+  private state = State;
+  public firstName: string;
+  public lastName: string;
+  public currentUser: User = new User();
   /*@ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;*/
 
   constructor(private ticketService: TicketService,
               private route: ActivatedRoute,
               private showService: ShowService,
-              private eventService: EventService) { }
+              private eventService: EventService,
+              private userService: UserService) { }
 
   ngOnInit(): void {
-    this.loadTickets();
+    this.loadUser();
   }
-  public loadTickets(): void {
-    const userCode = this.route.snapshot.paramMap.get('userCode');
-    this.ticketService.getDetailedTicketsByUserCode(userCode).subscribe(
-      (tickets: SimpleTicket[]) => {
-        this.tickets = tickets;
+  private loadUser() {
+    this.userService.getCurrentUser().subscribe(
+      (user: User) => {
+        Object.assign(this.currentUser, user);
+        this.loadTickets();
       },
-      error => {
-        this.defaultServiceErrorHandling(error);
+      (error) => {
+        this.error = error.error;
       }
     );
   }
-  public getShowByShowId(showId: number) {
+  public loadTickets(): void {
+      this.ticketService.getDetailedTicketsByUserCode(this.currentUser.userCode).subscribe(
+        (tickets: SimpleTicket[]) => {
+          this.tickets = tickets;
+        },
+        (error) => {
+          this.error = error.error;
+        }
+      );
+  }
+ /* public getShowByShowId(showId: number) {
    return this.showService.getShowByShowId(showId).subscribe(
       show => { this.show = show; },
       error => { this.defaultServiceErrorHandling(error); }
@@ -62,19 +81,7 @@ export class MyTicketsTabComponent implements OnInit {
     }
   }*/
 
-  private defaultServiceErrorHandling(error: any) {
-    console.log(error);
-    this.error = true;
-    if (error.status === 0) {
-      // If status is 0, the backend is probably down
-      this.errorMessage = 'The backend seems not to be reachable';
-    } else if (error.error.message === 'No message available') {
-      // If no detailed error message is provided, fall back to the simple error name
-      this.errorMessage = error.error.error;
-    } else {
-      this.errorMessage = error.error.message;
-    }
-  }
+ /*
   public getEventByEventCode(eventCode: string): DetailedEvent {
     let resultEvent;
     this.eventService.getDetailedEventByUserCode(eventCode).subscribe(
@@ -86,5 +93,5 @@ export class MyTicketsTabComponent implements OnInit {
       }
     );
     return resultEvent;
-  }
+  }*/
 }
