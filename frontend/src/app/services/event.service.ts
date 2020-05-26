@@ -39,14 +39,11 @@ export class EventService {
   }
   getDetailedEventByUserCode(eventCode: string): Observable<DetailedEvent> {
     console.log('Load event by EventCode');
-    return this.httpClient.get<DetailedEvent>(this.eventBaseUri + '/' + eventCode).pipe(
-      catchError(this.handleError)
-    );
+    return this.httpClient.get<DetailedEvent>(this.eventBaseUri + '/' + eventCode);
   }
 
-
-  getDetailedEventsBy(name: string, startsAt: string, endsAt: string, startPrice: string, endPrice: string, type: string, category: string, prices: string) {
-    
+  getDetailedEventsBy(name: string, startsAt: string, endsAt: string, startPrice: string,
+                      endPrice: string, type: string, category: string, prices: string) {
   }
 
   getDetailedEventsByName(name: string): Observable<DetailedEvent[]> {
