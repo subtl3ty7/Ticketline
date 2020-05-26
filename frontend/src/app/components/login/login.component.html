@@ -7,13 +7,11 @@
 </div>
 <div class="container">
   <div class="row">
-    <div class="col-md-7 mx-auto" style="max-width: 660px; max-height: 640px;" >
+    <div class="col-md-7 mx-auto" style="max-width: 660px;" >
       <span class="anchor" id="formLogin"></span>
 
-      <div class="card" style="max-width: 660px; max-height: 640px;">
-        <div style="padding: 40px;">
-          <h2>Einloggen</h2>
-        </div>
+      <div class="card" style="max-width: 660px;">
+        <div class="login-title">Einloggen</div>
         <div class="card-body">
           <form class="form" (keyup.enter)="loginUser()" [formGroup]="loginForm" (ngSubmit)="loginUser()">
 
@@ -41,17 +39,13 @@
             <button type="button" (click)="loginUser()" class="btn default">Einloggen</button>
 
           </form>
-          <div class="row">
-          </div>
-          <div class="h-divider">
-          </div>
-          <div class="row">
-          </div>
-          <p style="padding-left: 30px; padding-right: 30px;">Noch kein Konto? <a href="/registration" style="color: #707070">Jetzt registrieren</a></p>
+
+          <p class="account-lock-info">You have in total 5 login attempts. If your account gets locked, please contact us.</p>
+          <div class="h-divider"></div>
+          <p class="registration-info">Noch kein Konto? <a href="/registration" class="registration-link">Jetzt registrieren</a></p>
         </div>
 
       </div>
-      <p style="color: crimson; padding-left: 2%">You have in total 5 login attempts. If your account gets locked, please contact us.</p>
     </div>
   </div>
 </div>
