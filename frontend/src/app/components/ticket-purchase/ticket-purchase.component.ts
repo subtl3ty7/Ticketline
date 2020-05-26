@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {TicketPurchaseSharedServiceService} from './ticket-purchase-shared-service.service';
+import {TicketPurchaseSharedServiceService, TicketState} from './ticket-purchase-shared-service.service';
 import {DetailedTicket} from '../../dtos/detailed-ticket';
 import {UserService} from '../../services/user.service';
 
@@ -25,6 +25,7 @@ export class TicketPurchaseComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.ticketPurchaseSharingService.ticketState = TicketState.BEGIN;
     this.isLinear = false;
     this.ticket = new DetailedTicket();
     this.userService.getCurrentUser().subscribe((user) => {
