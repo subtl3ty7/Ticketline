@@ -116,4 +116,9 @@ public class CustomEventService implements EventService {
         return eventRepository.findEventsByArtistsContaining(artist);
 
     }
+
+    @Override
+    public List<Event> findEventsByName(String name) {
+        return eventRepository.findEventsByNameContainingIgnoreCase(name);
+    }
 }
