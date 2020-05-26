@@ -9,3 +9,7 @@
 .hidden-x {
   overflow-x: hidden;
 }
+
+.gap {
+  padding: 30px;
+}

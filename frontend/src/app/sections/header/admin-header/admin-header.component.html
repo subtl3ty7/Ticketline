@@ -1,4 +1,5 @@
-<!--Mobile Navbar -->
+<!--
+Mobile Navbar
 <nav class="navbar-custom navbar-expand-lg d-flex" *ngIf="isMobileLayout">
   <div class="container-fluid">
     <div class="row header-row">
@@ -22,7 +23,7 @@
   </div>
 </nav>
 
-<!--Navbar for screens bigger than 1000px-->
+Navbar for screens bigger than 1000px
 <nav class="navbar-custom navbar-expand-lg d-flex" *ngIf="!isMobileLayout">
   <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed">
@@ -41,4 +42,14 @@
     </div>
   </div>
 </nav>
+-->
 
+
+<!-- New, Angular-Material fitting Toolbar Header -->
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <button routerLink="/home">Ticketline</button>
+    <span class="example-spacer"></span>
+    <button routerLink="/" (click)="authService.logoutUser()"><i class="fas fa-sign-out-alt"></i></button>
+  </mat-toolbar-row>
+</mat-toolbar>

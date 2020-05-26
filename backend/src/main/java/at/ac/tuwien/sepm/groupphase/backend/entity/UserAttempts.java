@@ -4,9 +4,15 @@ package at.ac.tuwien.sepm.groupphase.backend.entity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.ResultCheckStyle;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import javax.persistence.*;
 
 @Entity
+@SQLDelete(sql = "UPDATE USER_ATTEMPT SET is_Deleted=true WHERE id = ?", check = ResultCheckStyle.COUNT)
+@Where(clause = "is_Deleted=false")
 @Table(name = "user_attempt")
 @Getter
 @Setter
@@ -20,6 +26,9 @@ public class UserAttempts {
 
     @Column(name = "attempts")
     private int attempts;
+
+    @Column
+    private boolean isDeleted;
 
     public UserAttempts() {
 
@@ -71,5 +80,10 @@ public class UserAttempts {
         }
 
 
+    }
+
+    @PreRemove
+    public void deleteUser() {
+        this.isDeleted = true;
     }
 }

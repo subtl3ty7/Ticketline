@@ -63,6 +63,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         HttpStatus status,
         WebRequest request) {
         LOGGER.info("Handling Spring InternalException: " + exception.getMessage());
+        exception.printStackTrace();
         return new ResponseEntity(
             new JsonResponse(
                 LocalDateTime.now(),
@@ -120,6 +121,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {ValidationException.class})
     protected ResponseEntity<Object> handleValidation(ValidationException e) {
         LOGGER.info("Handling ValidationException");
+        e.printStackTrace();
         return new ResponseEntity(
             new JsonResponse(
                 LocalDateTime.now(),
@@ -137,6 +139,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {NotFoundException.class})
     protected ResponseEntity<JsonResponse> handleNotFound(NotFoundException e) {
         LOGGER.info("Handling NotFoundException");
+        e.printStackTrace();
         return new ResponseEntity(
             new JsonResponse(
                 LocalDateTime.now(),

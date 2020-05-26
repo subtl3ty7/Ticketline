@@ -34,4 +34,9 @@ public class CustomShowService implements ShowService {
         return seats;
     }
 
+    @Override
+    public List<Show> getShowsByEventLocationId(Long eventLocationId) {
+        return showRepository.findShowsByEventLocationOriginalId(eventLocationId);
+    }
+
 }

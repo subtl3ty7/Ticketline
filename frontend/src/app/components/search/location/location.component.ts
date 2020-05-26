@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Artist} from '../../../dtos/artist';
 import {AuthService} from '../../../services/auth.service';
 import {ArtistService} from '../../../services/artist.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {SearchShared} from '../search-shared';
 import {EventLocation} from '../../../dtos/event-location';
 
@@ -15,7 +15,7 @@ export class LocationComponent implements OnInit {
 
   name: string = '';
 
-  constructor(public authService: AuthService, private artistService: ArtistService, private activatedRoute: ActivatedRoute, private searchShared: SearchShared) {
+  constructor(public authService: AuthService, private artistService: ArtistService, private activatedRoute: ActivatedRoute, private searchShared: SearchShared, private router: Router) {
 
   }
 
@@ -38,8 +38,14 @@ export class LocationComponent implements OnInit {
     } else {
       // throw error
     }
-
-
   }
 
+  searchShows(eventLocation: EventLocation) {
+    console.log('searching for shows with event location id ' + eventLocation.id);
+    sessionStorage.setItem('eventLocationId', eventLocation.id.toString());
+    sessionStorage.setItem('eventLocationName', eventLocation.name.toString());
+    sessionStorage.setItem('eventLocationPLZ', eventLocation.plz.toString());
+    sessionStorage.setItem('eventLocationCity', eventLocation.city.toString());
+    this.router.navigate(['/search/location-shows']);
+  }
 }
