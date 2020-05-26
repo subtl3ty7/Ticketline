@@ -1,7 +1,7 @@
 /* Modify the background color */
 
 .navbar-custom {
-  background-color: #2771BB;
+  background-color: #673ab7;
 }
 /* Modify brand and text color */
 
@@ -31,7 +31,7 @@ li {
 }
 
 .navbar-custom {
-  min-height: 160px;
+  min-height: 80px;
   box-shadow: 0px 3px 6px #00000029;
 }
 
