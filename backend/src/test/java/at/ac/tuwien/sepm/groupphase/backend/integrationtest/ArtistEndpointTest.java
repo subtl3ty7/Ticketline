@@ -75,7 +75,7 @@ public class ArtistEndpointTest implements TestData {
     public void givenNothing_whenFindByNonExistingName_then200AndEmptyList() throws Exception{
         artistRepository.save(artist);
 
-        MvcResult mvcResult = this.mockMvc.perform(get(ARTIST_BASE_URI + "/search")
+        MvcResult mvcResult = this.mockMvc.perform(get(ARTIST_BASE_URI)
             .param("firstName", "error").param("lastName", "error")
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
             .andDo(print())
@@ -95,7 +95,7 @@ public class ArtistEndpointTest implements TestData {
     public void givenArtist_whenFindByFullName_then200AndListWithSizeOneAndArtistWithAllProperties() throws Exception{
         artistRepository.save(artist);
 
-        MvcResult mvcResult = this.mockMvc.perform(get(ARTIST_BASE_URI + "/search")
+        MvcResult mvcResult = this.mockMvc.perform(get(ARTIST_BASE_URI)
             .param("firstName", FNAME.toUpperCase()).param("lastName", LNAME.toUpperCase())
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
             .andDo(print())

@@ -1,10 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.unittests.service;
 
 import at.ac.tuwien.sepm.groupphase.backend.basetest.TestData;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Seat;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
+import at.ac.tuwien.sepm.groupphase.backend.entity.*;
 import at.ac.tuwien.sepm.groupphase.backend.repository.SeatRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.ShowRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.TicketRepository;
@@ -41,7 +38,7 @@ public class TicketServiceTest implements TestData {
         .ticketCode(USER_CODE)
         .purchaseDate(START)
         .price(TOTAL)
-        .userCode(USER_CODE)
+        .userCode(USER_CODE_TICKET)
         .build();
 
     @BeforeEach
@@ -53,12 +50,14 @@ public class TicketServiceTest implements TestData {
             .ticketCode(USER_CODE)
             .purchaseDate(START)
             .price(TOTAL)
-            .userCode(USER_CODE)
+            .userCode(USER_CODE_TICKET)
             .build();
     }
 
     @Test
     public void given2Tickets_whenGetAllOfUser_thenListWithTicketsElement() {
+        USER_TICKET.setEmail("new@email.com");
+        USER_TICKET.setUserCode("code22");
         userRepository.save(USER_TICKET);
         ticketRepository.save(ticket);
         ticket.setTicketId(2L);

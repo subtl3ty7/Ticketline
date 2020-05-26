@@ -94,37 +94,6 @@ public class NewsEndpointTest implements TestData {
         .withPoints(POINTS)
         .build();
 
-    /*@BeforeEach
-    public void beforeEach() {
-        newsRepository.deleteAll();
-        news = News.builder()
-            .id(ID)
-            .newsCode(USER_CODE)
-            .title(TEST_NEWS_TITLE)
-            .publishedAt(TEST_NEWS_PUBLISHED_AT)
-            .stopsBeingRelevantAt(TEST_NEWS_PUBLISHED_AT)
-            .summary(TEST_NEWS_SUMMARY)
-            .text(TEST_NEWS_TEXT)
-            .author(FNAME)
-            .photo(PHOTO)
-            .build();
-
-        userRepository.deleteAll();
-        abstractUser = Customer.CustomerBuilder.aCustomer()
-            .withId(ID)
-            .withUserCode(USER_CODE)
-            .withFirstName(FNAME)
-            .withLastName(LNAME)
-            .withEmail(DEFAULT_USER)
-            .withPassword(PASS)
-            .withBirthday(BIRTHDAY)
-            .withCreatedAt(CRE)
-            .withUpdatedAt(UPD)
-            .withIsBlocked(false)
-            .withIsLogged(true)
-            .withPoints(POINTS)
-            .build();
-    }*/
 
     @Order(1)
     @Test
@@ -174,7 +143,6 @@ public class NewsEndpointTest implements TestData {
     @Order(3)
     @Test
     public void givenNews_whenGetLatestNews_then200AndNewsListWith1Element() throws Exception{
-        //newsRepository.save(news);
 
         MvcResult mvcResult = this.mockMvc.perform(get(NEWS_BASE_URI + "/latest?limit=1")
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
