@@ -70,12 +70,14 @@
   font-size: 18px;
 }
 
-.row {
-  padding: 0px;
-}
-
 .card-body {
   padding-top: 60px;
   padding-left: 50px;
   padding-right: 50px;
+}
+
+
+.page-title {
+  padding-left: 20px;
+  margin: 0px;
 }

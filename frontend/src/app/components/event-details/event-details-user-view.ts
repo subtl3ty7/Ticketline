@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 
 import {EventService} from '../../services/event.service';
 import {DetailedEvent} from '../../dtos/detailed-event';
+import {Background} from '../../utils/background';
 
 @Component({
   selector: 'app-event-details-user-view',
@@ -15,7 +16,10 @@ export class EventDetailsUserViewComponent implements OnInit {
 
   constructor(private eventService: EventService,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private background: Background) {
+    this.background.defineBackground();
+  }
 
   ngOnInit(): void {
     this.loadEvent();
@@ -39,5 +43,4 @@ export class EventDetailsUserViewComponent implements OnInit {
       this.router.navigate(['ticket-purchase']);
     }
   }
-
 }

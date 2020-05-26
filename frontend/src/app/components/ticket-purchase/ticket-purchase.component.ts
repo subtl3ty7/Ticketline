@@ -3,6 +3,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TicketPurchaseSharedServiceService} from './ticket-purchase-shared-service.service';
 import {DetailedTicket} from '../../dtos/detailed-ticket';
 import {UserService} from '../../services/user.service';
+import {Router} from '@angular/router';
+import {Background} from '../../utils/background';
 
 @Component({
   selector: 'app-ticket-purchase',
@@ -21,8 +23,9 @@ export class TicketPurchaseComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private ticketPurchaseSharingService: TicketPurchaseSharedServiceService,
-    private userService: UserService
-  ) { }
+    private userService: UserService, private background: Background) {
+    this.background.defineBackground();
+  }
 
   ngOnInit(): void {
     this.isLinear = false;

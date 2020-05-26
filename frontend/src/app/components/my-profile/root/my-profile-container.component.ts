@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
+import {Background} from '../../../utils/background';
 
 @Component({
   selector: 'app-my-profile-container',
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MyProfileContainerComponent implements OnInit {
 
-  constructor() { }
+  constructor(private background: Background) {
+    this.background.defineBackground();
+  }
 
   ngOnInit(): void {
   }

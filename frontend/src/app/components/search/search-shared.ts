@@ -2,12 +2,13 @@ import {Injectable} from '@angular/core';
 import {Artist} from '../../dtos/artist';
 import {AuthService} from '../../services/auth.service';
 import {ArtistService} from '../../services/artist.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {EventLocationService} from '../../services/event-location.service';
 import {EventLocation} from '../../dtos/event-location';
 import {EventService} from '../../services/event.service';
 import {SimpleEvent} from '../../dtos/simple-event';
 import {DetailedEvent} from '../../dtos/detailed-event';
+import {Background} from '../../utils/background';
 
 export enum SearchEntity {
   ARTIST = 'Artist',
@@ -23,8 +24,13 @@ export class SearchShared {
   public searchTerm: string = '';
   public searchEntity: string;
   public entities: object[];
-  
-  constructor(public authService: AuthService, private artistService: ArtistService, private eventService: EventService, private eventLocationService: EventLocationService) { }
+
+  constructor(public authService: AuthService,
+              private artistService: ArtistService,
+              private eventService: EventService,
+              private eventLocationService: EventLocationService, private background: Background) {
+    this.background.defineBackground();
+  }
 
   public getArtistsByFirstAndLastName(firstName: string, lastName: string) {
     console.log('loading all artists with first name containing "' + firstName + '" and last name containing "' + lastName + '"');

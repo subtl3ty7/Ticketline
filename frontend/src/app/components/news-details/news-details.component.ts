@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
+import {Background} from '../../utils/background';
 
 @Component({
   selector: 'app-news-details',
@@ -7,12 +9,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewsDetailsComponent implements OnInit {
 
-  constructor() {
-    document.body.style.background = '#0c0d0f';
-    document.body.style.backgroundImage = 'url("assets/images/bg.png")';
-    document.body.style.backgroundRepeat = 'no-repeat';
-    document.body.style.backgroundPosition = 'top';
-    document.body.style.backgroundSize = '100%';
+  constructor(private background: Background) {
+    this.background.defineBackground();
   }
 
   ngOnInit(): void {
