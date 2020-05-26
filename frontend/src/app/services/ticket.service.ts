@@ -46,4 +46,10 @@ export class TicketService {
     console.error(errorMessage);
     return throwError(errorMessage);
   }
+  getDetailedTicketsByUserCode(userCode: string): Observable<SimpleTicket[]> {
+    console.log('Load all tickets by userCode');
+    return this.httpClient.get<SimpleTicket[]>(this.ticketBaseUri + '/' + userCode).pipe(
+      catchError(this.handleError)
+    );
+  }
 }

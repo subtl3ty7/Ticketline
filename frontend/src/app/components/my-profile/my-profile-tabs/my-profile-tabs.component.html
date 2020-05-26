@@ -5,8 +5,8 @@
     <div class="profile-title-wrapper">
       <div class="profile-line">
         <div class="profile-title">
-          <span *ngIf="globals.getProfileChoosenTab === 'my-info'">My Info</span>
-          <span *ngIf="globals.getProfileChoosenTab === 'my-tickets'">My Tickets</span>
+          <span *ngIf="globals.getProfileChoosenTab === 'my-info'">Mein Profil</span>
+          <span *ngIf="globals.getProfileChoosenTab === 'my-tickets'">Meine Buchungen</span>
           <span *ngIf="globals.getProfileChoosenTab === 'my-invoices'">My Invoices</span>
         </div>
       </div>
@@ -25,7 +25,7 @@
 
       <div class="profile-content"
            *ngIf="globals.getProfileChoosenTab === 'my-tickets'">
-        <app-my-tickets-tab class="all-height" [choosenTab]="globals.getProfileChoosenTab"></app-my-tickets-tab>
+        <app-my-tickets-tab class="all-height"></app-my-tickets-tab>
       </div>
 
       <div class="profile-content"
@@ -35,6 +35,5 @@
 
     </div>
   </div>
-</div>
-  </div>
+</div></div>
 </div>
