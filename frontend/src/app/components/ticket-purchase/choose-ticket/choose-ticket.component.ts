@@ -41,7 +41,7 @@ export class ChooseTicketComponent implements OnInit {
       this.ticket.seat.sectionId = this.chosenSection.id;
       this.ticketPurchaseSharingService.ticketState = ticketState;
       if (ticketState === TicketState.RESERVED) {
-        this.ticket.isReserved = true;
+        this.ticket.reserved = true;
         this.tickets = [this.ticket];
         this.ticketService.reserve(this.tickets).subscribe();
       }
