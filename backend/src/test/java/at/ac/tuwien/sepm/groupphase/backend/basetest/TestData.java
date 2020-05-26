@@ -92,4 +92,12 @@ public interface TestData {
 
     String TICKETS_BASE_URI = BASE_URI + "/tickets";
 
+
+
+
+
+
+    String ARTIST_BASE_URI = BASE_URI + "/artists";
+    String NEWS_BASE_URI = BASE_URI + "/news";
+
 }
