@@ -7,7 +7,7 @@
     <div>
       <div class="password-button-wrapper">
       <button id="userInfoForm_PasswordButton"
-            class="btn btn-outline-dark" style="white-space: nowrap"
+            class="btn btn-outline-dark" style="white-space: nowrap; border-radius: 10px"
             (click)="openPasswordMode()">
         Passwort Ändern
       </button>
@@ -18,7 +18,7 @@
       <div class="bottom-button-wrapper">
         <div class="edit-button-wrapper">
           <button id="userInfoForm_editButton"
-                class="btn btn-outline-primary"
+                class="btn btn-outline-primary" style="white-space: nowrap; border-radius: 10px"
                 (click)="openEditMode()">
           Bearbeiten
           </button>
@@ -26,7 +26,7 @@
 
         <div class="delete-button-wrapper">
         <span id="userInfoForm_deleteButton"
-            class="btn btn-outline-danger" style="white-space: nowrap"
+            class="btn btn-outline-danger" style="white-space: nowrap; border-radius: 10px"
             (click)="openDeleteDialog()">
         Konto Löschen
         </span>
@@ -40,12 +40,12 @@
   <app-edit-profile [wrapper]= "wrapper">
 
       <button id="userInfoForm_saveButton"
-              class="btn btn-outline-primary"
+              class="btn btn-outline-primary" style="white-space: nowrap; border-radius: 10px"
               (click)="saveUserInfo()">Speichern
       </button>
 
       <button id="userInfoForm_closeButton"
-              class="btn btn-outline-danger"
+              class="btn btn-outline-danger" style="white-space: nowrap; border-radius: 10px"
               (click)="closeEditMode()">Abbrechen
       </button>
   </app-edit-profile>
@@ -54,12 +54,12 @@
 <div style="padding-top: 150px;" *ngIf="wrapper.state === state.PASSWORD && !error">
   <app-change-password [changePassword]= "changePassword">
       <button id="userInfoForm_changeButton"
-              class="btn btn-outline-primary"
+              class="btn btn-outline-primary" style="white-space: nowrap; border-radius: 10px"
               (click)="savePassword()">Ändern
       </button>
 
       <button id="userInfoForm_cancelButton"
-              class="btn btn-outline-danger"
+              class="btn btn-outline-danger" style="white-space: nowrap; border-radius: 10px"
               (click)="closePasswordMode()">Abbrechen
       </button>
 
