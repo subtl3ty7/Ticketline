@@ -1,7 +1,7 @@
 <app-customer-header></app-customer-header>
 <app-error-notification *ngIf="error" [error]="error"></app-error-notification>
 <!-- Container the card is in -->
-<div *ngIf="event" class="container-fluid" style="padding-left: 5%; padding-right: 5%;">
+<div class="container-fluid" style="padding-left: 5%; padding-right: 5%;">
   <div class="row">
     <div class="mx-auto" style="max-width: 1320px; width: 100%;">
 
@@ -14,11 +14,10 @@
         <div class="card-body">
           <div class="row">
             <div class="col">
-              <img src="{{event.photo}}" class="img-fluid" alt="some Image">
-
+              <img src="{{event.photo}}" class="img-fluid image-crop-big" alt="some Image">
             </div>
             <div class="col">
-              <div id="eventHeadline">
+              <div>
                 <h2 class="mb-0 headline">{{event.name}}</h2><br>
               </div>
 
@@ -47,18 +46,8 @@
             </div>
           </div>
 
-          <div class="row">
-
-            <h2 class="mb-0 headline" style="font-size: 25px; padding-left: 13px;"> Beschreibung  </h2>
-
-          </div>
-
-        <div class="row">
-          <div id="descriptionText">
-            <p> {{event.description}}
-            </p>
-          </div>
-        </div>
+          <div class="description-title">Beschreibung</div>
+          <div class="description-text text-justify">{{event.description}}</div>
 
         </div>
       </div>
