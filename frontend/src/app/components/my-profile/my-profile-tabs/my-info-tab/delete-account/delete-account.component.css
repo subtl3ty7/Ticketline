@@ -9,57 +9,10 @@
 
 .button-wrapper {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  padding-top: 25px;
 }
 
-.cancel-button {
-  height: 40px;
-  background-color: #ffffff;
-  border: 1px solid #000000;
-}
-
-.cancel-button-label {
-  font-family: SansSerif, sans-serif;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: 0.9px;
-  text-align: center;
-  color: #000000;
-  text-transform: uppercase;
-}
-
-.confirm-button {
-  height: 40px;
-  background-color: #ff1f20;
-  border: none;
-}
-
-.confirm-button-label {
-  font-family: SansSerif, sans-serif;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: 0.9px;
-  text-align: center;
-  color: #ffffff;
-  text-transform: uppercase;
-}
-
-button {
-  outline: none;
-  cursor: pointer;
-}
-.rectangle-7 {
-  margin: 0 auto;
-  width: 90%;
-  height: 40px;
-  border: solid 1px #888888;
-}
 
 .info {
   font-family: SansSerif, sans-serif;

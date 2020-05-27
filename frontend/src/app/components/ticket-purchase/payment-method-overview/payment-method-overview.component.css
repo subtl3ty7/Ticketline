@@ -1,35 +1,61 @@
-.eventName {
-  display: inline-flex;
+.element-title {
+  font-weight: bold!important;
+  margin-right: 7px;
 }
 
-.artistName {
-  display: inline-flex;
+.row {
+  margin: 0px;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
-.datum {
-  display: inline-flex;
-}
-
-.performanceTime {
-  display: inline-flex;
-}
-
-.hall {
-  display: inline-flex;
-}
-
-.city {
-  display: inline-flex;
-}
-
-.adress {
-  display: inline-flex;
-}
-
-.seating {
-  display: inline-flex;
-}
-
-.h5_bold {
+.page-title {
+  font-size: 40px;
+  margin-top: 30px;
+  margin-bottom: 70px;
   font-weight: bold;
+  color: #212529;
+}
+
+.ticket-details {
+  margin-left: 50px;
+}
+
+
+.payment-method-title {
+  font-family: Segue UI, Roboto, "Helvetica Neue", sans-serif !important;
+  font-size: 40px;
+  font-weight: bold;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  color: #212529;
+}
+
+.buy-button {
+  color: white;
+  background-color: #43B581;
+  height: 75px;
+  width: 400px;
+  transition: .2s;
+  padding: 0px;
+  text-align: center;
+  margin: 0px 0px 20px;
+}
+
+.button-font {
+  font-size: 25px;
+  color: white;
+}
+
+.payment-method-form {
+  width: 97%;
+  font-size: 30px;
+}
+
+.payment-method {
+  margin-left: 50px;
+}
+
+.button-row {
+  margin-top: 50px;
 }

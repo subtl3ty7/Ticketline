@@ -1,5 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint.dto;
 
+import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Seat;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
@@ -22,6 +23,7 @@ public class DetailedTicketDto {
     private String userCode;
     private Integer price;
     private Show show;
+    private Event event;
 
     public static final class DetailedTicketDtoBuilder{
         private Long ticketId;
@@ -33,9 +35,10 @@ public class DetailedTicketDto {
         private String userCode;
         private Integer price;
         private Show show;
+        private Event event;
 
         public DetailedTicketDtoBuilder(Long ticketId, String ticketCode, boolean isPurchased, boolean isReserved,
-                                        LocalDateTime purchaseDate, Seat seat, String userCode, Integer price, Show show){
+                                        LocalDateTime purchaseDate, Seat seat, String userCode, Integer price, Show show, Event event){
             this.ticketId = ticketId;
             this.ticketCode = ticketCode;
             this.isPurchased = isPurchased;
@@ -45,12 +48,13 @@ public class DetailedTicketDto {
             this.userCode = userCode;
             this.price = price;
             this.show = show;
+            this.event = event;
         }
 
         public static DetailedTicketDto.DetailedTicketDtoBuilder aDetailedTicketDto(Long ticketId, String ticketCode, boolean isPurchased,
                                                                                     boolean isReserved, LocalDateTime purchaseDate, Seat seat, String userCode,
-                                                                                    Integer price, Show show){
-            return new DetailedTicketDto.DetailedTicketDtoBuilder(ticketId, ticketCode, isPurchased, isReserved, purchaseDate, seat, userCode, price, show);
+                                                                                    Integer price, Show show, Event event){
+            return new DetailedTicketDto.DetailedTicketDtoBuilder(ticketId, ticketCode, isPurchased, isReserved, purchaseDate, seat, userCode, price, show, event);
         }
 
         public DetailedTicketDto build(){
@@ -64,6 +68,7 @@ public class DetailedTicketDto {
             detailedTicketDto.setUserCode(userCode);
             detailedTicketDto.setPrice(price);
             detailedTicketDto.setShow(show);
+            detailedTicketDto.setEvent(event);
             return detailedTicketDto;
         }
 

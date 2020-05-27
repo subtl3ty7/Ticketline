@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Background} from '../../utils/background';
 
 @Component({
   selector: 'app-home',
@@ -6,12 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  constructor() {
-    document.body.style.background = '#0c0d0f';
-    document.body.style.backgroundImage = 'url("assets/images/bg.png")';
-    document.body.style.backgroundRepeat = 'no-repeat';
-    document.body.style.backgroundPosition = 'top';
-    document.body.style.backgroundSize = '100%';
+  constructor(private background: Background) {
+    this.background.defineBackground();
   }
 
   ngOnInit() {
