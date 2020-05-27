@@ -82,4 +82,13 @@ public class Event implements Serializable {
     @Lob
     @Column(nullable = false, name = "photo")
     private String photo;
+
+    @NotNull
+    @Column
+    private EventTypeEnum eventType;
+
+    @NotNull
+    @Column
+    private EventCategoryEnum eventCategory;
+
 }

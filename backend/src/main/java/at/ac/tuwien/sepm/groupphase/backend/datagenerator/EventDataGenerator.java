@@ -124,6 +124,8 @@ public class EventDataGenerator {
                 .type("Of the cool type")
                 .shows(generateShows(eventLocations.get(eventLocationIndex)))
                 .artists(addedArtists)
+                .eventType(EventTypeEnum.MUSIC)
+                .eventCategory(EventCategoryEnum.HIPHOP)
                 .build();
             event = eventService.createNewEvent(event);
             events.add(event);
@@ -139,12 +141,15 @@ public class EventDataGenerator {
         for(int i=0; i<numberOfShows; i++) {
             //List<EventLocation> location = new ArrayList<>();
             //location.add(new EventLocation(eventLocation));
+            LocalDateTime start = LocalDateTime.now();
+            LocalDateTime end = start.plusHours(2);
             Show show = Show.builder()
-                .startsAt(LocalDateTime.now())
-                .endsAt(LocalDateTime.now())
+                .startsAt(start)
+                .endsAt(end)
                 .ticketsAvailable(1000)
                 .ticketsSold(300)
                 .eventLocationOriginalId(eventLocation.getId())
+                .duration(Duration.between(start, end))
                 .build();
             shows.add(show);
         }
