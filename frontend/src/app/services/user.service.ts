@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Globals} from '../global/globals';
 import {Observable, throwError} from 'rxjs';
 import {User} from '../dtos/user';
@@ -21,6 +21,15 @@ export class UserService {
   getAllUsers(): Observable<User[]> {
     console.log('Load all users.');
     return this.httpClient.get<User[]>(this.userBaseUri + '/all');
+  }
+
+  getUsersByParameters(user: User): Observable<User[]> {
+    const params = new HttpParams()
+    .set('userCode', user.userCode)
+    .set('firstName', user.firstName)
+    .set('lastName', user.lastName)
+    .set('email', user.email);
+    return this.httpClient.get<User[]>(this.userBaseUri + '/', {params});
   }
 
   getUserByUserCode(userCode: string): Observable<User> {
