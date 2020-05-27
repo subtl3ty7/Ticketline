@@ -4,58 +4,39 @@
 <div class="container-fluid" style="padding-left: 5%; padding-right: 5%;">
   <div class="row">
     <div class="mx-auto" style="max-width: 1320px; width: 100%;">
+      <div class="card main-body">
+        <div class="card-header d-flex align-items-center"  *ngIf="event">
+          <h3 class="page-title">Tickets für {{event.name}}</h3>
+          <div class="divider"></div>
+          <h3 class="page-title">{{show.eventLocationCopy.name}}, {{show.eventLocationCopy.city}}</h3>
+          <div class="divider"></div>
+          <h3 class="page-title">{{formatDate(show.startsAt)}}</h3>
+        </div>
+        <div class="card-body">
 
-<div class="card main-body">
-  <div class="card-header d-flex align-items-center">
-    <h3 class="mb-0 " style="font-size: 40px; padding-left: 20px;"></h3>
-  </div>
+          <app-error-notification *ngIf="error" [error]="error"></app-error-notification>
 
-  <div class="card-body">
-  <mat-horizontal-stepper [linear]="isLinear" #stepper>
-  <mat-step [stepControl]="firstFormGroup" *ngIf="!ticketPurchaseSharingService.isReserved()">
-    <form [formGroup]="firstFormGroup">
-      <ng-template matStepLabel>Choose Ticket</ng-template>
-    <app-choose-ticket [ticketPurchaseSharingService]="ticketPurchaseSharingService" [ticket]= "ticket" [firstFormGroup]="firstFormGroup"></app-choose-ticket>
-    </form>
-  </mat-step>
+          <!-- Stepper -->
+          <mat-horizontal-stepper linear #stepper>
 
-    <mat-step [stepControl]="secondFormGroup" *ngIf="!ticketPurchaseSharingService.isReserved()">
-      <ng-template matStepLabel>Payment Method</ng-template>
-    <app-payment-method-overview [ticketPurchaseSharingService]="ticketPurchaseSharingService" [ticket] ="ticket"></app-payment-method-overview>
-  </mat-step>
-
-  <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-
-
-    <div class="messageWhenPurchased" *ngIf="ticketPurchaseSharingService.isPurchased()">
-      <h2> Danke für Ihren Einkauf!</h2>
-      <br>
-      <h4> Ticket(s): {{ticket.ticketCode}}</h4>
-      <br>
-      <button type="button" class="btn btn-secondary">Rechnung herunterladen</button>
-      <br>
-      <br>
-    </div>
-
-
-    <div class="messageWhenPurchased" *ngIf="ticketPurchaseSharingService.isReserved()">
-      <h2> Danke für Ihre Reservierung!</h2>
-      <br>
-      <h4> Reservierung(en): {{ticket.ticketCode}}</h4>
-      <br>
-      <button type="button" class="btn btn-secondary">Rechnung herunterladen</button>
-      <br>
-      <br>
-    </div>
-    <button type="button" class="btn btn-primary" routerLink="/home">Zurück zur Startseite</button>
-
-  </mat-step>
-</mat-horizontal-stepper>
+            <mat-step *ngIf="show" [stepControl]="firstFormGroup" [editable]="secondFormGroup.value.editable" label="Tickets auswählen" class="blueee">
+                <app-choose-ticket *ngIf="ticket" [ticketPurchaseSharingService]="ticketPurchaseSharingService" [ticket]="ticket" [firstFormGroup]="firstFormGroup"></app-choose-ticket>
+            </mat-step>
+            <mat-step *ngIf="show" [stepControl]="secondFormGroup" [editable]="secondFormGroup.value.editable" label="Zahlungsmethode auswählen" >
+                <app-payment-method-overview *ngIf="ticket" [secondFormGroup]="secondFormGroup" [event]="event" [ticket]="ticket" [stepper]="stepper"></app-payment-method-overview>
+            </mat-step>
+            <mat-step *ngIf="show" label="Erledigt">
+              <app-payment-done [event]="event" [show]="show" [ticket]="ticket" [section]="firstFormGroup.value.section"></app-payment-done>
+            </mat-step>
+          </mat-horizontal-stepper>
 
 
 
-</div>
-</div>
+
+
+
+        </div>
+      </div>
     </div>
   </div>
+</div>

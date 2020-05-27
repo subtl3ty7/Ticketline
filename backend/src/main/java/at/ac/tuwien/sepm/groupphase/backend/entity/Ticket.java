@@ -54,10 +54,10 @@ public class Ticket {
     @Column(nullable = false, name = "price")
     private Integer price;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Show show;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Event event;
 
 
