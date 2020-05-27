@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TicketPurchaseSharedServiceService, TicketState} from '../ticket-purchase-shared-service.service';
 import {EventLocation} from '../../../dtos/event-location';
 import {Show} from '../../../dtos/show';
-import {FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Section} from '../../../dtos/section';
 import {Seat} from '../../../dtos/seat';
 import {DetailedTicket} from '../../../dtos/detailed-ticket';
@@ -17,14 +17,14 @@ export class ChooseTicketComponent implements OnInit {
   private error;
   @Input() ticketPurchaseSharingService: TicketPurchaseSharedServiceService;
   private show: Show;
-  @Input() ticket: DetailedTicket;
   @Input() firstFormGroup: FormGroup;
+  @Input() ticket: DetailedTicket;
   private ticketState = TicketState;
   public tickets: DetailedTicket[];
   private eventLocation: EventLocation;
   private chosenSection: Section;
   private chosenSeat: Seat;
-  constructor(private ticketService: TicketService) {
+  constructor(private ticketService: TicketService, private _formBuilder: FormBuilder) {
   }
 
   ngOnInit(): void {

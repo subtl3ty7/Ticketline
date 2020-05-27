@@ -13,8 +13,39 @@
 
 
 
+          <mat-horizontal-stepper linear #stepper>
+            <mat-step [stepControl]="firstFormGroup" errorMessage="You cant do that.">
+                <app-choose-ticket [ticketPurchaseSharingService]="ticketPurchaseSharingService" [ticket]="ticket" [firstFormGroup]="firstFormGroup"></app-choose-ticket>
+            </mat-step>
+            <mat-step [stepControl]="secondFormGroup" errorMessage="Address is required.">
+              <form [formGroup]="secondFormGroup">
+                <ng-template matStepLabel>Fill out your address</ng-template>
+                <mat-form-field>
+                  <mat-label>Address</mat-label>
+                  <input matInput placeholder="Ex. 1 Main St, New York, NY" formControlName="secondCtrl"
+                         required>
+                </mat-form-field>
+                <div>
+                  <button mat-button matStepperPrevious>Back</button>
+                  <button mat-button matStepperNext>Next</button>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step>
+              <ng-template matStepLabel>Done</ng-template>
+              <p>You are now done.</p>
+              <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button (click)="stepper.reset()">Reset</button>
+              </div>
+            </mat-step>
+          </mat-horizontal-stepper>
+
+
+
+          <!--
           <mat-horizontal-stepper [linear]="isLinear" #stepper>
-            <mat-step [stepControl]="firstFormGroup" *ngIf="!ticketPurchaseSharingService.isReserved()">
+            <mat-step [stepControl]="firstFormGroup" errorMessage="You cant do that" *ngIf="!ticketPurchaseSharingService.isReserved()">
               <form [formGroup]="firstFormGroup">
                 <ng-template matStepLabel>Ticket auswählen</ng-template>
                 <app-choose-ticket [ticketPurchaseSharingService]="ticketPurchaseSharingService" [ticket]= "ticket" [firstFormGroup]="firstFormGroup"></app-choose-ticket>
@@ -52,7 +83,7 @@
 
           </mat-step>
           </mat-horizontal-stepper>
-
+          -->
 
 
 
@@ -61,3 +92,4 @@
     </div>
   </div>
 </div>
+

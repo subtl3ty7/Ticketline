@@ -1,9 +1,5 @@
-#numberOfTickets {
-  max-width: 15%;
-}
-
 .numberOfTickets {
-  display: flex;
+  max-width: 15%;
 }
 
 #section {
@@ -14,12 +10,12 @@
   display: flex;
 }
 
-.ticketRow {
-  display:flex;
+.section-select {
+  max-width: 30%;
 }
 
-#ticketRow {
-  max-width: 15%;
+.seat-select {
+  max-width: 20%;
 }
 
 .ticketPlace {
@@ -28,4 +24,30 @@
 
 #ticketPlace {
   max-width: 15%;
+}
+
+
+.choosing-title {
+  font-family: Segue UI, Roboto, "Helvetica Neue", sans-serif !important;
+  font-size: 20px;
+  font-weight: bold;
+  padding-right: 40px;
+}
+
+.choosing-subtitle {
+  font-family: Segue UI, Roboto, "Helvetica Neue", sans-serif !important;
+  font-size: 15px;
+  padding-right: 20px;
+}
+
+.row {
+  margin: 0px;
+}
+
+.gap {
+  padding: 15px;
+}
+
+.seat-select-container {
+  padding-left: 40px;
 }

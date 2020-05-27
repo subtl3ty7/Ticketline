@@ -43,6 +43,7 @@ public class ShowEndpoint {
     public ResponseEntity<List<ShowDto>> findShowsByEventLocationName(@RequestParam Long eventLocationId) {
         LOGGER.info("GET /api/v1/shows?eventLocationId=" + eventLocationId);
         List<ShowDto> result = showMapper.showToShowDto(showService.getShowsByEventLocationId(eventLocationId));
+
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

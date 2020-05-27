@@ -27,7 +27,7 @@ export class ErrorNotificationComponent implements OnInit {
     const error = this.error.error;
     if (error && (error.status || error.error || (error.messages && error.messages[0]))) {
         this.customError = error;
-    } else if (this.error && (this.error.status || this.error.error || (this.error.messages && error.messages[0]))) {
+    } else if (this.error && (this.error.status || this.error.error || (this.error.messages && this.error.messages[0]))) {
       this.customError = error;
     } else if (this.error && this.error.status) {
       this.customError.status = this.error.status;

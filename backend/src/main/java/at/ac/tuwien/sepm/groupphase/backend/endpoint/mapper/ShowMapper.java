@@ -3,8 +3,11 @@ package at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper;
 
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.ShowDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleShowDto;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
+import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
 import org.mapstruct.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,7 +16,6 @@ import java.util.List;
 @Mapper(uses = {EventLocationMapper.class})
 public interface ShowMapper {
     @Named("showToShowDto")
-    //@Mapping(expression= "java(EventLocationMapper.eventLocationCopyToEventLocationDto(show.getEventLocationCopy().get(0)))", target = "eventLocation")
     ShowDto showToShowDto(Show show);
 
     @IterableMapping(qualifiedByName = "showToShowDto")
