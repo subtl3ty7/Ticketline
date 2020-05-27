@@ -49,7 +49,7 @@ export class ChooseTicketComponent implements OnInit {
     if (this.firstFormGroup.value.count && this.firstFormGroup.value.section && this.firstFormGroup.value.seat && this.show) {
       this.setTicket();
       this.ticketPurchaseSharingService.ticketState = TicketState.RESERVED;
-      this.ticket.isReserved = true;
+      this.ticket.reserved = true;
       this.tickets = [this.ticket];
       this.ticketService.reserve(this.tickets).subscribe();
     } else {
