@@ -44,7 +44,8 @@ export class EventLocationService {
 
   getLocationsAdvanced(name: string, street: string, city: string, country: string, plz: string) {
     console.log('Load all locations with advanced parameters');
-    return this.httpClient.get<EventLocation[]>(this.eventBaseUri + '?name=' + name + '&city=' + city + '&country=' + country + '&plz=' + plz).pipe(
+    console.log(this.eventBaseUri + '?name=' + name + '&description=' + '&street=' + street + '&city=' + city + '&country=' + country + '&plz=' + plz);
+    return this.httpClient.get<EventLocation[]>(this.eventBaseUri + '?name=' + name + '&description=' + '&street=' + street + '&city=' + city + '&country=' + country + '&plz=' + plz).pipe(
       catchError(this.handleError)
     );
   }

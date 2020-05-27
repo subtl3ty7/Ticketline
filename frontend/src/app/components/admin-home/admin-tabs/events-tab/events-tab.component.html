@@ -1,7 +1,7 @@
 <div class="table-container all-height" #table>
 
 
-  <button mat-raised-button color = "basic" (click)="createNewEvent()" style="margin-left: 80%;margin-bottom: 1%">Create a new Event</button>
+  <button mat-raised-button color = "basic" style="margin-left: 80%;margin-bottom: 1%">Event Erstellen</button>
 
   <div class="table">
     <mat-table #table [dataSource]="dataSource" matSort>
@@ -28,7 +28,7 @@
 
       <!--STARTDATE-->
       <ng-container matColumnDef="startsAt">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Beginn</mat-header-cell>
         <mat-cell *matCellDef="let element" (click)="eventDetails(element)">
           <div class="cell-padding">
             {{element?.startsAt | date}}
@@ -37,7 +37,7 @@
       </ng-container>
       <!--ENDDATE-->
       <ng-container matColumnDef="endsAt">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>End Date</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Ende</mat-header-cell>
         <mat-cell *matCellDef="let element" (click)="eventDetails(element)">
           <div class="cell-padding">
             {{element?.endsAt | date}}

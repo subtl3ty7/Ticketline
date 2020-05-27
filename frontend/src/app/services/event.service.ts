@@ -42,8 +42,7 @@ export class EventService {
     return this.httpClient.get<DetailedEvent>(this.eventBaseUri + '/' + eventCode);
   }
 
-  getDetailedEventsBy(name: string, startsAt: string, endsAt: string, startPrice: string,
-                      endPrice: string, type: string, category: string, prices: string) {
+  getDetailedEventsBy(name: string, type: string, category: string, startsAt: string, endsAt: string, startPrice: string) {
   }
 
   getDetailedEventsByName(name: string): Observable<DetailedEvent[]> {

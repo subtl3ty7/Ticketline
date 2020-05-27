@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {SimpleEvent} from '../../../../dtos/simple-event';
 import {ShowService} from '../../../../services/show.service';
 import {Show} from '../../../../dtos/show';
+import {EventService} from '../../../../services/event.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-location-show',
@@ -15,8 +17,9 @@ export class LocationShowComponent implements OnInit {
   public eventLocationName: string;
   public eventLocationPLZ: string;
   public shows: Show[];
+  public showsEvents: SimpleEvent[];
 
-  constructor(private showService: ShowService) { }
+  constructor(private showService: ShowService, private eventService: EventService) { }
 
   ngOnInit(): void {
     this.eventLocationId = parseInt(sessionStorage.getItem('eventLocationId'), 10);
@@ -32,5 +35,4 @@ export class LocationShowComponent implements OnInit {
       }
     );
   }
-
 }

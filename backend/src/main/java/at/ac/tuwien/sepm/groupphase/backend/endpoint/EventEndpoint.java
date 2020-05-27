@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.lang.invoke.MethodHandles;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -164,4 +167,29 @@ public class EventEndpoint {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
+    @GetMapping(value = "", params = {"name", "type", "category", "startsAt", "endsAt", "showDuration", "price"})
+    @ApiOperation(
+        value = "Get all events by name",
+        notes = "Get all events by with details",
+        authorizations = {@Authorization(value = "apiKey")})
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "Events are successfully retrieved"),
+        @ApiResponse(code = 404, message = "No Event is found"),
+        @ApiResponse(code = 500, message = "Connection Refused"),
+    })
+    public ResponseEntity<List<SimpleEventDto>> findEventsAdvanced(@Valid @RequestParam String name,
+                                                                  @Valid @RequestParam String type,
+                                                                  @Valid @RequestParam String category,
+                                                                  @Valid @RequestParam String startsAt,
+                                                                  @Valid @RequestParam String endsAt,
+                                                                  @Valid @RequestParam String showDuration,
+                                                                  @Valid @RequestParam Long price
+    ) {
+        LOGGER.info("GET /api/v1/events?name=" + name + "&type" + type + "&category=" + category + "&startsAt=" + startsAt + "&endsAt=" + endsAt + "&showDuration=" + showDuration + "&price=" + price);
+        LocalDateTime startsAtDate = LocalDateTime.parse(startsAt);
+        LocalDateTime endsAtDate = LocalDateTime.parse(endsAt);
+        List<SimpleEventDto> result = eventMapper.eventToSimpleEventDto(eventService.findEventsAdvanced(name, type, category, startsAtDate, endsAtDate, showDuration, price));
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

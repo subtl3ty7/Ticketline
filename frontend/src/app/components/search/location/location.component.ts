@@ -32,7 +32,7 @@ export class LocationComponent implements OnInit {
       const country = sessionStorage.getItem('locationCountry');
       const plz = sessionStorage.getItem('locationPLZ');
       console.log('location street: ' + street + '; location city: ' + city + '; location country: ' + country + '; location plz: ' + plz);
-      this.searchShared.getLocationsAdvanced(name, street, city, country, plz);
+      this.searchShared.getLocationsAdvanced(this.name, street, city, country, plz);
     } else if (sessionStorage.getItem('isAdvancedSearchActive') === String(false)) {
       this.searchShared.getLocationByName(this.name);
     } else {

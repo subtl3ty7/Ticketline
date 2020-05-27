@@ -49,7 +49,7 @@ public class NewsEndpoint {
         );
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/{newsCode}")
     @ApiOperation(
         value = "Get News Entry by newsCode",
@@ -64,7 +64,7 @@ public class NewsEndpoint {
         );
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/unseen")
     @ApiOperation(
         value = "Get the latest News Entries for a Customer",
@@ -78,7 +78,7 @@ public class NewsEndpoint {
         );
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/seen")
     @ApiOperation(
         value = "Get all News Entries that this customer has already seen",
@@ -94,7 +94,7 @@ public class NewsEndpoint {
     }
 
     @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/latest")
     @ApiOperation(
         value = "Get the latest News Entries",
