@@ -77,6 +77,8 @@ public class TicketEndpoint {
         int i = 0;
         for (SimpleTicketDto ticketEntity: simpleTickets
         ) {
+            ticketEntity.setEventName(tickets.get(i).getEvent().getName());
+            ticketEntity.setShowTime(tickets.get(i).getShow().getStartsAt());
             ticketEntity.setShowId(tickets.get(i).getShow().getId());
             ticketEntity.setSeatId(tickets.get(i).getSeat().getId());
             ++i;

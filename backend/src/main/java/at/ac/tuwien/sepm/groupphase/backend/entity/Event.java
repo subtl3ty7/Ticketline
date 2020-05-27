@@ -37,8 +37,8 @@ public class Event implements Serializable {
     private String name;
 
     @NotNull
-    @Size(min=1, max=1000)
-    @Column(nullable = false, length = 1000)
+    @Size(min=1, max=10000)
+    @Column(nullable = false, length = 10000)
     private String description;
 
     @NotNull

@@ -2,9 +2,13 @@ import {Injectable} from '@angular/core';
 import {Artist} from '../../dtos/artist';
 import {AuthService} from '../../services/auth.service';
 import {ArtistService} from '../../services/artist.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {EventLocationService} from '../../services/event-location.service';
 import {EventLocation} from '../../dtos/event-location';
+import {EventService} from '../../services/event.service';
+import {SimpleEvent} from '../../dtos/simple-event';
+import {DetailedEvent} from '../../dtos/detailed-event';
+import {Background} from '../../utils/background';
 
 export enum SearchEntity {
   ARTIST = 'Artist',
@@ -20,8 +24,13 @@ export class SearchShared {
   public searchTerm: string = '';
   public searchEntity: string;
   public entities: object[];
-  
-  constructor(public authService: AuthService, private artistService: ArtistService, private eventLocationService: EventLocationService) { }
+
+  constructor(public authService: AuthService,
+              private artistService: ArtistService,
+              private eventService: EventService,
+              private eventLocationService: EventLocationService, private background: Background) {
+    this.background.defineBackground();
+  }
 
   public getArtistsByFirstAndLastName(firstName: string, lastName: string) {
     console.log('loading all artists with first name containing "' + firstName + '" and last name containing "' + lastName + '"');
@@ -52,6 +61,21 @@ export class SearchShared {
     this.eventLocationService.getLocationsAdvanced(name, street, city, country, plz).subscribe(
       (eventLocations: EventLocation[]) => {
         this.entities = eventLocations;
+      },
+      error => {
+        this.entities = null;
+      }
+    );
+  }
+
+  getEventsBy(name: string, startsAt: string, endsAt: string, startPrice: string, endPrice: string, type: string, category: string, prices: string) {
+    this.eventService.getDetailedEventsBy(name, startsAt, endsAt, startPrice, endPrice, type, category, prices);
+  }
+
+  getEventsByName(name: string) {
+    this.eventService.getDetailedEventsByName(name).subscribe(
+      (events: DetailedEvent[]) => {
+        this.entities = events;
       },
       error => {
         this.entities = null;

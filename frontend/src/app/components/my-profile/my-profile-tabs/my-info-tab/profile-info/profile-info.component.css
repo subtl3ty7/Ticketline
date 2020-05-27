@@ -14,7 +14,7 @@
 .info-wrapper {
   display: flex;
   align-items: flex-end;
-  height: 60px;
+  height: 70px;
   border-top: 1px solid #efefef;
   cursor: pointer;
   padding-bottom: 15px;
@@ -26,7 +26,7 @@
 
 .info-label {
   font-family: SansSerif, sans-serif;
-  font-size: 14px;
+  font-size: 18px;
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
@@ -36,7 +36,7 @@
 }
 .info-field {
   font-family: SansSerif, sans-serif;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
@@ -45,32 +45,5 @@
   color: #000000;
 }
 
-.code-field {
-  min-height: 20px;
-}
 
-.primary-img {
-  padding-right: 10px;
-  cursor: pointer;
-}
 
-.customer-label {
-  font-family: SansSerif, sans-serif;
-  font-size: 18px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.33;
-  letter-spacing: normal;
-  color: #000000;
-  padding-bottom: 15px;
-}
-
-.user-info-padding {
-  padding: 10px 0;
-}
-
-.on {
-  padding-right: 8px;
-  height: 25px;
-}

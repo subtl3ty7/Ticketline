@@ -72,7 +72,7 @@ public class NewsDataGenerator {
                 .photo(resources.getImageEncoded(imgName))
                 .publishedAt(null)
                 .stopsBeingRelevantAt(LocalDateTime.now().plusWeeks(i))
-                .title("News " + i + resources.getText("news_title.txt"))
+                .title("News " + i + ": " + resources.getText("news_title.txt"))
                 .summary(resources.getText("news_summary.txt"))
                 .text(resources.getText("news_text.txt"))
                 .seenBy(customers.subList(i*splitUp, (i+1)*splitUp))

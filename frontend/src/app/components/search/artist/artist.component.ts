@@ -3,9 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../../services/auth.service';
 import {ArtistService} from '../../../services/artist.service';
 import {Artist} from '../../../dtos/artist';
-import {ActivatedRoute} from '@angular/router';
-import {SearchShared} from '../search-shared';
+import {ActivatedRoute, Router} from '@angular/router';
+import {SearchEntity, SearchShared} from '../search-shared';
 import {string} from '@amcharts/amcharts4/core';
+import {EventService} from '../../../services/event.service';
 
 @Component({
   selector: 'app-artist',
@@ -18,7 +19,7 @@ export class ArtistComponent implements OnInit {
   lastName: string = '';
   artists: Artist[];
 
-  constructor(public authService: AuthService, private artistService: ArtistService, private activatedRoute: ActivatedRoute, private searchShared: SearchShared) {
+  constructor(public authService: AuthService, private artistService: ArtistService, private activatedRoute: ActivatedRoute, private searchShared: SearchShared, private router: Router) {
 
   }
 
@@ -31,5 +32,12 @@ export class ArtistComponent implements OnInit {
     document.body.style.backgroundColor = '#DEDEDE';
     console.log('first name: ' + this.firstName + ', last name: ' + this.lastName);
     this.searchShared.getArtistsByFirstAndLastName(this.firstName, this.lastName);
+  }
+
+  searchEvents(artist: Artist) {
+      console.log('searching for artists events with id ' + artist.id);
+      sessionStorage.setItem('artistId', artist.id.toString());
+      sessionStorage.setItem('artistName', artist.firstName + ' ' + artist.lastName);
+      this.router.navigate(['/search/artist-events']);
   }
 }

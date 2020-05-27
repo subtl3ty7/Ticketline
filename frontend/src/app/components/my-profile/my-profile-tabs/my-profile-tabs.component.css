@@ -1,110 +1,37 @@
-:host {
-  display: block;
-}
-
-.profile-content-wrapper {
-  padding-left: 31px;
-}
-
 .profile-wrapper {
-  height: 95%;
+  height: 100%;
   display: flex;
 }
 
-.profile-title-wrapper {
-  display: flex;
-  justify-content: flex-end;
+.profile-tabs {
+  /* UI Properties */
+  background: #2771BB 0% 0% no-repeat padding-box;
+  box-shadow: 6px 3px 6px #00000029;
+  border-radius: 0px 0px 0px 20px;
+  opacity: 1;
+  width: 25%;
 }
 
-.profile-line {
-  width: 85%;
-  border-bottom: 1px solid #888888;
-}
 
-.profile-title {
-  font-family: SansSerif, sans-serif;
-  font-size: 24px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: 0.2px;
-  color: #000000;
-}
-
-.tab {
-  cursor: pointer;
-  padding-top: 8px;
-  padding-bottom: 8px;
-}
-
-.select-tab {
-  background: #ececec;
-}
-
-.select-tab-label {
-  color: #ff1f20 !important;
-}
-
-.tab-label {
-  padding-left: 5px;
-  font-family: Verdana;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: 0.2px;
-  color: #808080;
-  width: 7%;
-}
-
-@media screen and (min-width: 1080px) and (max-width: 1280px) {
-  .profile-line {
-    width: 82%;
-  }
-}
-
-@media screen and (max-width: 1080px) {
-  .profile-line {
-    width: 100%;
-  }
+@media screen and (min-width: 700px) and (max-width: 1080px) {
 
   .profile-tabs {
-    width: 20%;
+    width: 30%;
   }
 
   .profile-content {
-    width: 85%;
+    width: 70%;
   }
 }
 
 @media screen and (max-width: 700px) {
-  .profile-content-wrapper {
-    padding: 0 20px;
-  }
 
   .profile-tabs {
-    display: none;
-  }
-
-
-  .tab {
-    margin-top: 5px;
+    width: 40%;
   }
 
   .profile-content {
-    width: 100%;
+    width: 50%;
   }
-
-  .profile-line {
-    display: flex;
-    width: 100%;
-  }
-
-  .profile-title {
-    min-width: 120px;
-  }
-
-
 }
+

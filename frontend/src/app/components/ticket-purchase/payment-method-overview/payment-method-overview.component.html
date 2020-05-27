@@ -1,82 +1,57 @@
-<!-- Group of default radios - option 1 -->
-<div class="container">
-  <div class="row">
-    <div class="col-6">
-      <h2>Zahlungsübersicht</h2>
+<app-error-notification *ngIf="error" [error]="error"></app-error-notification>
 
-<div class="overview">
-  <div class="eventName">
-    <h5 class="h5_bold">Veranstaltung: </h5>
-    <p>{{event.name}}</p>
-  </div>
-<br>
-  <div class="artistName">
-    <h5 class="h5_bold">Künstler(in): </h5>
-    <div *ngFor="let artist of event.artists">
-      <p>{{artist.firstName}} {{artist.lastName}}</p>
+<form [formGroup]="secondFormGroup" *ngIf="ticket && event && show">
+  <div class="container">
+    <!-- page title -->
+    <div class="page-title">Zahlungsübersicht</div>
+    <!-- details to Event and ticket -->
+    <div class="container ticket-details">
+      <div class="row">
+        <h5 class="element-title">Veranstaltung: </h5>
+        <p>{{event.name}}</p>
+      </div>
+      <div class="row">
+        <h5 class="element-title">Künstler(in): </h5>
+        <div *ngFor="let artist of event.artists">
+          <p>{{artist.firstName}} {{artist.lastName}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <h5 class="element-title">Aufführungszeitpunkt: </h5>
+        <p>{{formatDate(show.startsAt)}}</p>
+      </div>
+      <div class="row">
+        <h5 class="element-title">Veranstaltungsort: </h5>
+        <p>{{show.eventLocationCopy.name}}</p>
+      </div>
+      <div class="row">
+        <h5 class="element-title">Stadt:</h5>
+        <p>{{show.eventLocationCopy.city}}</p>
+      </div>
+      <div class="row">
+        <h5 class="element-title">Adresse:</h5>
+        <p>{{show.eventLocationCopy.street}}, {{show.eventLocationCopy.plz}} {{show.eventLocationCopy.city}}, {{show.eventLocationCopy.country}}</p>
+      </div>
+      <div class="row" *ngIf="this.ticket.seat">
+        <h5 class="element-title">Sitzplätze:</h5>
+        <p>Platz {{this.ticket.seat.seatColumn}}{{this.ticket.seat.seatRow}}</p>
+      </div>
     </div>
-  </div>
-<br>
-  <div class="datum">
-    <h5 class="h5_bold">Datum:</h5>
-    <p>{{show.startsAt | date }}</p>
-  </div>
-<br>
-  <div class="performanceTime">
-    <h5 class="h5_bold">Aufführung: </h5>
-    <p>{{show.startsAt | date:'shortTime' }}</p>
-  </div>
-<br>
-  <div class="hall">
-    <h5 class="h5_bold">Saal: </h5>
-    <p>{{show.eventLocationCopy.name}}</p>
-  </div>
-  <br>
+    <!-- payment title -->
+    <div class="payment-method-title">
+      Zahlungsmethode
+    </div>
 
-  <div class="city">
-    <h5 class="h5_bold">Ort:</h5>
-    <p>{{show.eventLocationCopy.city}}</p>
-  </div>
-<br>
-  <div class="adress">
-    <h5 class="h5_bold">Adresse:</h5>
-    <p>{{show.eventLocationCopy.street}}, {{show.eventLocationCopy.plz}} {{show.eventLocationCopy.city}} {{show.eventLocationCopy.country}}</p>
-  </div>
-<br>
-  <div class="seating" *ngIf="this.ticket.seat">
-    <h5 class="h5_bold">Sitzplätze:</h5>
-    <p>Platz {{this.ticket.seat.seatColumn}}{{this.ticket.seat.seatRow}}</p>
-  </div>
-  <br>
-</div>
-  </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-auto">
-      <h3>Zahlungsmethode</h3>
-
-
-<div class="custom-control custom-radio">
-  <input type="radio" class="custom-control-input" id="defaultGroupExample1" name="groupOfDefaultRadios">
-  <label class="custom-control-label" for="defaultGroupExample1">Paypal</label>
-</div>
-
-<!-- Group of default radios - option 2 -->
-<div class="custom-control custom-radio">
-  <input type="radio" class="custom-control-input" id="defaultGroupExample2" name="groupOfDefaultRadios" checked>
-  <label class="custom-control-label" for="defaultGroupExample2">Kreditkarte</label>
-</div>
-
-<!-- Group of default radios - option 3 -->
-<div class="custom-control custom-radio">
-  <input type="radio" class="custom-control-input" id="defaultGroupExample3" name="groupOfDefaultRadios">
-  <label class="custom-control-label" for="defaultGroupExample3">Debit</label>
-</div>
-      <button type="button" mat-button matStepperNext class="btn btn-success" (click)="completePurchase()">Jetzt zahlen</button>
-
+    <div class="container-fluid payment-method">
+      <mat-select formControlName="paymentmethod" placeholder="Wähle Bezahlungsmethode" class="form-control payment-method-form" required>
+        <mat-option [value]="'creditcard'">Kredit-/Debitkarte</mat-option>
+        <mat-option [value]="'creditcard'">Paypal</mat-option>
+      </mat-select>
+    </div>
+    <!--<button type="button" mat-button matStepperNext class="btn btn-success" (click)="completePurchase()">Jetzt zahlen</button>-->
+    <div class="row button-row">
+      <button matStepperNext class="buy-button row ml-auto align-items-center align-self-end" (click)="completePurchase()"><div class="col button-font">Jetzt zahlen</div></button>
     </div>
 
   </div>
-</div>
+</form>
