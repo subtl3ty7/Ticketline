@@ -32,6 +32,7 @@ export class TicketPurchaseComponent implements OnInit, AfterViewInit {
   private ticket: DetailedTicket;
   private show: Show;
   private event: DetailedEvent;
+  sharedVars: FormGroup;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
 
@@ -83,12 +84,16 @@ export class TicketPurchaseComponent implements OnInit, AfterViewInit {
     this.firstFormGroup = this._formBuilder.group({
       count: ['', Validators.required],
       section: ['', Validators.required],
-      seat: ['', Validators.required]
+      seat: ['', Validators.required],
+      success: ['', Validators.required]
     });
     this.secondFormGroup = this._formBuilder.group({
       paymentmethod: ['', Validators.required],
       purchased: ['', Validators.required],
+    });
+    this.sharedVars = this._formBuilder.group( {
       editable: [true],
+      stepTwo: [true]
     });
   }
 

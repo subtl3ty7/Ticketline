@@ -19,11 +19,11 @@
           <!-- Stepper -->
           <mat-horizontal-stepper linear #stepper>
 
-            <mat-step *ngIf="show" [stepControl]="firstFormGroup" [editable]="secondFormGroup.value.editable" label="Tickets auswählen" class="blueee">
-                <app-choose-ticket *ngIf="ticket" [ticketPurchaseSharingService]="ticketPurchaseSharingService" [ticket]="ticket" [firstFormGroup]="firstFormGroup"></app-choose-ticket>
+            <mat-step *ngIf="show" [stepControl]="firstFormGroup" [editable]="sharedVars.value.editable" label="Tickets auswählen" class="blueee">
+                <app-choose-ticket *ngIf="ticket" [ticketPurchaseSharingService]="ticketPurchaseSharingService" [sharedVars]="sharedVars" [ticket]="ticket" [firstFormGroup]="firstFormGroup" [stepper]="stepper"></app-choose-ticket>
             </mat-step>
-            <mat-step *ngIf="show" [stepControl]="secondFormGroup" [editable]="secondFormGroup.value.editable" label="Zahlungsmethode auswählen" >
-                <app-payment-method-overview *ngIf="ticket" [secondFormGroup]="secondFormGroup" [event]="event" [ticket]="ticket" [stepper]="stepper"></app-payment-method-overview>
+            <mat-step *ngIf="show && sharedVars.value.stepTwo" [stepControl]="secondFormGroup" [editable]="sharedVars.value.editable" label="Zahlungsmethode auswählen" >
+                <app-payment-method-overview *ngIf="ticket" [secondFormGroup]="secondFormGroup" [sharedVars]="sharedVars" [event]="event" [ticket]="ticket" [stepper]="stepper"></app-payment-method-overview>
             </mat-step>
             <mat-step *ngIf="show" label="Erledigt">
               <app-payment-done [event]="event" [show]="show" [ticket]="ticket" [section]="firstFormGroup.value.section"></app-payment-done>

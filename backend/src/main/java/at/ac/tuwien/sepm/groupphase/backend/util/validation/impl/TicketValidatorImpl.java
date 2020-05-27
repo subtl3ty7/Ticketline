@@ -75,13 +75,11 @@ public class TicketValidatorImpl implements TicketValidator {
     @Override
     public Constraints validateBefore(Ticket ticket) {
         Constraints constraints = new Constraints();
-        constraints.add("seat_null", ticket.getSeat().getId() != null);
-        constraints.add("show_null", ticket.getShow().getId() != null);
-        constraints.add("price_null", ticket.getPrice() != null);
-        if(!constraints.isViolated()) {
-            constraints.add("show_zero", ticket.getShow().getId() != 0);
-            constraints.add("seat_zero", ticket.getSeat().getId() != 0);
-            constraints.add("price_zero", ticket.getPrice() != 0);
+        constraints.add("ticket_notNull", ticket != null);;
+        if(ticket != null) {
+            constraints.add("seat_notNull", ticket.getSeat() != null && ticket.getSeat().getId() != null);
+            constraints.add("show_notNull", ticket.getShow() != null && ticket.getShow().getId() != null);
+            constraints.add("price_notNull", ticket.getPrice() != null );
         }
         return constraints;
     }

@@ -45,12 +45,31 @@
     <div class="container-fluid payment-method">
       <mat-select formControlName="paymentmethod" placeholder="Wähle Bezahlungsmethode" class="form-control payment-method-form" required>
         <mat-option [value]="'creditcard'">Kredit-/Debitkarte</mat-option>
-        <mat-option [value]="'creditcard'">Paypal</mat-option>
+        <mat-option [value]="'paypal'">Paypal</mat-option>
       </mat-select>
     </div>
     <!--<button type="button" mat-button matStepperNext class="btn btn-success" (click)="completePurchase()">Jetzt zahlen</button>-->
     <div class="row button-row">
-      <button matStepperNext class="buy-button row ml-auto align-items-center align-self-end" (click)="completePurchase()"><div class="col button-font">Jetzt zahlen</div></button>
+      <button class="buy-button row ml-auto align-items-center align-self-end" data-toggle="modal" data-target="#purchase-modal"><div class="col button-font">Jetzt zahlen</div></button>
+    </div>
+
+    <!-- Modal (Pop up when clicking purchase) -->
+    <div class="modal fade" id="purchase-modal" role="dialog" aria-labelledby="purchase-modal-label" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="purchase-modal-label">
+              Willst du dieses Ticket kaufen?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn-secondary btn" data-dismiss="modal">Abbrechen</button>
+            <button matStepperNext  (click)="completePurchase()" type="button" class="btn-primary btn" data-dismiss="modal">Ja</button>
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>

@@ -59,13 +59,14 @@
 
 .buy-button {
   color: white;
-  background-color: #43B581;
+  background-color: #2771BB;
   height: 75px;
   width: 400px;
   transition: .2s;
   padding: 0px;
   text-align: center;
   margin: 0px 0px 20px;
+  border-width: 1px;
 }
 
 .reserve-button {
@@ -77,15 +78,17 @@
   padding: 0px;
   margin: 0px;
   text-align: center;
+  border-width: 1px;
 }
 
-.btn {
-  margin: 0px;
-  padding: 0px;
+.reserve-button:hover {
+  background-color: #909090;
 }
+
+/*ddd*/
 
 .buy-button:hover {
-  background-color: #327470;
+  background-color: #1f5993;
 }
 
 .button-font {
@@ -108,4 +111,9 @@
   font-weight: bold;
   color: #212529;
   margin-bottom: 30px;
+}
+
+.modal-buttons {
+  border-radius: 5px;
+  margin-left: 10px;
 }
