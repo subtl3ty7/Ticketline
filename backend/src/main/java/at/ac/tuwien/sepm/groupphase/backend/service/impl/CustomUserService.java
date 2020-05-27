@@ -235,4 +235,10 @@ public class CustomUserService implements UserService {
         user.setPassword(newPassword);
         userRepository.save(user);
     }
+
+    @Override
+    public List<AbstractUser> findUserByParams(String userCode, String firstName, String lastName, String email) {
+        List<AbstractUser> users =  userRepository.findAllByUserCodeContainingIgnoreCaseAndFirstNameContainingIgnoreCaseAndLastNameContainingIgnoreCaseAndEmailContainingIgnoreCase(userCode, firstName, lastName, email);
+        return users;
+    }
 }
