@@ -28,12 +28,12 @@ public interface EventLocationRepository extends JpaRepository<EventLocationOrig
 
     @Query(value = "" +
         "SELECT * FROM EVENT_LOCATION_ORIGINAL e " +
-        "WHERE ((:name IS NULL) OR (:name IS NOT NULL AND e.name = :name)) " +
-        "AND ((:city IS NULL) OR (:city IS NOT NULL AND e.city = :city)) " +
-        "AND ((:street IS NULL) OR (:street IS NOT NULL AND e.street = :street)) " +
-        "AND ((:country IS NULL) OR (:country IS NOT NULL AND e.country = :country))  " +
-        "AND ((:plz IS NULL) OR (:plz IS NOT NULL AND e.plz = :plz))  " +
-        "AND ((:event_location_description IS NULL) OR (:event_location_description IS NOT NULL AND e.event_location_description = :event_location_description ))", nativeQuery = true)
+        "WHERE ((:name IS NULL) OR (:name IS NOT NULL AND e.name LIKE %:name%)) " +
+        "AND ((:city IS NULL) OR (:city IS NOT NULL AND e.city LIKE %:city%)) " +
+        "AND ((:street IS NULL) OR (:street IS NOT NULL AND e.street LIKE %:street%)) " +
+        "AND ((:country IS NULL) OR (:country IS NOT NULL AND e.country LIKE %:country%))  " +
+        "AND ((:plz IS NULL) OR (:plz IS NOT NULL AND e.plz LIKE %:plz%))  " +
+        "AND ((:event_location_description IS NULL) OR (:event_location_description IS NOT NULL AND e.event_location_description LIKE %:event_location_description%))", nativeQuery = true)
     List<EventLocationOriginal> findAllByNameAndCityAndStreetAndCountryAndPlzAndEventLocationDescription(@Param("name") String name, @Param("city") String city, @Param("street") String street, @Param("country") String country, @Param("plz") String plz, @Param("event_location_description") String description);
 
 }

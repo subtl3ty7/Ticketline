@@ -68,8 +68,8 @@ public class EventLocationEndpoint {
         @ApiResponse(code = 404, message = "No EventLocation is found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<List<EventLocationDto>> findEventLocationsByName(EventLocationDto searchEventLocationDto) {
-        //LOGGER.info("GET /api/v1/eventLocations?locationName=" + name + "&description=" + description + "&street=" + street + "&city=" + city + "&country=" + country + "&plz=" + plz);
+    public ResponseEntity<List<EventLocationDto>> findAllFilteredEventLocations(EventLocationDto searchEventLocationDto) {
+        // LOGGER.info("GET /api/v1/eventLocations?locationName=" + name + "&description=" + description + "&street=" + street + "&city=" + city + "&country=" + country + "&plz=" + plz);
         EventLocationOriginal searchEventLocation = eventLocationMapper.eventLocationDtoToEventLocationOriginal(searchEventLocationDto);
         List<EventLocationDto> result = eventLocationMapper.eventLocationOriginalToEventLocationDto(eventLocationService.findAllFilteredEventLocations(searchEventLocation));
         return new ResponseEntity(result, HttpStatus.OK);
