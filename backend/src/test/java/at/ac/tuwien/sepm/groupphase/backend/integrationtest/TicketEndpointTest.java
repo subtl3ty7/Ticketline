@@ -41,7 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class TicketEndpointTest implements TestData {
-/*
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -108,7 +108,7 @@ public class TicketEndpointTest implements TestData {
         eventDataGenerator.generate();
 
         detailedTicketDto = DetailedTicketDto.DetailedTicketDtoBuilder.aDetailedTicketDto(
-            ID, USER_CODE, false, false, START, seatRepository.findSeatById(6L), USER_CODE, TOTAL, showRepository.findShowById(6L)).build();
+            ID, USER_CODE, false, false, START, seatRepository.findSeatById(6L), USER_CODE_TICKET, TOTAL, showRepository.findShowById(6L), eventRepository.findEventById(1L)).build();
 
         List<DetailedTicketDto> ticketDtos = new ArrayList<>();
         ticketDtos.add(detailedTicketDto);
@@ -117,7 +117,7 @@ public class TicketEndpointTest implements TestData {
         MvcResult mvcResult = this.mockMvc.perform(post(TICKETS_BASE_URI + "/purchase")
             .contentType(MediaType.APPLICATION_JSON)
             .content(body)
-            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_TICKET, USER_ROLES)))
             .andDo(print())
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
@@ -138,7 +138,7 @@ public class TicketEndpointTest implements TestData {
     public void givenNothing_whenReserveTicket_then201AndTicketList_AndTicketReservedTrue() throws Exception{
 
         detailedTicketDto = DetailedTicketDto.DetailedTicketDtoBuilder.aDetailedTicketDto(
-            2L, "code12", false, false, START, seatRepository.findSeatById(7L), USER_CODE, TOTAL, showRepository.findShowById(7L)).build();
+            2L, "code12", false, false, START, seatRepository.findSeatById(7L), USER_CODE_TICKET, TOTAL, showRepository.findShowById(7L), eventRepository.findEventById(1L)).build();
 
         List<DetailedTicketDto> ticketDtos = new ArrayList<>();
         ticketDtos.add(detailedTicketDto);
@@ -147,7 +147,7 @@ public class TicketEndpointTest implements TestData {
         MvcResult mvcResult = this.mockMvc.perform(post(TICKETS_BASE_URI + "/reserve")
             .contentType(MediaType.APPLICATION_JSON)
             .content(body)
-            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_TICKET, USER_ROLES)))
             .andDo(print())
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
@@ -170,7 +170,7 @@ public class TicketEndpointTest implements TestData {
         MvcResult mvcResult = this.mockMvc.perform(post(TICKETS_BASE_URI + "/purchaseReserved/" +
             ticketRepository.findTicketByTicketId(2L).getTicketCode())
             .contentType(MediaType.APPLICATION_JSON)
-            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_TICKET, USER_ROLES)))
             .andDo(print())
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
@@ -193,9 +193,9 @@ public class TicketEndpointTest implements TestData {
     @Order(4)
     public void givenTicket_whenGetTicketsByUserCode_then200AndTicketListWith2Elements() throws Exception{
 
-        MvcResult mvcResult = this.mockMvc.perform(get(TICKETS_BASE_URI + "/" + USER_CODE)
+        MvcResult mvcResult = this.mockMvc.perform(get(TICKETS_BASE_URI + "/" + USER_CODE_TICKET)
             .contentType(MediaType.APPLICATION_JSON)
-            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_TICKET, USER_ROLES)))
             .andDo(print())
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
@@ -217,7 +217,7 @@ public class TicketEndpointTest implements TestData {
         MvcResult mvcResult = this.mockMvc.perform(delete(TICKETS_BASE_URI + "/cancelPurchased/" +
             ticketRepository.findTicketByTicketId(ID).getTicketCode())
             .contentType(MediaType.APPLICATION_JSON)
-            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_TICKET, USER_ROLES)))
             .andDo(print())
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
@@ -233,7 +233,8 @@ public class TicketEndpointTest implements TestData {
         sectionRepository.deleteAll();
         eventLocationRepository.deleteAll();
         eventRepository.deleteAll();
+        artistRepository.deleteAll();
         userRepository.deleteAll();
     }
-*/
+
 }
