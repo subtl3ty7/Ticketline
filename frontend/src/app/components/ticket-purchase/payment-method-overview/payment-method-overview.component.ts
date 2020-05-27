@@ -32,7 +32,7 @@ export class PaymentMethodOverviewComponent implements OnInit {
 
   completePurchase() {
     this.ticketPurchaseSharingService.ticketState = TicketState.PURCHASED;
-    this.ticket.isPurchased = true;
+    this.ticket.purchased = true;
     this.tickets = [this.ticket];
     this.ticketService.purchase(this.tickets).subscribe();
   }
