@@ -169,11 +169,8 @@ import { MyInvoiceComponent } from './components/my-profile/my-profile-tabs/my-t
     ResetPasswordAdminComponent,
     ResetPasswordAdminFormComponent,
     MyTicketsTabComponent,
-<<<<<<< frontend/src/app/app.module.ts
-    PaymentDoneComponent
-=======
+    PaymentDoneComponent,
     MyInvoiceComponent
->>>>>>> frontend/src/app/app.module.ts
   ],
   imports: [
     BrowserModule,
