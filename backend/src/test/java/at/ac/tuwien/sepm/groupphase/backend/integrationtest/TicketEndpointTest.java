@@ -41,7 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class TicketEndpointTest implements TestData {
-/*
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -108,7 +108,7 @@ public class TicketEndpointTest implements TestData {
         eventDataGenerator.generate();
 
         detailedTicketDto = DetailedTicketDto.DetailedTicketDtoBuilder.aDetailedTicketDto(
-            ID, USER_CODE, false, false, START, seatRepository.findSeatById(6L), USER_CODE_TICKET, TOTAL, showRepository.findShowById(6L)).build();
+            ID, USER_CODE, false, false, START, seatRepository.findSeatById(6L), USER_CODE_TICKET, TOTAL, showRepository.findShowById(6L), eventRepository.findEventById(1L)).build();
 
         List<DetailedTicketDto> ticketDtos = new ArrayList<>();
         ticketDtos.add(detailedTicketDto);
@@ -138,7 +138,7 @@ public class TicketEndpointTest implements TestData {
     public void givenNothing_whenReserveTicket_then201AndTicketList_AndTicketReservedTrue() throws Exception{
 
         detailedTicketDto = DetailedTicketDto.DetailedTicketDtoBuilder.aDetailedTicketDto(
-            2L, "code12", false, false, START, seatRepository.findSeatById(7L), USER_CODE_TICKET, TOTAL, showRepository.findShowById(7L)).build();
+            2L, "code12", false, false, START, seatRepository.findSeatById(7L), USER_CODE_TICKET, TOTAL, showRepository.findShowById(7L), eventRepository.findEventById(1L)).build();
 
         List<DetailedTicketDto> ticketDtos = new ArrayList<>();
         ticketDtos.add(detailedTicketDto);
@@ -236,5 +236,5 @@ public class TicketEndpointTest implements TestData {
         artistRepository.deleteAll();
         userRepository.deleteAll();
     }
-*/
+
 }

@@ -59,12 +59,13 @@ public class TicketServiceTest implements TestData {
         USER_TICKET.setEmail("new@email.com");
         USER_TICKET.setUserCode("code22");
         userRepository.save(USER_TICKET);
+        ticket.setUserCode(USER_TICKET.getUserCode());
         ticketRepository.save(ticket);
         ticket.setTicketId(2L);
         ticket.setTicketCode("code12");
         ticketRepository.save(ticket);
 
-        assertEquals(2, ticketService.allTicketsOfUser(ticket.getUserCode()).size());
+        assertEquals(2, ticketService.allTicketsOfUser(USER_TICKET.getUserCode()).size());
 
     }
 }

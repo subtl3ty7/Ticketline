@@ -125,7 +125,7 @@ public class NewsEndpointTest implements TestData {
         MockHttpServletResponse response = mvcResult.getResponse();
 
         assertAll(
-            () -> assertEquals(HttpStatus.CREATED.value(), response.getStatus()),
+            () -> assertEquals(HttpStatus.OK.value(), response.getStatus()),
             () -> assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType())
         );
         NewsDto newsDto = objectMapper.readValue(response.getContentAsString(), NewsDto.class);
@@ -151,7 +151,7 @@ public class NewsEndpointTest implements TestData {
         MockHttpServletResponse response = mvcResult.getResponse();
 
         assertAll(
-            () -> assertEquals(HttpStatus.CREATED.value(), response.getStatus()),
+            () -> assertEquals(HttpStatus.OK.value(), response.getStatus()),
             () -> assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType())
         );
         List<NewsDto> newsDtos = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
