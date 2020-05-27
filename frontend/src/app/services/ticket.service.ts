@@ -64,4 +64,10 @@ export class TicketService {
       catchError(this.handleError)
     );
   }
+  public purchaseReservedTickets(ticketCode: String, tickets: Array<SimpleTicket>): Observable<Object> {
+    console.log('Purchase reserved tickets');
+    return this.httpClient.post(this.ticketBaseUri + '/purchaseReserved/' + ticketCode, tickets).pipe(
+      catchError(this.handleError)
+    );
+  }
 }
