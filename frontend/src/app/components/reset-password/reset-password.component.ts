@@ -3,6 +3,7 @@ import {AuthRequest} from '../../dtos/auth-request';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../../services/user.service';
 import {Router} from '@angular/router';
+import {Background} from '../../utils/background';
 
 @Component({
   selector: 'app-reset-password',
@@ -18,12 +19,11 @@ export class ResetPasswordComponent implements OnInit {
   error: boolean = false;
   errorMessage: string = '';
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService, private router: Router) {
+  constructor(private formBuilder: FormBuilder, private userService: UserService, private router: Router, private background: Background) {
+    this.background.defineBackground();
     this.formResetPassword = this.formBuilder.group({
       email: ['', [Validators.required]],
     });
-    document.body.style.backgroundImage = 'url("assets/images/bg.png")';
-    document.body.style.backgroundColor = '#0c0d0f';
   }
 
   /**
@@ -61,5 +61,13 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  defineBackground() {
+    document.body.style.background = '#0c0d0f';
+    document.body.style.backgroundImage = 'url("assets/images/bg.png")';
+    document.body.style.backgroundRepeat = 'no-repeat';
+    document.body.style.backgroundPosition = 'top';
+    document.body.style.backgroundSize = '100%';
   }
 }

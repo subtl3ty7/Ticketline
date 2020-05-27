@@ -194,18 +194,24 @@ public class EventDataGenerator {
     }
 
     private List<Section> generateSections() {
-        int numberOfSections = 4;
+        String[] labels = new String[]{
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+        };
 
         List<Section> sections = new ArrayList<>();
-        for(int i=0; i<numberOfSections; i++) {
+        for(String label: labels) {
             List<Seat> seats = generateSeats();
             Section section = Section.builder()
-                .sectionName("Section Bla" + i)
-                .sectionDescription("BlaDescription")
+                .sectionName(label)
+                .sectionDescription("Some Description")
                 .priceCategory("Low")
                 .price(9.99)
                 .seats(seats)
-                .capacity(seats.size()+i)
+                .capacity(seats.size())
                 .build();
 
             sections.add(section);
@@ -218,12 +224,23 @@ public class EventDataGenerator {
         String[] columns = new String[]{
             "1",
             "2",
-            "3"
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
         };
         String[] rows = new String[] {
             "A",
             "B",
-            "C"
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H"
         };
 
         List<Seat> seats = new ArrayList<>();

@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {SearchEntity, SearchShared} from './search-shared';
 import {Router} from '@angular/router';
+import {Background} from '../../utils/background';
 
 @Component({
   selector: 'app-search',
@@ -11,7 +12,9 @@ import {Router} from '@angular/router';
 })
 export class SearchComponent implements OnInit {
 
-  constructor(private authService: AuthService, private searchShared: SearchShared, private router: Router) { }
+  constructor(private authService: AuthService, private searchShared: SearchShared, private router: Router, private background: Background) {
+    this.background.defineBackground();
+  }
   public isMobileLayout = false;
   isCollapsed: boolean;
   currentTerm: string;
@@ -32,5 +35,4 @@ export class SearchComponent implements OnInit {
 
     }
   }
-
 }

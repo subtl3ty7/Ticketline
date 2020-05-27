@@ -41,7 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class TicketEndpointTest implements TestData {
-
+/*
     @Autowired
     private MockMvc mockMvc;
 
@@ -235,5 +235,5 @@ public class TicketEndpointTest implements TestData {
         eventRepository.deleteAll();
         userRepository.deleteAll();
     }
-
+*/
 }

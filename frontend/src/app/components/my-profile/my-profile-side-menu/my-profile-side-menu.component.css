@@ -1,12 +1,20 @@
-:host {
-  display: block;
+.top-tab {
+  cursor: pointer;
+  padding-top: 15px;
+  padding-bottom: 10px;
+  color: #aeb0b6;
 }
 
 .tab {
   cursor: pointer;
-  padding-top: 10px;
+  padding-top: 15px;
   padding-bottom: 10px;
-  color: #808080;
+  color: #aeb0b6;
+  border-top: 1px solid #efefef;
+}
+
+.top-tab:focus {
+  outline: 0;
 }
 
 .tab:focus {
@@ -14,14 +22,13 @@
 }
 
 .select-tab {
-  background: #ececec;
-  color: #ff1f20 !important;
+  color: #ffffff !important;
 }
 
 .tab-label {
   padding-left: 5px;
-  font-family: Verdana;
-  font-size: 16px;
+  font-family: SansSerif, sans-serif;
+  font-size: 20px;
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
@@ -29,3 +36,4 @@
   letter-spacing: 0.2px;
   width: 7%;
 }
+

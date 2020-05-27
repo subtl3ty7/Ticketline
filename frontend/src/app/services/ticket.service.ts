@@ -46,4 +46,28 @@ export class TicketService {
     console.error(errorMessage);
     return throwError(errorMessage);
   }
+  getDetailedTicketsByUserCode(userCode: string): Observable<SimpleTicket[]> {
+    console.log('Load all tickets by userCode');
+    return this.httpClient.get<SimpleTicket[]>(this.ticketBaseUri + '/' + userCode).pipe(
+      catchError(this.handleError)
+    );
+  }
+  cancelReservedTicket(ticketCode: String) {
+    console.log('Cancel ticket with ticketCode ' + ticketCode);
+    return this.httpClient.delete(this.ticketBaseUri + '/cancelReserved/' + ticketCode).pipe(
+      catchError(this.handleError)
+    );
+  }
+  cancelPurchasedTicket(ticketCode: String) {
+    console.log('Cancel ticket with ticketCode ' + ticketCode);
+    return this.httpClient.delete(this.ticketBaseUri + '/cancelPurchased/' + ticketCode).pipe(
+      catchError(this.handleError)
+    );
+  }
+  public purchaseReservedTickets(ticketCode: String, tickets: Array<SimpleTicket>): Observable<Object> {
+    console.log('Purchase reserved tickets');
+    return this.httpClient.post(this.ticketBaseUri + '/purchaseReserved/' + ticketCode, tickets).pipe(
+      catchError(this.handleError)
+    );
+  }
 }

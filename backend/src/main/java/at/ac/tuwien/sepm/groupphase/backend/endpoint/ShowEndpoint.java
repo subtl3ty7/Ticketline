@@ -1,7 +1,9 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.ShowDto;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EventMapper;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.ShowMapper;
+import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
 import at.ac.tuwien.sepm.groupphase.backend.service.ShowService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -23,11 +25,14 @@ public class ShowEndpoint {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final ShowService showService;
     private final ShowMapper showMapper;
+    private final EventMapper eventMapper;
+    private final EventService eventService;
 
-    @Autowired
-    public ShowEndpoint(ShowService showService, ShowMapper showMapper) {
+    public ShowEndpoint(ShowService showService, ShowMapper showMapper, EventMapper eventMapper, EventService eventService) {
         this.showService = showService;
         this.showMapper = showMapper;
+        this.eventMapper = eventMapper;
+        this.eventService = eventService;
     }
 
     @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
@@ -42,7 +47,10 @@ public class ShowEndpoint {
     })
     public ResponseEntity<List<ShowDto>> findShowsByEventLocationName(@RequestParam Long eventLocationId) {
         LOGGER.info("GET /api/v1/shows?eventLocationId=" + eventLocationId);
-        List<ShowDto> result = showMapper.showToShowDto(showService.getShowsByEventLocationId(eventLocationId));
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        List<ShowDto> shows = showMapper.showToShowDto(showService.getShowsByEventLocationId(eventLocationId));
+        for(ShowDto show: shows) {
+            show.setEvent(eventMapper.eventToSimpleEventDto(eventService.findByEventCode(show.getEventCode())));
+        }
+        return new ResponseEntity<>(shows, HttpStatus.OK);
     }
 }
