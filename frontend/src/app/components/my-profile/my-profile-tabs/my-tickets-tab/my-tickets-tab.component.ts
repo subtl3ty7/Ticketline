@@ -43,8 +43,7 @@ export class MyTicketsTabComponent implements OnInit {
               private route: ActivatedRoute,
               private showService: ShowService,
               private eventService: EventService,
-              private userService: UserService,
-              private router: Router) { }
+              private userService: UserService) { }
 
   ngOnInit(): void {
     this.loadUser();

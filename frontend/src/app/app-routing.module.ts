@@ -62,7 +62,7 @@ const routes: Routes = [
   {path: 'search/artist-advanced', component: ArtistAdvancedComponent},
   {path: 'search/location-advanced', component: LocationAdvancedComponent},
   {path: 'search/location-shows', component: LocationShowComponent},
-  {path: 'my-profile/my-tickets/my-invoice', component: MyInvoiceComponent}
+  {path: 'my-profile/my-tickets/my-invoice', component: MyInvoiceComponent},
   ];
 
 @NgModule({
