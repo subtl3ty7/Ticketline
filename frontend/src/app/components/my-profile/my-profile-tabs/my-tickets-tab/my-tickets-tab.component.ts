@@ -74,6 +74,13 @@ export class MyTicketsTabComponent implements OnInit {
     this.invoice = true;
     this.selectedTicket = ticket;
   }
+  public purchaseTicket(ticketCode: String, ticket: SimpleTicket) {
+    const ticketsToReserve: Array<SimpleTicket> = new Array<SimpleTicket>();
+    ticketsToReserve.push(ticket);
+    this.ticketService.purchaseReservedTickets(ticketCode, ticketsToReserve).subscribe(
+      o => {  window.location.reload();}
+    );
+  }
  /* public getShowByShowId(showId: number) {
    return this.showService.getShowByShowId(showId).subscribe(
       show => { this.show = show; },
