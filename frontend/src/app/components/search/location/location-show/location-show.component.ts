@@ -28,21 +28,10 @@ export class LocationShowComponent implements OnInit {
     this.eventLocationPLZ = sessionStorage.getItem('eventLocationPLZ');
     this.showService.getShowsByEventLocationId(this.eventLocationId).subscribe(
       (shows: Show[]) => {
-        for (let i = 0; i < shows.length; i++) {
-          this.getEventByEventCode(shows[i].eventCode, i);
-        }
         this.shows = shows;
       },
       error => {
         // throw error
-      }
-    );
-  }
-
-  getEventByEventCode(eventCode: string, i: number): void {
-    this.eventService.getSimpleEventByUserCode(eventCode).subscribe(
-      (event: SimpleEvent) => {
-        this.showsEvents[i] = event;
       }
     );
   }
