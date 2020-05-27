@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Directive, EventEmitter, HostBinding, Input, OnInit, Output} from '@angular/core';
 import {CustomError} from '../../dtos/customError';
 
 @Component({
@@ -8,6 +8,7 @@ import {CustomError} from '../../dtos/customError';
 })
 export class ErrorNotificationComponent implements OnInit {
   @Input() error;
+  @Output() newError: EventEmitter<any> = new EventEmitter<any>();
   customError: CustomError;
 
   constructor() { }
@@ -20,6 +21,7 @@ export class ErrorNotificationComponent implements OnInit {
   vanishError() {
     this.error = null;
     this.customError = null;
+    this.newError.emit(null);
   }
 
   getError() {
@@ -28,7 +30,9 @@ export class ErrorNotificationComponent implements OnInit {
     if (error && (error.status || error.error || (error.messages && error.messages[0]))) {
         this.customError = error;
     } else if (this.error && (this.error.status || this.error.error || (this.error.messages && this.error.messages[0]))) {
-      this.customError = error;
+      this.customError.status = this.error.status;
+      this.customError.error = this.error.error;
+      this.customError.messages = this.error.messages;
     } else if (this.error && this.error.status) {
       this.customError.status = this.error.status;
       this.customError.error = 'Keine Antwort';

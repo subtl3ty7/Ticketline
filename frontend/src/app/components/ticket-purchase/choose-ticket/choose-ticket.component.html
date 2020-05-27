@@ -1,74 +1,74 @@
 <app-error-notification *ngIf="error" [error]="error"></app-error-notification>
 
-<form [formGroup]="firstFormGroup">
-  <ng-template matStepLabel>Ticket auswählen</ng-template>
+<form [formGroup]="firstFormGroup" *ngIf="eventLocation">
   <div class="container">
+    <!-- page subtitle -->
+    <div class="page-subtitle">Tickets auswählen</div>
     <div class="row">
-
       <!-- Seat Plan -->
       <div class="col-7">
-        <p> put the seating plan here </p>
+        <img class="img-fluid" src="assets/images/seatplan.png" style="width:auto; height:auto">
       </div>
-
       <!-- Ticket Info and/or Selection -->
       <div class="col">
         <!-- Number of Tickets Selection -->
         <div class="row">
-          <div class="choosing-title align-items-center row">Anzahl der Tickets: </div>
-          <select class="form-control numberOfTickets"  formControlName="ticketCountCtrl" required>
-            <option value="1"> 1 </option>
-            <option value="2"> 2 </option>
-            <option value="3"> 3 </option>
-            <option value="4"> 4 </option>
-            <option value="5"> 5 </option>
-          </select>
+          <div class="choosing-title align-items-center row">Anzahl der Tickets</div>
+          <mat-select class="form-control numberOfTickets"  formControlName="count" required>
+            <mat-option value="1"> 1 </mat-option>
+            <mat-option value="2"> 2 </mat-option>
+            <mat-option value="3"> 3 </mat-option>
+            <mat-option value="4"> 4 </mat-option>
+            <mat-option value="5"> 5 </mat-option>
+          </mat-select>
         </div>
-
         <!-- Section and Seat Title -->
         <div class="gap"></div>
         <div class="choosing-title align-items-center row">Sitzplätze</div>
-        <div class="gap"></div>
-
         <!-- Section and Seat Info and/or Selection -->
         <div class="container seat-select-container">
-          <div class="row">
+          <div class="row selecting-row align-items-center">
             <div class="choosing-subtitle align-items-center row">Sektion</div>
-            <select class="form-control section-select" [(value)]="chosenSection">
-              <option *ngFor="let section of eventLocation.sections" [value]="section" required>
+            <mat-select class="form-control section-select" formControlName="section" required>
+              <mat-option *ngFor="let section of eventLocation.sections" [value]="section">
                 {{section.sectionName}}
-              </option>
-            </select>
+              </mat-option>
+            </mat-select>
           </div>
-          <div class="gap"></div>
-
-          <div *ngIf="chosenSection" class="row">
+          <div class="row selecting-row align-items-center">
             <div class="choosing-subtitle align-items-center row">Seat</div>
-            <select class="form-control seat-select" formControlName="ticketRow" required [(value)]="chosenSeat">
-              <option *ngFor="let seat of chosenSection.seats" [value]="seat">
+            <mat-select [disabled]="!this.firstFormGroup.value.section.seats" class="form-control seat-select" formControlName="seat" required>
+              <mat-option *ngFor="let seat of firstFormGroup.value.section.seats" [value]="seat">
                 {{seat.seatRow}}{{seat.seatColumn}}
-              </option>
-            </select>
-            </div>
+              </mat-option>
+            </mat-select>
+          </div>
         </div>
+        <!-- Price Overview -->
+        <div class="price-title align-items-center row">
+          Preis:
+          <div *ngIf="this.firstFormGroup.value.seat" class="gap">{{this.firstFormGroup.value.seat.price}} EUR</div>
+          <div *ngIf="!this.firstFormGroup.value.seat" class="gap">0 EUR</div>
+        </div>
+        <!-- Purchase/Reserve Buttons -->
+        <button matStepperNext (click)="nextStep()" class="buy-button row align-items-center"><div class="col button-font">Jetzt kaufen</div></button>
+        <button matStepperNext (click)="reserve()" class="reserve-button row align-items-center"><div class="col button-font">Reservieren</div></button>
       </div>
     </div>
   </div>
 </form>
 
 
-
-
-
-        <!--
-        <div class="category">
-          <h3> Preise:</h3>
-          <p *ngFor="let s of eventLocation.sections">
-            {{s.sectionName}}: €{{s.price}}
-          </p>
-        </div>
-        <div class="finalPrice">
-          <h3> Preis: <span *ngIf = "chosenSection">€{{chosenSection.price}} </span></h3>
-        </div>
-        <button type="button" mat-button matStepperNext class="btn btn-success" (click)="nextStep(ticketState.PROCESSING)">Jetzt kaufen</button>
-        <button type="button" mat-button matStepperNext class="btn btn-secondary" (click)="nextStep(ticketState.RESERVED)">Reservieren</button>
-        -->
+<!--
+<div class="category">
+  <h3> Preise:</h3>
+  <p *ngFor="let s of eventLocation.sections">
+    {{s.sectionName}}: €{{s.price}}
+  </p>
+</div>
+<div class="finalPrice">
+  <h3> Preis: <span *ngIf = "chosenSection">€{{chosenSection.price}} </span></h3>
+</div>
+<button type="button" mat-button matStepperNext class="btn btn-success" (click)="nextStep(ticketState.PROCESSING)">Jetzt kaufen</button>
+<button type="button" mat-button matStepperNext class="btn btn-secondary" (click)="nextStep(ticketState.RESERVED)">Reservieren</button>
+-->
