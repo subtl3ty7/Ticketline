@@ -52,4 +52,16 @@ export class TicketService {
       catchError(this.handleError)
     );
   }
+  cancelReservedTicket(ticketCode: String) {
+    console.log('Cancel ticket with ticketCode ' + ticketCode);
+    return this.httpClient.delete(this.ticketBaseUri + '/cancelReserved/' + ticketCode).pipe(
+      catchError(this.handleError)
+    );
+  }
+  cancelPurchasedTicket(ticketCode: String) {
+    console.log('Cancel ticket with ticketCode ' + ticketCode);
+    return this.httpClient.delete(this.ticketBaseUri + '/cancelPurchased/' + ticketCode).pipe(
+      catchError(this.handleError)
+    );
+  }
 }

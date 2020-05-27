@@ -19,4 +19,5 @@ public class ShowDto {
     @ToString.Exclude
     private EventLocationDto eventLocationCopy;
     private Long eventLocationOriginalId;
+    private SimpleEventDto event;
 }

@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {EventService} from '../../../../services/event.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {TicketService} from '../../../../services/ticket.service';
 import {DetailedTicket} from '../../../../dtos/detailed-ticket';
 import {SimpleTicket} from '../../../../dtos/simple-ticket';
@@ -33,6 +33,8 @@ export class MyTicketsTabComponent implements OnInit {
   private state = State;
   public firstName: string;
   public lastName: string;
+  invoice = false;
+  public selectedTicket: SimpleTicket;
   public currentUser: User = new User();
   /*@ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;*/
@@ -66,6 +68,11 @@ export class MyTicketsTabComponent implements OnInit {
           this.error = error.error;
         }
       );
+  }
+  public showInvoice(ticket: SimpleTicket) {
+   // this.router.navigate(['my-profile/my-tickets/my-invoice']);
+    this.invoice = true;
+    this.selectedTicket = ticket;
   }
  /* public getShowByShowId(showId: number) {
    return this.showService.getShowByShowId(showId).subscribe(
