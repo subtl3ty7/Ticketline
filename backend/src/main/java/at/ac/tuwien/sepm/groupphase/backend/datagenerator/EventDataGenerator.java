@@ -211,8 +211,8 @@ public class EventDataGenerator {
         for(String label: labels) {
             List<Seat> seats = generateSeats();
             Section section = Section.builder()
-                .sectionName(label)
-                .sectionDescription("Some Description")
+                .name(label)
+                .description("Some Description")
                 .priceCategory("Low")
                 .price(9.99)
                 .seats(seats)

@@ -5,6 +5,7 @@ import {ArtistService} from '../../../services/artist.service';
 import {ActivatedRoute} from '@angular/router';
 import {SearchShared} from '../search-shared';
 import {number} from '@amcharts/amcharts4/core';
+import {Background} from '../../../utils/background';
 
 @Component({
   selector: 'app-event',
@@ -15,14 +16,16 @@ export class EventComponent implements OnInit {
 
   name: string = '';
   artistId: string;
-  constructor(public authService: AuthService, private artistService: ArtistService, private activatedRoute: ActivatedRoute, private searchShared: SearchShared) {
-
+  constructor(public authService: AuthService,
+              private artistService: ArtistService,
+              private activatedRoute: ActivatedRoute,
+              private searchShared: SearchShared,
+              private background: Background) {
+    background.defineBackground();
   }
 
   ngOnInit(): void {
     console.log('event search');
-    document.body.style.backgroundImage = null;
-    document.body.style.backgroundColor = '#DEDEDE';
     this.name = sessionStorage.getItem('searchTerm');
     if (sessionStorage.getItem('isAdvancedSearchActive') === String(true)) {
       const type = sessionStorage.getItem('eventType');

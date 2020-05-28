@@ -5,6 +5,7 @@ import {ArtistService} from '../../../../services/artist.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SearchShared} from '../../search-shared';
 import {FormControl, FormGroup} from '@angular/forms';
+import {Background} from '../../../../utils/background';
 
 @Component({
   selector: 'app-artist-advanced',
@@ -17,8 +18,13 @@ export class ArtistAdvancedComponent implements OnInit {
   firstName: string = '';
   lastName: string = '';
 
-  constructor(public authService: AuthService, public router: Router, private artistService: ArtistService, private activatedRoute: ActivatedRoute, private searchShared: SearchShared) {
-    this.advancedArtistSearchForm = new FormGroup({
+  constructor(public authService: AuthService, public router:
+    Router, private artistService: ArtistService,
+              private activatedRoute: ActivatedRoute,
+              private searchShared: SearchShared,
+              private background: Background) {
+      background.defineBackground();
+      this.advancedArtistSearchForm = new FormGroup({
       firstName: new FormControl(),
       lastName: new FormControl()
     });
@@ -26,8 +32,6 @@ export class ArtistAdvancedComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('advanced artist search');
-    document.body.style.backgroundImage = null;
-    document.body.style.backgroundColor = '#DEDEDE';
   }
 
   advancedArtistSearch() {

@@ -5,6 +5,7 @@ import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.ShowDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleShowDto;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,4 +27,5 @@ public interface ShowMapper {
 
     @IterableMapping(qualifiedByName = "showToShowDto")
     List<SimpleShowDto> showToSimpleShowDto(List<Show> show);
+
 }

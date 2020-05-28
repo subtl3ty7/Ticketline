@@ -11,8 +11,10 @@ import {Background} from '../../utils/background';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-
-  constructor(private authService: AuthService, private searchShared: SearchShared, private router: Router, private background: Background) {
+  constructor(private authService: AuthService,
+              private searchShared: SearchShared,
+              private router: Router,
+              private background: Background) {
     this.background.defineBackground();
   }
   public isMobileLayout = false;
