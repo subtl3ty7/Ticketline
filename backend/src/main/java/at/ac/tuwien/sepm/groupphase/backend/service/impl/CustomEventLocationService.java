@@ -47,9 +47,16 @@ public class CustomEventLocationService implements EventLocationService {
         return eventLocationRepository.save(eventLocation);
     }
 
+
     @Override
-    public List<EventLocationOriginal> findEventLocationsByName(String locationName) {
-        List<EventLocationOriginal> eventLocations = eventLocationRepository.findAllByNameContainingIgnoreCase(locationName);
-        return eventLocations;
+    public List<EventLocationOriginal> findAllFilteredEventLocations(EventLocationOriginal searchEventLocation) {
+        return eventLocationRepository.findAllByNameAndCityAndStreetAndCountryAndPlzAndEventLocationDescription(
+            searchEventLocation.getName(),
+            searchEventLocation.getCity(),
+            searchEventLocation.getStreet(),
+            searchEventLocation.getCountry(),
+            searchEventLocation.getPlz(),
+            searchEventLocation.getEventLocationDescription()
+        );
     }
 }

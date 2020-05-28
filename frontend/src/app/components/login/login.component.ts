@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
 import {AuthRequest} from '../../dtos/auth-request';
 import {DOCUMENT} from '@angular/common';
+import {Background} from '../../utils/background';
 
 
 @Component({
@@ -20,13 +21,12 @@ export class LoginComponent implements OnInit {
   error: boolean = false;
   errorMessage: string = '';
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router, private background: Background) {
+    this.background.defineBackground();
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8)]]
     });
-    document.body.style.backgroundImage = 'url("assets/images/bg.png")';
-    document.body.style.backgroundColor = '#0c0d0f';
   }
 
   /**
@@ -76,5 +76,4 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

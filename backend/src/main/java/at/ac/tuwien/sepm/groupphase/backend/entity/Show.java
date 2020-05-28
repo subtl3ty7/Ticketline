@@ -1,10 +1,12 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -44,6 +46,9 @@ public class Show implements Serializable {
 
     @Column(name = "EVENT_LOCATION_ORIGINAL_ID")
     private Long eventLocationOriginalId;
+
+    @Column
+    public Duration duration;
 
     public Show(){
     }

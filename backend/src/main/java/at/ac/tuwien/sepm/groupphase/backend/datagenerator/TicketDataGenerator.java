@@ -5,10 +5,7 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
-import at.ac.tuwien.sepm.groupphase.backend.repository.SeatRepository;
-import at.ac.tuwien.sepm.groupphase.backend.repository.ShowRepository;
-import at.ac.tuwien.sepm.groupphase.backend.repository.TicketRepository;
-import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
+import at.ac.tuwien.sepm.groupphase.backend.repository.*;
 import at.ac.tuwien.sepm.groupphase.backend.datagenerator.EventDataGenerator;
 import at.ac.tuwien.sepm.groupphase.backend.service.TicketService;
 import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
@@ -38,17 +35,20 @@ public class TicketDataGenerator {
     private final SeatRepository seatRepository;
     private final TicketService ticketService;
     private final UserService userService;
+    private final EventRepository eventRepository;
     private final EntityManagerFactory entityManagerFactory;
     private static final int NUMBER_OF_TICKETS_TO_GENERATE = 5;
 
     public TicketDataGenerator(TicketRepository ticketRepository, ShowRepository showRepository, SeatRepository seatRepository
-                                , EntityManagerFactory entityManagerFactory, TicketService ticketService, UserService userService){
+                                , EntityManagerFactory entityManagerFactory, TicketService ticketService, UserService userService,
+                               EventRepository eventRepository){
         this.ticketRepository = ticketRepository;
         this.seatRepository = seatRepository;
         this.showRepository = showRepository;
         this.ticketService = ticketService;
         this.entityManagerFactory = entityManagerFactory;
         this.userService = userService;
+        this.eventRepository = eventRepository;
     }
 
     private Session getSession() {
@@ -90,6 +90,7 @@ public class TicketDataGenerator {
                 .seat(seatRepository.findSeatById(((long)i + 1)))
                 .show(showRepository.findShowById((long) i + 1))
                 .userCode(customer0.getUserCode())
+                .event(eventRepository.findEventById((long)i+1))
                 .build();
             tickets.add(ticket);
             randomPurchaseReserve(tickets, bool);
@@ -105,6 +106,7 @@ public class TicketDataGenerator {
                 .seat(seatRepository.findSeatById(((long) i + 1)))
                 .show(showRepository.findShowById((long) i + 1))
                 .userCode(customer1.getUserCode())
+                .event(eventRepository.findEventById((long)i+1))
                 .build();
             tickets.add(ticket);
             randomPurchaseReserve(tickets, bool);

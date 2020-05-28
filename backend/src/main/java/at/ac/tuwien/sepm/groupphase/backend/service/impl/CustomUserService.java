@@ -69,7 +69,7 @@ public class CustomUserService implements UserService {
                 grantedAuthorities = AuthorityUtils.createAuthorityList("ROLE_ADMIN", "ROLE_USER");
                 return new User(user.getEmail(),  user.getPassword(), grantedAuthorities);
             } else {
-                //If user is a basic user
+                //If user is a Customer
                 grantedAuthorities = AuthorityUtils.createAuthorityList("ROLE_USER");
                 //check for login attempts
                 UserAttempts userAttempts = userAttemptsRepository.findUserAttemptsByEmail(email);
@@ -86,7 +86,7 @@ public class CustomUserService implements UserService {
     }
 
     @Override
-    public AbstractUser findUserByEmail(String email) {
+    public AbstractUser findUserByEmail(String email) throws DataAccessException{
         LOGGER.debug("Find application user by email");
         AbstractUser user = userRepository.findAbstractUserByEmail(email);
         if (user != null) return user;
@@ -94,7 +94,7 @@ public class CustomUserService implements UserService {
     }
 
     @Override
-    public AbstractUser findUserByUserCode(String userCode) {
+    public AbstractUser findUserByUserCode(String userCode) throws DataAccessException {
         LOGGER.debug("Find application user by usercode");
         AbstractUser user = userRepository.findAbstractUserByUserCode(userCode);
         if (user != null) return user;
@@ -102,7 +102,7 @@ public class CustomUserService implements UserService {
     }
 
     @Override
-    public String unblockUser(String userCode) {
+    public String unblockUser(String userCode) throws ValidationException, DataAccessException {
         LOGGER.debug("Unblocking user with user code " + userCode);
         AbstractUser user = userRepository.findAbstractUserByUserCode(userCode);
         validator.validateUnblock(userCode).throwIfViolated();
@@ -118,7 +118,7 @@ public class CustomUserService implements UserService {
     }
 
     @Override
-    public String blockCustomer(String userCode) {
+    public String blockCustomer(String userCode) throws ValidationException, DataAccessException {
         LOGGER.info("Blocking customer with user code " + userCode );
         AbstractUser user = userRepository.findAbstractUserByUserCode(userCode);
         validator.validateBlock(userCode).throwIfViolated();
@@ -161,7 +161,7 @@ public class CustomUserService implements UserService {
         return admin;
     }
 
-    private String getNewUserCode() {
+    private String getNewUserCode() throws ValidationException {
         final int maxAttempts = 1000;
         String userCode = "";
         int i;
@@ -178,12 +178,12 @@ public class CustomUserService implements UserService {
     }
 
     @Override
-    public List<AbstractUser> loadAllUsers(){
+    public List<AbstractUser> loadAllUsers() throws DataAccessException{
         return userRepository.findAll();
     }
 
     @Override
-    public void deleteUserByUsercode(String userCode) {
+    public void deleteUserByUsercode(String userCode) throws ValidationException, DataAccessException{
         LOGGER.info("Deleting Customer Entity in Service Layer");
         validator.validateDelete(userCode).throwIfViolated();
         AbstractUser user = findUserByUserCode(userCode);
@@ -193,7 +193,7 @@ public class CustomUserService implements UserService {
     }
 
     @Override
-    public AbstractUser updateCustomer(Customer customer) {
+    public AbstractUser updateCustomer(Customer customer) throws ValidationException, DataAccessException{
         LOGGER.info("Updating customer with the usercode " + customer.getUserCode());
         validator.validateUpdate(customer).throwIfViolated();
         AbstractUser userFromDatabase = userRepository.findAbstractUserByUserCode(customer.getUserCode());
@@ -210,6 +210,7 @@ public class CustomUserService implements UserService {
 
     @Override
     public AbstractUser getAuthenticatedUser(Authentication auth) {
+        LOGGER.info("Getting authenticated user information");
         String email = "";
         Object principal = auth.getPrincipal();
         if (principal != null) {
@@ -223,7 +224,21 @@ public class CustomUserService implements UserService {
             LOGGER.info("Getting user information for " + email);
             return findUserByEmail(email);
         }
-        return null;
+        throw new NotFoundException("Authenticated user not found");
     }
 
+    @Override
+    public void changePasswordCustomer(String email, String newPassword) throws ValidationException, DataAccessException{
+        LOGGER.info("Changing password of user " + email);
+        validator.validateChangePasswordCustomer(email, newPassword).throwIfViolated();
+        AbstractUser user = userRepository.findAbstractUserByEmail(email);
+        user.setPassword(newPassword);
+        userRepository.save(user);
+    }
+
+    @Override
+    public List<AbstractUser> findUserByParams(String userCode, String firstName, String lastName, String email) {
+        List<AbstractUser> users =  userRepository.findAllByUserCodeContainingIgnoreCaseAndFirstNameContainingIgnoreCaseAndLastNameContainingIgnoreCaseAndEmailContainingIgnoreCase(userCode, firstName, lastName, email);
+        return users;
+    }
 }

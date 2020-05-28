@@ -8,6 +8,7 @@ import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
+import net.bytebuddy.utility.RandomString;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -64,10 +65,10 @@ public class UserServiceTest implements TestData {
         userRepository.deleteAll();
         customer = Customer.CustomerBuilder.aCustomer()
             .withId(ID)
-            .withUserCode(USER_CODE)
+            .withUserCode(RandomString.make(6))
             .withFirstName(FNAME)
             .withLastName(LNAME)
-            .withEmail(DEFAULT_USER)
+            .withEmail(RandomString.make(5) + "@email.com")
             .withPassword(PASS)
             .withBirthday(BIRTHDAY)
             .withCreatedAt(CRE)
@@ -79,10 +80,10 @@ public class UserServiceTest implements TestData {
 
         admin = Administrator.AdministratorBuilder.aAdministrator()
             .withId(ID)
-            .withUserCode(USER_CODE)
+            .withUserCode(RandomString.make(6))
             .withFirstName(FNAME)
             .withLastName(LNAME)
-            .withEmail(ADMIN_USER)
+            .withEmail(RandomString.make(5) + "@email.com")
             .withPassword(PASS)
             .withBirthday(BIRTHDAY)
             .withCreatedAt(CRE)
@@ -96,14 +97,13 @@ public class UserServiceTest implements TestData {
         userService.registerNewCustomer((Customer)customer);
 
         assertEquals(1, userService.loadAllUsers().size());
-        assertNotNull(userService.findUserByUserCode(userService.findUserByEmail(DEFAULT_USER).getUserCode()));
-        assertNotNull(userService.findUserByEmail(DEFAULT_USER));
+        assertNotNull(userService.findUserByUserCode(userService.findUserByEmail(customer.getEmail()).getUserCode()));
+        assertNotNull(userService.findUserByEmail(customer.getEmail()));
 
-        AbstractUser abstractUser = userService.findUserByEmail(DEFAULT_USER);
+        AbstractUser abstractUser = userService.findUserByEmail(customer.getEmail());
         assertAll(
             () -> assertEquals(FNAME, abstractUser.getFirstName()),
             () -> assertEquals(LNAME, abstractUser.getLastName()),
-            () -> assertEquals(DEFAULT_USER, abstractUser.getEmail()),
             () -> assertEquals(PASS, abstractUser.getPassword()),
             () -> assertEquals(BIRTHDAY, abstractUser.getBirthday()),
             () -> assertFalse(abstractUser.isLogged())
@@ -115,14 +115,13 @@ public class UserServiceTest implements TestData {
         userService.registerNewAdmin((Administrator)admin);
 
         assertEquals(1, userService.loadAllUsers().size());
-        assertNotNull(userService.findUserByUserCode(userService.findUserByEmail(ADMIN_USER).getUserCode()));
-        assertNotNull(userService.findUserByEmail(ADMIN_USER));
+        assertNotNull(userService.findUserByUserCode(userService.findUserByEmail(admin.getEmail()).getUserCode()));
+        assertNotNull(userService.findUserByEmail(admin.getEmail()));
 
-        AbstractUser abstractUser = userService.findUserByEmail(ADMIN_USER);
+        AbstractUser abstractUser = userService.findUserByEmail(admin.getEmail());
         assertAll(
             () -> assertEquals(FNAME, abstractUser.getFirstName()),
             () -> assertEquals(LNAME, abstractUser.getLastName()),
-            () -> assertEquals(ADMIN_USER, abstractUser.getEmail()),
             () -> assertEquals(PASS, abstractUser.getPassword()),
             () -> assertEquals(BIRTHDAY, abstractUser.getBirthday()),
             () -> assertFalse(abstractUser.isLogged())
@@ -144,16 +143,16 @@ public class UserServiceTest implements TestData {
         assertThrows(ValidationException.class,
             () ->   userService.registerNewAdmin((Administrator)admin));
         assertThrows(ValidationException.class,
-            () ->   userService.blockCustomer(userService.findUserByEmail(ADMIN_USER).getUserCode()));
+            () ->   userService.blockCustomer(userService.findUserByEmail(admin.getEmail()).getUserCode()));
     }
 
     @Test
     public void givenCustomer_whenBlock_thenBlocked() {
         userService.registerNewCustomer((Customer)customer);
-        assertFalse(((Customer)userService.findUserByEmail(DEFAULT_USER)).isBlocked());
+        assertFalse(((Customer)userService.findUserByEmail(customer.getEmail())).isBlocked());
 
-        userService.blockCustomer(userService.findUserByEmail(DEFAULT_USER).getUserCode());
-        assertTrue(((Customer)userService.findUserByEmail(DEFAULT_USER)).isBlocked());
+        userService.blockCustomer(userService.findUserByEmail(customer.getEmail()).getUserCode());
+        assertTrue(((Customer)userService.findUserByEmail(customer.getEmail())).isBlocked());
     }
 
 

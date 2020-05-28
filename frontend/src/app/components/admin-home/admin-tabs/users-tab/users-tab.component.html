@@ -1,34 +1,33 @@
 <div class="table-container all-height" #table>
   <div fxLayout = "row">
     <mat-form-field class="input-wrapper">
-      <mat-label>Search User code</mat-label>
+      <mat-label>In User code suchen</mat-label>
       <input matInput
-             name="searchUserCode"
-             (keyup)="searchForAllUsers($event, 'userCode')">
+             name="searchUserCode" [(ngModel)]="searchUser.userCode">
     </mat-form-field>
     <mat-form-field class="input-wrapper">
-      <mat-label>Search First name</mat-label>
+      <mat-label>In First name suchen</mat-label>
       <input matInput
-             name="searchFirstName"
-             (keyup)="searchForAllUsers($event, 'fname')">
+             name="searchFirstName" [(ngModel)]="searchUser.firstName">
     </mat-form-field>
     <mat-form-field class="input-wrapper">
-      <mat-label>Search Last name</mat-label>
+      <mat-label>In Last name suchen</mat-label>
       <input matInput
-             name="searchLastName"
-             (keyup)="searchForAllUsers($event, 'lname')">
+             name="searchLastName" [(ngModel)]="searchUser.lastName">
     </mat-form-field>
     <mat-form-field class="input-wrapper">
-      <mat-label>Search Email</mat-label>
+      <mat-label>In Email suchen</mat-label>
       <input matInput
-             name="searchEmail"
-             (keyup)="searchForAllUsers($event, 'email')">
+             name="searchEmail" [(ngModel)]="searchUser.email">
     </mat-form-field>
   </div>
+<div>
+  <button mat-raised-button (click)="loadAllUsersByParameters()" style="margin-right:10px"> Suchen</button>
+  <button mat-raised-button (click)="loadAllUsers()" style="margin-right: 40%">Alle Users</button>
 
-  <mat-checkbox color = "primary" labelPosition = 'before' [(ngModel)]='showBlocked' (change)='applySearch(users)'>Show only blocked users</mat-checkbox>
-
-  <button mat-raised-button color = "basic" (click)="createNewUser()" style="margin-left: 80%;margin-bottom: 1%">Create a new User</button>
+  <mat-checkbox color = "primary" labelPosition = 'before' [(ngModel)]='showBlocked' (change)='applyBlocked(users)'>Nur Blocked Kunde zeigen</mat-checkbox>
+</div>
+  <button mat-raised-button color = "basic" (click)="createNewUser()" style="margin-left: 80%;margin-bottom: 1%">User Erstellen</button>
 
 <div class="table">
   <mat-table #table [dataSource]="dataSource" matSort>
@@ -45,7 +44,7 @@
 
       <!--FIRST NAME-->
       <ng-container matColumnDef="firstName">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>First name</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Vorname</mat-header-cell>
         <mat-cell *matCellDef="let element" (click)="userDetails(element)">
           <div class="cell-padding">
             {{element?.firstName}}
@@ -55,7 +54,7 @@
 
       <!--LAST NAME-->
       <ng-container matColumnDef="lastName">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Last name</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Nachname</mat-header-cell>
         <mat-cell *matCellDef="let element" (click)="userDetails(element)">
           <div class="cell-padding">
            {{element?.lastName}}

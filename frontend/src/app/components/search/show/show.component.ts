@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {EventService} from '../../../services/event.service';
+import {Background} from '../../../utils/background';
 
 @Component({
   selector: 'app-show',
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShowComponent implements OnInit {
 
-  constructor() { }
+  constructor(private background: Background) {
+    background.defineBackground();
+  }
 
   ngOnInit(): void {
   }

@@ -1,0 +1,92 @@
+.center-block {
+  width: 100%;
+}
+
+
+.info-wrapper {
+  display: flex;
+  align-items: flex-end;
+  height: 70px;
+  border-top: 1px solid #efefef;
+  cursor: pointer;
+  padding-bottom: 15px;
+}
+
+.info {
+  padding-left: 10px;
+}
+
+.info-label {
+  font-family: SansSerif, sans-serif;
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.1px;
+  color: #888888;
+}
+.info-field {
+  font-family: SansSerif, sans-serif;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  color: #000000;
+}
+.center-block {
+  width: 480px;
+  margin: 0 125px;
+  padding-top: 10px;
+}
+
+.edit-button-wrapper {
+  padding-top: 25px;
+}
+
+.password-button-wrapper {
+  padding-bottom: 15px;
+  padding-left: 87%;
+}
+
+.delete-button-wrapper {
+  padding-top: 25px;
+  padding-left: 45%;
+}
+
+
+.bottom-button-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-bottom: 5%;
+}
+
+@media screen and (max-width: 1080px) {
+
+  .center-block {
+    width: 150px;
+    margin: 0 auto;
+  }
+
+  .bottom-button-wrapper {
+    width: 5%;
+    flex-direction: column;
+  }
+
+  .password-button-wrapper {
+    padding-left: 30%;
+  }
+
+  .delete-button-wrapper {
+    padding-top: 10px;
+    padding-left: 5%;
+  }
+}
+
+
+
+
+

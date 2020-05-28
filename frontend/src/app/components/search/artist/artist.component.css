@@ -28,6 +28,10 @@
   font-size: 18px;
 }
 
+.header-row {
+  padding-top: 18px;
+}
+
 a {
   color: #FBFBFB;
 }

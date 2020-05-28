@@ -1,8 +1,11 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint.dto;
 
 
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventCategoryEnum;
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventTypeEnum;
 import lombok.*;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 
@@ -21,4 +24,7 @@ public class SimpleEventDto {
     private LocalDateTime endsAt;
     private String photo;
     private int totalTicketsSold;
+    private Duration duration;
+    private EventTypeEnum eventType;
+    private EventCategoryEnum eventCategory;
 }

@@ -1,11 +1,11 @@
-<div class="card-header d-flex align-items-center">
+<div class="card-header">
   <div class="container" style="margin: 0; max-width: 1320px">
-    <div class="row">
+    <div class="row header-row">
       <div class="col-8">
         <h1 class="mb-0 ml-3 page-title">Ort suchen</h1>
       </div>
       <div class="col advanced-search mr-4">
-        <a routerLink="/search/location-advanced">Erweiterte Suche >></a>
+        <a routerLink="/search/location-advanced">>> Erweiterte Suche</a>
       </div>
     </div>
   </div>
@@ -22,7 +22,7 @@
               </div>
             </div>
             <div class="col pr-5">
-              <button class="btn default location-button align-middle" style="margin-top: 25px;">
+              <button (click)="searchShows(l)" class="btn default location-button align-middle" style="margin-top: 25px;">
                 Aufführungen
               </button>
             </div>
@@ -31,5 +31,5 @@
       </div>
     </div>
   </div>
-  <p *ngIf="searchShared.entities.length == 0" style="font-size: 20px; padding-top: 40px; text-align: center">Es konnten keine Veranstalungsorte mit diesen Kriterien gefunden werden.</p>
+  <p *ngIf="searchShared.entities.length == 0" style="font-size: 20px; padding-top: 40px; text-align: center">Es konnten keine Veranstaltungsorte mit diesen Kriterien gefunden werden.</p>
 </div>

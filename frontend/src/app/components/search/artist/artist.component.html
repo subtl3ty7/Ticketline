@@ -1,11 +1,11 @@
-<div class="card-header d-flex align-items-center">
+<div class="card-header">
   <div class="container" style="margin: 0; max-width: 1320px">
-    <div class="row">
+    <div class="row header-row">
       <div class="col-8">
         <h1 class="mb-0 ml-3 page-title">Nach Künstler suchen</h1>
       </div>
       <div class="col advanced-search mr-4">
-        <a routerLink="/search/artist-advanced">Erweiterte Suche >></a>
+        <a routerLink="/search/artist-advanced">>> Erweiterte Suche</a>
       </div>
     </div>
   </div>
@@ -22,7 +22,7 @@
               </div>
             </div>
             <div class="col pr-5">
-              <button class="btn default artist-button align-middle" style="margin-top: 30px;">
+              <button class="btn default artist-button align-middle" style="margin-top: 30px;" (click)="searchEvents(a)">
                 Zu den Events
               </button>
             </div>

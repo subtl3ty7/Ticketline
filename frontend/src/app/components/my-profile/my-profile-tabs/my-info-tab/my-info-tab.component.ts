@@ -5,6 +5,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../../../../services/user.service';
 import {DeleteAccountComponent} from './delete-account/delete-account.component';
 import {MatDialog} from '@angular/material/dialog';
+import {ChangePassword} from '../../../../dtos/change-password';
+import * as bcrypt from 'bcryptjs';
+
 
 @Component({
   selector: 'app-my-info-tab',
@@ -15,8 +18,10 @@ export class MyInfoTabComponent implements OnInit {
   public wrapper = new MyProfileWrapper();
   private backupProfile = new User();
   private state = State;
+  private changePassword = new ChangePassword();
   public firstName: string;
   public lastName: string;
+  error;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -36,8 +41,8 @@ export class MyInfoTabComponent implements OnInit {
         this.lastName = this.wrapper.model.lastName;
         this.wrapper.model.birthday = new Date(this.wrapper.model.birthday);
       },
-      error => {
-        this.router.navigate(['/']);
+      (error) => {
+        this.error = error.error;
       }
     );
   }
@@ -45,6 +50,7 @@ export class MyInfoTabComponent implements OnInit {
     this.backupProfile = JSON.parse(JSON.stringify(this.wrapper.model));
     this.wrapper.state = this.state.EDIT;
   }
+
   closeEditMode() {
     Object.assign(this.wrapper.model, this.backupProfile);
     this.wrapper.state = this.state.READY;
@@ -57,6 +63,7 @@ export class MyInfoTabComponent implements OnInit {
       });
     }
   }
+
   openDeleteDialog() {
     this.wrapper.state = State.DELETING;
     const dialogRef = this.dialog.open(DeleteAccountComponent,
@@ -66,4 +73,27 @@ export class MyInfoTabComponent implements OnInit {
     });
   }
 
+  openPasswordMode() {
+    this.wrapper.state = this.state.PASSWORD;
+  }
+
+  savePassword() {
+    if (this.changePassword.newPassword) {
+      const salt = bcrypt.genSaltSync(10);
+      const pwd = bcrypt.hashSync(this.changePassword.newPassword, salt);
+      this.changePassword.newPassword = pwd;
+      this.changePassword.email = this.wrapper.model.email;
+      this.userService.changePasswordCustomer(this.changePassword).subscribe(() => {
+        this.wrapper.state = this.state.READY;
+      },
+        (error) => {
+        this.error = error.error;
+        });
+    }
+  }
+
+  closePasswordMode() {
+    this.changePassword = new ChangePassword();
+    this.wrapper.state = this.state.READY;
+  }
 }

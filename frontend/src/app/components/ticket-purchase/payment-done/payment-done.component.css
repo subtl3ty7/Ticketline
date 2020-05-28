@@ -1,0 +1,73 @@
+
+.page-title {
+  font-size: 40px;
+  margin-top: 50px!important;
+  margin-bottom: 60px!important;
+  font-weight: bold;
+  color: #212529;
+}
+
+.page-subtitle {
+  font-size: 30px;
+  margin-top: 30px;
+  margin-bottom: 70px;
+  font-weight: bold;
+  color: #212529;
+}
+
+.margin-left {
+  margin-left: 30px;
+}
+
+.row {
+  margin: 0px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+
+.homepage-button {
+  color: white;
+  background-color: #2771BB;
+  height: 75px;
+  width: 400px;
+  transition: .2s;
+  padding: 0px;
+  text-align: center;
+  border-width: 1px;
+}
+
+.download-button {
+  color: white;
+  background-color: #A1A1A1;
+  height: 75px;
+  width: 400px;
+  transition: .2s;
+  padding: 0px;
+  text-align: center;
+  margin: 50px 0px 20px 0px;
+  border-width: 1px;
+}
+
+.btn {
+  margin: 0px;
+  padding: 0px;
+}
+
+.download-button:hover {
+  background-color: #909090;
+}
+
+.homepage-button:hover {
+  background-color: #1f5993;
+}
+
+.button-font {
+  font-size: 25px;
+  color: white;
+}
+
+.element-title {
+  font-weight: bold!important;
+  margin-right: 7px;
+}

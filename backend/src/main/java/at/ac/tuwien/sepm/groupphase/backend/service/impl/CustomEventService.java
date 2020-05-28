@@ -116,4 +116,15 @@ public class CustomEventService implements EventService {
         return eventRepository.findEventsByArtistsContaining(artist);
 
     }
+
+    @Override
+    public List<Event> findEventsByName(String name) {
+        return eventRepository.findEventsByNameContainingIgnoreCase(name);
+    }
+
+    @Override
+    public List<Event> findEventsAdvanced(String name, String type, String category, LocalDateTime startsAt, LocalDateTime endsAt, String showLength, Long price) {
+        return null;
+        // return eventRepository.findEventsByNameAndEventTypeAndEventCategoryAndStartsAtAfterAndEndsAtBeforeAndShows_DurationLessThanAndPricesLessThanEqual(name, EventTypeEnum.valueOf(type), EventCategoryEnum.valueOf(category), startsAt, endsAt, LocalDateTime.parse(showLength), price);
+    }
 }

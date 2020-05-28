@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -103,5 +104,7 @@ public interface UserService extends UserDetailsService {
      */
     AbstractUser getAuthenticatedUser(Authentication auth);
 
+    void changePasswordCustomer(String email, String newPassword);
 
+    List<AbstractUser> findUserByParams(String userCode, String firstName, String lastName, String email);
 }

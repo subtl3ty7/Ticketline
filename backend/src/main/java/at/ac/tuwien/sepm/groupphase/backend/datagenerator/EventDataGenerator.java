@@ -113,7 +113,7 @@ public class EventDataGenerator {
 
             Event event = Event.builder()
                 .category("Talk")
-                .description("Interesting debate!")
+                .description(resources.getText("event_text.txt"))
                 .startsAt(LocalDateTime.now())
                 .endsAt(LocalDateTime.now())
                 .eventCode("E1234" + i)
@@ -124,6 +124,8 @@ public class EventDataGenerator {
                 .type("Of the cool type")
                 .shows(generateShows(eventLocations.get(eventLocationIndex)))
                 .artists(addedArtists)
+                .eventType(EventTypeEnum.MUSIC)
+                .eventCategory(EventCategoryEnum.HIPHOP)
                 .build();
             event = eventService.createNewEvent(event);
             events.add(event);
@@ -139,12 +141,15 @@ public class EventDataGenerator {
         for(int i=0; i<numberOfShows; i++) {
             //List<EventLocation> location = new ArrayList<>();
             //location.add(new EventLocation(eventLocation));
+            LocalDateTime start = LocalDateTime.now();
+            LocalDateTime end = start.plusHours(2);
             Show show = Show.builder()
-                .startsAt(LocalDateTime.now())
-                .endsAt(LocalDateTime.now())
+                .startsAt(start)
+                .endsAt(end)
                 .ticketsAvailable(1000)
                 .ticketsSold(300)
                 .eventLocationOriginalId(eventLocation.getId())
+                .duration(Duration.between(start, end))
                 .build();
             shows.add(show);
         }
@@ -194,16 +199,24 @@ public class EventDataGenerator {
     }
 
     private List<Section> generateSections() {
-        int numberOfSections = 4;
+        String[] labels = new String[]{
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+        };
 
         List<Section> sections = new ArrayList<>();
-        for(int i=0; i<numberOfSections; i++) {
+        for(String label: labels) {
             List<Seat> seats = generateSeats();
             Section section = Section.builder()
-                .sectionName("Section Bla" + i)
-                .sectionDescription("BlaDescription")
+                .name(label)
+                .description("Some Description")
+                .priceCategory("Low")
+                .price(9.99)
                 .seats(seats)
-                .capacity(seats.size()+i)
+                .capacity(seats.size())
                 .build();
 
             sections.add(section);
@@ -216,12 +229,23 @@ public class EventDataGenerator {
         String[] columns = new String[]{
             "1",
             "2",
-            "3"
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
         };
         String[] rows = new String[] {
             "A",
             "B",
-            "C"
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H"
         };
 
         List<Seat> seats = new ArrayList<>();

@@ -5,7 +5,7 @@
     </div>
 
     <div class="bread-crumps user-padding">
-      > Create User
+      > User Erstellen
     </div>
   </div>
 </div>
@@ -17,16 +17,16 @@
     <div>
       <app-create-user-form [user]="wrapper.model">
         <div fxLayout="row" class="buttons-wrapper">
-        <button id="user-password-save-button"
-                class="save-button"
-                (click)="saveUser()">
-          <span class="save-button-label">Save</span>
-        </button>
-        <button id="user-password-cancel-button"
-                class="cancel-button"
-                (click)="cancelCreateUserMode()">
-          <span class="cancel-button-label">Cancel</span>
-        </button>
+          <div class="save-button-wrapper">
+            <button id="user-password-save-button" mat-raised-button
+                (click)="saveUser()">Erstellen
+            </button>
+          </div>
+          <div class="cancel-button-wrapper">
+            <button id="user-password-cancel-button" mat-raised-button color = "warn"
+                (click)="cancelCreateUserMode()">Abbrechen
+            </button>
+          </div>
         </div>
       </app-create-user-form>
     </div>

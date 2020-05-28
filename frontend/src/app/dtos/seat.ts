@@ -4,4 +4,5 @@ export class Seat {
   public seatRow: string;
   public seatColumn: string;
   public isFree: boolean;
+  public price: number;
 }

@@ -26,6 +26,10 @@ import {TicketPurchaseComponent} from './components/ticket-purchase/ticket-purch
 import {SearchComponent} from './components/search/search.component';
 import {ArtistAdvancedComponent} from './components/search/artist/artist-advanced/artist-advanced.component';
 import {LocationAdvancedComponent} from './components/search/location/location-advanced/location-advanced.component';
+import {ArtistEventComponent} from './components/search/artist/artist-event/artist-event.component';
+import {LocationShowComponent} from './components/search/location/location-show/location-show.component';
+import {ResetPasswordAdminContainerComponent} from './components/admin-home/admin-tabs/users-tab/reset-password-admin-container/root/reset-password-admin-container.component';
+import {MyInvoiceComponent} from './components/my-profile/my-profile-tabs/my-tickets-tab/my-invoice/my-invoice.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -35,15 +39,15 @@ const routes: Routes = [
   {path: 'administration', canActivate: [AdminGuard], redirectTo: 'administration/users'},
   {path: 'administration/:tabId', canActivate: [AdminGuard], component: AdminHomeComponent},
   {path: 'user-details/:uc', canActivate: [AdminGuard], component: UserDetailsContainerComponent},
-  {path: 'user-details/:uc/reset-password', canActivate: [AdminGuard], component: UserDetailsContainerComponent},
+  {path: 'user-details/:uc/reset-password', canActivate: [AdminGuard], component: ResetPasswordAdminContainerComponent},
   {path: 'create-user', canActivate: [AdminGuard], component: CreateUserContainerComponent},
-  {path: 'events/:ec', canActivate: [AdminGuard], component: EventDetailsContainerComponent},
+  {path: 'event-details/:ec', canActivate: [AdminGuard], component: EventDetailsContainerComponent},
   {path: 'my-profile', canActivate: [LoggedInGuard], redirectTo: 'my-profile/my-info'},
   {path: 'my-profile/:tabId', canActivate: [LoggedInGuard], component: MyProfileContainerComponent},
   {path: 'registration', canActivate: [NotLoggedInGuard], component: RegistrationComponent},
   {path: 'create-event', canActivate: [AdminGuard], component: CreateEventContainerComponent},
   {path: 'create-user', canActivate: [AdminGuard], component: CreateUserContainerComponent},
-  {path: 'event-details/:eventCode', canActivate: [LoggedInGuard], component: EventDetailsUserViewComponent},
+  {path: 'events/:eventCode', canActivate: [LoggedInGuard], component: EventDetailsUserViewComponent},
   {path: 'faq', canActivate: [], component: FaqComponent},
   {path: 'top-ten-events', component: TopTenEventsComponent},
   {path: 'search', canActivate: [], component: SearchComponent},
@@ -54,8 +58,12 @@ const routes: Routes = [
   {path: 'news-list', canActivate: [], component: NewsListComponent},
   {path: 'ticket-purchase', canActivate: [LoggedInGuard], component: TicketPurchaseComponent},
   {path: 'ticket-purchase', canActivate: [LoggedInGuard], component: TicketPurchaseComponent},
+  {path: 'search/artist-events', component: ArtistEventComponent},
   {path: 'search/artist-advanced', component: ArtistAdvancedComponent},
-  {path: 'search/location-advanced', component: LocationAdvancedComponent}];
+  {path: 'search/location-advanced', component: LocationAdvancedComponent},
+  {path: 'search/location-shows', component: LocationShowComponent},
+  {path: 'my-profile/my-tickets/my-invoice', component: MyInvoiceComponent},
+  ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

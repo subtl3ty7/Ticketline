@@ -1,28 +1,23 @@
 <app-customer-header></app-customer-header>
-<!-- <div *ngIf="error" class="alert alert-warning alert-dismissible fade show" role="alert">
-  <strong>Authentication problems!</strong> {{ errorMessage }}
-  <button type="button" (click)="vanishError()" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div> -->
-<div class="container-fluid justify-content-center" style="padding-left: 5%; padding-right: 5%;" *ngIf="event">
+<app-error-notification *ngIf="error" [error]="error"></app-error-notification>
+<!-- Container the card is in -->
+<div *ngIf="event" class="container-fluid" style="padding-left: 5%; padding-right: 5%;">
   <div class="row">
     <div class="mx-auto" style="max-width: 1320px; width: 100%;">
-      <span class="anchor" id="formLogin"></span>
 
+      <!-- Page card containing everything -->
       <div class="card main-body">
-        <div class="card-header d-flex align-items-center">
-          <h3 class="mb-0 " style="font-size: 40px; padding-left: 20px;">{{event.name}}</h3>
+        <div class="card-header row align-items-center" style="margin: 0px">
+          <h1 class="col-4 page-title">{{event.name}}</h1>
         </div>
 
         <div class="card-body">
           <div class="row">
             <div class="col">
-              <img src="{{event.photo}}" class="img-fluid" alt="some Image">
-
+              <img src="{{event.photo}}" class="img-fluid image-crop-big" alt="some Image">
             </div>
             <div class="col">
-              <div id="eventHeadline">
+              <div>
                 <h2 class="mb-0 headline">{{event.name}}</h2><br>
               </div>
 
@@ -38,9 +33,9 @@
 
                 <table class="table table-responsive-lg table-hover  mb-0">
                   <tbody *ngFor="let s of event.shows">
-                  <tr *ngFor="let l of s.eventLocation">
+                  <tr>
                     <th scope="row"></th>
-                    <td>{{s.startsAt | date:'short'}} - {{s.endsAt | date:'short' }}, {{l.city}}, {{l.country}}</td>
+                    <td>{{s.startsAt | date:'short'}} - {{s.endsAt | date:'short' }}, {{s.eventLocationCopy.name}}, {{s.eventLocationCopy.city}}, {{s.eventLocationCopy.country}}</td>
                     <button type="button" class="btn btn-success btn-sm m-0" (click) = "openPurchase(s)">Tickets</button>
                   </tr>
                   </tbody>
@@ -51,18 +46,8 @@
             </div>
           </div>
 
-          <div class="row">
-
-            <h2 class="mb-0 headline" style="font-size: 25px; padding-left: 13px;"> Beschreibung  </h2>
-
-          </div>
-
-        <div class="row">
-          <div id="descriptionText">
-            <p> {{event.description}}
-            </p>
-          </div>
-        </div>
+          <div class="description-title">Beschreibung</div>
+          <div class="description-text text-justify">{{event.description}}</div>
 
         </div>
       </div>

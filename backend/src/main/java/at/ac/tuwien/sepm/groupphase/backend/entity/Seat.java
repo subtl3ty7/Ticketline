@@ -33,6 +33,9 @@ public class Seat implements Serializable {
     private String seatColumn;
 
     @Column
+    private double price;
+
+    @Column
     private boolean isFree;
 
     public Seat() {}
@@ -42,10 +45,11 @@ public class Seat implements Serializable {
         this.seatRow = seatRow;
     }
 
-    public Seat(Seat seat) {
+    public Seat(Seat seat, double price) {
         this.seatRow = seat.getSeatRow();
         this.seatColumn = seat.getSeatColumn();
         this.isFree = seat.isFree();
+        this.price = price;
     }
 
 }
