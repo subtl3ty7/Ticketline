@@ -44,7 +44,7 @@
                           </div>
                         </div>
                         <div class="row justify-content-end" style="margin-top: 20px;">
-                          <button routerLink="/ticket-purchase" class="btn default show-button align-middle" style="margin-top: 30px;">
+                          <button class="btn default show-button align-middle" style="margin-top: 30px;" (click) = "openPurchase(s)">
                             Tickets
                           </button>
                         </div>
@@ -55,7 +55,7 @@
               </div>
             </div>
           </div>
-          <p *ngIf="shows.length == 0" style="font-size: 20px; padding-top: 40px; text-align: center">Es konnten keine Künstler mit diesen Kriterien gefunden werden.</p>
+          <p *ngIf="shows.length == 0" style="font-size: 20px; padding-top: 40px; text-align: center">Es konnten keine Aufführungen mit diesen Kriterien gefunden werden.</p>
         </div>
       </div>
     </div>

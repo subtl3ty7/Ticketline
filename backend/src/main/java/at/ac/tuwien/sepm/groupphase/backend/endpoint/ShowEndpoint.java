@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.ShowDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EventMapper;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.ShowMapper;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
 import at.ac.tuwien.sepm.groupphase.backend.service.ShowService;
 import io.swagger.annotations.ApiOperation;
@@ -47,7 +48,8 @@ public class ShowEndpoint {
     })
     public ResponseEntity<List<ShowDto>> findShowsByEventLocationName(@RequestParam Long eventLocationId) {
         LOGGER.info("GET /api/v1/shows?eventLocationId=" + eventLocationId);
-        List<ShowDto> shows = showMapper.showToShowDto(showService.getShowsByEventLocationId(eventLocationId));
+        List<Show> showList = showService.getShowsByEventLocationId(eventLocationId);
+        List<ShowDto> shows = showMapper.showToShowDto(showList);
         for(ShowDto show: shows) {
             show.setEvent(eventMapper.eventToSimpleEventDto(eventService.findByEventCode(show.getEventCode())));
         }

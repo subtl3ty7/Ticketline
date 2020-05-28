@@ -4,6 +4,8 @@ import {AuthService} from '../../../../services/auth.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ArtistService} from '../../../../services/artist.service';
 import {SearchShared} from '../../search-shared';
+import {EventService} from '../../../../services/event.service';
+import {Background} from '../../../../utils/background';
 
 @Component({
   selector: 'app-location-advanced',
@@ -20,7 +22,14 @@ export class LocationAdvancedComponent implements OnInit {
   country: string = '';
   plz: string = '';
 
-  constructor(private formBuilder: FormBuilder, public authService: AuthService, public router: Router, private artistService: ArtistService, private activatedRoute: ActivatedRoute, private searchShared: SearchShared) {
+  constructor(private formBuilder: FormBuilder,
+              public authService: AuthService,
+              public router: Router,
+              private artistService: ArtistService,
+              private activatedRoute: ActivatedRoute,
+              private searchShared: SearchShared,
+              private background: Background) {
+    background.defineBackground();
     this.advancedLocationSearchForm = this.formBuilder.group({
       name: [''],
       street: [''],
@@ -32,8 +41,6 @@ export class LocationAdvancedComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('advanced artist search');
-    document.body.style.backgroundImage = null;
-    document.body.style.backgroundColor = '#DEDEDE';
   }
 
   advancedLocationSearch() {

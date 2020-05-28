@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {SearchEntity, SearchShared} from '../search-shared';
 import {string} from '@amcharts/amcharts4/core';
 import {EventService} from '../../../services/event.service';
+import {Background} from '../../../utils/background';
 
 @Component({
   selector: 'app-artist',
@@ -19,8 +20,13 @@ export class ArtistComponent implements OnInit {
   lastName: string = '';
   artists: Artist[];
 
-  constructor(public authService: AuthService, private artistService: ArtistService, private activatedRoute: ActivatedRoute, private searchShared: SearchShared, private router: Router) {
-
+  constructor(public authService: AuthService,
+              private artistService: ArtistService,
+              private activatedRoute: ActivatedRoute,
+              private searchShared: SearchShared,
+              private router: Router,
+              private background: Background) {
+    background.defineBackground();
   }
 
   ngOnInit(): void {
@@ -28,8 +34,6 @@ export class ArtistComponent implements OnInit {
     const searchTerm = sessionStorage.getItem('searchTerm').split(' ', 2);
     this.firstName = searchTerm[0];
     this.lastName = searchTerm[1];
-    document.body.style.backgroundImage = null;
-    document.body.style.backgroundColor = '#DEDEDE';
     console.log('first name: ' + this.firstName + ', last name: ' + this.lastName);
     this.searchShared.getArtistsByFirstAndLastName(this.firstName, this.lastName);
   }

@@ -74,7 +74,7 @@ public interface TestData {
     List<Section> SECTIONS = new ArrayList<>() {
         {
             add(Section.builder()
-                .id(ID).sectionName(FNAME).eventLocationId(ID).sectionDescription(DESC).capacity(TOTAL).seats(SEATS).build());
+                .id(ID).name(FNAME).eventLocationId(ID).description(DESC).capacity(TOTAL).seats(SEATS).build());
         }
     };
     Long LOCATIONID = 1L;

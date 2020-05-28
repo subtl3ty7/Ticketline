@@ -4,6 +4,9 @@ import {ShowService} from '../../../../services/show.service';
 import {Show} from '../../../../dtos/show';
 import {EventService} from '../../../../services/event.service';
 import {Observable} from 'rxjs';
+import {SearchShared} from '../../search-shared';
+import {Background} from '../../../../utils/background';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-location-show',
@@ -19,7 +22,13 @@ export class LocationShowComponent implements OnInit {
   public shows: Show[];
   public showsEvents: SimpleEvent[];
 
-  constructor(private showService: ShowService, private eventService: EventService) { }
+  constructor(private showService: ShowService,
+              private router: Router,
+              private route: ActivatedRoute,
+              private eventService: EventService,
+              private background: Background) {
+    background.defineBackground();
+  }
 
   ngOnInit(): void {
     this.eventLocationId = parseInt(sessionStorage.getItem('eventLocationId'), 10);
@@ -29,10 +38,18 @@ export class LocationShowComponent implements OnInit {
     this.showService.getShowsByEventLocationId(this.eventLocationId).subscribe(
       (shows: Show[]) => {
         this.shows = shows;
+        console.log(this.shows);
       },
       error => {
         // throw error
       }
     );
+  }
+
+  openPurchase(show) {
+    if (show) {
+      sessionStorage.setItem('show', JSON.stringify(show));
+      this.router.navigate(['ticket-purchase']);
+    }
   }
 }
