@@ -17,12 +17,13 @@ import {MatHorizontalStepper} from '@angular/material/stepper';
 })
 export class PaymentMethodOverviewComponent implements OnInit {
 
-  private error;
+  public error;
   private show: Show;
   @Input() event = new DetailedEvent();
   private ticketState = TicketState;
   @Input() ticket: DetailedTicket;
   @Input() secondFormGroup: FormGroup;
+  @Input() sharedVars: FormGroup;
   @Input() stepper: MatHorizontalStepper;
   public tickets: DetailedTicket[];
 
@@ -40,7 +41,7 @@ export class PaymentMethodOverviewComponent implements OnInit {
     this.ticket.purchased = true;
     this.tickets = [this.ticket];
     this.ticketService.purchase(this.tickets).subscribe(
-      (ret) => {
+      (tickets) => {
         // success from backend, go to next step
         console.log('Successfully bought ticket');
         this.secondFormGroup.controls['purchased'].setErrors(null);
@@ -48,6 +49,7 @@ export class PaymentMethodOverviewComponent implements OnInit {
         this.stepper.next();
       },
       (error) => {
+        console.log(error);
         this.error = error;
       }
     );
@@ -60,7 +62,7 @@ export class PaymentMethodOverviewComponent implements OnInit {
   // prevents the user from going back to the other steps again when the purchase is done
   lockOtherSteps() {
     console.log('Lock other steps');
-    this.secondFormGroup.get('editable').setValue(false);
+    this.sharedVars.get('editable').setValue(false);
   }
 
 }

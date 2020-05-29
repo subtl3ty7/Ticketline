@@ -33,6 +33,7 @@ export class ShowService {
 
   getShowsByEventLocationId(eventLocationId: number): Observable<Show[]> {
     console.log('Find shows by event location id ' + eventLocationId);
+    console.log(this.eventBaseUri + '?eventLocationId=' + eventLocationId);
     return this.httpClient.get<Show[]>(this.eventBaseUri + '?eventLocationId=' + eventLocationId);
   }
 }

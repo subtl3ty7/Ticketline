@@ -31,7 +31,7 @@
             <div class="choosing-subtitle align-items-center row">Sektion</div>
             <mat-select class="form-control section-select" formControlName="section" required>
               <mat-option *ngFor="let section of eventLocation.sections" [value]="section">
-                {{section.sectionName}}
+                {{section.name}}
               </mat-option>
             </mat-select>
           </div>
@@ -51,24 +51,30 @@
           <div *ngIf="!this.firstFormGroup.value.seat" class="gap">0 EUR</div>
         </div>
         <!-- Purchase/Reserve Buttons -->
-        <button matStepperNext (click)="nextStep()" class="buy-button row align-items-center"><div class="col button-font">Jetzt kaufen</div></button>
-        <button matStepperNext (click)="reserve()" class="reserve-button row align-items-center"><div class="col button-font">Reservieren</div></button>
+        <button matStepperNext (click)="nextStep()" class="buy-button row align-items-center btn"><div class="col button-font">Jetzt kaufen</div></button>
+        <button class="reserve-button row align-items-center btn" data-toggle="modal" data-target="#exampleModal"><div class="col button-font">Reservieren</div></button>
+
+
+        <!-- Modal (Pop up when clicking reserve) -->
+        <div class="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                  Willst du dieses Ticket reservieren?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn-secondary btn" data-dismiss="modal">Abbrechen</button>
+                <button matStepperNext (click)="reserve()" type="button" class="btn-primary btn" data-dismiss="modal">Ja</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
 </form>
-
-
-<!--
-<div class="category">
-  <h3> Preise:</h3>
-  <p *ngFor="let s of eventLocation.sections">
-    {{s.sectionName}}: €{{s.price}}
-  </p>
-</div>
-<div class="finalPrice">
-  <h3> Preis: <span *ngIf = "chosenSection">€{{chosenSection.price}} </span></h3>
-</div>
-<button type="button" mat-button matStepperNext class="btn btn-success" (click)="nextStep(ticketState.PROCESSING)">Jetzt kaufen</button>
-<button type="button" mat-button matStepperNext class="btn btn-secondary" (click)="nextStep(ticketState.RESERVED)">Reservieren</button>
--->

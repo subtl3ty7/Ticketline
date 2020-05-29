@@ -1,0 +1,8 @@
+select {
+  height: 50px;
+  border-color: rgb(206, 212, 218);
+  border-radius: 0.25rem;
+  padding-left: 10px;
+  color: #6c757d;
+}
+

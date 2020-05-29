@@ -37,19 +37,11 @@ public class TicketEndpoint {
         value = "Purchasing a ticket",
         notes = "Purchasing a ticket",
          authorizations = {@Authorization(value = "apiKey")})
-    @ApiResponses({
-        @ApiResponse(code = 201, message = "Ticket is successfully purchased"),
-        @ApiResponse(code = 400, message = "Ticket is already purchased"),
-        @ApiResponse(code = 500, message = "Connection Refused"),
-    })
-    public ResponseEntity<String> buyTicket(@RequestBody List<DetailedTicketDto> detailedTicketDto) {
+    @ApiResponse(code = 201, message = "Ticket is successfully purchased")
+    public List<SimpleTicketDto> buyTicket(@RequestBody List<DetailedTicketDto> detailedTicketDto) {
         LOGGER.info("POST " + detailedTicketDto);
         List<Ticket> tickets = ticketService.buyTickets(ticketMapper.detailedTicketDtoListToTicketList(detailedTicketDto));
-
-        ResponseEntity response = new ResponseEntity(ticketMapper.ticketListToSimpleTicketDtoList(tickets), HttpStatus.CREATED);
-
-        LOGGER.info("Sending API Response: [" + response.getBody() + ", " + response.getStatusCode() + "]");
-        return response;
+        return ticketMapper.ticketListToSimpleTicketDtoList(tickets);
     }
 
     @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")

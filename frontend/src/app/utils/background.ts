@@ -5,6 +5,7 @@ import {Injectable} from '@angular/core';
 })
 export class Background {
   defineBackground() {
+    document.body.style.background = null;
     document.body.style.background = '#0c0d0f';
     document.body.style.backgroundImage = 'url("assets/images/bg.png")';
     document.body.style.backgroundRepeat = 'no-repeat';

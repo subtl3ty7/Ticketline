@@ -68,8 +68,8 @@ export class SearchShared {
     );
   }
 
-  getEventsBy(name: string, startsAt: string, endsAt: string, startPrice: string, endPrice: string, type: string, category: string, prices: string) {
-    this.eventService.getDetailedEventsBy(name, startsAt, endsAt, startPrice, endPrice, type, category, prices);
+  getEventsBy(name: string, type: string, category: string, startsAt: string, endsAt: string, duration: string, startPrice: string) {
+    // this.eventService.getDetailedEventsBy(name, type, category, startsAt, endsAt, duration, startPrice);
   }
 
   getEventsByName(name: string) {

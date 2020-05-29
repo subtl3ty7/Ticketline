@@ -70,3 +70,18 @@ a:hover {
 .event-block {
   width: 100%;
 }
+
+
+/* Class for preventing text overflow for event description */
+.event-description-font {
+  font-size: 20px;
+  color: black;
+  font-family: Segue UI, Roboto, "Helvetica Neue", sans-serif;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  line-height: 30px; /* fallback */
+  height: 60px; /* fallback */
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

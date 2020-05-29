@@ -1,7 +1,12 @@
 <div class="container" *ngIf="event && ticket && show && section">
-  <!-- page title -->
-  <div class="page-title row align-items-center">
+  <!-- page title for bought tickets -->
+  <div *ngIf="!ticket.reserved" class="page-title row align-items-center">
     Danke für ihren Einkauf
+    <i class="fas fa-check-circle ml-lg-5"></i>
+  </div>
+  <!-- page title for reserved tickets -->
+  <div *ngIf="ticket.reserved" class="page-title row align-items-center">
+    Danke für ihre Reservierung
     <i class="fas fa-check-circle ml-lg-5"></i>
   </div>
   <!-- details to Event and ticket -->
@@ -37,11 +42,28 @@
       </div>
       <div class="row" *ngIf="this.ticket.seat">
         <h5 class="element-title">Sitzplätze:</h5>
-        <p>Sektor {{section.sectionName}}, Reihe {{this.ticket.seat.seatRow}}, Platz {{this.ticket.seat.seatColumn}}</p>
+        <p>Sektor {{section.name}}, Reihe {{this.ticket.seat.seatRow}}, Platz {{this.ticket.seat.seatColumn}}</p>
       </div>
       </div>
 
-      <button class="download-button row align-items-center"><div class="col button-font">Ticket herunterladen </div></button>
+      <!-- Download Button for reserved tickets -->
+      <div *ngIf="ticket.reserved">
+        <button class="download-button row align-items-center">
+          <div class="col button-font">
+            <i class="fas fa-arrow-alt-circle-down"></i>
+            Reservierung herunterladen
+          </div>
+        </button>
+      </div>
+      <!-- Download Button for bought tickets -->
+      <div *ngIf="!ticket.reserved">
+        <button class="download-button row align-items-center">
+          <div class="col button-font">
+            <i class="fas fa-arrow-alt-circle-down"></i>
+            Ticket herunterladen
+          </div>
+        </button>
+      </div>
       <button class="homepage-button row align-items-center" routerLink="/home"><div class="col button-font">Zurück zur Startseite</div></button>
     </div>
   </div>

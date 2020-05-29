@@ -106,7 +106,9 @@ public class CustomTicketService implements TicketService {
 
             show.setTicketsSold(show.getTicketsSold() + 1);
             show.setTicketsAvailable(show.getTicketsAvailable() - 1);
+            event.setTotalTicketsSold(event.getTotalTicketsSold() + 1);
             showRepository.save(show);
+            eventRepository.save(event);
 
             seat.setFree(false);
             seatRepository.save(seat);
