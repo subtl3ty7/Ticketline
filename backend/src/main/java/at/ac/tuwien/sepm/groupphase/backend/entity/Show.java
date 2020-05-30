@@ -1,10 +1,13 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -47,8 +50,19 @@ public class Show implements Serializable {
     @Column(name = "EVENT_LOCATION_ORIGINAL_ID")
     private Long eventLocationOriginalId;
 
+    @NotNull
+    @Column(nullable = false, length = 100)
+    private EventTypeEnum type;
+
+    @NotNull
+    @Column(nullable = false, length = 100)
+    private EventCategoryEnum category;
+
     @Column
     public Duration duration;
+
+    @Column
+    private int price;
 
     public Show(){
     }

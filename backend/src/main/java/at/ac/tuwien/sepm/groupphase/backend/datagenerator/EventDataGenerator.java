@@ -7,6 +7,7 @@ import at.ac.tuwien.sepm.groupphase.backend.service.ArtistService;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventLocationService;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
 import at.ac.tuwien.sepm.groupphase.backend.util.Resources;
+import jdk.jfr.EventType;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -122,7 +123,7 @@ public class EventDataGenerator {
                 .prices(List.of(1,2,3))
                 .totalTicketsSold(5*i*i*i)
                 .type("Of the cool type")
-                .shows(generateShows(eventLocations.get(eventLocationIndex)))
+                .shows(generateShows(eventLocations.get(eventLocationIndex), EventTypeEnum.MUSIC, EventCategoryEnum.HIPHOP))
                 .artists(addedArtists)
                 .eventType(EventTypeEnum.MUSIC)
                 .eventCategory(EventCategoryEnum.HIPHOP)
@@ -134,7 +135,7 @@ public class EventDataGenerator {
         return events;
     }
 
-    private List<Show> generateShows(EventLocation eventLocation) {
+    private List<Show> generateShows(EventLocation eventLocation, EventTypeEnum typeEnum, EventCategoryEnum categoryEnum) {
         int numberOfShows = 2;
 
         List<Show> shows = new ArrayList<>();
@@ -149,7 +150,10 @@ public class EventDataGenerator {
                 .ticketsAvailable(1000)
                 .ticketsSold(300)
                 .eventLocationOriginalId(eventLocation.getId())
+                .type(typeEnum)
+                .category(categoryEnum)
                 .duration(Duration.between(start, end))
+                .price(50)
                 .build();
             shows.add(show);
         }
