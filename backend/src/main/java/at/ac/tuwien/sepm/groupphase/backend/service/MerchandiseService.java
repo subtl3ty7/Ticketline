@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface MerchandiseService {
 
+    Merchandise createNewProduct(Merchandise product);
+
     List<Merchandise> findAllMerchandiseProducts();
 
 
