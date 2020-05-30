@@ -100,7 +100,7 @@ public class TicketEndpointTest implements TestData {
 
     @Test
     @Order(1)
-    public void givenNothing_whenBuyTicket_then201AndTicketList_AndTicketPurchasedTrue() throws Exception{
+    public void givenNothing_whenBuyTicket_then200AndTicketList_AndTicketPurchasedTrue() throws Exception{
 
         userRepository.save(USER_TICKET);
         EventDataGenerator eventDataGenerator = new EventDataGenerator(sectionRepository, seatRepository,
@@ -123,7 +123,7 @@ public class TicketEndpointTest implements TestData {
         MockHttpServletResponse response = mvcResult.getResponse();
 
         assertAll(
-            () -> assertEquals(HttpStatus.CREATED.value(), response.getStatus()),
+            () -> assertEquals(HttpStatus.OK.value(), response.getStatus()),
             () -> assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType())
         );
 

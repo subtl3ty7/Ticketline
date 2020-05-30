@@ -50,8 +50,10 @@ public interface TestData {
     String EVENT_TOP10 = EVENT_BASE_URI + "/top10";
     String NAME = "event";
     String DESC = "description";
-    String CAT = "concert";
-    String TYP = "out";
+    String CAT = "category";
+    String TYP = "type";
+    EventCategoryEnum CAT1 = EventCategoryEnum.HIPHOP;
+    EventTypeEnum TYP1 = EventTypeEnum.MUSIC;
     String PHOTO = "no photo";
     LocalDateTime START =
         LocalDateTime.of(2020, 11, 13, 12, 15, 0, 0);
