@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface MerchandiseRepository extends JpaRepository<Merchandise, Long> {
 
+
 }

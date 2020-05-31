@@ -41,8 +41,6 @@ public class CustomMerchandiseService implements MerchandiseService {
         LOGGER.debug("Moving Merchandise Entity through Service Layer " + product);
         product.setMerchandiseProductCode(getNewMerchandiseProductCode());
 
-
-
         return merchandiseRepository.save(product);
     }
 
