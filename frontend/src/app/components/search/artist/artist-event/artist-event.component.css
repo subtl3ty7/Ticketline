@@ -85,3 +85,8 @@ a:hover {
   text-overflow: ellipsis;
   overflow: hidden;
 }
+
+.header-row {
+  padding-top: 18px;
+}
+

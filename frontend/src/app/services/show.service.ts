@@ -36,4 +36,12 @@ export class ShowService {
     console.log(this.eventBaseUri + '?eventLocationId=' + eventLocationId);
     return this.httpClient.get<Show[]>(this.eventBaseUri + '?eventLocationId=' + eventLocationId);
   }
+
+  getDetailedShowsBy(name: string, type: string, category: string, showStartsAt: string, showEndsAt: string, duration: string, startPrice: string) {
+    console.log('Load events advanced');
+    console.log('url: ' + this.eventBaseUri + 'eventName=' + name + '&type=' + type + '&category=' + category + '&startsAt=' + showStartsAt + '&endsAt=' + showEndsAt + '&showDuration=' + duration);
+    return this.httpClient.get<SimpleEvent[]>(this.eventBaseUri + 'eventName=' + name + '&type=' + type + '&category=' + category + '&startsAt=' + showStartsAt + '&endsAt=' + showEndsAt + '&showDuration=' + duration).pipe(
+      catchError(this.handleError)
+    );
+  }
 }

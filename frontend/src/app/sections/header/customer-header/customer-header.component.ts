@@ -56,9 +56,6 @@ export class CustomerHeaderComponent implements OnInit {
         console.log('location name: ' + locationTerm);
         this.searchShared.getLocationByName(locationTerm);
         break;
-      case SearchEntity.SHOW:
-        this.searchShared.searchEntity = 'Show';
-        break;
     }
     this.router.navigate(['/search']);
     this.isSearchActive = false;

@@ -30,6 +30,7 @@ import {ArtistEventComponent} from './components/search/artist/artist-event/arti
 import {LocationShowComponent} from './components/search/location/location-show/location-show.component';
 import {ResetPasswordAdminContainerComponent} from './components/admin-home/admin-tabs/users-tab/reset-password-admin-container/root/reset-password-admin-container.component';
 import {MyInvoiceComponent} from './components/my-profile/my-profile-tabs/my-tickets-tab/my-invoice/my-invoice.component';
+import {EventAdvancedComponent} from './components/search/event/event-advanced/event-advanced.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -60,6 +61,7 @@ const routes: Routes = [
   {path: 'ticket-purchase', canActivate: [LoggedInGuard], component: TicketPurchaseComponent},
   {path: 'search/artist-events', component: ArtistEventComponent},
   {path: 'search/artist-advanced', component: ArtistAdvancedComponent},
+  {path: 'search/event-advanced', component: EventAdvancedComponent},
   {path: 'search/location-advanced', component: LocationAdvancedComponent},
   {path: 'search/location-shows', component: LocationShowComponent},
   {path: 'my-profile/my-tickets/my-invoice', component: MyInvoiceComponent},

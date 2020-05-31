@@ -1,0 +1,81 @@
+<app-header></app-header>
+<div class="container-fluid justify-content-center" style="padding-left: 5%; padding-right: 5%;">
+  <div class="row">
+    <div class="mx-auto" style="max-width: 1320px; width: 100%;">
+      <span class="anchor" id="formLogin"></span>
+      <div class="card main-body">
+        <div class="card-header align-items-center">
+          <h1 class="mb-0 ml-3 page-title">Erweiterte Suche - Events</h1>
+        </div>
+        <div class="card-body">
+          <form class="form" [formGroup]="advancedEventSearchForm" (ngSubmit)="advancedSearch()">
+            <div class="row">
+              <div class="container">
+                <div class="row">
+                  <h3>Events</h3>
+                </div>
+                <div class="row">
+                  <div class="form-group">
+                    <label for="inputEventType">Typ der Veranstaltung</label><br>
+                    <select name="type" id="inputEventType">
+                      <option value="">Bitte ausw&auml;hlen ...</option>
+                      <option value="SPORT">Sport</option>
+                      <option value="CULTURE">Kultur</option>
+                      <option value="MUSIC">Musik</option>
+                      <option value="OTHER">Sonstiges</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group">
+                <label for="inputEventType">Kategorie der Veranstaltung</label><br>
+                <select name="category" id="inputEventCategory">
+                  <option value="">Bitte ausw&auml;hlen ...</option>
+                  <option value="POP">Pop</option>
+                  <option value="HIPHOP">Hip-Hop</option>
+                  <option value="JAZZ">Jazz</option>
+                  <option value="ROCK">Rock</option>
+                  <option value="SCHLAGER">Schlager</option>
+                  <option value="CLASSICAL">Klassik</option>
+                  <option value="THEATRE">Theater</option>
+                  <option value="OPERA">Oper</option>
+                  <option value="MUSICAL">Musical</option>
+                  <option value="INDOORS">Indoor</option>
+                  <option value="OUTDOORS">Outdoor</option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <label>Datum</label>
+              <div class="container">
+                <div class="row">
+                  <div class="form-group">
+                    <label for="inputEventDateFrom">Von: </label>
+                    <input type="date" name="startsAt" id="inputEventDateFrom"/>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEventDateTo">Bis: </label>
+                    <input type="date" name="endsAt" id="inputEventDateTo"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row apply-filter">
+              <div class="container pr-5 align-middle">
+                <div class="row reset-search">
+                  <a (click)="resetForm()">Filter zurücksetzen</a>
+                </div>
+                <div class="row" style="float: right; padding-right: 2px">
+                  <button class="btn default search-button " style="margin-top: 5px;">Anwenden</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
