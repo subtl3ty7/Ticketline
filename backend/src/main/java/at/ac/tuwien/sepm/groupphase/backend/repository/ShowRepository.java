@@ -1,6 +1,5 @@
 package at.ac.tuwien.sepm.groupphase.backend.repository;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventCategoryEnum;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventTypeEnum;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Show;

@@ -1,7 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.ShowDto;
-import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleEventDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleShowDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EventMapper;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.ShowMapper;
@@ -16,7 +15,6 @@ import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.Authorization;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -84,12 +82,12 @@ public class ShowEndpoint {
                                                                    @Valid @RequestParam Integer price
     ) {
         LOGGER.info("GET /api/v1/shows?eventName=" + eventName + "&type=" + type + "&category=" + category + "&startsAt=" + startsAt + "&endsAt=" + endsAt + "&duration=" + duration + "&price=" + price);
-        LocalDateTime startsAtDate = LocalDateTime.parse(startsAt);
-        LocalDateTime endsAtDate = LocalDateTime.parse(endsAt);
+        LocalDateTime startDateParsed = LocalDateTime.parse(startsAt);
+        LocalDateTime endDateParsed = LocalDateTime.parse(endsAt);
         EventTypeEnum eventTypeEnum = EventTypeEnum.valueOf(type);
         EventCategoryEnum eventCategoryEnum = EventCategoryEnum.valueOf(category);
         Duration durationParsed = Duration.parse(duration);
-        List<SimpleShowDto> result = showMapper.showToSimpleShowDto(showService.findShowsAdvanced(eventName, eventTypeEnum, eventCategoryEnum, startsAtDate, endsAtDate, durationParsed, price));
+        List<SimpleShowDto> result = showMapper.showToSimpleShowDto(showService.findShowsAdvanced(eventName, eventTypeEnum, eventCategoryEnum, startDateParsed, endDateParsed, durationParsed, price));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

@@ -1,9 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.*;
-import at.ac.tuwien.sepm.groupphase.backend.repository.EventLocationRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.ShowRepository;
-import at.ac.tuwien.sepm.groupphase.backend.service.EventLocationService;
 import at.ac.tuwien.sepm.groupphase.backend.service.ShowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,8 +37,8 @@ public class CustomShowService implements ShowService {
     }
 
     @Override
-    public List<Show> findShowsAdvanced(String name, EventTypeEnum type, EventCategoryEnum category, LocalDateTime startsAtDate, LocalDateTime endsAtDate, Duration showDuration, Integer price) {
-        return showRepository.findShowsByEventNameContainingIgnoreCaseAndEventTypeAndEventCategoryAndStartsAtIsGreaterThanEqualAndEndsAtIsLessThanEqualAndDurationLessThanEqualAndPriceLessThanEqual(name, type, category, startsAtDate, endsAtDate, showDuration, price);
+    public List<Show> findShowsAdvanced(String name, EventTypeEnum type, EventCategoryEnum category, LocalDateTime startsAt, LocalDateTime endsAt, Duration showDuration, Integer price) {
+        return showRepository.findShowsByEventNameContainingIgnoreCaseAndEventTypeAndEventCategoryAndStartsAtIsGreaterThanEqualAndEndsAtIsLessThanEqualAndDurationLessThanEqualAndPriceLessThanEqual(name, type, category, startsAt, endsAt, showDuration, price);
     }
 
 }

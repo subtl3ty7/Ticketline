@@ -124,7 +124,7 @@ public class CustomEventService implements EventService {
     }
 
     @Override
-    public List<Event> findEventsAdvanced(String name, EventTypeEnum type, EventCategoryEnum category, LocalDateTime startsAt, LocalDateTime endsAt, Duration showDuration, Integer price) {
-        return eventRepository.findEventsByNameContainingIgnoreCaseAndEventTypeAndEventCategoryAndStartsAtIsGreaterThanEqualAndEndsAtIsLessThanEqualAndShowsDurationLessThanEqualAndPricesLessThanEqual(name, type, category, startsAt, endsAt, showDuration, price);
+    public List<Event> findEventsAdvanced(String name, EventTypeEnum type, EventCategoryEnum category, LocalDateTime startsAt, LocalDateTime endsAt, Duration showDuration) {
+        return eventRepository.findEventsByNameContainingIgnoreCaseAndEventTypeAndEventCategoryAndStartsAtIsGreaterThanEqualAndEndsAtIsLessThanEqualAndShowsDurationLessThanEqual(name, type, category, startsAt, endsAt, showDuration);
     }
 }

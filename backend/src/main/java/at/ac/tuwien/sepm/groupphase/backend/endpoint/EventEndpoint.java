@@ -3,7 +3,6 @@ package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.DetailedEventDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleEventDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EventMapper;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Artist;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventCategoryEnum;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventTypeEnum;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
@@ -22,9 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.lang.invoke.MethodHandles;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -171,7 +168,7 @@ public class EventEndpoint {
     }
 
     @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
-    @GetMapping(value = "", params = {"eventName", "type", "category", "startsAt", "endsAt", "showDuration", "price"})
+    @GetMapping(value = "", params = {"eventName", "type", "category", "startsAt", "endsAt", "showDuration"})
     @ApiOperation(
         value = "Get all events advanced",
         notes = "Get all events by with details",
@@ -186,16 +183,15 @@ public class EventEndpoint {
                                                                   @Valid @RequestParam String category,
                                                                   @Valid @RequestParam String startsAt,
                                                                   @Valid @RequestParam String endsAt,
-                                                                  @Valid @RequestParam String showDuration,
-                                                                  @Valid @RequestParam Integer price
+                                                                  @Valid @RequestParam String showDuration
     ) {
-        LOGGER.info("GET /api/v1/events?eventName=" + eventName + "&type=" + type + "&category=" + category + "&startsAt=" + startsAt + "&endsAt=" + endsAt + "&showDuration=" + showDuration + "&price=" + price);
+        LOGGER.info("GET /api/v1/events?eventName=" + eventName + "&type=" + type + "&category=" + category + "&startsAt=" + startsAt + "&endsAt=" + endsAt + "&showDuration=" + showDuration);
         LocalDateTime startsAtDate = LocalDateTime.parse(startsAt);
         LocalDateTime endsAtDate = LocalDateTime.parse(endsAt);
         EventTypeEnum eventTypeEnum = EventTypeEnum.valueOf(type);
         EventCategoryEnum eventCategoryEnum = EventCategoryEnum.valueOf(category);
         Duration showDurationParsed = Duration.parse(showDuration);
-        List<SimpleEventDto> result = eventMapper.eventToSimpleEventDto(eventService.findEventsAdvanced(eventName, eventTypeEnum, eventCategoryEnum, startsAtDate, endsAtDate, showDurationParsed, price));
+        List<SimpleEventDto> result = eventMapper.eventToSimpleEventDto(eventService.findEventsAdvanced(eventName, eventTypeEnum, eventCategoryEnum, startsAtDate, endsAtDate, showDurationParsed));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
