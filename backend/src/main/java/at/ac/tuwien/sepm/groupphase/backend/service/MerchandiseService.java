@@ -10,5 +10,6 @@ public interface MerchandiseService {
 
     List<Merchandise> findAllMerchandiseProducts();
 
+  //  List<Merchandise> findAllMerchandiseProductsPremium();
 
 }

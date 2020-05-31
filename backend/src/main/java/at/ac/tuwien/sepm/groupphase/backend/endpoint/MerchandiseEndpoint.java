@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.MerchandiseDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.MerchandiseMapper;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Merchandise;
 import at.ac.tuwien.sepm.groupphase.backend.service.MerchandiseService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -50,6 +51,23 @@ public class MerchandiseEndpoint {
         List<MerchandiseDto> result = merchandiseMapper.merchandiseToMerchandiseDto(merchandiseService.findAllMerchandiseProducts());
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+  /*  @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
+    @GetMapping(value = "/all")
+    @ApiOperation(
+        value = "Get all merchandise premium products",
+        notes = "Get all merchandise premium products",
+        authorizations = {@Authorization(value = "apiKey")})
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "Merchandise premium products are successfully retrieved"),
+        @ApiResponse(code = 404, message = "No Merchandise premium product is found"),
+        @ApiResponse(code = 500, message = "Connection Refused"),}
+    )
+    public ResponseEntity<List<MerchandiseDto>> findAllPremiumMerchandiseProducts() {
+        LOGGER.info("GET /api/v1/merchandise/premium");
+        List<MerchandiseDto> result = merchandiseMapper.merchandiseToMerchandiseDto(merchandiseService.findAllMerchandiseProductsPremium());
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }*/
 
 
 

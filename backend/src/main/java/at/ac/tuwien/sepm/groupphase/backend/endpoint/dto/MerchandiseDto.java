@@ -15,7 +15,7 @@ public class MerchandiseDto {
     private int stockCount;
     private int price;
     private int premiumPrice;
-    private boolean isPremium;
+    private boolean premium;
 
 
     @Override
@@ -26,7 +26,7 @@ public class MerchandiseDto {
         return stockCount == that.stockCount &&
             price == that.price &&
             premiumPrice == that.premiumPrice &&
-            isPremium == that.isPremium &&
+            premium == that.premium &&
             id.equals(that.id) &&
             merchandiseProductCode.equals(that.merchandiseProductCode) &&
             merchandiseProductName.equals(that.merchandiseProductName);
@@ -34,7 +34,7 @@ public class MerchandiseDto {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, merchandiseProductCode, merchandiseProductName, stockCount, price, premiumPrice, isPremium);
+        return Objects.hash(id, merchandiseProductCode, merchandiseProductName, stockCount, price, premiumPrice, premium);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class MerchandiseDto {
             ", stockCount=" + stockCount +
             ", price=" + price +
             ", premiumPrice=" + premiumPrice +
-            ", isPremium=" + isPremium +
+            ", premium=" + premium +
             '}';
     }
 }

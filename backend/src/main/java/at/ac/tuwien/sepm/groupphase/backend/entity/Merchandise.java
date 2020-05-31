@@ -54,8 +54,8 @@ public class Merchandise {
     private int premiumPrice;
 
     @NotNull
-    @Column(nullable = false, name = "is_premium")
-    private boolean isPremium;
+    @Column(nullable = false, name = "premium")
+    private boolean premium;
 
 
 
