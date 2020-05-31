@@ -52,17 +52,20 @@ public class Show implements Serializable {
 
     @NotNull
     @Column(nullable = false, length = 100)
-    private EventTypeEnum type;
+    private EventTypeEnum eventType;
 
     @NotNull
     @Column(nullable = false, length = 100)
-    private EventCategoryEnum category;
+    private EventCategoryEnum eventCategory;
 
     @Column
     public Duration duration;
 
     @Column
-    private int price;
+    private Integer price;
+
+    @Column
+    private String eventName;
 
     public Show(){
     }

@@ -4,6 +4,8 @@ import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.DetailedEventDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleEventDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EventMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Artist;
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventCategoryEnum;
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventTypeEnum;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.lang.invoke.MethodHandles;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -168,28 +171,31 @@ public class EventEndpoint {
     }
 
     @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
-    @GetMapping(value = "", params = {"name", "type", "category", "startsAt", "endsAt", "showDuration", "price"})
+    @GetMapping(value = "", params = {"eventName", "type", "category", "startsAt", "endsAt", "showDuration", "price"})
     @ApiOperation(
-        value = "Get all events by name",
+        value = "Get all events advanced",
         notes = "Get all events by with details",
         authorizations = {@Authorization(value = "apiKey")})
     @ApiResponses({
         @ApiResponse(code = 200, message = "Events are successfully retrieved"),
-        @ApiResponse(code = 404, message = "No Event is found"),
+        @ApiResponse(code = 404, message = "No Events are found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<List<SimpleEventDto>> findEventsAdvanced(@Valid @RequestParam String name,
+    public ResponseEntity<List<SimpleEventDto>> findEventsAdvanced(@Valid @RequestParam String eventName,
                                                                   @Valid @RequestParam String type,
                                                                   @Valid @RequestParam String category,
                                                                   @Valid @RequestParam String startsAt,
                                                                   @Valid @RequestParam String endsAt,
                                                                   @Valid @RequestParam String showDuration,
-                                                                  @Valid @RequestParam Long price
+                                                                  @Valid @RequestParam Integer price
     ) {
-        LOGGER.info("GET /api/v1/events?name=" + name + "&type" + type + "&category=" + category + "&startsAt=" + startsAt + "&endsAt=" + endsAt + "&showDuration=" + showDuration + "&price=" + price);
+        LOGGER.info("GET /api/v1/events?eventName=" + eventName + "&type=" + type + "&category=" + category + "&startsAt=" + startsAt + "&endsAt=" + endsAt + "&showDuration=" + showDuration + "&price=" + price);
         LocalDateTime startsAtDate = LocalDateTime.parse(startsAt);
         LocalDateTime endsAtDate = LocalDateTime.parse(endsAt);
-        List<SimpleEventDto> result = eventMapper.eventToSimpleEventDto(eventService.findEventsAdvanced(name, type, category, startsAtDate, endsAtDate, showDuration, price));
+        EventTypeEnum eventTypeEnum = EventTypeEnum.valueOf(type);
+        EventCategoryEnum eventCategoryEnum = EventCategoryEnum.valueOf(category);
+        Duration showDurationParsed = Duration.parse(showDuration);
+        List<SimpleEventDto> result = eventMapper.eventToSimpleEventDto(eventService.findEventsAdvanced(eventName, eventTypeEnum, eventCategoryEnum, startsAtDate, endsAtDate, showDurationParsed, price));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

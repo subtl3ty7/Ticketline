@@ -1,9 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Seat;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Section;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
+import at.ac.tuwien.sepm.groupphase.backend.entity.*;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventLocationRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.ShowRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventLocationService;
@@ -11,6 +8,8 @@ import at.ac.tuwien.sepm.groupphase.backend.service.ShowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +36,11 @@ public class CustomShowService implements ShowService {
     @Override
     public List<Show> getShowsByEventLocationId(Long eventLocationId) {
         return showRepository.findShowsByEventLocationOriginalId(eventLocationId);
+    }
+
+    @Override
+    public List<Show> findShowsAdvanced(String name, EventTypeEnum type, EventCategoryEnum category, LocalDateTime startsAtDate, LocalDateTime endsAtDate, Duration showDuration, Integer price) {
+        return showRepository.findShowsByEventNameContainingIgnoreCaseAndEventTypeAndEventCategoryAndStartsAtIsGreaterThanEqualAndEndsAtIsLessThanEqualAndDurationLessThanEqualAndPriceLessThanEqual(name, type, category, startsAtDate, endsAtDate, showDuration, price);
     }
 
 }

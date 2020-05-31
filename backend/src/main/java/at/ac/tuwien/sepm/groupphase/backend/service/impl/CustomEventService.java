@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -123,8 +124,7 @@ public class CustomEventService implements EventService {
     }
 
     @Override
-    public List<Event> findEventsAdvanced(String name, String type, String category, LocalDateTime startsAt, LocalDateTime endsAt, String showLength, Long price) {
-        return null;
-        // return eventRepository.findEventsByNameAndEventTypeAndEventCategoryAndStartsAtAfterAndEndsAtBeforeAndShows_DurationLessThanAndPricesLessThanEqual(name, EventTypeEnum.valueOf(type), EventCategoryEnum.valueOf(category), startsAt, endsAt, LocalDateTime.parse(showLength), price);
+    public List<Event> findEventsAdvanced(String name, EventTypeEnum type, EventCategoryEnum category, LocalDateTime startsAt, LocalDateTime endsAt, Duration showDuration, Integer price) {
+        return eventRepository.findEventsByNameContainingIgnoreCaseAndEventTypeAndEventCategoryAndStartsAtIsGreaterThanEqualAndEndsAtIsLessThanEqualAndShowsDurationLessThanEqualAndPricesLessThanEqual(name, type, category, startsAt, endsAt, showDuration, price);
     }
 }

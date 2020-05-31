@@ -123,7 +123,7 @@ public class EventDataGenerator {
                 .prices(List.of(1,2,3))
                 .totalTicketsSold(5*i*i*i)
                 .type("Of the cool type")
-                .shows(generateShows(eventLocations.get(eventLocationIndex), EventTypeEnum.MUSIC, EventCategoryEnum.HIPHOP))
+                .shows(generateShows(eventLocations.get(eventLocationIndex), EventTypeEnum.MUSIC, EventCategoryEnum.HIPHOP, "Event " + i))
                 .artists(addedArtists)
                 .eventType(EventTypeEnum.MUSIC)
                 .eventCategory(EventCategoryEnum.HIPHOP)
@@ -135,7 +135,7 @@ public class EventDataGenerator {
         return events;
     }
 
-    private List<Show> generateShows(EventLocation eventLocation, EventTypeEnum typeEnum, EventCategoryEnum categoryEnum) {
+    private List<Show> generateShows(EventLocation eventLocation, EventTypeEnum typeEnum, EventCategoryEnum categoryEnum, String eventName) {
         int numberOfShows = 2;
 
         List<Show> shows = new ArrayList<>();
@@ -150,9 +150,10 @@ public class EventDataGenerator {
                 .ticketsAvailable(1000)
                 .ticketsSold(300)
                 .eventLocationOriginalId(eventLocation.getId())
-                .type(typeEnum)
-                .category(categoryEnum)
+                .eventType(typeEnum)
+                .eventCategory(categoryEnum)
                 .duration(Duration.between(start, end))
+                .eventName(eventName)
                 .price(50)
                 .build();
             shows.add(show);
