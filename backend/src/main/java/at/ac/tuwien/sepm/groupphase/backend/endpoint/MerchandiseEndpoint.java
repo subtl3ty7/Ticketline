@@ -52,8 +52,8 @@ public class MerchandiseEndpoint {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-  /*  @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
-    @GetMapping(value = "/all")
+    @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
+    @GetMapping(value = "/premium")
     @ApiOperation(
         value = "Get all merchandise premium products",
         notes = "Get all merchandise premium products",
@@ -63,12 +63,11 @@ public class MerchandiseEndpoint {
         @ApiResponse(code = 404, message = "No Merchandise premium product is found"),
         @ApiResponse(code = 500, message = "Connection Refused"),}
     )
-    public ResponseEntity<List<MerchandiseDto>> findAllPremiumMerchandiseProducts() {
+    public ResponseEntity<List<MerchandiseDto>> findAllMerchandisePremiumProducts() {
         LOGGER.info("GET /api/v1/merchandise/premium");
-        List<MerchandiseDto> result = merchandiseMapper.merchandiseToMerchandiseDto(merchandiseService.findAllMerchandiseProductsPremium());
+        List<MerchandiseDto> result = merchandiseMapper.merchandiseToMerchandiseDto(merchandiseService.findAllMerchandisePremiumProducts());
         return new ResponseEntity<>(result, HttpStatus.OK);
-    }*/
-
+    }
 
 
 

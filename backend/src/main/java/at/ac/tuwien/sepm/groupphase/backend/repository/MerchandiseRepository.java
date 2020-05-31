@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface MerchandiseRepository extends JpaRepository<Merchandise, Long> {
 
- //   List<Merchandise> findByPremiumIsTrue();
+    List<Merchandise> findAllByPremiumIsTrue();
 
 
 

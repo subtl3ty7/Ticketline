@@ -51,9 +51,9 @@ public class CustomMerchandiseService implements MerchandiseService {
         return allMerchandiseProducts;
     }
 
-  /*  @Override
-    public List<Merchandise> findAllMerchandiseProductsPremium() {
-        List<Merchandise> allPremiumProducts = merchandiseRepository.findByPremiumIsTrue();
+    @Override
+    public List<Merchandise> findAllMerchandisePremiumProducts() {
+        List<Merchandise> allPremiumProducts = merchandiseRepository.findAllByPremiumIsTrue();
         return allPremiumProducts;
-    }*/
+    }
 }
