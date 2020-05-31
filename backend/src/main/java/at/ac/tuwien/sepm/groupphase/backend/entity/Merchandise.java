@@ -22,7 +22,7 @@ public class Merchandise {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long merchandiseProductId;
+    private Long id;
 
     @NotNull
     @Size(min = 6, max = 6)

@@ -72,7 +72,7 @@ public class MerchandiseDataGenerator {
                 .stockCount(20 * i + 1)
                 .price(10 * i + 1)
                 .premiumPrice(5 * i +1)
-                .isPremium(false)
+                .isPremium((i%2) == 0)
                 .build();
 
             product = merchandiseService.createNewProduct(product);
