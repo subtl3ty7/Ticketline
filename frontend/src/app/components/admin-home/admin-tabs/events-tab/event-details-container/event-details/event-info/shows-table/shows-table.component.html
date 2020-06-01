@@ -1,13 +1,6 @@
 <span style="font-size: 18px">Shows</span>
 <div class="table-container all-height" #table>
-  <div class="flex">
-    <mat-form-field class="input-wrapper">
-      <mat-label>Search</mat-label>
-      <input matInput
-             name="searchUser"
-             (keyup)="searchForAllShows($event)">
-    </mat-form-field>
-  </div>
+
 
   <div class="table">
     <mat-table #table [dataSource]="dataSource" matSort>

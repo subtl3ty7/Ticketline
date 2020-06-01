@@ -1,5 +1,32 @@
 <div class="table-container all-height" #table>
-
+  <div fxLayout = "row">
+    <mat-form-field class="input-wrapper">
+      <mat-label>In Event code suchen</mat-label>
+      <input matInput
+             name="searchEventCode" [(ngModel)]="searchEvent.eventCode">
+    </mat-form-field>
+    <mat-form-field class="input-wrapper">
+      <mat-label>In Event name suchen</mat-label>
+      <input matInput
+             name="searchName" [(ngModel)]="searchEvent.name">
+    </mat-form-field>
+    <mat-form-field class="input-wrapper">
+      <mat-label>Beginn Von</mat-label>
+      <input matInput [matDatepicker]="picker1" (dateInput)="addStart('input', $event)" (dateChange)="addStart('change', $event)">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="input-wrapper">
+      <mat-label>Beginn Bis</mat-label>
+      <input matInput [matDatepicker]="picker2" (dateInput)="addEnd('input', $event)" (dateChange)="addEnd('change', $event)">
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div>
+    <button mat-raised-button (click)="loadAllEventsByParameters()" style="margin-right:10px"> Suchen</button>
+    <button mat-raised-button (click)="loadAllEvents()" style="margin-right: 40%">Alle Events</button>
+  </div>
 
   <button mat-raised-button color = "basic" style="margin-left: 80%;margin-bottom: 1%">Event Erstellen</button>
 
