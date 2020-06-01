@@ -15,4 +15,6 @@ public interface MerchandiseRepository extends JpaRepository<Merchandise, Long> 
 
 
 
+
+
 }

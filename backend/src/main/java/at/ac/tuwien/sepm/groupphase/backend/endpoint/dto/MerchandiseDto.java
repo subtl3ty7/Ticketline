@@ -16,7 +16,7 @@ public class MerchandiseDto {
     private int price;
     private int premiumPrice;
     private boolean premium;
-
+    private boolean purchased;
 
     @Override
     public boolean equals(Object o) {
@@ -27,6 +27,7 @@ public class MerchandiseDto {
             price == that.price &&
             premiumPrice == that.premiumPrice &&
             premium == that.premium &&
+            purchased == that.purchased &&
             id.equals(that.id) &&
             merchandiseProductCode.equals(that.merchandiseProductCode) &&
             merchandiseProductName.equals(that.merchandiseProductName);
@@ -34,19 +35,6 @@ public class MerchandiseDto {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, merchandiseProductCode, merchandiseProductName, stockCount, price, premiumPrice, premium);
-    }
-
-    @Override
-    public String toString() {
-        return "MerchandiseDto{" +
-            "id=" + id +
-            ", merchandiseProductCode='" + merchandiseProductCode + '\'' +
-            ", merchandiseProductName='" + merchandiseProductName + '\'' +
-            ", stockCount=" + stockCount +
-            ", price=" + price +
-            ", premiumPrice=" + premiumPrice +
-            ", premium=" + premium +
-            '}';
+        return Objects.hash(id, merchandiseProductCode, merchandiseProductName, stockCount, price, premiumPrice, premium, purchased);
     }
 }

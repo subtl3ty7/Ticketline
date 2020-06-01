@@ -2,15 +2,18 @@ package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.Merchandise;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
+import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.MerchandiseRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.MerchandiseService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -55,5 +58,16 @@ public class CustomMerchandiseService implements MerchandiseService {
     public List<Merchandise> findAllMerchandisePremiumProducts() {
         List<Merchandise> allPremiumProducts = merchandiseRepository.findAllByPremiumIsTrue();
         return allPremiumProducts;
+    }
+
+    @Override
+    public List<Merchandise> buyMerchandiseProducts(List<Merchandise> products) throws ValidationException, DataAccessException {
+        List<Merchandise> productsToBuy = new ArrayList<>();
+
+        for (Merchandise product : products) {
+
+
+        }
+        return null;
     }
 }

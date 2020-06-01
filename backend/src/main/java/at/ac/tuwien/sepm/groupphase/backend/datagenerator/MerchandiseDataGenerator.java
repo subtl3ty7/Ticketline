@@ -73,6 +73,7 @@ public class MerchandiseDataGenerator {
                 .price(10 * i + 1)
                 .premiumPrice(5 * i +1)
                 .premium((i%2) == 0)
+                .purchased((i%2)==0)
                 .build();
 
             product = merchandiseService.createNewProduct(product);
