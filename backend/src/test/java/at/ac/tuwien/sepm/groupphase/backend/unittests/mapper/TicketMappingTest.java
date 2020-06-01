@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 @ActiveProfiles("test")
 public class TicketMappingTest implements TestData {
-/*
+
     private final Ticket ticket = Ticket.builder()
         .ticketId(ID)
         .ticketCode(USER_CODE)
@@ -36,11 +36,12 @@ public class TicketMappingTest implements TestData {
         .userCode(USER_CODE)
         .seat(SEATS.get(0))
         .show(SHOWS.get(0))
+        .event(EVENT)
         .build();
 
     private final DetailedTicketDto ticketDto = DetailedTicketDto.
         DetailedTicketDtoBuilder.aDetailedTicketDto
-        (ID, USER_CODE, false, false, START, SEATS.get(0), USER_CODE, TOTAL, SHOWS.get(0))
+        (ID, USER_CODE, false, false, START, SEATS.get(0), USER_CODE, TOTAL, SHOWS.get(0), EVENT)
         .build();
 
 
@@ -57,7 +58,10 @@ public class TicketMappingTest implements TestData {
             () -> assertFalse( ticketDto.isReserved()),
             () -> assertEquals(START, ticketDto.getPurchaseDate()),
             () -> assertEquals(TOTAL, ticketDto.getPrice()),
-            () -> assertEquals(USER_CODE, ticketDto.getUserCode())
+            () -> assertEquals(USER_CODE, ticketDto.getUserCode()),
+            () -> assertEquals(SEATS.get(0).getId(), ticketDto.getSeatId()),
+            () -> assertEquals(SHOWS.get(0).getId(), ticketDto.getShowId()),
+            () -> assertEquals(EVENT.getName(), ticketDto.getEventName())
         );
     }
 
@@ -75,7 +79,10 @@ public class TicketMappingTest implements TestData {
             () -> assertFalse( ticketDto.isReserved()),
             () -> assertEquals(START, ticketDto.getPurchaseDate()),
             () -> assertEquals(TOTAL, ticketDto.getPrice()),
-            () -> assertEquals(USER_CODE, ticketDto.getUserCode())
+            () -> assertEquals(USER_CODE, ticketDto.getUserCode()),
+            () -> assertEquals(SEATS.get(0).getId(), ticketDto.getSeatId()),
+            () -> assertEquals(SHOWS.get(0).getId(), ticketDto.getShowId()),
+            () -> assertEquals(EVENT.getName(), ticketDto.getEventName())
         );
     }
 
@@ -91,7 +98,8 @@ public class TicketMappingTest implements TestData {
             () -> assertEquals(TOTAL, ticket1.getPrice()),
             () -> assertEquals(USER_CODE, ticket1.getUserCode()),
             () -> assertEquals(SEATS.get(0), ticket1.getSeat()),
-            () -> assertEquals(SHOWS.get(0), ticket1.getShow())
+            () -> assertEquals(SHOWS.get(0), ticket1.getShow()),
+            () -> assertEquals(EVENT, ticket1.getEvent())
         );
-    }*/
+    }
 }

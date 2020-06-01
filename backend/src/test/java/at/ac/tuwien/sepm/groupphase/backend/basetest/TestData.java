@@ -96,12 +96,21 @@ public interface TestData {
 
     String TICKETS_BASE_URI = BASE_URI + "/tickets";
 
-
-
-
-
+    String TYP_I = "purchase";
+    String PAY = "card";
+    LocalDateTime PURCHASE = LocalDateTime.of(2020,6,1,10,0,0);
+    int NUM = 100;
+    List<Ticket> TICKETS = new ArrayList<>(){
+        {
+            add(Ticket.builder().ticketId(ID).ticketCode(USER_CODE).isPurchased(false).isReserved(false)
+                .purchaseDate(START).price(TOTAL).userCode(USER_CODE).seat(SEATS.get(0)).show(SHOWS.get(0)).build());
+        }
+    };
 
     String ARTIST_BASE_URI = BASE_URI + "/artists";
     String NEWS_BASE_URI = BASE_URI + "/news";
+
+    Event EVENT = Event.builder().id(ID).eventCode(USER_CODE).name(NAME).description(DESC).category(CAT).type(TYP).eventCategory(CAT1)
+        .eventType(TYP1).startsAt(START).endsAt(END).prices(PRICES).totalTicketsSold(TOTAL).shows(SHOWS).build();
 
 }
