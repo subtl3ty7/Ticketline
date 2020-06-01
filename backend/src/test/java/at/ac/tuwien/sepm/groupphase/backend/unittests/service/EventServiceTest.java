@@ -36,6 +36,8 @@ public class EventServiceTest implements TestData {
         .description(DESC)
         .category(CAT)
         .type(TYP)
+        .eventCategory(CAT1)
+        .eventType(TYP1)
         .startsAt(START)
         .endsAt(END)
         .prices(PRICES)
@@ -54,6 +56,8 @@ public class EventServiceTest implements TestData {
             .description(DESC)
             .category(CAT)
             .type(TYP)
+            .eventCategory(CAT1)
+            .eventType(TYP1)
             .startsAt(START)
             .endsAt(END)
             .prices(PRICES)
@@ -74,6 +78,8 @@ public class EventServiceTest implements TestData {
             () -> assertEquals(DESC, event1.getDescription()),
             () -> assertEquals(TYP, event1.getType()),
             () -> assertEquals(CAT, event1.getCategory()),
+            () -> assertEquals(TYP1, event1.getEventType()),
+            () -> assertEquals(CAT1, event1.getEventCategory()),
             () -> assertEquals(START, event1.getStartsAt()),
             () -> assertEquals(END, event1.getEndsAt()),
             () -> assertEquals(PRICES, event1.getPrices()),
