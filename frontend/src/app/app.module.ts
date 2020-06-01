@@ -95,6 +95,11 @@ import { ResetPasswordAdminFormComponent } from './components/admin-home/admin-t
 import { MyTicketsTabComponent } from './components/my-profile/my-profile-tabs/my-tickets-tab/my-tickets-tab.component';
 import { PaymentDoneComponent } from './components/ticket-purchase/payment-done/payment-done.component';
 import { MyInvoiceComponent } from './components/my-profile/my-profile-tabs/my-tickets-tab/my-invoice/my-invoice.component';
+import { NewsTabComponent } from './components/admin-home/admin-tabs/news-tab/news-tab.component';
+import { NewsDetailsContainerComponent } from './components/admin-home/admin-tabs/news-tab/news-details-container/root/news-details-container.component';
+import { AdminNewsDetailsComponent } from './components/admin-home/admin-tabs/news-tab/news-details-container/admin-news-details/admin-news-details.component';
+import { NewsInfoComponent } from './components/admin-home/admin-tabs/news-tab/news-details-container/admin-news-details/news-info/news-info.component';
+import { NewsDetailsDialogComponent } from './components/admin-home/admin-tabs/news-tab/news-details-container/admin-news-details/news-info/news-details-dialog/news-details-dialog.component';
 
 @NgModule({
   declarations: [
@@ -170,7 +175,12 @@ import { MyInvoiceComponent } from './components/my-profile/my-profile-tabs/my-t
     ResetPasswordAdminFormComponent,
     MyTicketsTabComponent,
     PaymentDoneComponent,
-    MyInvoiceComponent
+    MyInvoiceComponent,
+    NewsTabComponent,
+    NewsDetailsContainerComponent,
+    AdminNewsDetailsComponent,
+    NewsInfoComponent,
+    NewsDetailsDialogComponent
   ],
   imports: [
     BrowserModule,
