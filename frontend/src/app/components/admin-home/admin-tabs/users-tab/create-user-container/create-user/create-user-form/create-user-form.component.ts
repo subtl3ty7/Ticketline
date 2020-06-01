@@ -25,12 +25,13 @@ export class CreateUserFormComponent implements OnInit {
     this.user.admin = false;
   }
   changeUserType() {
+    this.adminFlag = !this.adminFlag;
     this.user.admin = this.adminFlag;
   }
   addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
     this.user.birthday = event.value;
   }
-  passwordChange(){
+  passwordChange() {
     this.user.password = this.password;
   }
 }

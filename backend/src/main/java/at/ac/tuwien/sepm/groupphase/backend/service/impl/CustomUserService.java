@@ -69,7 +69,7 @@ public class CustomUserService implements UserService {
                 grantedAuthorities = AuthorityUtils.createAuthorityList("ROLE_ADMIN", "ROLE_USER");
                 return new User(user.getEmail(),  user.getPassword(), grantedAuthorities);
             } else {
-                //If user is a basic user
+                //If user is a Customer
                 grantedAuthorities = AuthorityUtils.createAuthorityList("ROLE_USER");
                 //check for login attempts
                 UserAttempts userAttempts = userAttemptsRepository.findUserAttemptsByEmail(email);
@@ -234,5 +234,11 @@ public class CustomUserService implements UserService {
         AbstractUser user = userRepository.findAbstractUserByEmail(email);
         user.setPassword(newPassword);
         userRepository.save(user);
+    }
+
+    @Override
+    public List<AbstractUser> findUserByParams(String userCode, String firstName, String lastName, String email) {
+        List<AbstractUser> users =  userRepository.findAllByUserCodeContainingIgnoreCaseAndFirstNameContainingIgnoreCaseAndLastNameContainingIgnoreCaseAndEmailContainingIgnoreCase(userCode, firstName, lastName, email);
+        return users;
     }
 }

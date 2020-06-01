@@ -31,7 +31,7 @@ public interface TestData {
         }
     };
 
-    String DEFAULT_USER = "e0@customer.com";
+    String DEFAULT_USER = "user@email.com";
     List<String> USER_ROLES = new ArrayList<>() {
         {
             add("ROLE_USER");
@@ -50,8 +50,10 @@ public interface TestData {
     String EVENT_TOP10 = EVENT_BASE_URI + "/top10";
     String NAME = "event";
     String DESC = "description";
-    String CAT = "concert";
-    String TYP = "out";
+    String CAT = "category";
+    String TYP = "type";
+    EventCategoryEnum CAT1 = EventCategoryEnum.HIPHOP;
+    EventTypeEnum TYP1 = EventTypeEnum.MUSIC;
     String PHOTO = "no photo";
     LocalDateTime START =
         LocalDateTime.of(2020, 11, 13, 12, 15, 0, 0);
@@ -74,7 +76,7 @@ public interface TestData {
     List<Section> SECTIONS = new ArrayList<>() {
         {
             add(Section.builder()
-                .id(ID).sectionName(FNAME).eventLocationId(ID).sectionDescription(DESC).capacity(TOTAL).seats(SEATS).build());
+                .id(ID).name(FNAME).eventLocationId(ID).description(DESC).capacity(TOTAL).seats(SEATS).build());
         }
     };
     Long LOCATIONID = 1L;
@@ -86,27 +88,20 @@ public interface TestData {
         }
     };
 
-    Customer USER_TICKET = Customer.CustomerBuilder.aCustomer().withId(ID).withUserCode(USER_CODE).withFirstName(FNAME)
-        .withLastName(LNAME).withEmail(DEFAULT_USER).withPassword(PASS).withBirthday(BIRTHDAY).withCreatedAt(CRE)
+    String USER_CODE_TICKET = "code00";
+    String EMAIL_TICKET = "ticket@email.com";
+    Customer USER_TICKET = Customer.CustomerBuilder.aCustomer().withId(ID).withUserCode(USER_CODE_TICKET).withFirstName(FNAME)
+        .withLastName(LNAME).withEmail(EMAIL_TICKET).withPassword(PASS).withBirthday(BIRTHDAY).withCreatedAt(CRE)
         .withUpdatedAt(UPD).withIsBlocked(false).withIsLogged(false).withPoints(POINTS).build();
 
     String TICKETS_BASE_URI = BASE_URI + "/tickets";
 
-    String TYP_I = "purchase";
-    String PAY = "card";
-    LocalDateTime PURCHASE = LocalDateTime.of(2020,5,24,0,0,0);
-    int NUM = 1;
-    List<Ticket> TICKETS = new ArrayList<>() {
-        {
-            add(Ticket.builder()
-                .ticketId(ID)
-                .ticketCode(USER_CODE)
-                .isPurchased(false)
-                .isReserved(false)
-                .purchaseDate(START)
-                .price(TOTAL)
-                .userCode(USER_CODE)
-                .build());
-        }
-    };
+
+
+
+
+
+    String ARTIST_BASE_URI = BASE_URI + "/artists";
+    String NEWS_BASE_URI = BASE_URI + "/news";
+
 }

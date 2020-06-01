@@ -13,13 +13,6 @@
   height: auto;
 }
 
-.headline {
-  max-width: 100%;
-  height: auto;
-  font-size: 40px;
-  padding-top: 30px;
-}
-
 .sub-headline {
   /* padding-top: 10px; */
 }
@@ -27,15 +20,16 @@
 .img-fluid {
   display: inline-flex;
   float: left;
-
-
-  padding-top: 30px;
-  max-width: 100%;
-  height: auto;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #888888;
 }
 
-#descriptionText {
-  padding-left: 10px;
+.image-crop-big {
+  object-fit: cover; /* scale the image */
+  object-position: center; /* Center the image within the element */
+  height: 400px;
+  width: 100%;
 }
 
 .h3 {
@@ -55,4 +49,35 @@
   display: block;
 }
 
+.page-title {
+  padding-left: 20px;
+  margin: 0px;
+}
 
+.description-title {
+  font-family: Segue UI, Roboto, "Helvetica Neue", sans-serif;
+  font-weight: bold;
+  font-size: 35px;
+  max-width: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.description-text {
+  font-family: Segue UI, Roboto, "Helvetica Neue", sans-serif;
+  white-space: pre-wrap;
+  line-height: 200%;
+  font-size: 18px;
+}
+
+.card-body {
+  padding-top: 60px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+
+.page-title {
+  padding-left: 20px;
+  margin: 0px;
+}

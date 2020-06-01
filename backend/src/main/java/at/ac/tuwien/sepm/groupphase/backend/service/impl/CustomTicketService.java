@@ -6,6 +6,7 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
+import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.SeatRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.ShowRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.TicketRepository;
@@ -32,16 +33,16 @@ public class CustomTicketService implements TicketService {
     private final TicketValidator validator;
     private final SeatRepository seatRepository;
     private final ShowRepository showRepository;
+    private final EventRepository eventRepository;
 
     @Autowired
-    public CustomTicketService(TicketRepository ticketRepository, TicketValidator validator,
-                               SeatRepository seatRepository, ShowRepository showRepository){
+    public CustomTicketService(TicketRepository ticketRepository, TicketValidator validator, SeatRepository seatRepository, ShowRepository showRepository, EventRepository eventRepository) {
         this.ticketRepository = ticketRepository;
         this.validator = validator;
         this.seatRepository = seatRepository;
         this.showRepository = showRepository;
+        this.eventRepository = eventRepository;
     }
-
 
     @Override
     public List<Ticket> buyTickets(List<Ticket> tickets) throws ValidationException, DataAccessException {
@@ -96,13 +97,18 @@ public class CustomTicketService implements TicketService {
             Show show = showRepository.findShowById(ticketEntity.getShow().getId());
             ticketEntity.setShow(show);
 
+            Event event = eventRepository.findEventByEventCode(ticketEntity.getShow().getEventCode());
+            ticketEntity.setEvent(event);
+
             ticketEntity.setPrice(50);
             validator.validateSave(ticketEntity).throwIfViolated();
             validator.validate(ticketEntity).throwIfViolated();
 
             show.setTicketsSold(show.getTicketsSold() + 1);
             show.setTicketsAvailable(show.getTicketsAvailable() - 1);
+            event.setTotalTicketsSold(event.getTotalTicketsSold() + 1);
             showRepository.save(show);
+            eventRepository.save(event);
 
             seat.setFree(false);
             seatRepository.save(seat);

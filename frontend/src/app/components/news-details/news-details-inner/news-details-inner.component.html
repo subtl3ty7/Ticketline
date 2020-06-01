@@ -1,16 +1,10 @@
 <div *ngIf="newsEntry">
-  <div routerLink="/top-ten-events">
-    <h1 class="title-headline">{{newsEntry.title}}</h1>
-  </div>
+  <h1 class="title-headline">{{newsEntry.title}}</h1>
   <div class="author-font">{{formatDate(newsEntry.publishedAt)}}, von {{newsEntry.author}}</div>
   <div class="container">
     <img src="{{newsEntry.photo}}" class="image-crop-big img-fluid border border-dark custom-border-width">
     <div class="text-justify news-summary-font">{{newsEntry.summary}}{{"\n\n"}}</div>
     <div class="text-justify news-text-font">{{newsEntry.text}}</div>
   </div>
-
-
-
-
 
 </div>

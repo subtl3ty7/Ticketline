@@ -1,12 +1,18 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
 
+import org.hibernate.annotations.ResultCheckStyle;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Entity(name = "user")
+@SQLDelete(sql = "UPDATE USER SET is_Deleted=true WHERE id = ?", check = ResultCheckStyle.COUNT)
+@Where(clause = "is_Deleted=false")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn (name = "USER_TYPE", discriminatorType= DiscriminatorType.STRING)
 public abstract class AbstractUser {
@@ -55,8 +61,12 @@ public abstract class AbstractUser {
     @Column(nullable = false, name = "UPDATED_AT")
     private LocalDateTime updatedAt;
 
-    public void setEmail(String email){
-        this.email = email;
+    @Column(name="is_Deleted")
+    private boolean isDeleted;
+
+    @PreRemove
+    public void deleteUser() {
+        this.isDeleted = true;
     }
 
     public Long getId() {
@@ -93,6 +103,10 @@ public abstract class AbstractUser {
 
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -133,6 +147,14 @@ public abstract class AbstractUser {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 
     @Override

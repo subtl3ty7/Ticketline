@@ -77,4 +77,7 @@ export class EventsTabComponent implements OnInit {
       this.errorMessage = error.error.message;
     }
   }
+  public getName(): string {
+    return this.event.name;
+  }
 }

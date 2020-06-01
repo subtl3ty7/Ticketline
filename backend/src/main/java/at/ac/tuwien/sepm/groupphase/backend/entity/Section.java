@@ -24,11 +24,11 @@ public class Section implements Serializable {
     @NotNull
     @Size(min=1, max = 100)
     @Column(nullable = false, length = 100)
-    private String sectionName;
+    private String name;
 
     @Size(max = 1000)
     @Column(length = 1000)
-    private String sectionDescription;
+    private String description;
 
     @ToString.Exclude
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -48,8 +48,8 @@ public class Section implements Serializable {
     }
 
     public Section(Section section) {
-        this.sectionName = section.getSectionName();
-        this.sectionDescription = section.getSectionDescription();
+        this.name = section.getName();
+        this.description = section.getDescription();
         this.capacity = section.getCapacity();
         this.seats = new ArrayList<>();
         for(Seat seat: section.getSeats()) {

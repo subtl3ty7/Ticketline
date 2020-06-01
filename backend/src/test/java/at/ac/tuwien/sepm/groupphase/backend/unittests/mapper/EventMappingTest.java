@@ -35,6 +35,8 @@ public class EventMappingTest implements TestData {
         .description(DESC)
         .category(CAT)
         .type(TYP)
+        .eventCategory(CAT1)
+        .eventType(TYP1)
         .startsAt(START)
         .endsAt(END)
         .prices(PRICES)
@@ -54,6 +56,8 @@ public class EventMappingTest implements TestData {
             () -> assertEquals(DESC, simpleEventDto.getDescription()),
             () -> assertEquals(START, simpleEventDto.getStartsAt()),
             () -> assertEquals(END, simpleEventDto.getEndsAt()),
+            () -> assertEquals(CAT1, simpleEventDto.getEventCategory()),
+            () -> assertEquals(TYP1, simpleEventDto.getEventType()),
             () -> assertEquals(PRICES.get(0), simpleEventDto.getStartPrice())
         );
     }
@@ -73,6 +77,8 @@ public class EventMappingTest implements TestData {
             () -> assertEquals(DESC, simpleEventDto.getDescription()),
             () -> assertEquals(START, simpleEventDto.getStartsAt()),
             () -> assertEquals(END, simpleEventDto.getEndsAt()),
+            () -> assertEquals(CAT1, simpleEventDto.getEventCategory()),
+            () -> assertEquals(TYP1, simpleEventDto.getEventType()),
             () -> assertEquals(PRICES.get(0), simpleEventDto.getStartPrice())
         );
     }

@@ -24,4 +24,6 @@ public interface ShowRepository extends JpaRepository<Show, Long> {
      * @return a list of shows which belong to corresponding event.
      */
     List<Show> findShowsByEventCode(String eventCode);
+
+    List<Show> findShowsByEventLocationOriginalId(Long eventLocationId);
 }

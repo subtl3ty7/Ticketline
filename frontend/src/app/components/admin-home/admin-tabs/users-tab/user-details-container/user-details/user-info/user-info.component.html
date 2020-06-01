@@ -37,31 +37,24 @@
   <div fxLayout="row" class="info-wrapper">
     <img src="assets/images/user/birth.svg" alt="">
     <div class="info">
-      <div class="info-label">Birthdate</div>
+      <div class="info-label">Geburtsdatum</div>
       <div class="info-field">{{user?.birthday | date}}</div>
     </div>
   </div>
 
   <div fxLayout="row" class="info-wrapper">
+    <img src="assets/images/user/person.svg" alt="">
     <div class="info">
-      <div class="info-label">User Type</div>
+      <div class="info-label">Usertyp</div>
       <div class="info-field status-label" *ngIf="user.admin">Administrator</div>
-      <div class="info-field status-label" *ngIf="!user.admin">Customer</div>
-    </div>
-  </div>
-
-  <!--ONLINE STATUS-->
-  <div fxLayout="row" class="info-wrapper">
-    <div class="info">
-      <div class="info-label">Is Online</div>
-      <div class="info-field status-label">{{user?.logged}}</div>
+      <div class="info-field status-label" *ngIf="!user.admin">Kunde</div>
     </div>
   </div>
 
   <div fxLayout="row" class="info-wrapper">
     <img src="assets/images/user/history.svg" alt="">
     <div class="info">
-      <div class="info-label">Created At</div>
+      <div class="info-label">Erstellt am</div>
       <div class="info-field status-label">{{user?.createdAt | date}}</div>
     </div>
   </div>
@@ -69,7 +62,7 @@
   <div fxLayout="row" class="info-wrapper">
     <img src="assets/images/user/history.svg" alt="">
     <div class="info">
-      <div class="info-label">Updated At</div>
+      <div class="info-label">Bearbeitet am</div>
       <div class="info-field status-label">{{user?.updatedAt | date}}</div>
     </div>
   </div>
@@ -79,7 +72,7 @@
   <div *ngIf="user?.admin === false">
 
     <div fxLayout="row" class="user-info-padding">
-      <div class="customer-label">Customer Related Information</div>
+      <div class="customer-label">Kunde Informationen</div>
     </div>
 
     <!--BLOCKED STATUS-->
@@ -87,7 +80,7 @@
       <img src="assets/images/user/block.svg" alt="" *ngIf="user?.blocked">
       <img src="assets/images/user/not-block.svg" alt="" *ngIf="user?.blocked === false">
       <div class="info">
-        <div class="info-label">Is Blocked</div>
+        <div class="info-label">Ist Blocked</div>
         <div class="info-field status-label">{{user?.blocked}}</div>
       </div>
     </div>
@@ -96,7 +89,7 @@
     <div fxLayout="row" class="info-wrapper">
       <img src="assets/images/user/points.svg" alt="">
       <div class="info">
-        <div class="info-label">Points</div>
+        <div class="info-label">Prämienpunkte</div>
         <div class="info-field status-label">{{user?.points}}</div>
       </div>
     </div>

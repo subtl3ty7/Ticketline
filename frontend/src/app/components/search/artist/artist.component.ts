@@ -3,9 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../../services/auth.service';
 import {ArtistService} from '../../../services/artist.service';
 import {Artist} from '../../../dtos/artist';
-import {ActivatedRoute} from '@angular/router';
-import {SearchShared} from '../search-shared';
+import {ActivatedRoute, Router} from '@angular/router';
+import {SearchEntity, SearchShared} from '../search-shared';
 import {string} from '@amcharts/amcharts4/core';
+import {EventService} from '../../../services/event.service';
+import {Background} from '../../../utils/background';
 
 @Component({
   selector: 'app-artist',
@@ -18,8 +20,13 @@ export class ArtistComponent implements OnInit {
   lastName: string = '';
   artists: Artist[];
 
-  constructor(public authService: AuthService, private artistService: ArtistService, private activatedRoute: ActivatedRoute, private searchShared: SearchShared) {
-
+  constructor(public authService: AuthService,
+              private artistService: ArtistService,
+              private activatedRoute: ActivatedRoute,
+              private searchShared: SearchShared,
+              private router: Router,
+              private background: Background) {
+    background.defineBackground();
   }
 
   ngOnInit(): void {
@@ -27,9 +34,14 @@ export class ArtistComponent implements OnInit {
     const searchTerm = sessionStorage.getItem('searchTerm').split(' ', 2);
     this.firstName = searchTerm[0];
     this.lastName = searchTerm[1];
-    document.body.style.backgroundImage = null;
-    document.body.style.backgroundColor = '#DEDEDE';
     console.log('first name: ' + this.firstName + ', last name: ' + this.lastName);
     this.searchShared.getArtistsByFirstAndLastName(this.firstName, this.lastName);
+  }
+
+  searchEvents(artist: Artist) {
+      console.log('searching for artists events with id ' + artist.id);
+      sessionStorage.setItem('artistId', artist.id.toString());
+      sessionStorage.setItem('artistName', artist.firstName + ' ' + artist.lastName);
+      this.router.navigate(['/search/artist-events']);
   }
 }

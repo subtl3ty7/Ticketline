@@ -1,4 +1,5 @@
 import {EventLocation} from './event-location';
+import {SimpleEvent} from './simple-event';
 
 export class Show {
   public id: number;
@@ -9,4 +10,5 @@ export class Show {
   public ticketsAvailable: number;
   public eventLocationCopy: EventLocation;
   public eventLocationOriginalId: number;
+  public event: SimpleEvent;
 }

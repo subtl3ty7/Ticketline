@@ -40,4 +40,10 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     Event findEventByEventCode(String eventCode);
 
     List<Event> findEventsByArtistsContaining(Artist artist);
+
+
+    Event findEventById(Long id);
+
+    List<Event> findEventsByNameContainingIgnoreCase(String name);
+
 }

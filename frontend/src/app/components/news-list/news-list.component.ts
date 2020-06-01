@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {News} from '../../dtos/news';
 import {NewsService} from '../../services/news.service';
 import {AuthService} from '../../services/auth.service';
+import {Router} from '@angular/router';
+import {Background} from '../../utils/background';
 
 @Component({
   selector: 'app-news',
@@ -14,15 +16,12 @@ export class NewsListComponent implements OnInit {
   latestNews: News[][];
   seenNews: News[][];
 
-  constructor(private newsService: NewsService, private authService: AuthService) {
-    document.body.style.background = '#0c0d0f';
-    document.body.style.backgroundImage = 'url("assets/images/bg.png")';
-    document.body.style.backgroundRepeat = 'no-repeat';
-    document.body.style.backgroundPosition = 'top';
-    document.body.style.backgroundSize = '100%';
+  constructor(private newsService: NewsService, private authService: AuthService, private background: Background) {
+    this.background.defineBackground();
   }
 
   ngOnInit(): void {
+    this.defineBackground();
     this.getSeen();
     this.getLatest();
   }
@@ -79,5 +78,14 @@ export class NewsListComponent implements OnInit {
       blocks.push(lastBlock);
     }
     return blocks;
+  }
+
+
+  defineBackground() {
+    document.body.style.background = '#0c0d0f';
+    document.body.style.backgroundImage = 'url("assets/images/bg.png")';
+    document.body.style.backgroundRepeat = 'no-repeat';
+    document.body.style.backgroundPosition = 'top';
+    document.body.style.backgroundSize = '100%';
   }
 }

@@ -4,8 +4,8 @@
     <div class="mx-auto" style="max-width: 1320px; width: 100%;">
       <span class="anchor" id="formLogin"></span>
       <div class="card main-body">
-        <div class="card-header d-flex align-items-center">
-          <h1 class="mb-0 ml-3 page-title">Erweiterte Ort-Suche</h1>
+        <div class="card-header align-items-center">
+          <h1 class="mb-0 ml-3 page-title">Erweiterte Suche - Ort</h1>
         </div>
         <div class="card-body">
           <form class="form" [formGroup]="advancedLocationSearchForm" (ngSubmit)="advancedLocationSearch()">
@@ -14,7 +14,7 @@
               <div class="form-group">
                   <label for="inputName">Bezeichnung</label>
                   <input type="text" name="name" formControlName="name" class="form-control" id="inputName"
-                         placeholder="Vorname">
+                         placeholder="Bezeichnung des Veranstaltungsortes">
                 </div>
               </div>
             </div>
@@ -38,9 +38,8 @@
             <div class="row">
               <div class="col">
                 <div class="form-group">
-                  <label for="inputCountry">Land</label>
-                  <input type="text" name="country" formControlName="country" class="form-control" id="inputCountry"
-                         placeholder="Land">
+                  <label for="inputCountry">Land</label><br>
+                  <app-dropdown-country id="inputCountry"></app-dropdown-country>
                 </div>
               </div>
               <div class="col">

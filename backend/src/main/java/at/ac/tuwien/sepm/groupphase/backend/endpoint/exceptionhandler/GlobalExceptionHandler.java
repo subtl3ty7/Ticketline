@@ -4,10 +4,7 @@ import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -43,6 +40,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Setter
     @Getter
+    @ToString
     @AllArgsConstructor
     @NoArgsConstructor
     private class JsonResponse {
@@ -63,6 +61,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         HttpStatus status,
         WebRequest request) {
         LOGGER.info("Handling Spring InternalException: " + exception.getMessage());
+        exception.printStackTrace();
         return new ResponseEntity(
             new JsonResponse(
                 LocalDateTime.now(),
@@ -120,7 +119,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {ValidationException.class})
     protected ResponseEntity<Object> handleValidation(ValidationException e) {
         LOGGER.info("Handling ValidationException");
-        return new ResponseEntity(
+        e.printStackTrace();
+        ResponseEntity<Object> responseEntity = new ResponseEntity(
             new JsonResponse(
                 LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(),
@@ -129,6 +129,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             ),
             HttpStatus.BAD_REQUEST
         );
+        LOGGER.info("Sending ResponseEntity(body=" + responseEntity.getBody() + ", statusCode=" + responseEntity.getStatusCode() + ")");
+        return responseEntity;
     }
 
     /**
@@ -137,6 +139,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {NotFoundException.class})
     protected ResponseEntity<JsonResponse> handleNotFound(NotFoundException e) {
         LOGGER.info("Handling NotFoundException");
+        e.printStackTrace();
         return new ResponseEntity(
             new JsonResponse(
                 LocalDateTime.now(),

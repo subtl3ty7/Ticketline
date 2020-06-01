@@ -26,14 +26,11 @@ export class UsersTabComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('scrollBlock') scrollBlock: ElementRef;
 
-  error = false;
-  errorMessage = '';
-  private user: User;
+  error;
   private users: Array<User>;
-  private searchUsers: Array<User>;
-  private searchParam = '';
+  private searchBlocked: Array<User>;
   private showBlocked = false;
-  private searchIn;
+  private searchUser;
 
   constructor(private userService: UserService,
               public  router: Router,
@@ -43,16 +40,34 @@ export class UsersTabComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadAllUsers();
+    this.searchUser = new User();
+    this.searchUser.userCode = '';
+    this.searchUser.firstName = '';
+    this.searchUser.lastName = '';
+    this.searchUser.email = '';
   }
 
   private loadAllUsers() {
     this.userService.getAllUsers().subscribe(
-      (user: User[]) => {
-        this.users = user;
+      (users: User[]) => {
+        this.users = users;
         this.initTable();
       },
       error => {
-        this.defaultServiceErrorHandling(error);
+        this.error = error.error;
+      }
+    );
+  }
+
+  private loadAllUsersByParameters() {
+    console.log(this.searchUser);
+    this.userService.getUsersByParameters(this.searchUser).subscribe(
+      (users: User[]) => {
+        this.users = users;
+        this.initTable();
+      },
+      (error) => {
+        this.error = error.error;
       }
     );
   }
@@ -75,9 +90,9 @@ export class UsersTabComponent implements OnInit {
 
   private blockUser(element) {
     element.blocked = true;
-    this.userService.blockUser(element.userCode).subscribe(
-      error => {
-        this.defaultServiceErrorHandling(error);
+    this.userService.blockUser(element.userCode).subscribe( () => {},
+      (error) => {
+        this.error = error.error;
       }
     );
   }
@@ -85,9 +100,9 @@ export class UsersTabComponent implements OnInit {
   private unblockUser(element) {
 
     element.blocked = false;
-    this.userService.unblockUser(element.userCode).subscribe(
-      error => {
-        this.defaultServiceErrorHandling(error);
+    this.userService.unblockUser(element.userCode).subscribe( () => {},
+      (error) => {
+        this.error = error.error;
       }
     );
   }
@@ -95,49 +110,19 @@ export class UsersTabComponent implements OnInit {
   private createNewUser() {
     this.router.navigate(['create-user']);
   }
-
-  public searchForAllUsers(searchData?, searchIn?) {
-    this.searchParam = searchData.target.value;
-    this.applySearch(this.users, searchIn);
-  }
-
-  private applySearch(users: Array<User>, searchIn) {
-    if (!this.searchParam) {
-      if (this.showBlocked) {
-        this.searchUsers = users.filter(param => param.blocked === true);
-        this.initSearchTable();
-      } else {
-        this.initTable();
-      }
-    } else {
-      this.searchUsers = users.filter((param) => (
-        (param.userCode.toLowerCase() + ' ' + param.firstName.toLowerCase() + ' ' + param.lastName.toLowerCase() + ' ' + param.email)
-          .indexOf(this.searchParam.toLowerCase()) > -1));
-      if (this.showBlocked) {
-        this.searchUsers = this.searchUsers.filter((param) => (param.blocked === true));
-      }
+  private applyBlocked(users: Array<User>) {
+    if (this.showBlocked) {
+      this.searchBlocked = users.filter(param => param.blocked === true);
       this.initSearchTable();
-    }
-  }
-
-  private initSearchTable() {
-    if (this.searchUsers) {
-      this.dataSource = new MatTableDataSource(this.searchUsers);
-      this.dataSource.sort = this.sort;
-    }
-  }
-
-  private defaultServiceErrorHandling(error: any) {
-    console.log(error);
-    this.error = true;
-    if (error.status === 0) {
-      // If status is 0, the backend is probably down
-      this.errorMessage = 'The backend seems not to be reachable';
-    } else if (error.error.message === 'No message available') {
-      // If no detailed error message is provided, fall back to the simple error name
-      this.errorMessage = error.error.error;
     } else {
-      this.errorMessage = error.error.message;
+      this.initTable();
     }
   }
+private initSearchTable() {
+  if (this.searchBlocked) {
+    this.dataSource = new MatTableDataSource(this.searchBlocked);
+    this.dataSource.sort = this.sort;
+  }
+}
+
 }
