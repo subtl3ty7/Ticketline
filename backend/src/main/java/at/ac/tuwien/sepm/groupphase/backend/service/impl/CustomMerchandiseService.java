@@ -59,15 +59,4 @@ public class CustomMerchandiseService implements MerchandiseService {
         List<Merchandise> allPremiumProducts = merchandiseRepository.findAllByPremiumIsTrue();
         return allPremiumProducts;
     }
-
-    @Override
-    public List<Merchandise> buyMerchandiseProducts(List<Merchandise> products) throws ValidationException, DataAccessException {
-        List<Merchandise> productsToBuy = new ArrayList<>();
-
-        for (Merchandise product : products) {
-
-
-        }
-        return null;
-    }
 }
