@@ -84,7 +84,6 @@ public class EventEndpoint {
     }
 
 
-
     @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
     @GetMapping(value = "/{eventCode}")
     @ApiOperation(
@@ -192,4 +191,28 @@ public class EventEndpoint {
         List<SimpleEventDto> result = eventMapper.eventToSimpleEventDto(eventService.findEventsAdvanced(name, type, category, startsAtDate, endsAtDate, showDuration, price));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @Secured("ROLE_ADMIN")
+    @GetMapping(value = "", params = {"eventCode", "name", "startRange", "endRange"})
+    @ApiOperation(
+        value = "Get simple events",
+        notes = "Get simple events by params",
+        authorizations = {@Authorization(value = "apiKey")})
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "Events are successfully retrieved"),
+        @ApiResponse(code = 404, message = "No Event is found"),
+        @ApiResponse(code = 500, message = "Connection Refused"),
+    })
+    public ResponseEntity<List<SimpleEventDto>> findSimpleEventsByParam(@RequestParam String eventCode,
+                                                                        @RequestParam String name,
+                                                                        @RequestParam String startRange,
+                                                                        @RequestParam String endRange
+    ) {
+        LOGGER.info("GET /api/v1/events?eventCode=" + eventCode + "&name=" + name +  "&startRange=" + startRange + "&endRange=" + endRange);
+        LocalDateTime startRangeDate = LocalDate.parse(startRange, DateTimeFormatter.ofPattern("E MMM dd yyyy")).atStartOfDay();
+        LocalDateTime endRangeDate = LocalDate.parse(endRange, DateTimeFormatter.ofPattern("E MMM dd yyyy")).atStartOfDay();
+        List<SimpleEventDto> result = eventMapper.eventToSimpleEventDto(eventService.findSimpleEventsByParam(eventCode, name, startRangeDate, endRangeDate));
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
 }

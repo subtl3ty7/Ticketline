@@ -46,4 +46,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     List<Event> findEventsByNameContainingIgnoreCase(String name);
 
+    List<Event> findAllByEventCodeContainingIgnoreCaseAndNameContainingIgnoreCaseAndStartsAtBetween(String eventCode, String name, LocalDateTime startsAt, LocalDateTime endsAt);
+
 }
