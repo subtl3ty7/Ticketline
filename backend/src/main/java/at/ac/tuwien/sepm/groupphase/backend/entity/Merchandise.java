@@ -57,10 +57,6 @@ public class Merchandise {
     @Column(nullable = false, name = "premium")
     private boolean premium;
 
-    @NotNull
-    @Column(nullable = false, name = "purchased")
-    private boolean purchased;
-
 
 
 }
