@@ -1,7 +1,8 @@
 package at.ac.tuwien.sepm.groupphase.backend.unittests.repository;
 
 import at.ac.tuwien.sepm.groupphase.backend.basetest.TestData;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Invoice;
+import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractInvoice;
+import at.ac.tuwien.sepm.groupphase.backend.entity.TicketInvoice;
 import at.ac.tuwien.sepm.groupphase.backend.repository.InvoiceRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,10 +22,9 @@ public class InvoiceRepositoryTest implements TestData {
     @Autowired
     private InvoiceRepository invoiceRepository;
 
-    private Invoice invoice = Invoice.builder()
+    private AbstractInvoice invoice = TicketInvoice.builder()
         .id(ID)
         .invoice_type(TYP_I)
-        .merchandise_code(USER_CODE)
         .userCode(USER_CODE)
         .payment_method(PAY)
         .purchased_at(PURCHASE)
@@ -34,10 +34,9 @@ public class InvoiceRepositoryTest implements TestData {
     @BeforeEach
     public void beforeEach() {
         invoiceRepository.deleteAll();
-        invoice = Invoice.builder()
+        invoice = TicketInvoice.builder()
             .id(ID)
             .invoice_type(TYP_I)
-            .merchandise_code(USER_CODE)
             .userCode(USER_CODE)
             .payment_method(PAY)
             .purchased_at(PURCHASE)
@@ -51,19 +50,20 @@ public class InvoiceRepositoryTest implements TestData {
 
         assertAll(
             () -> assertEquals(1, invoiceRepository.findAll().size()),
-            () -> assertNotNull(invoiceRepository.findInvoiceById(invoice.getId()))
+            () -> assertNotNull(invoiceRepository.findInvoiceById(invoiceRepository.findAll().get(0).getId()))
         );
     }
 
     @Test
-    public void givenNothing_whenSaveInvoice_thenFindListWithOneElementAndFindInvoiceByUserCode() {
-        invoiceRepository.save(invoice);
+    public void givenNothing_whenSave2Invoices_thenFindListWith2ElementAndFindInvoicesByUserCode() {
         invoice.setId(2L);
+        invoiceRepository.save(invoice);
+        invoice.setId(3L);
         invoiceRepository.save(invoice);
 
         assertAll(
-            () -> assertEquals(1, invoiceRepository.findAll().size()),
-            () -> assertEquals(1, invoiceRepository.findInvoicesByUserCode(invoice.getUserCode()).size())
+            () -> assertEquals(2, invoiceRepository.findAll().size()),
+            () -> assertEquals(2, invoiceRepository.findInvoicesByUserCode(invoice.getUserCode()).size())
         );
     }
 }

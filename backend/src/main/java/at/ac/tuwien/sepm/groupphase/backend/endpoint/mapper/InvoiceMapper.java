@@ -1,7 +1,8 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper;
 
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.InvoiceDto;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Invoice;
+import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractInvoice;
+import at.ac.tuwien.sepm.groupphase.backend.entity.TicketInvoice;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Named;
@@ -12,14 +13,14 @@ import java.util.List;
 public interface InvoiceMapper {
 
     @Named("InvoiceToInvoiceDto")
-    InvoiceDto invoiceToInvoiceDto(Invoice invoice);
+    InvoiceDto invoiceToInvoiceDto(TicketInvoice invoice);
 
     @Named("InvoiceDtoToInvoice")
-    Invoice invoiceDtoToInvoice(InvoiceDto invoiceDto);
+    TicketInvoice invoiceDtoToInvoice(InvoiceDto invoiceDto);
 
     @IterableMapping(qualifiedByName = "InvoiceListToInvoiceDtoList")
-    List<InvoiceDto> invoiceListToInvoiceDtoList(List<Invoice> invoices);
+    List<InvoiceDto> invoiceListToInvoiceDtoList(List<TicketInvoice> invoices);
 
     @IterableMapping(qualifiedByName = "InvoiceDtoListToInvoiceList")
-    List<Invoice> invoiceDtoListToInvoiceList(List<InvoiceDto> invoiceDtos);
+    List<TicketInvoice> invoiceDtoListToInvoiceList(List<InvoiceDto> invoiceDtos);
 }
