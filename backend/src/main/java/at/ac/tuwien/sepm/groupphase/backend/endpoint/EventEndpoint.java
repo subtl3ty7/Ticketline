@@ -186,12 +186,31 @@ public class EventEndpoint {
                                                                   @Valid @RequestParam String showDuration
     ) {
         LOGGER.info("GET /api/v1/events?eventName=" + eventName + "&type=" + type + "&category=" + category + "&startsAt=" + startsAt + "&endsAt=" + endsAt + "&showDuration=" + showDuration);
-        LocalDateTime startsAtDate = LocalDateTime.parse(startsAt);
-        LocalDateTime endsAtDate = LocalDateTime.parse(endsAt);
-        EventTypeEnum eventTypeEnum = EventTypeEnum.valueOf(type);
-        EventCategoryEnum eventCategoryEnum = EventCategoryEnum.valueOf(category);
-        Duration showDurationParsed = Duration.parse(showDuration);
-        List<SimpleEventDto> result = eventMapper.eventToSimpleEventDto(eventService.findEventsAdvanced(eventName, eventTypeEnum, eventCategoryEnum, startsAtDate, endsAtDate, showDurationParsed));
+        LocalDateTime startsAtParsed = null;
+        if (!startsAt.isEmpty()) {
+            startsAtParsed = LocalDateTime.parse(startsAt);
+        }
+
+        LocalDateTime endsAtParsed = null;
+        if (!endsAt.isEmpty()) {
+            endsAtParsed = LocalDateTime.parse(endsAt);
+        }
+
+        Integer eventTypeEnumOrdinal = null;
+        if (!type.isEmpty()) {
+            eventTypeEnumOrdinal = EventTypeEnum.valueOf(type).ordinal();
+        }
+
+        Integer eventCategoryEnumOrdinal = null;
+        if (!category.isEmpty()) {
+            eventCategoryEnumOrdinal = EventCategoryEnum.valueOf(category).ordinal();
+        }
+
+        Duration showDurationParsed = null;
+        if (!showDuration.isEmpty()) {
+            showDurationParsed = Duration.parse(showDuration);
+        }
+        List<SimpleEventDto> result = eventMapper.eventToSimpleEventDto(eventService.findEventsAdvanced(eventName, eventTypeEnumOrdinal, eventCategoryEnumOrdinal, startsAtParsed, endsAtParsed, showDurationParsed));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

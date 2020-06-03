@@ -1,7 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.ShowDto;
-import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleShowDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EventMapper;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.ShowMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventCategoryEnum;
@@ -73,21 +72,49 @@ public class ShowEndpoint {
         @ApiResponse(code = 404, message = "No Event is found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<List<SimpleShowDto>> findShowsAdvanced(@Valid @RequestParam String eventName,
+    public ResponseEntity<List<ShowDto>> findShowsAdvanced(@Valid @RequestParam String eventName,
                                                                    @Valid @RequestParam String type,
                                                                    @Valid @RequestParam String category,
                                                                    @Valid @RequestParam String startsAt,
                                                                    @Valid @RequestParam String endsAt,
                                                                    @Valid @RequestParam String duration,
-                                                                   @Valid @RequestParam Integer price
+                                                                   @Valid @RequestParam String price
     ) {
         LOGGER.info("GET /api/v1/shows?eventName=" + eventName + "&type=" + type + "&category=" + category + "&startsAt=" + startsAt + "&endsAt=" + endsAt + "&duration=" + duration + "&price=" + price);
-        LocalDateTime startDateParsed = LocalDateTime.parse(startsAt);
-        LocalDateTime endDateParsed = LocalDateTime.parse(endsAt);
-        EventTypeEnum eventTypeEnum = EventTypeEnum.valueOf(type);
-        EventCategoryEnum eventCategoryEnum = EventCategoryEnum.valueOf(category);
-        Duration durationParsed = Duration.parse(duration);
-        List<SimpleShowDto> result = showMapper.showToSimpleShowDto(showService.findShowsAdvanced(eventName, eventTypeEnum, eventCategoryEnum, startDateParsed, endDateParsed, durationParsed, price));
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        LocalDateTime startsAtParsed = null;
+        if (!startsAt.isEmpty()) {
+            startsAtParsed = LocalDateTime.parse(startsAt);
+        }
+
+        LocalDateTime endsAtParsed = null;
+        if (!endsAt.isEmpty()) {
+            endsAtParsed = LocalDateTime.parse(endsAt);
+        }
+
+        Integer eventTypeEnumOrdinal = null;
+        if (!type.isEmpty()) {
+            eventTypeEnumOrdinal = EventTypeEnum.valueOf(type).ordinal();
+        }
+
+        Integer eventCategoryEnumOrdinal = null;
+        if (!category.isEmpty()) {
+            eventCategoryEnumOrdinal = EventCategoryEnum.valueOf(category).ordinal();
+        }
+
+        Duration durationParsed = null;
+        if (!duration.isEmpty()) {
+            durationParsed = Duration.parse(duration);
+        }
+
+        Integer priceInteger = null;
+        if (!price.isEmpty()) {
+            priceInteger = Integer.parseInt(price);
+        }
+
+        List<ShowDto> shows = showMapper.showToShowDto(showService.findShowsAdvanced(eventName, eventTypeEnumOrdinal, eventCategoryEnumOrdinal, startsAtParsed, endsAtParsed, durationParsed, priceInteger));
+        for(ShowDto show: shows) {
+            show.setEvent(eventMapper.eventToSimpleEventDto(eventService.findByEventCode(show.getEventCode())));
+        }
+        return new ResponseEntity<>(shows, HttpStatus.OK);
     }
 }

@@ -46,10 +46,12 @@ public class Show implements Serializable {
     private Long eventLocationOriginalId;
 
     @NotNull
+    @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false, length = 100)
     private EventTypeEnum eventType;
 
     @NotNull
+    @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false, length = 100)
     private EventCategoryEnum eventCategory;
 

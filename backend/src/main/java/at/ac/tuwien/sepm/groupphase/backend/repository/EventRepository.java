@@ -2,9 +2,9 @@ package at.ac.tuwien.sepm.groupphase.backend.repository;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.Artist;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
-import at.ac.tuwien.sepm.groupphase.backend.entity.EventCategoryEnum;
-import at.ac.tuwien.sepm.groupphase.backend.entity.EventTypeEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.Duration;
@@ -46,5 +46,13 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     List<Event> findEventsByNameContainingIgnoreCase(String name);
 
-    List<Event> findEventsByNameContainingIgnoreCaseAndEventTypeAndEventCategoryAndStartsAtIsGreaterThanEqualAndEndsAtIsLessThanEqualAndShowsDurationLessThanEqual(String name, EventTypeEnum type, EventCategoryEnum category, LocalDateTime startsAt, LocalDateTime endsAt, Duration duration);
+    @Query(value = "" +
+        "SELECT * FROM EVENT e " +
+        "WHERE ((:name IS NULL) OR (:name IS NOT NULL AND e.name LIKE %:name%)) " +
+        "AND ((:type IS NULL) OR (:type IS NOT NULL AND e.event_type = :type)) " +
+        "AND ((:category IS NULL) OR (:category IS NOT NULL AND e.event_category = :category))  " +
+        "AND ((:startsAt IS NULL) OR (:startsAt IS NOT NULL AND e.start_datetime > :startsAt))  " +
+        "AND ((:endsAt IS NULL) OR (:endsAt IS NOT NULL AND e.end_datetime < :endsAt))  " +
+        "AND ((:duration IS NULL) OR (:duration IS NOT NULL AND e.duration <= :duration))", nativeQuery = true)
+    List<Event> findEventsByNameContainingIgnoreCaseAndEventTypeContainingAndEventCategoryContainingAndStartsAtIsGreaterThanEqualAndEndsAtIsLessThanEqualAndShowsDurationLessThanEqual(@Param("name") String name, @Param("type") Integer type, @Param("category") Integer category, @Param("startsAt") LocalDateTime startsAt, @Param("endsAt") LocalDateTime endsAt, @Param("duration") Duration duration);
 }

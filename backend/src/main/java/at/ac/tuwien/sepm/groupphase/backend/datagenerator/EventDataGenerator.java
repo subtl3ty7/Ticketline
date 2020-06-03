@@ -2,12 +2,14 @@ package at.ac.tuwien.sepm.groupphase.backend.datagenerator;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.*;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
-import at.ac.tuwien.sepm.groupphase.backend.repository.*;
+import at.ac.tuwien.sepm.groupphase.backend.repository.ArtistRepository;
+import at.ac.tuwien.sepm.groupphase.backend.repository.SeatRepository;
+import at.ac.tuwien.sepm.groupphase.backend.repository.SectionRepository;
+import at.ac.tuwien.sepm.groupphase.backend.repository.ShowRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.ArtistService;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventLocationService;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
 import at.ac.tuwien.sepm.groupphase.backend.util.Resources;
-import jdk.jfr.EventType;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -21,7 +23,8 @@ import javax.persistence.EntityManagerFactory;
 import java.lang.invoke.MethodHandles;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Profile("generateData")
 @Component("EventDataGenerator")
@@ -42,6 +45,7 @@ public class EventDataGenerator {
     private final static int numberOfEventLocations = 5;
     private static final int numberOfEvents = 15;
     private static final int numberOfArtists = 5;
+    private static final int eventDurationInHours = 2;
 
     @Autowired
     public EventDataGenerator(SectionRepository sectionRepository,
@@ -127,6 +131,7 @@ public class EventDataGenerator {
                 .artists(addedArtists)
                 .eventType(EventTypeEnum.MUSIC)
                 .eventCategory(EventCategoryEnum.HIPHOP)
+                .duration(Duration.ofHours(eventDurationInHours))
                 .build();
             event = eventService.createNewEvent(event);
             events.add(event);
@@ -143,7 +148,7 @@ public class EventDataGenerator {
             //List<EventLocation> location = new ArrayList<>();
             //location.add(new EventLocation(eventLocation));
             LocalDateTime start = LocalDateTime.now();
-            LocalDateTime end = start.plusHours(2);
+            LocalDateTime end = start.plusHours(eventDurationInHours);
             Show show = Show.builder()
                 .startsAt(start)
                 .endsAt(end)
@@ -152,7 +157,6 @@ public class EventDataGenerator {
                 .eventLocationOriginalId(eventLocation.getId())
                 .eventType(typeEnum)
                 .eventCategory(categoryEnum)
-                .duration(Duration.between(start, end))
                 .eventName(eventName)
                 .price(50)
                 .build();

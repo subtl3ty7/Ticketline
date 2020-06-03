@@ -1,9 +1,9 @@
 package at.ac.tuwien.sepm.groupphase.backend.repository;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.EventCategoryEnum;
-import at.ac.tuwien.sepm.groupphase.backend.entity.EventTypeEnum;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.Duration;
@@ -31,5 +31,14 @@ public interface ShowRepository extends JpaRepository<Show, Long> {
 
     List<Show> findShowsByEventLocationOriginalId(Long eventLocationId);
 
-    List<Show> findShowsByEventNameContainingIgnoreCaseAndEventTypeAndEventCategoryAndStartsAtIsGreaterThanEqualAndEndsAtIsLessThanEqualAndDurationLessThanEqualAndPriceLessThanEqual(String name, EventTypeEnum type, EventCategoryEnum category, LocalDateTime startsAt, LocalDateTime endsAt, Duration duration, Integer price);
+    @Query(value = "" +
+        "SELECT * FROM SHOW s " +
+        "WHERE ((:eventName IS NULL) OR (:eventName IS NOT NULL AND s.event_name LIKE %:eventName%)) " +
+        "AND ((:type IS NULL) OR (:type IS NOT NULL AND s.event_type = :type)) " +
+        "AND ((:category IS NULL) OR (:category IS NOT NULL AND s.event_category = :category))  " +
+        "AND ((:startsAt IS NULL) OR (:startsAt IS NOT NULL AND s.start_datetime > :startsAt))  " +
+        "AND ((:endsAt IS NULL) OR (:endsAt IS NOT NULL AND s.end_datetime < :endsAt))  " +
+        "AND ((:price IS NULL) OR (:price IS NOT NULL AND s.price <= :price))  " +
+        "AND ((:duration IS NULL) OR (:duration IS NOT NULL AND s.duration <= :duration))", nativeQuery = true)
+    List<Show> findShowsByEventNameContainingIgnoreCaseAndEventTypeOrEventTypeIsNullAndEventCategoryOrEventCategoryIsNullAndStartsAtIsGreaterThanEqualAndEndsAtIsLessThanEqualAndDurationLessThanEqualAndPriceLessThanEqualOrPriceIsNull(@Param("eventName") String eventName, @Param("type") Integer type, @Param("category") Integer category, @Param("startsAt") LocalDateTime startsAt, @Param("endsAt") LocalDateTime endsAt, @Param("duration") Duration duration, @Param("price") Integer price);
 }

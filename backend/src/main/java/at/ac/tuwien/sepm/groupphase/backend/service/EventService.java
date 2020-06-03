@@ -1,8 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.service;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
-import at.ac.tuwien.sepm.groupphase.backend.entity.EventCategoryEnum;
-import at.ac.tuwien.sepm.groupphase.backend.entity.EventTypeEnum;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -26,5 +24,5 @@ public interface EventService {
 
     List<Event> findEventsByName(String name);
 
-    List<Event> findEventsAdvanced(String name, EventTypeEnum type, EventCategoryEnum category, LocalDateTime startsAt, LocalDateTime endsAt, Duration showDuration);
+    List<Event> findEventsAdvanced(String name, Integer type, Integer category, LocalDateTime startsAt, LocalDateTime endsAt, Duration showDuration);
 }
