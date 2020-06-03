@@ -29,16 +29,16 @@ export class EventAdvancedComponent implements OnInit {
   showEndsAt: string = '';
 
   constructor(private formBuilder: FormBuilder, public authService: AuthService, public router: Router, private artistService: ArtistService, private activatedRoute: ActivatedRoute, private searchShared: SearchShared) {
-    this.advancedEventSearchForm = this.formBuilder.group({
-      name: [''],
-      type: [''],
-      category: [''],
-      startsAt: [''],
-      endsAt: [''],
-      duration: [''],
-      startPrice: [''],
-      showStartsAt: [''],
-      showEndsAt: ['']
+    this.advancedEventSearchForm = new FormGroup({
+      name: new FormControl(),
+      type: new FormControl(),
+      category: new FormControl(),
+      startsAt: new FormControl(),
+      endsAt: new FormControl(),
+      duration: new FormControl(),
+      startPrice: new FormControl(),
+      showStartsAt: new FormControl(),
+      showEndsAt: new FormControl()
     });
   }
 
@@ -68,7 +68,7 @@ export class EventAdvancedComponent implements OnInit {
       sessionStorage.setItem('eventStartsAt', this.startsAt);
       sessionStorage.setItem('eventEndsAt', this.endsAt);
       sessionStorage.setItem('eventDuration', this.duration);
-      if (this.advancedEventSearchForm.controls.startPrice !== null || this.advancedEventSearchForm.controls.showStartAt !== null || this.advancedEventSearchForm.controls.showEndsAt !== null) {
+      if (this.startPrice !== '' || this.showStartsAt !== '' || this.showEndsAt !== '') {
         sessionStorage.setItem('eventStartPrice', this.startPrice);
         sessionStorage.setItem('eventShowStartsAt', this.showStartsAt);
         sessionStorage.setItem('eventShowEndsAt', this.showEndsAt);

@@ -3,7 +3,7 @@ import {EventService} from '../../../services/event.service';
 import {Background} from '../../../utils/background';
 import {AuthService} from '../../../services/auth.service';
 import {ArtistService} from '../../../services/artist.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {SearchShared} from '../search-shared';
 
 @Component({
@@ -20,6 +20,7 @@ export class ShowComponent implements OnInit {
               private artistService: ArtistService,
               private activatedRoute: ActivatedRoute,
               private searchShared: SearchShared,
+              private router: Router
               ) {
     background.defineBackground();
   }
@@ -36,10 +37,13 @@ export class ShowComponent implements OnInit {
       const showEndsAt = sessionStorage.getItem('eventShowEndsAt');
       console.log('show name: ' + this.name + ', show type: ' + type + ' show category: ' + category + 'starts at: ' + showStartsAt + ', event ends at: ' + showEndsAt + ', event duration: ' + duration + ', event start price: ' + startPrice);
       this.searchShared.getShowsBy(name, type, category, showStartsAt, showEndsAt, duration, startPrice);
-    } else {
-      console.log('show name: ' + this.name);
-      this.searchShared.getEventsByName(this.name);
     }
   }
 
+  openPurchase(show) {
+    if (show) {
+      sessionStorage.setItem('show', JSON.stringify(show));
+      this.router.navigate(['ticket-purchase']);
+    }
+  }
 }

@@ -10,6 +10,7 @@ import {SimpleEvent} from '../../dtos/simple-event';
 import {DetailedEvent} from '../../dtos/detailed-event';
 import {Background} from '../../utils/background';
 import {ShowService} from '../../services/show.service';
+import {Show} from '../../dtos/show';
 
 export enum SearchEntity {
   ARTIST = 'Artist',
@@ -72,7 +73,13 @@ export class SearchShared {
   }
 
   getEventsBy(name: string, type: string, category: string, startsAt: string, endsAt: string, duration: string) {
-    this.eventService.getDetailedEventsBy(name, type, category, startsAt, endsAt, duration);
+    this.eventService.getDetailedEventsBy(name, type, category, startsAt, endsAt, duration).subscribe(
+      (events: DetailedEvent[]) => {
+        this.entities = events;
+      }, error => {
+        this.entities = null;
+      }
+    );
   }
 
   getEventsByName(name: string) {
@@ -87,6 +94,12 @@ export class SearchShared {
   }
 
   getShowsBy(name: never, type: string, category: string, showStartsAt: string, showEndsAt: string, duration: string, startPrice: string) {
-    this.showService.getDetailedShowsBy(name, type, category, showStartsAt, showEndsAt, duration, startPrice);
+    this.showService.getDetailedShowsBy(name, type, category, showStartsAt, showEndsAt, duration, startPrice).subscribe(
+      (shows: Show[]) => {
+        this.entities = shows;
+      }, error => {
+        this.entities = null;
+    }
+    );
   }
 }
