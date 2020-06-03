@@ -27,8 +27,8 @@ public class InvoiceRepositoryTest implements TestData {
         .invoice_type(TYP_I)
         .userCode(USER_CODE)
         .payment_method(PAY)
-        .purchased_at(PURCHASE)
-        .receipt_number(NUM)
+        .generated_at(GENERATE)
+        .invoice_number(NUM)
         .build();
 
     @BeforeEach
@@ -39,8 +39,8 @@ public class InvoiceRepositoryTest implements TestData {
             .invoice_type(TYP_I)
             .userCode(USER_CODE)
             .payment_method(PAY)
-            .purchased_at(PURCHASE)
-            .receipt_number(NUM)
+            .generated_at(GENERATE)
+            .invoice_number(NUM)
             .build();
     }
 

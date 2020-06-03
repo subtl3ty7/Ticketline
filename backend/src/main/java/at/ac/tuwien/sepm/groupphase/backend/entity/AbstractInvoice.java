@@ -28,16 +28,16 @@ public abstract class AbstractInvoice implements Serializable {
     private String userCode;
 
     @NotNull
-    @Column(nullable = false,  name = "purchased_at")
-    private LocalDateTime purchased_at;
+    @Column(nullable = false,  name = "generated_at")
+    private LocalDateTime generated_at;
 
-    @NotNull
-    @Column(nullable = false,  name = "payment_method")
+    @Column(name = "payment_method")
     private String payment_method;
 
     @NotNull
-    @Column(nullable = false,  name = "receipt_number")
-    private Integer receipt_number;
+    @Size(min = 6, max = 6)
+    @Column(nullable = false, name = "invoice_number", length = 6)
+    private String invoice_number;
 
     public AbstractInvoice () {}
 }

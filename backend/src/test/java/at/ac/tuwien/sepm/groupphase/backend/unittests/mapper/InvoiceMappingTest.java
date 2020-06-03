@@ -23,13 +23,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ActiveProfiles("test")
 public class InvoiceMappingTest implements TestData {
 
-    private final TicketInvoice invoice = TicketInvoice.builder()
+    private final AbstractInvoice invoice = TicketInvoice.builder()
         .id(ID)
         .invoice_type(TYP_I)
         .userCode(USER_CODE)
         .payment_method(PAY)
-        .purchased_at(PURCHASE)
-        .receipt_number(NUM)
+        .generated_at(GENERATE)
+        .invoice_number(NUM)
         .tickets(TICKETS)
         .build();
 
@@ -41,18 +41,16 @@ public class InvoiceMappingTest implements TestData {
         InvoiceDto invoiceDto = invoiceMapper.invoiceToInvoiceDto(invoice);
         assertAll(
             () -> assertEquals(ID, invoiceDto.getId()),
-            () -> assertEquals(TYP_I, invoiceDto.getInvoice_type()),
             () -> assertEquals(USER_CODE, invoiceDto.getUserCode()),
             () -> assertEquals(PAY, invoiceDto.getPayment_method()),
-            () -> assertEquals(PURCHASE, invoiceDto.getPurchased_at()),
-            () -> assertEquals(NUM, invoiceDto.getReceipt_number()),
-            () -> assertEquals(TICKETS, invoiceDto.getTickets())
+            () -> assertEquals(GENERATE, invoiceDto.getGenerated_at()),
+            () -> assertEquals(NUM, invoiceDto.getInvoice_number())
         );
     }
 
     @Test
     public void shouldMapInvoiceListToInvoiceDtoList() {
-        List<TicketInvoice> invoices = new ArrayList<>();
+        List<AbstractInvoice> invoices = new ArrayList<>();
         invoices.add(invoice);
         invoices.add(invoice);
 
@@ -60,12 +58,10 @@ public class InvoiceMappingTest implements TestData {
         InvoiceDto invoiceDto = invoiceDtos.get(0);
         assertAll(
             () -> assertEquals(ID, invoiceDto.getId()),
-            () -> assertEquals(TYP_I, invoiceDto.getInvoice_type()),
             () -> assertEquals(USER_CODE, invoiceDto.getUserCode()),
             () -> assertEquals(PAY, invoiceDto.getPayment_method()),
-            () -> assertEquals(PURCHASE, invoiceDto.getPurchased_at()),
-            () -> assertEquals(NUM, invoiceDto.getReceipt_number()),
-            () -> assertEquals(TICKETS, invoiceDto.getTickets())
+            () -> assertEquals(GENERATE, invoiceDto.getGenerated_at()),
+            () -> assertEquals(NUM, invoiceDto.getInvoice_number())
         );
     }
 
@@ -75,12 +71,10 @@ public class InvoiceMappingTest implements TestData {
         TicketInvoice invoice1 = invoiceMapper.invoiceDtoToInvoice(invoiceDto);
         assertAll(
             () -> assertEquals(ID, invoice1.getId()),
-            () -> assertEquals(TYP_I, invoice1.getInvoice_type()),
             () -> assertEquals(USER_CODE, invoice1.getUserCode()),
             () -> assertEquals(PAY, invoice1.getPayment_method()),
-            () -> assertEquals(PURCHASE, invoice1.getPurchased_at()),
-            () -> assertEquals(NUM, invoice1.getReceipt_number()),
-            () -> assertEquals(TICKETS, invoice1.getTickets())
+            () -> assertEquals(GENERATE, invoice1.getGenerated_at()),
+            () -> assertEquals(NUM, invoice1.getInvoice_number())
         );
     }
 }

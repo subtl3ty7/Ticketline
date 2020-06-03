@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.util;
 import org.springframework.util.StringUtils;
 
 import java.security.SecureRandom;
+import java.util.Random;
 
 public abstract class CodeGenerator {
     private static final String DIGITS = "0123456789";
@@ -23,6 +24,14 @@ public abstract class CodeGenerator {
                 int position = random.nextInt(allCharactersAndDigits.length());
                 code.append(allCharactersAndDigits.charAt(position));
             }
+        }
+
+        if (type == 'I') {
+            for (int i = 0; i < length; i++) {
+                int position = random.nextInt(DIGITS.length());
+                code.append(DIGITS.charAt(position));
+            }
+            return code.toString();
         }
 
         code.append(type);
@@ -65,5 +74,11 @@ public abstract class CodeGenerator {
         int newsCodeLength = 6;
         char type = 'N';
         return generateCode(newsCodeLength, type).toUpperCase();
+    }
+
+    public static String generateInvoiceNumber() {
+        int invoiceNumLength = 6;
+        char type = 'I';
+        return generateCode(invoiceNumLength, type);
     }
 }

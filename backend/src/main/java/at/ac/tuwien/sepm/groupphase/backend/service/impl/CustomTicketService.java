@@ -10,6 +10,7 @@ import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.SeatRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.ShowRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.TicketRepository;
+import at.ac.tuwien.sepm.groupphase.backend.service.InvoiceService;
 import at.ac.tuwien.sepm.groupphase.backend.service.TicketService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
 import at.ac.tuwien.sepm.groupphase.backend.util.validation.TicketValidator;
@@ -34,14 +35,16 @@ public class CustomTicketService implements TicketService {
     private final SeatRepository seatRepository;
     private final ShowRepository showRepository;
     private final EventRepository eventRepository;
+    private final InvoiceService invoiceService;
 
     @Autowired
-    public CustomTicketService(TicketRepository ticketRepository, TicketValidator validator, SeatRepository seatRepository, ShowRepository showRepository, EventRepository eventRepository) {
+    public CustomTicketService(TicketRepository ticketRepository, TicketValidator validator, SeatRepository seatRepository, ShowRepository showRepository, EventRepository eventRepository, InvoiceService invoiceService) {
         this.ticketRepository = ticketRepository;
         this.validator = validator;
         this.seatRepository = seatRepository;
         this.showRepository = showRepository;
         this.eventRepository = eventRepository;
+        this.invoiceService = invoiceService;
     }
 
     @Override
@@ -57,6 +60,7 @@ public class CustomTicketService implements TicketService {
 
             LOGGER.info("Purchased ticket " + savedTicket);
         }
+        invoiceService.createTicketInvoice(tickets, "PURCHASE");
         return savedTickets;
     }
 
@@ -141,6 +145,8 @@ public class CustomTicketService implements TicketService {
         Seat seat = ticket1.getSeat();
         seat.setFree(true);
         seatRepository.save(seat);
+
+        invoiceService.createTicketInvoice(List.of(ticket1), "CANCELLATION");
         ticketRepository.delete(ticket1);
         // do the money return  and invoices stuff
 
@@ -159,6 +165,7 @@ public class CustomTicketService implements TicketService {
         ticketRepository.save(ticket);
 
         LOGGER.info("Purchased ticket " + ticket);
+        invoiceService.createTicketInvoice(List.of(ticket), "PURCHASE");
 
         return ticket;
     }
@@ -174,6 +181,7 @@ public class CustomTicketService implements TicketService {
         seat.setFree(true);
         seatRepository.save(seat);
 
+        invoiceService.createTicketInvoice(List.of(chosenTicket), "CANCELLATION");
         ticketRepository.delete(chosenTicket);
         LOGGER.info("Reservation with the ticket code" + ticketCode +  " cancelled!");
     }

@@ -13,13 +13,13 @@ import java.util.List;
 public interface InvoiceMapper {
 
     @Named("InvoiceToInvoiceDto")
-    InvoiceDto invoiceToInvoiceDto(TicketInvoice invoice);
+    InvoiceDto invoiceToInvoiceDto(AbstractInvoice invoice);
 
     @Named("InvoiceDtoToInvoice")
     TicketInvoice invoiceDtoToInvoice(InvoiceDto invoiceDto);
 
     @IterableMapping(qualifiedByName = "InvoiceListToInvoiceDtoList")
-    List<InvoiceDto> invoiceListToInvoiceDtoList(List<TicketInvoice> invoices);
+    List<InvoiceDto> invoiceListToInvoiceDtoList(List<AbstractInvoice> invoices);
 
     @IterableMapping(qualifiedByName = "InvoiceDtoListToInvoiceList")
     List<TicketInvoice> invoiceDtoListToInvoiceList(List<InvoiceDto> invoiceDtos);
