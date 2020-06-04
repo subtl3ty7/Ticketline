@@ -3,6 +3,7 @@ import {Merchandise} from '../../../dtos/merchandise';
 import {MerchandiseService} from '../../../services/merchandise.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Background} from '../../../utils/background';
+import {DetailedEvent} from '../../../dtos/detailed-event';
 
 @Component({
   selector: 'app-product-details',
@@ -12,7 +13,7 @@ import {Background} from '../../../utils/background';
 export class ProductDetailsComponent implements OnInit {
 
   error;
-  merchandiseProduct: Merchandise;
+  merchandiseProduct: Merchandise[];
 
   constructor(
     private merchandiseService: MerchandiseService,
@@ -25,6 +26,17 @@ export class ProductDetailsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public loadMerchandiseProduct(): void {
+    const merchandiseProductCode = this.route.snapshot.paramMap.get('merchandiseProductCode');
+    this.merchandiseService.getMerchandiseProductByProductCode(merchandiseProductCode).subscribe(
+      (merchandiseProduct: Merchandise[]) => {
+        this.merchandiseProduct = merchandiseProduct;
+      },
+      (error) => {
+        this.error = error;
+      }
+    );
+  }
 
 
 }

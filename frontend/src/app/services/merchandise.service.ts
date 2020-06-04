@@ -37,6 +37,11 @@ export class MerchandiseService {
     return this.httpClient.get<Merchandise[]>(this.merchandiseBaseUri + '/all');
   }
 
+  getMerchandiseProductByProductCode(merchandiseProductCode: string): Observable<Merchandise[]> {
+    console.log('Load merchandise product with the code ' + merchandiseProductCode);
+    return this.httpClient.get<Merchandise[]>(this.merchandiseBaseUri + '/' + merchandiseProductCode);
+  }
+
 
 }
 
