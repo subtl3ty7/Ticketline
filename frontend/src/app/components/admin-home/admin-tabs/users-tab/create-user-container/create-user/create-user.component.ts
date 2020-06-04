@@ -12,6 +12,7 @@ import * as bcrypt from 'bcryptjs';
 export class CreateUserComponent implements OnInit {
 
   public wrapper = new CreateUserWrapper();
+  error;
   constructor(private router: Router,
               private route: ActivatedRoute,
               private userService: UserService) { }
@@ -26,14 +27,17 @@ export class CreateUserComponent implements OnInit {
     this.usersNavigate();
   }
   saveUser() {
-    if (this.wrapper.valid()) {
+    if (this.wrapper.valid() && this.wrapper.model.password.length >= 8) {
       const salt = bcrypt.genSaltSync(10);
       const pwd = bcrypt.hashSync(this.wrapper.model.password, salt);
       this.wrapper.model.password = pwd;
     this.userService.save(this.wrapper.model).subscribe(
-      error => {
+      (next) => {
         this.router.navigate(['administration']);
-      }
+      },
+      (error) => {
+        this.error = error.error;
+    }
     );
   }
   }

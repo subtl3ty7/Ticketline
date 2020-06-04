@@ -14,6 +14,7 @@
     <app-admin-side-menu></app-admin-side-menu>
   </div>
   <div class="center-block">
+    <app-error-notification *ngIf = "error" [error]="error"></app-error-notification>
     <div>
       <app-create-user-form [user]="wrapper.model">
         <div fxLayout="row" class="buttons-wrapper">
