@@ -30,6 +30,7 @@ import {ArtistEventComponent} from './components/search/artist/artist-event/arti
 import {LocationShowComponent} from './components/search/location/location-show/location-show.component';
 import {ResetPasswordAdminContainerComponent} from './components/admin-home/admin-tabs/users-tab/reset-password-admin-container/root/reset-password-admin-container.component';
 import {MyInvoiceComponent} from './components/my-profile/my-profile-tabs/my-tickets-tab/my-invoice/my-invoice.component';
+import {MerchandiseComponent} from './components/merchandise/merchandise.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -63,6 +64,7 @@ const routes: Routes = [
   {path: 'search/location-advanced', component: LocationAdvancedComponent},
   {path: 'search/location-shows', component: LocationShowComponent},
   {path: 'my-profile/my-tickets/my-invoice', component: MyInvoiceComponent},
+  {path: 'merchandise', component: MerchandiseComponent}
   ];
 
 @NgModule({

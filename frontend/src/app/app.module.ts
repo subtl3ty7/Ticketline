@@ -95,6 +95,7 @@ import { ResetPasswordAdminFormComponent } from './components/admin-home/admin-t
 import { MyTicketsTabComponent } from './components/my-profile/my-profile-tabs/my-tickets-tab/my-tickets-tab.component';
 import { PaymentDoneComponent } from './components/ticket-purchase/payment-done/payment-done.component';
 import { MyInvoiceComponent } from './components/my-profile/my-profile-tabs/my-tickets-tab/my-invoice/my-invoice.component';
+import { MerchandiseComponent } from './components/merchandise/merchandise.component';
 
 @NgModule({
   declarations: [
@@ -170,7 +171,8 @@ import { MyInvoiceComponent } from './components/my-profile/my-profile-tabs/my-t
     ResetPasswordAdminFormComponent,
     MyTicketsTabComponent,
     PaymentDoneComponent,
-    MyInvoiceComponent
+    MyInvoiceComponent,
+    MerchandiseComponent
   ],
   imports: [
     BrowserModule,
