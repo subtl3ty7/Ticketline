@@ -28,12 +28,12 @@ public interface EventLocationRepository extends JpaRepository<EventLocationOrig
 
     @Query(value = "" +
         "SELECT * FROM EVENT_LOCATION_ORIGINAL e " +
-        "WHERE ((:name IS NULL) OR (:name IS NOT NULL AND e.name LIKE %:name%)) " +
-        "AND ((:city IS NULL) OR (:city IS NOT NULL AND e.city LIKE %:city%)) " +
-        "AND ((:street IS NULL) OR (:street IS NOT NULL AND e.street LIKE %:street%)) " +
-        "AND ((:country IS NULL) OR (:country IS NOT NULL AND e.country LIKE %:country%))  " +
+        "WHERE ((:name IS NULL) OR (:name IS NOT NULL AND LOWER(e.name) LIKE LOWER(CONCAT('%',:name,'%')))) " +
+        "AND ((:city IS NULL) OR (:city IS NOT NULL AND LOWER(e.city) LIKE LOWER(CONCAT('%',:city,'%')))) " +
+        "AND ((:street IS NULL) OR (:street IS NOT NULL AND LOWER(e.street) LIKE LOWER(CONCAT('%',:street,'%')))) " +
+        "AND ((:country IS NULL) OR (:country IS NOT NULL AND LOWER(e.country) LIKE LOWER(CONCAT('%',:country,'%'))))  " +
         "AND ((:plz IS NULL) OR (:plz IS NOT NULL AND e.plz LIKE %:plz%))  " +
-        "AND ((:event_location_description IS NULL) OR (:event_location_description IS NOT NULL AND e.event_location_description LIKE %:event_location_description%))", nativeQuery = true)
+        "AND ((:event_location_description IS NULL) OR (:event_location_description IS NOT NULL AND LOWER(e.event_location_description) LIKE LOWER(CONCAT('%',:event_location_description,'%'))))", nativeQuery = true)
     List<EventLocationOriginal> findAllByNameAndCityAndStreetAndCountryAndPlzAndEventLocationDescription(@Param("name") String name, @Param("city") String city, @Param("street") String street, @Param("country") String country, @Param("plz") String plz, @Param("event_location_description") String description);
 
 }

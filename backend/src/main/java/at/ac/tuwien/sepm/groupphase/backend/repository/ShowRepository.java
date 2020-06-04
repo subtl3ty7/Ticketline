@@ -33,7 +33,7 @@ public interface ShowRepository extends JpaRepository<Show, Long> {
 
     @Query(value = "" +
         "SELECT * FROM SHOW s " +
-        "WHERE ((:eventName IS NULL) OR (:eventName IS NOT NULL AND s.event_name LIKE %:eventName%)) " +
+        "WHERE ((:eventName IS NULL) OR (:eventName IS NOT NULL AND LOWER(s.event_name) LIKE LOWER(CONCAT('%',:eventName,'%')))) " +
         "AND ((:type IS NULL) OR (:type IS NOT NULL AND s.event_type = :type)) " +
         "AND ((:category IS NULL) OR (:category IS NOT NULL AND s.event_category = :category))  " +
         "AND ((:startsAt IS NULL) OR (:startsAt IS NOT NULL AND s.start_datetime > :startsAt))  " +
