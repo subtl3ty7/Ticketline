@@ -4,6 +4,7 @@ import {AuthService} from '../../../../services/auth.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ArtistService} from '../../../../services/artist.service';
 import {SearchShared} from '../../search-shared';
+import {Background} from '../../../../utils/background';
 
 @Component({
   selector: 'app-event-advanced',
@@ -28,7 +29,7 @@ export class EventAdvancedComponent implements OnInit {
   showStartsAt: string = '';
   showEndsAt: string = '';
 
-  constructor(private formBuilder: FormBuilder, public authService: AuthService, public router: Router, private artistService: ArtistService, private activatedRoute: ActivatedRoute, private searchShared: SearchShared) {
+  constructor(private formBuilder: FormBuilder, public authService: AuthService, public router: Router, private artistService: ArtistService, private activatedRoute: ActivatedRoute, private searchShared: SearchShared, private background: Background) {
     this.advancedEventSearchForm = new FormGroup({
       name: new FormControl(),
       type: new FormControl(),
@@ -40,12 +41,13 @@ export class EventAdvancedComponent implements OnInit {
       showStartsAt: new FormControl(),
       showEndsAt: new FormControl()
     });
+    background.defineBackground();
   }
 
   ngOnInit(): void {
     console.log('advanced event search');
-    document.body.style.backgroundImage = null;
-    document.body.style.backgroundColor = '#DEDEDE';
+    this.name = sessionStorage.getItem('searchTerm');
+    this.advancedEventSearchForm.setControl('name', new FormControl(this.name));
   }
 
   advancedSearch() {

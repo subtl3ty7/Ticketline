@@ -59,13 +59,7 @@
     </div>
   </div>
   <p *ngIf="searchShared.entities && searchShared.entities.length == 0" style="font-size: 20px; padding-top: 40px; text-align: center">Es konnten keine Veranstaltungen mit diesen Kriterien gefunden werden.</p>
-  <div class="container">
-    <div class="row justify-content-center" >
-        <a class="spinner-border" *ngIf="searchShared.entities === undefined" style="margin-top: 50px; width: 120px; height: 120px"></a>
-    </div>
-    <div class="row justify-content-center" style="margin-top: 20px">
-      <p style="font-size: 20px">Lädt ...</p>
-    </div>
-  </div>
+  <app-spinner *ngIf="searchShared.entities === undefined" style="margin-top: 500px; margin-bottom: 500px;">
+  </app-spinner>
 </div>
 

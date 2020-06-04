@@ -14,82 +14,140 @@
                 <div class="row">
                   <h3>Events</h3>
                 </div>
-                <div class="row">
-                  <div class="form-group">
-                    <label for="inputName">Name: </label><br>
-                    <input type="text" name="name" formControlName="name" id="inputName"/>
+                <div class="row mt-2">
+                  <div class="col-xl-4 col-12">
+                    <div class="form-group">
+                      <div class="container">
+                        <div class="row" style="margin-bottom: -10px">
+                            <label for="inputName">Name</label><br>
+                        </div>
+                        <div class="row">
+                          <input type="text" name="name" formControlName="name" placeholder="Name" value="{{name}}" autocomplete="off" class="form-control" id="inputName"/>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="form-group">
-                    <label for="inputEventType">Typ der Veranstaltung</label><br>
-                    <select name="type" id="inputEventType" formControlName="type">
-                      <option value="">Bitte ausw&auml;hlen ...</option>
-                      <option value="SPORT">Sport</option>
-                      <option value="CULTURE">Kultur</option>
-                      <option value="MUSIC">Musik</option>
-                      <option value="OTHER">Sonstiges</option>
-                    </select>
+                <div class="row mt-2">
+                  <div class="col-xl-4 col-12">
+                    <div class="form-group">
+                      <div class="container">
+                        <div class="row" style="margin-bottom: -10px">
+                          <label for="inputEventType">Typ der Veranstaltung</label>
+                        </div>
+                        <div class="row">
+                          <select name="type" id="inputEventType" formControlName="type" class="form-control">
+                            <option value="" disabled selected >Bitte ausw&auml;hlen ...</option>
+                            <option value="SPORT">Sport</option>
+                            <option value="CULTURE">Kultur</option>
+                            <option value="MUSIC">Musik</option>
+                            <option value="OTHER">Sonstiges</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-4 col-12">
+                    <div class="form-group">
+                      <div class="container">
+                        <div class="row" style="margin-bottom: -10px">
+                          <label for="inputEventCategory">Kategorie der Veranstaltung</label>
+                        </div>
+                        <div class="row">
+                          <select id="inputEventCategory" formControlName="category" class="form-control">
+                            <option value="" disabled selected >Bitte ausw&auml;hlen ...</option>
+                            <option value="POP">Pop</option>
+                            <option value="HIPHOP">Hip-Hop</option>
+                            <option value="JAZZ">Jazz</option>
+                            <option value="ROCK">Rock</option>
+                            <option value="SCHLAGER">Schlager</option>
+                            <option value="CLASSICAL">Klassik</option>
+                            <option value="THEATRE">Theater</option>
+                            <option value="OPERA">Oper</option>
+                            <option value="MUSICAL">Musical</option>
+                            <option value="INDOORS">Indoor</option>
+                            <option value="OUTDOORS">Outdoor</option>
+                          </select>
+                        </div>
+                      </div>
+
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="form-group">
-                <label for="inputEventCategory">Kategorie der Veranstaltung</label><br>
-                <select name="form-control" id="inputEventCategory" formControlName="category">
-                  <option value="">Bitte ausw&auml;hlen ...</option>
-                  <option value="POP">Pop</option>
-                  <option value="HIPHOP">Hip-Hop</option>
-                  <option value="JAZZ">Jazz</option>
-                  <option value="ROCK">Rock</option>
-                  <option value="SCHLAGER">Schlager</option>
-                  <option value="CLASSICAL">Klassik</option>
-                  <option value="THEATRE">Theater</option>
-                  <option value="OPERA">Oper</option>
-                  <option value="MUSICAL">Musical</option>
-                  <option value="INDOORS">Indoor</option>
-                  <option value="OUTDOORS">Outdoor</option>
-                </select>
-              </div>
-            </div>
-            <div class="row">
-              <label>Datum</label><br>
+            <div class="row mt-2">
               <div class="container">
-                <div class="row">
-                  <div class="form-group">
-                    <label for="inputEventDateFrom">Von: </label>
-                    <input type="date" name="startsAt" formControlName="startsAt" id="inputEventDateFrom"/>
+                <div class="row" style="margin-bottom: -10px">
+                  <div class="col">
+                    <label>Datum</label>
                   </div>
-                  <div class="form-group">
-                    <label for="inputEventDateTo">Bis: </label>
-                    <input type="date" name="endsAt" formControlName="endsAt" id="inputEventDateTo"/>
+                </div>
+                <div class="row mt-1">
+                  <div class="col-xl-4 col-12">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Von</span>
+                      </div>
+                      <input type="date" min="2019-01-01" name="startsAt" formControlName="startsAt" id="inputEventDateFrom" class="form-control"/>
+                    </div>
+                  </div>
+                  <div class="col-xl-4 col-12 mt-xl-0 mt-2">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2">Bis</span>
+                      </div>
+                      <input type="date" min="2019-01-01" name="endsAt" formControlName="endsAt" id="inputEventDateTo" class="form-control"/>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+            <hr style="margin-top: 30px; margin-bottom: 30px;">
             <div class="row">
               <div class="container">
                 <div class="row">
                   <h3>Aufführungen</h3>
                 </div>
-                <div class="container">
-                  <div class="row">
-                    <label>Dauer</label><br>
-                    <div class="form-group">
-                      <label for="inputShowDateTimeFrom">Von: </label>
-                      <input type="datetime-local" name="showStartsAt" formControlName="showStartsAt" id="inputShowDateTimeFrom"/>
+                <div class="row mt-2">
+                    <div class="col">
+                      <label>Dauer</label>
                     </div>
-                    <div class="form-group">
-                      <label for="inputShowDateTimeTo">Bis: </label>
-                      <input type="datetime-local" name="showEndsAt" formControlName="showEndsAt" id="inputShowDateTimeTo"/>
+                </div>
+                <div class="row">
+                  <div class="col-xl-4 col-12">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon3">Von</span>
+                      </div>
+                      <input type="datetime-local" min="2019-01-01" name="showStartsAt" formControlName="showStartsAt" class="form-control" id="inputShowDateTimeFrom"/>
                     </div>
                   </div>
-                  <div class="row">
-                    <label>Preis</label><br>
-                    <div class="form-group">
-                      <label for="inputShowStartPrice">Bis: </label>
-                      <input type="number" name="startPrice" formControlName="startPrice" id="inputShowStartPrice"/>
+                  <div class="col-xl-4 col-12 mt-xl-0 mt-2">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon4">Bis</span>
+                      </div>
+                      <input type="datetime-local" min="2019-01-01" name="showEndsAt" formControlName="showEndsAt" class="form-control" id="inputShowDateTimeTo"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="container">
+                    <div class="row" style="margin-bottom: -10px">
+                      <div class="col">
+                        <label>Preis</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xl-4 col-12">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon5">Bis</span>
+                          </div>
+                          <input type="number" min="0" name="startPrice" formControlName="startPrice" class="form-control" id="inputShowStartPrice"/>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
