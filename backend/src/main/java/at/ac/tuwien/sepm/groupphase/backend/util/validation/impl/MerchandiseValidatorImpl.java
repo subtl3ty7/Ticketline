@@ -32,7 +32,7 @@ public class MerchandiseValidatorImpl implements MerchandiseValidator {
             Merchandise merchandise1 = merchandiseRepository.findMerchandiseById(merchandise.getId());
             AbstractUser user1 = userRepository.findAbstractUserByUserCode(userCode);
             constraints.add("merchandise_premium", merchandise1.isPremium());
-            constraints.add("merchandise_outOfStock", merchandise1.getStockCount() != 0);
+            constraints.add("merchandise_outOfStock", merchandise1.getStockCount() > 0);
             constraints.add("user_noPoints", ((Customer) user1).getPoints() >= merchandise1.getPremiumPrice());
         }
         return constraints;

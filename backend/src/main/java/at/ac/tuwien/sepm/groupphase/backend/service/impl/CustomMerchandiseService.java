@@ -25,13 +25,13 @@ public class CustomMerchandiseService implements MerchandiseService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final MerchandiseRepository merchandiseRepository;
-    private final MerchandiseValidator merchandiseValidator;
+    private final MerchandiseValidator validator;
     private final UserRepository userRepository;
 
     @Autowired
-    public CustomMerchandiseService(MerchandiseRepository merchandiseRepository, MerchandiseValidator merchandiseValidator, UserRepository userRepository) {
+    public CustomMerchandiseService(MerchandiseRepository merchandiseRepository, MerchandiseValidator validator, UserRepository userRepository) {
         this.merchandiseRepository = merchandiseRepository;
-        this.merchandiseValidator = merchandiseValidator;
+        this.validator = validator;
         this.userRepository = userRepository;
     }
 
@@ -70,18 +70,19 @@ public class CustomMerchandiseService implements MerchandiseService {
 
     @Override
     public Merchandise purchaseWithPremiumPoints(Merchandise merchandise, String userCode) {
-        LOGGER.info("Validating merchandise " + merchandise);
+        LOGGER.info("Validating merchandise " + merchandise + " for user with userCode " + userCode);
 
-        merchandiseValidator.validateMerchandisePurchaseWithPremiumPoints(merchandise, userCode);
-        merchandise.setStockCount(merchandise.getStockCount() - 1);
+        validator.validateMerchandisePurchaseWithPremiumPoints(merchandise, userCode).throwIfViolated();
+        Merchandise saveMerchandise = merchandiseRepository.findMerchandiseById(merchandise.getId());
+        saveMerchandise.setStockCount(saveMerchandise.getStockCount() - 1);
 
         AbstractUser user = userRepository.findAbstractUserByUserCode(userCode);
         long currentPoints = ((Customer) user).getPoints();
-        ((Customer) user).setPoints(currentPoints - merchandise.getPremiumPrice());
+        ((Customer) user).setPoints(currentPoints - saveMerchandise.getPremiumPrice());
 
-        merchandiseRepository.save(merchandise);
+        merchandiseRepository.save(saveMerchandise);
         userRepository.save(user);
 
-        return merchandise;
+        return saveMerchandise;
     }
 }
