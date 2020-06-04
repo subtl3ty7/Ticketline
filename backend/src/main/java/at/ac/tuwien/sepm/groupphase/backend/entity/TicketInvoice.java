@@ -18,7 +18,8 @@ import java.util.List;
 @ToString
 public class TicketInvoice extends AbstractInvoice {
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @ToString.Exclude
+    @OneToMany
     private List<Ticket> tickets;
 
     @NotNull

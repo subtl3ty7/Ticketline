@@ -27,7 +27,7 @@ public class InvoiceRepositoryTest implements TestData {
         .invoice_type(TYP_I)
         .userCode(USER_CODE)
         .payment_method(PAY)
-        .generated_at(GENERATE)
+        .generatedAt(GENERATE)
         .invoice_number(NUM)
         .build();
 
@@ -39,7 +39,7 @@ public class InvoiceRepositoryTest implements TestData {
             .invoice_type(TYP_I)
             .userCode(USER_CODE)
             .payment_method(PAY)
-            .generated_at(GENERATE)
+            .generatedAt(GENERATE)
             .invoice_number(NUM)
             .build();
     }

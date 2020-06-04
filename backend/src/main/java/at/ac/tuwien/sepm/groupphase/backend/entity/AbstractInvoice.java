@@ -29,7 +29,7 @@ public abstract class AbstractInvoice implements Serializable {
 
     @NotNull
     @Column(nullable = false,  name = "generated_at")
-    private LocalDateTime generated_at;
+    private LocalDateTime generatedAt;
 
     @Column(name = "payment_method")
     private String payment_method;

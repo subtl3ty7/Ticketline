@@ -28,9 +28,8 @@ public class InvoiceMappingTest implements TestData {
         .invoice_type(TYP_I)
         .userCode(USER_CODE)
         .payment_method(PAY)
-        .generated_at(GENERATE)
+        .generatedAt(GENERATE)
         .invoice_number(NUM)
-        .tickets(TICKETS)
         .build();
 
     @Autowired
@@ -43,7 +42,7 @@ public class InvoiceMappingTest implements TestData {
             () -> assertEquals(ID, invoiceDto.getId()),
             () -> assertEquals(USER_CODE, invoiceDto.getUserCode()),
             () -> assertEquals(PAY, invoiceDto.getPayment_method()),
-            () -> assertEquals(GENERATE, invoiceDto.getGenerated_at()),
+            () -> assertEquals(GENERATE, invoiceDto.getGeneratedAt()),
             () -> assertEquals(NUM, invoiceDto.getInvoice_number())
         );
     }
@@ -60,7 +59,7 @@ public class InvoiceMappingTest implements TestData {
             () -> assertEquals(ID, invoiceDto.getId()),
             () -> assertEquals(USER_CODE, invoiceDto.getUserCode()),
             () -> assertEquals(PAY, invoiceDto.getPayment_method()),
-            () -> assertEquals(GENERATE, invoiceDto.getGenerated_at()),
+            () -> assertEquals(GENERATE, invoiceDto.getGeneratedAt()),
             () -> assertEquals(NUM, invoiceDto.getInvoice_number())
         );
     }
@@ -73,7 +72,7 @@ public class InvoiceMappingTest implements TestData {
             () -> assertEquals(ID, invoice1.getId()),
             () -> assertEquals(USER_CODE, invoice1.getUserCode()),
             () -> assertEquals(PAY, invoice1.getPayment_method()),
-            () -> assertEquals(GENERATE, invoice1.getGenerated_at()),
+            () -> assertEquals(GENERATE, invoice1.getGeneratedAt()),
             () -> assertEquals(NUM, invoice1.getInvoice_number())
         );
     }

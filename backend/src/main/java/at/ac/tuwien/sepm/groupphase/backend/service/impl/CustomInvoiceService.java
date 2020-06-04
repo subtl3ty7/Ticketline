@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -30,12 +31,15 @@ public class CustomInvoiceService implements InvoiceService {
     }
 
     @Override
-    public TicketInvoice createTicketInvoice(List<Ticket> tickets, String type) {
+    public TicketInvoice createTicketInvoice(List<Ticket> tickets, String type, LocalDateTime generatedAt) {
+        if(type.equals("PURCHASE CANCELLATION")) {
+            invoiceRepository.delete(invoiceRepository.findInvoiceByUserCodeAndGeneratedAt(tickets.get(0).getUserCode(), tickets.get(0).getPurchaseDate()));
+        }
         TicketInvoice ticketInvoice = TicketInvoice.builder()
             .invoice_type(type)
             .userCode(tickets.get(0).getUserCode())
-            .payment_method("card")
-            .generated_at(tickets.get(0).getPurchaseDate())
+            .payment_method("Credit card")
+            .generatedAt(generatedAt)
             .invoice_number(CodeGenerator.generateInvoiceNumber())
             .tickets(tickets)
             .build();
