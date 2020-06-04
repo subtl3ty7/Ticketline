@@ -13,4 +13,6 @@ public interface MerchandiseService {
     List<Merchandise> findAllMerchandiseProducts();
 
     List<Merchandise> findAllMerchandisePremiumProducts();
+
+    List<Merchandise> purchaseWithPremiumPoints(List<Merchandise> merchandises);
 }
