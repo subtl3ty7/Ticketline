@@ -67,8 +67,12 @@ public class CustomEventService implements EventService {
     public Event createNewEvent(Event event){
         LOGGER.debug("Moving Event Entity through Service Layer: " + event);
         event.setEventCode(getNewEventCode());
+        event.setEventCategory(EventCategoryEnum.valueOf(event.getCategory()));
+        event.setEventType(EventTypeEnum.valueOf(event.getType()));
         validator.validate(event).throwIfViolated();
-
+        for (Artist a : event.getArtists()) {
+            artistRepository.save(a);
+        }
         //Give shows new EventLocation Entities (copies of existing ones) to make sure they all can have different seating assignments
         for(Show show: event.getShows()) {
             EventLocationOriginal eventLocation = eventLocationRepository.findEventLocationById(show.getEventLocationOriginalId());

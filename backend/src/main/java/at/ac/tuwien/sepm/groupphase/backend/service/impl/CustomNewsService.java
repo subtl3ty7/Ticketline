@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -84,6 +85,7 @@ public class CustomNewsService implements NewsService {
         if(news != null) {
             news.setNewsCode(this.getNewNewsCode());
             news.setPublishedAt(LocalDateTime.now());
+            news.setSeenBy(new ArrayList<>());
         }
 
         validator.validate(news).throwIfViolated();

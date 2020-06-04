@@ -4,6 +4,8 @@ import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.DetailedEventDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleEventDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EventMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Artist;
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventCategoryEnum;
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventTypeEnum;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -22,6 +24,7 @@ import java.lang.invoke.MethodHandles;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -83,6 +86,31 @@ public class EventEndpoint {
             eventService.createNewEvent(eventMapper.detailedEventDtoToEvent(eventDto)));
     }
 
+    @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
+    @GetMapping(value = "/eventCategories")
+    @ApiOperation(
+        value = "Get all event categories",
+        notes = "Get all event categories",
+        authorizations = {@Authorization(value = "apiKey")})
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "Event categories are successfully retrieved")
+    })
+    public ResponseEntity<List<EventCategoryEnum>> findAllEventCategories() {
+        return new ResponseEntity<>(Arrays.asList(EventCategoryEnum.values()), HttpStatus.OK);
+    }
+
+    @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
+    @GetMapping(value = "/eventTypes")
+    @ApiOperation(
+        value = "Get all event types",
+        notes = "Get all event types",
+        authorizations = {@Authorization(value = "apiKey")})
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "Event types are successfully retrieved")
+    })
+    public ResponseEntity<List<EventTypeEnum>> findAllEventTypes() {
+        return new ResponseEntity<>(Arrays.asList(EventTypeEnum.values()), HttpStatus.OK);
+    }
 
     @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
     @GetMapping(value = "/{eventCode}")
@@ -214,5 +242,7 @@ public class EventEndpoint {
         List<SimpleEventDto> result = eventMapper.eventToSimpleEventDto(eventService.findSimpleEventsByParam(eventCode, name, startRangeDate, endRangeDate));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+
 
 }
