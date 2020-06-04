@@ -16,7 +16,8 @@
     <div class="row" style="padding-left: 25px; padding-right: 25px; padding-bottom: 25px">
 
       <div class="zoom col-4"
-           *ngFor="let product of merchandise">
+           *ngFor="let product of merchandise"
+           routerLink="/merchandise/{{product.merchandiseProductCode}}">
         <div class="card" style="padding-bottom: 10px">
           <img class="card-img-top img-fluid image-crop-big"
                src="https://i.picsum.photos/id/100/2500/1656.jpg">

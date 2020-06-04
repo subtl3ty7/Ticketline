@@ -96,6 +96,7 @@ import { MyTicketsTabComponent } from './components/my-profile/my-profile-tabs/m
 import { PaymentDoneComponent } from './components/ticket-purchase/payment-done/payment-done.component';
 import { MyInvoiceComponent } from './components/my-profile/my-profile-tabs/my-tickets-tab/my-invoice/my-invoice.component';
 import { MerchandiseComponent } from './components/merchandise/merchandise.component';
+import { ProductDetailsComponent } from './components/merchandise/product-details/product-details.component';
 
 @NgModule({
   declarations: [
@@ -172,7 +173,8 @@ import { MerchandiseComponent } from './components/merchandise/merchandise.compo
     MyTicketsTabComponent,
     PaymentDoneComponent,
     MyInvoiceComponent,
-    MerchandiseComponent
+    MerchandiseComponent,
+    ProductDetailsComponent
   ],
   imports: [
     BrowserModule,
