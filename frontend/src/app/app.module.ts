@@ -187,7 +187,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     PaymentDoneComponent,
     MyInvoiceComponent,
     EventAdvancedComponent,
-    SpinnerComponent
+    SpinnerComponent,
     MyInvoiceComponent,
     NewsTabComponent,
     NewsDetailsContainerComponent,
