@@ -1,23 +1,26 @@
 <app-customer-header></app-customer-header>
 
-<div class="container-fluid" style="padding-left: 5%; padding-right: 5%;">
-  <div class="row">
-    <div class="mx-auto" style="max-width: 1320px; width: 100%;">
+<div class="gap"></div>
 
-      <div class="card main-body">
+<app-error-notification *ngIf="error" [error]="error"></app-error-notification>
 
-        <div class="card-header row align-items-center" style="margin: 0px">
-          <h1 class="col-4 page-title"> MERCHANDISE </h1>
+<div *ngIf="merchandise">
+    <div class="row">
+
+      <div class="zoom col-4"
+           *ngFor="let product of merchandise">
+        <div class="card">
+          <img class="card-img-top img-fluid image-crop-big"
+               src="https://i.picsum.photos/id/100/2500/1656.jpg">
+          <div class="card-body">
+            <div class = "card-title">
+              <div class="col-sm card-title-font">{{product.merchandiseProductName}}</div>
+            </div>
+            <div class = "card-text">
+              <div class="col-sm card-text-font">{{product.price}}</div>
+            </div>
+          </div>
         </div>
-
-        <div class="card-body">
-          
-        </div>
-
       </div>
-
-
-
     </div>
   </div>
-</div>
