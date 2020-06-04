@@ -6,7 +6,8 @@ import {DetailedEvent} from '../dtos/detailed-event';
 import {SimpleEvent} from '../dtos/simple-event';
 import {catchError, tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
-import {User} from '../dtos/user';
+import {EventCategories} from '../dtos/event-categories';
+import {EventTypes} from '../dtos/event-types';
 
 @Injectable({
   providedIn: 'root'
@@ -67,7 +68,6 @@ export class EventService {
     if (!event.endsAt) {
       event.endsAt = new Date(3000, 1, 1);
     }
-    console.log(event.startsAt.toDateString() );
     const params = new HttpParams()
       .set('eventCode', event.eventCode)
       .set('name', event.name)
@@ -75,4 +75,18 @@ export class EventService {
       .set('endRange', event.endsAt.toDateString());
     return this.httpClient.get<SimpleEvent[]>(this.eventBaseUri + '/', {params});
   }
+
+  save(event: DetailedEvent) {
+    return this.httpClient.post<DetailedEvent>(this.eventBaseUri + '/', event);
+  }
+
+  getAllEventCategories(): Observable<EventCategories[]> {
+    console.log('Load all event categories.');
+    return this.httpClient.get<EventCategories[]>(this.eventBaseUri + '/eventCategories');
+  }
+  getAllEventTypes(): Observable<EventTypes[]> {
+    console.log('Load all event categories.');
+    return this.httpClient.get<EventTypes[]>(this.eventBaseUri + '/eventTypes');
+  }
+
 }

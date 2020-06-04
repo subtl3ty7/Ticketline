@@ -82,7 +82,6 @@ import { NewsDetailsInnerComponent } from './components/news-details/news-detail
 import { ErrorNotificationComponent } from './sections/error-notification/error-notification.component';
 import { NewsListComponent } from './components/news-list/news-list.component';
 import { NewsListInnerComponent } from './components/news-list/news-list-inner/news-list-inner.component';
-import { SearchShared} from './components/search/search-shared';
 import { ArtistAdvancedComponent } from './components/search/artist/artist-advanced/artist-advanced.component';
 import { LocationAdvancedComponent } from './components/search/location/location-advanced/location-advanced.component';
 import { DropdownCountryComponent } from './components/search/location/location-advanced/dropdown-country/dropdown-country.component';
@@ -100,6 +99,13 @@ import { NewsDetailsContainerComponent } from './components/admin-home/admin-tab
 import { AdminNewsDetailsComponent } from './components/admin-home/admin-tabs/news-tab/news-details-container/admin-news-details/admin-news-details.component';
 import { NewsInfoComponent } from './components/admin-home/admin-tabs/news-tab/news-details-container/admin-news-details/news-info/news-info.component';
 import { NewsDetailsDialogComponent } from './components/admin-home/admin-tabs/news-tab/news-details-container/admin-news-details/news-info/news-details-dialog/news-details-dialog.component';
+import { CreateNewsContainerComponent } from './components/admin-home/admin-tabs/news-tab/create-news-container/root/create-news-container.component';
+import { CreateNewsComponent } from './components/admin-home/admin-tabs/news-tab/create-news-container/create-news/create-news.component';
+import { CreateNewsFormComponent } from './components/admin-home/admin-tabs/news-tab/create-news-container/create-news/create-news-form/create-news-form.component';
+import { CreateShowsComponent } from './components/admin-home/admin-tabs/events-tab/create-event-container/create-event/create-event-form/create-shows/create-shows.component';
+import { CreateEventFormComponent } from './components/admin-home/admin-tabs/events-tab/create-event-container/create-event/create-event-form/create-event-form.component';
+import { CreateArtistsComponent } from './components/admin-home/admin-tabs/events-tab/create-event-container/create-event/create-event-form/create-artists/create-artists.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -180,7 +186,13 @@ import { NewsDetailsDialogComponent } from './components/admin-home/admin-tabs/n
     NewsDetailsContainerComponent,
     AdminNewsDetailsComponent,
     NewsInfoComponent,
-    NewsDetailsDialogComponent
+    NewsDetailsDialogComponent,
+    CreateNewsContainerComponent,
+    CreateNewsComponent,
+    CreateNewsFormComponent,
+    CreateShowsComponent,
+    CreateEventFormComponent,
+    CreateArtistsComponent
   ],
   imports: [
     BrowserModule,
@@ -205,7 +217,8 @@ import { NewsDetailsDialogComponent } from './components/admin-home/admin-tabs/n
     MatPaginatorModule,
     FlexModule,
     MatStepperModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDialogModule
   ],
   providers: [httpInterceptorProviders, MatDatepickerModule, MatNativeDateModule, ChooseTicketComponent],
   bootstrap: [AppComponent]

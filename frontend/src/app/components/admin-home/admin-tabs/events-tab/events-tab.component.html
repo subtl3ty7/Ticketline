@@ -28,7 +28,7 @@
     <button mat-raised-button (click)="loadAllEvents()" style="margin-right: 40%">Alle Events</button>
   </div>
 
-  <button mat-raised-button color = "basic" style="margin-left: 80%;margin-bottom: 1%">Event Erstellen</button>
+  <button mat-raised-button color = "basic" style="margin-left: 80%;margin-bottom: 1%" (click)="createNewEvent()">Event Erstellen</button>
 
   <div class="table">
     <mat-table #table [dataSource]="dataSource" matSort>

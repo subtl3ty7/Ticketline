@@ -44,7 +44,8 @@
   <div class="info-wrapper">
     <div class="info">
       <div class="info-label">Beschreibung</div>
-      <div class="info-field" style ="line-height: 25px; /* fallback */height: 22px; /* fallback */text-overflow: ellipsis; overflow: hidden;">{{event?.description.substring(0,50)}}...</div>
+      <div class="info-field" style ="line-height: 25px; /* fallback */height: 22px; /* fallback */text-overflow: ellipsis; overflow: hidden;" *ngIf="event.description && event.description.length > 50">{{event.description.substring(0,50)}}...</div>
+      <div class="info-field" style ="line-height: 25px; /* fallback */height: 22px; /* fallback */text-overflow: ellipsis; overflow: hidden;" *ngIf="event.description && event.description.length < 50">{{event.description}}</div>
     </div>
   </div>
   <!--CATEGORY-->

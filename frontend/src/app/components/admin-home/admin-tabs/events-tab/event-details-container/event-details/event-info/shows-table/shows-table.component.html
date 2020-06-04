@@ -10,7 +10,7 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header>Starts At</mat-header-cell>
         <mat-cell *matCellDef="let element">
           <div class="cell-padding">
-            {{element?.startsAt | date:'MMM d, y, h:mm'}}
+            {{element?.startsAt | date:'MMM d, y, HH:mm'}}
           </div>
         </mat-cell>
       </ng-container>
@@ -20,7 +20,7 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header>Ends At</mat-header-cell>
         <mat-cell *matCellDef="let element" >
           <div class="cell-padding">
-            {{element?.endsAt | date:'MMM d, y, h:mm'}}
+            {{element?.endsAt | date:'MMM d, y, HH:mm'}}
           </div>
         </mat-cell>
       </ng-container>
