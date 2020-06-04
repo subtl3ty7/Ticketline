@@ -1,31 +1,31 @@
 <div class="table-container all-height" #table>
   <div fxLayout = "row">
-    <mat-form-field class="input-wrapper">
+    <mat-form-field class="input-wrapper" style="width: 200px;">
       <mat-label>In News code suchen</mat-label>
       <input matInput
              name="searchNewsCode" [(ngModel)]="searchNews.newsCode">
     </mat-form-field>
 
-    <mat-form-field class="input-wrapper">
+    <mat-form-field class="input-wrapper" style="width: 150px;">
       <mat-label>In Titel suchen</mat-label>
       <input matInput
              name="searchTitle" [(ngModel)]="searchNews.title">
     </mat-form-field>
 
-    <mat-form-field class="input-wrapper">
+    <mat-form-field class="input-wrapper" style="width: 160px;">
       <mat-label>In Author suchen</mat-label>
       <input matInput
              name="searchAuthor" [(ngModel)]="searchNews.author">
     </mat-form-field>
 
-    <mat-form-field class="input-wrapper">
+    <mat-form-field class="input-wrapper" style="width: 175px;">
       <mat-label>Veröffentlicht Von</mat-label>
       <input matInput [matDatepicker]="picker1" (dateInput)="addStart('input', $event)" (dateChange)="addStart('change', $event)">
       <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
       <mat-datepicker #picker1></mat-datepicker>
     </mat-form-field>
 
-    <mat-form-field class="input-wrapper">
+    <mat-form-field class="input-wrapper" style="width: 175px;">
       <mat-label>Veröffentlicht Bis</mat-label>
       <input matInput [matDatepicker]="picker2" (dateInput)="addEnd('input', $event)" (dateChange)="addEnd('change', $event)">
       <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
@@ -38,7 +38,7 @@
     <button mat-raised-button (click)="loadAllNews()" style="margin-right: 40%">Alle News</button>
   </div>
 
-  <button mat-raised-button color = "basic" style="margin-left: 80%;margin-bottom: 1%">News Erstellen</button>
+  <button mat-raised-button color = "basic" style="margin-left: 80%;margin-bottom: 1%" (click)="createNewNews()">News Erstellen</button>
 
   <div class="table">
     <mat-table #table [dataSource]="dataSource" matSort>

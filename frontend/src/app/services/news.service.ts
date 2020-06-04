@@ -62,4 +62,8 @@ export class NewsService {
       .set('endRange', searchNews.publishedAtEndRange.toDateString());
     return this.httpClient.get<SimpleNews[]>(this.newsBaseUri + '/', {params});
 }
+
+  save(news: News) {
+    return this.httpClient.post<News>(this.newsBaseUri + '/', news);
+  }
 }

@@ -17,6 +17,6 @@ export class NewsInfoComponent implements OnInit {
 
   openNewsDetailsDialog() {
     this.dialog.open(NewsDetailsDialogComponent,
-      {width: '100%', data: this.news.summary});
+      {width: '100%', data: this.news});
   }
 }
