@@ -1,0 +1,83 @@
+<h2 mat-dialog-title> Artists Erstellen </h2>
+
+<mat-dialog-content>
+<div class="center-block">
+  <!--FIRST NAME-->
+  <div fxLayout="row" class="info-wrapper">
+    <div class="info">
+      <div class="info-label">Vorname</div>
+    </div>
+  </div>
+  <mat-form-field class="mat-form-field" >
+    <input
+      id="artistInfoForm_inputFirstName"
+      matInput
+      required
+      [(ngModel)]="artist.firstName">
+    <mat-error *ngIf="!artist.firstName">Vorname ist erforderlich!</mat-error>
+  </mat-form-field>
+
+  <!--LAST NAME-->
+  <div fxLayout="row" class="info-wrapper">
+    <div class="info">
+      <div class="info-label">Nachname</div>
+    </div>
+  </div>
+  <mat-form-field class="mat-form-field" >
+    <input
+      id="artistInfoForm_inputLastName"
+      matInput
+      required
+      [(ngModel)]="artist.lastName">
+    <mat-error *ngIf="!artist.lastName">Nachname ist erforderlich!</mat-error>
+  </mat-form-field>
+<div class="buttons-wrapper">
+  <button mat-raised-button color="basic" (click) = "createArtist()" style=""> Artist in Tabelle hinzufügen</button>
+  <button mat-raised-button color="primary" (click) = "closeModal()"> Alle Artists in Event speichern</button>
+</div>
+</div>
+
+
+
+<div class="table-container all-height" #table>
+  <div class="table">
+    <mat-table #table [dataSource]="dataSource" matSort>
+
+      <!--FIRST NAME-->
+      <ng-container matColumnDef="firstName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Vorname</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="cell-padding">
+            {{element?.firstName}}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <!--LAST NAME-->
+      <ng-container matColumnDef="lastName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Nachname</mat-header-cell>
+        <mat-cell *matCellDef="let element" >
+          <div class="cell-padding">
+            {{element?.lastName}}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <!--DELETE-->
+      <ng-container matColumnDef="delete">
+        <mat-header-cell *matHeaderCellDef ></mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="cell-padding">
+            <button mat-raised-button color="warn" (click)="delete(element)">Löschen</button>
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row;
+             columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator showFirstLastButtons [pageSizeOptions]="[5, 10, 15]"></mat-paginator>
+  </div>
+</div>
+</mat-dialog-content>

@@ -1,6 +1,9 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
 import lombok.*;
+import org.hibernate.annotations.ResultCheckStyle;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -14,6 +17,8 @@ import java.util.List;
 @Setter
 @Getter
 @AllArgsConstructor
+@SQLDelete(sql = "UPDATE TICKET SET is_Deleted=true WHERE TICKET_ID = ?", check = ResultCheckStyle.COUNT)
+@Where(clause = "is_Deleted=false")
 @Builder(toBuilder = true)
 @ToString
 public class Ticket {
@@ -44,6 +49,9 @@ public class Ticket {
 
     @OneToOne
     private Seat seat;
+
+    @Column(name="is_Deleted")
+    private boolean isDeleted;
 
     @NotNull
     @Size(min = 6, max = 6)

@@ -1,22 +1,29 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.NewsDto;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleEventDto;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleNewsDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.NewsMapper;
 import at.ac.tuwien.sepm.groupphase.backend.service.NewsService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.Authorization;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.lang.invoke.MethodHandles;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -106,6 +113,44 @@ public class NewsEndpoint {
         return newsMapper.newsToNewsDto(
             newsService.findLatest(limit)
         );
+    }
+    @Secured("ROLE_ADMIN")
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value = "/all")
+    @ApiOperation(
+        value = "Get all Simple News Entries",
+        notes = "Get all Simple News Entries")
+    @ApiResponse(code = 200, message = "Successfully retrieved News Entries")
+    public List<SimpleNewsDto> getAllSimpleNews() {
+        LOGGER.info("GET /api/v1/news/");
+
+        return newsMapper.newsToSimpleNewsDto(
+            newsService.findAll()
+        );
+    }
+
+    @Secured("ROLE_ADMIN")
+    @GetMapping(value = "", params = {"newsCode", "title", "author", "startRange", "endRange"})
+    @ApiOperation(
+        value = "Get simple news",
+        notes = "Get simple news by params",
+        authorizations = {@Authorization(value = "apiKey")})
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "News are successfully retrieved"),
+        @ApiResponse(code = 404, message = "No News is found"),
+        @ApiResponse(code = 500, message = "Connection Refused"),
+    })
+    public ResponseEntity<List<SimpleNewsDto>> findSimpleEventsByParam(@RequestParam String newsCode,
+                                                                        @RequestParam String title,
+                                                                        @RequestParam String author,
+                                                                        @RequestParam String startRange,
+                                                                        @RequestParam String endRange
+    ) {
+        LOGGER.info("GET /api/v1/news?newsCode=" + newsCode + "&title=" + title + "&author=" + author +  "&startRange=" + startRange + "&endRange=" + endRange);
+        LocalDateTime startRangeDate = LocalDate.parse(startRange, DateTimeFormatter.ofPattern("E MMM dd yyyy")).atStartOfDay();
+        LocalDateTime endRangeDate = LocalDate.parse(endRange, DateTimeFormatter.ofPattern("E MMM dd yyyy")).atStartOfDay();
+        List<SimpleNewsDto> result = newsMapper.newsToSimpleNewsDto(newsService.findSimpleNewsByParam(newsCode, title, author, startRangeDate, endRangeDate));
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 }

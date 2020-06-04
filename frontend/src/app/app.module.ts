@@ -98,6 +98,18 @@ import { PaymentDoneComponent } from './components/ticket-purchase/payment-done/
 import { MyInvoiceComponent } from './components/my-profile/my-profile-tabs/my-tickets-tab/my-invoice/my-invoice.component';
 import {EventAdvancedComponent} from './components/search/event/event-advanced/event-advanced.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { NewsTabComponent } from './components/admin-home/admin-tabs/news-tab/news-tab.component';
+import { NewsDetailsContainerComponent } from './components/admin-home/admin-tabs/news-tab/news-details-container/root/news-details-container.component';
+import { AdminNewsDetailsComponent } from './components/admin-home/admin-tabs/news-tab/news-details-container/admin-news-details/admin-news-details.component';
+import { NewsInfoComponent } from './components/admin-home/admin-tabs/news-tab/news-details-container/admin-news-details/news-info/news-info.component';
+import { NewsDetailsDialogComponent } from './components/admin-home/admin-tabs/news-tab/news-details-container/admin-news-details/news-info/news-details-dialog/news-details-dialog.component';
+import { CreateNewsContainerComponent } from './components/admin-home/admin-tabs/news-tab/create-news-container/root/create-news-container.component';
+import { CreateNewsComponent } from './components/admin-home/admin-tabs/news-tab/create-news-container/create-news/create-news.component';
+import { CreateNewsFormComponent } from './components/admin-home/admin-tabs/news-tab/create-news-container/create-news/create-news-form/create-news-form.component';
+import { CreateShowsComponent } from './components/admin-home/admin-tabs/events-tab/create-event-container/create-event/create-event-form/create-shows/create-shows.component';
+import { CreateEventFormComponent } from './components/admin-home/admin-tabs/events-tab/create-event-container/create-event/create-event-form/create-event-form.component';
+import { CreateArtistsComponent } from './components/admin-home/admin-tabs/events-tab/create-event-container/create-event/create-event-form/create-artists/create-artists.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -176,6 +188,18 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     MyInvoiceComponent,
     EventAdvancedComponent,
     SpinnerComponent
+    MyInvoiceComponent,
+    NewsTabComponent,
+    NewsDetailsContainerComponent,
+    AdminNewsDetailsComponent,
+    NewsInfoComponent,
+    NewsDetailsDialogComponent,
+    CreateNewsContainerComponent,
+    CreateNewsComponent,
+    CreateNewsFormComponent,
+    CreateShowsComponent,
+    CreateEventFormComponent,
+    CreateArtistsComponent
   ],
   imports: [
     BrowserModule,
@@ -201,6 +225,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     FlexModule,
     MatStepperModule,
     MatSelectModule,
+    MatDialogModule,
     MatProgressSpinnerModule
   ],
   providers: [httpInterceptorProviders, MatDatepickerModule, MatNativeDateModule, ChooseTicketComponent],

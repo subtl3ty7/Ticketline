@@ -2,6 +2,7 @@ package at.ac.tuwien.sepm.groupphase.backend.repository;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.Artist;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -45,6 +46,8 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     Event findEventById(Long id);
 
     List<Event> findEventsByNameContainingIgnoreCase(String name);
+
+    List<Event> findAllByEventCodeContainingIgnoreCaseAndNameContainingIgnoreCaseAndStartsAtBetween(String eventCode, String name, LocalDateTime startsAt, LocalDateTime endsAt);
 
     @Query(value = "" +
         "SELECT * FROM EVENT e " +

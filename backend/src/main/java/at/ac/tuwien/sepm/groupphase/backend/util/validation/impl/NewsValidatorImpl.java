@@ -60,7 +60,7 @@ public class NewsValidatorImpl implements NewsValidator {
             constraints.add("user_exists", userRepository.findAbstractUserByUserCode(user.getUserCode()) != null);
             if(!constraints.isViolated()) {
                 constraints.add("user_isLogged", user.isLogged());
-                constraints.add("user_isCustomer", user instanceof Customer);
+                constraints.add("user_isCustomerOrAdmin", user instanceof Customer || user instanceof Administrator);
                 constraints.add("user_isSelf", userValidator.validateUserIdentityWithGivenEmail(user.getEmail()));
             }
         }

@@ -42,12 +42,12 @@ public class Event implements Serializable {
 
     @NotNull
     @Size(min=1, max=100)
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false)
     private String category;
 
     @NotNull
     @Size(min=1, max=100)
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false)
     private String type;
 
     @NotNull

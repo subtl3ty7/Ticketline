@@ -2,10 +2,7 @@ package at.ac.tuwien.sepm.groupphase.backend.datagenerator;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.*;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
-import at.ac.tuwien.sepm.groupphase.backend.repository.ArtistRepository;
-import at.ac.tuwien.sepm.groupphase.backend.repository.SeatRepository;
-import at.ac.tuwien.sepm.groupphase.backend.repository.SectionRepository;
-import at.ac.tuwien.sepm.groupphase.backend.repository.ShowRepository;
+import at.ac.tuwien.sepm.groupphase.backend.repository.*;
 import at.ac.tuwien.sepm.groupphase.backend.service.ArtistService;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventLocationService;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
@@ -23,8 +20,7 @@ import javax.persistence.EntityManagerFactory;
 import java.lang.invoke.MethodHandles;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Profile("generateData")
 @Component("EventDataGenerator")
@@ -117,7 +113,7 @@ public class EventDataGenerator {
             addedArtists.add(artists.get(artistIndex));
 
             Event event = Event.builder()
-                .category("Talk")
+                .category("MUSICAL")
                 .description(resources.getText("event_text.txt"))
                 .startsAt(LocalDateTime.now())
                 .endsAt(LocalDateTime.now())
@@ -126,8 +122,8 @@ public class EventDataGenerator {
                 .photo(resources.getImageEncoded(imgName))
                 .prices(List.of(1,2,3))
                 .totalTicketsSold(5*i*i*i)
-                .type("Of the cool type")
                 .shows(generateShows(eventLocations.get(eventLocationIndex), EventTypeEnum.MUSIC, EventCategoryEnum.HIPHOP, "Event " + i))
+                .type("MUSIC")
                 .artists(addedArtists)
                 .eventType(EventTypeEnum.MUSIC)
                 .eventCategory(EventCategoryEnum.HIPHOP)

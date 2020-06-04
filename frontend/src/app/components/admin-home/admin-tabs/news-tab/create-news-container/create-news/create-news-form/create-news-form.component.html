@@ -1,0 +1,92 @@
+
+
+<div class="center-block">
+
+  <!--TITLE-->
+  <div fxLayout="row" class="info-wrapper">
+    <div class="info">
+      <div class="info-label">Titel</div>
+    </div>
+  </div>
+  <mat-form-field class="mat-form-field" >
+    <textarea
+      id="newsInfoForm_inputTitle"
+      matInput
+      name="title"
+      required
+      [(ngModel)]="news.title"></textarea>
+    <mat-error *ngIf="!news.title">Titel ist erforderlich!</mat-error>
+  </mat-form-field>
+
+  <!--SUMMARY-->
+  <div fxLayout="row" class="info-wrapper">
+    <div class="info">
+      <div class="info-label">Summary</div>
+    </div>
+  </div>
+  <mat-form-field class="mat-form-field" >
+    <textarea
+      id="newsInfoForm_inputSummary"
+      matInput
+      name="summary"
+      required
+      [(ngModel)]="news.summary"></textarea>
+    <mat-error *ngIf="!news.summary">Summary ist erforderlich!</mat-error>
+  </mat-form-field>
+
+  <!--TEXT-->
+  <div fxLayout="row" class="info-wrapper">
+    <div class="info">
+      <div class="info-label">Text</div>
+    </div>
+  </div>
+  <mat-form-field class="mat-form-field" >
+    <textarea
+      id="newsInfoForm_inputText"
+      matInput
+      name="text"
+      required
+      [(ngModel)]="news.text"></textarea>
+    <mat-error *ngIf="!news.text">Text ist erforderlich!</mat-error>
+  </mat-form-field>
+
+  <!--PASSWORD-->
+  <div fxLayout="row" class="info-wrapper">
+    <div class="info">
+      <div class="info-label">Author</div>
+    </div>
+  </div>
+  <mat-form-field class="mat-form-field" >
+    <input
+      id="newsInfoForm_inputAuthor"
+      matInput
+      required
+      maxlength="255"
+      [(ngModel)]="news.author">
+    <mat-error *ngIf="!news.author">Author ist erforderlich!</mat-error>
+  </mat-form-field>
+
+  <!--RELEVANCY-->
+  <div fxLayout="row" class="info-wrapper">
+    <div class="info">
+      <div class="info-label">Relevancy date</div>
+    </div>
+  </div>
+  <mat-form-field>
+    <mat-label>Wählen Sie ein Datum aus</mat-label>
+    <input required matInput [matDatepicker]="picker" (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error *ngIf="!news.stopsBeingRelevantAt">Relevancy ist erforderlich!</mat-error>
+  </mat-form-field>
+
+  <!--PHOTO-->
+  <div fxLayout="row" class="info-wrapper">
+    <div class="info">
+      <div class="info-label">Bild</div>
+    </div>
+  </div>
+    <input  type="file" onclick="this.value=null" (change)="inputChange($event);" accept="image/jpeg,image/png">
+  <p *ngIf="!news.photo" style="color: #ff1f20; font-size: 14px">Bild ist erforderlich!</p>
+  <ng-content></ng-content>
+</div>
