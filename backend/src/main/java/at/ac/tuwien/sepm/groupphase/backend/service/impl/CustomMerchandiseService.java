@@ -1,9 +1,12 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
+import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Merchandise;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.MerchandiseRepository;
+import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.MerchandiseService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
 import at.ac.tuwien.sepm.groupphase.backend.util.validation.MerchandiseValidator;
@@ -23,11 +26,13 @@ public class CustomMerchandiseService implements MerchandiseService {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final MerchandiseRepository merchandiseRepository;
     private final MerchandiseValidator merchandiseValidator;
+    private final UserRepository userRepository;
 
     @Autowired
-    public CustomMerchandiseService(MerchandiseRepository merchandiseRepository, MerchandiseValidator merchandiseValidator) {
+    public CustomMerchandiseService(MerchandiseRepository merchandiseRepository, MerchandiseValidator merchandiseValidator, UserRepository userRepository) {
         this.merchandiseRepository = merchandiseRepository;
         this.merchandiseValidator = merchandiseValidator;
+        this.userRepository = userRepository;
     }
 
 
@@ -68,7 +73,15 @@ public class CustomMerchandiseService implements MerchandiseService {
         LOGGER.info("Validating merchandise " + merchandise);
 
         merchandiseValidator.validateMerchandisePurchaseWithPremiumPoints(merchandise, userCode);
+        merchandise.setStockCount(merchandise.getStockCount() - 1);
 
-        return null;
+        AbstractUser user = userRepository.findAbstractUserByUserCode(userCode);
+        long currentPoints = ((Customer) user).getPoints();
+        ((Customer) user).setPoints(currentPoints - merchandise.getPremiumPrice());
+
+        merchandiseRepository.save(merchandise);
+        userRepository.save(user);
+
+        return merchandise;
     }
 }
