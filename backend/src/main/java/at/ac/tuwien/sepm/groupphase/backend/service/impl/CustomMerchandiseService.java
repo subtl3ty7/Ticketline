@@ -6,6 +6,7 @@ import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.MerchandiseRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.MerchandiseService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
+import at.ac.tuwien.sepm.groupphase.backend.util.validation.MerchandiseValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,12 @@ public class CustomMerchandiseService implements MerchandiseService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final MerchandiseRepository merchandiseRepository;
+    private final MerchandiseValidator merchandiseValidator;
 
     @Autowired
-    public CustomMerchandiseService(MerchandiseRepository merchandiseRepository) {
+    public CustomMerchandiseService(MerchandiseRepository merchandiseRepository, MerchandiseValidator merchandiseValidator) {
         this.merchandiseRepository = merchandiseRepository;
+        this.merchandiseValidator = merchandiseValidator;
     }
 
 
@@ -61,7 +64,11 @@ public class CustomMerchandiseService implements MerchandiseService {
     }
 
     @Override
-    public List<Merchandise> purchaseWithPremiumPoints(List<Merchandise> merchandises) {
+    public Merchandise purchaseWithPremiumPoints(Merchandise merchandise, String userCode) {
+        LOGGER.info("Validating merchandise " + merchandise);
+
+        merchandiseValidator.validateMerchandisePurchaseWithPremiumPoints(merchandise, userCode);
+
         return null;
     }
 }

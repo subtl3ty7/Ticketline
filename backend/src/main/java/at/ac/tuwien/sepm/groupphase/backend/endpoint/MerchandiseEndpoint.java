@@ -70,16 +70,16 @@ public class MerchandiseEndpoint {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/purchasing")
+    @PostMapping(value = "/purchasingWithPremiumPoints/{userCode}")
     @ApiOperation(
-        value = "Purchasing a merchandise products with premium points.",
-        notes = "Purchasing a merchandise products with premium points.",
+        value = "Purchasing a merchandise product with premium points.",
+        notes = "Purchasing a merchandise product with premium points.",
         authorizations = {@Authorization(value = "apiKey")})
     @ApiResponse(code = 201, message = "Product is successfully purchased")
-    public List<MerchandiseDto> buyTicket(@RequestBody List<MerchandiseDto> merchandiseDtoList) {
-        LOGGER.info("POST " + merchandiseDtoList);
-        List<Merchandise> merchandises = merchandiseService.purchaseWithPremiumPoints(merchandiseMapper.merchandiseDtoListToMerchandiseList(merchandiseDtoList));
-        return merchandiseMapper.merchandiseToMerchandiseDto(merchandises);
+    public MerchandiseDto buyMerchandiseWithPremiumPoints(@RequestBody MerchandiseDto merchandiseDto, @PathVariable String userCode) {
+        LOGGER.info("POST " + merchandiseDto);
+        Merchandise merchandise = merchandiseService.purchaseWithPremiumPoints(merchandiseMapper.merchandiseDtoToMerchandise(merchandiseDto), userCode);
+        return merchandiseMapper.merchandiseToMerchandiseDto(merchandise);
     }
 
 
