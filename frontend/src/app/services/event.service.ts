@@ -1,11 +1,13 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Globals} from '../global/globals';
 import {Observable, throwError} from 'rxjs';
 import {DetailedEvent} from '../dtos/detailed-event';
 import {SimpleEvent} from '../dtos/simple-event';
 import {catchError, tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
+import {EventCategories} from '../dtos/event-categories';
+import {EventTypes} from '../dtos/event-types';
 
 @Injectable({
   providedIn: 'root'
@@ -33,9 +35,7 @@ export class EventService {
   }
   getAllEvents(): Observable<SimpleEvent[]> {
     console.log('Load all events.');
-    return this.httpClient.get<SimpleEvent[]>(this.eventBaseUri + '/all').pipe(
-      catchError(this.handleError)
-    );
+    return this.httpClient.get<SimpleEvent[]>(this.eventBaseUri + '/all');
   }
   getDetailedEventByUserCode(eventCode: string): Observable<DetailedEvent> {
     console.log('Load event by EventCode');
@@ -60,4 +60,33 @@ export class EventService {
       catchError(this.handleError)
     );
   }
+
+  getSimpleEventsByParameters(event: SimpleEvent): Observable<SimpleEvent[]> {
+    if (!event.startsAt) {
+      event.startsAt = new Date(2000, 1, 1);
+    }
+    if (!event.endsAt) {
+      event.endsAt = new Date(3000, 1, 1);
+    }
+    const params = new HttpParams()
+      .set('eventCode', event.eventCode)
+      .set('name', event.name)
+      .set('startRange', event.startsAt.toDateString())
+      .set('endRange', event.endsAt.toDateString());
+    return this.httpClient.get<SimpleEvent[]>(this.eventBaseUri + '/', {params});
+  }
+
+  save(event: DetailedEvent) {
+    return this.httpClient.post<DetailedEvent>(this.eventBaseUri + '/', event);
+  }
+
+  getAllEventCategories(): Observable<EventCategories[]> {
+    console.log('Load all event categories.');
+    return this.httpClient.get<EventCategories[]>(this.eventBaseUri + '/eventCategories');
+  }
+  getAllEventTypes(): Observable<EventTypes[]> {
+    console.log('Load all event categories.');
+    return this.httpClient.get<EventTypes[]>(this.eventBaseUri + '/eventTypes');
+  }
+
 }

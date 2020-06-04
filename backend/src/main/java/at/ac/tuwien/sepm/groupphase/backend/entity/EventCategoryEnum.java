@@ -12,5 +12,4 @@ public enum EventCategoryEnum {
     MUSICAL,
     INDOORS,
     OUTDOORS
-
 }

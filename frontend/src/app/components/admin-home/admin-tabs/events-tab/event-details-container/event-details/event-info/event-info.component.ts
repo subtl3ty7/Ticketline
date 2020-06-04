@@ -13,6 +13,7 @@ export class EventInfoComponent implements OnInit {
   constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
+    console.log(this.event.description);
   }
 
   priceToString() {
