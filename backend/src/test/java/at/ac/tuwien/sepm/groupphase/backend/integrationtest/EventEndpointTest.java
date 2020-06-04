@@ -66,6 +66,8 @@ public class EventEndpointTest implements TestData {
         .description(DESC)
         .category(CAT)
         .type(TYP)
+        .eventCategory(CAT1)
+        .eventType(TYP1)
         .startsAt(START)
         .endsAt(END)
         .prices(PRICES)
@@ -84,6 +86,8 @@ public class EventEndpointTest implements TestData {
             .description(DESC)
             .category(CAT)
             .type(TYP)
+            .eventCategory(CAT1)
+            .eventType(TYP1)
             .startsAt(START)
             .endsAt(END)
             .prices(PRICES)
@@ -163,7 +167,7 @@ public class EventEndpointTest implements TestData {
     }
 
     @Test
-    public void givenEvent_whenGetEventByCode_then200AndEventWithAllProperties() throws Exception {
+    public void givenEvent_whenGetEventByCode_then200AndEventWithProperties() throws Exception {
         eventRepository.save(event);
 
         MvcResult mvcResult = this.mockMvc.perform(get(EVENT_BASE_URI + "/" + event.getEventCode())

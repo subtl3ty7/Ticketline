@@ -112,7 +112,7 @@ public class EventDataGenerator {
             addedArtists.add(artists.get(artistIndex));
 
             Event event = Event.builder()
-                .category("Talk")
+                .category("MUSICAL")
                 .description(resources.getText("event_text.txt"))
                 .startsAt(LocalDateTime.now())
                 .endsAt(LocalDateTime.now())
@@ -121,7 +121,7 @@ public class EventDataGenerator {
                 .photo(resources.getImageEncoded(imgName))
                 .prices(List.of(1,2,3))
                 .totalTicketsSold(5*i*i*i)
-                .type("Of the cool type")
+                .type("MUSIC")
                 .shows(generateShows(eventLocations.get(eventLocationIndex)))
                 .artists(addedArtists)
                 .eventType(EventTypeEnum.MUSIC)

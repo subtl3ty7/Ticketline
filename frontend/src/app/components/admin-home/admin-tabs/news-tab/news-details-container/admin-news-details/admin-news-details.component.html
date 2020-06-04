@@ -1,0 +1,24 @@
+<div class="news-wrapper">
+  <div fxLayout="row" class="news-line">
+    <div class="link opacity" (click)="newsNavigate()">
+      <span class="bread-crumps">News</span>
+    </div>
+
+    <div class="bread-crumps news-padding">
+      > {{title.substring(0,20)}}...
+    </div>
+  </div>
+</div>
+
+
+<div fxLayout="row" *ngIf="wrapper.state !== state.PROCESSING">
+  <div class="administration-tabs">
+    <app-admin-side-menu></app-admin-side-menu>
+  </div>
+  <div class="center-block">
+    <div fxLayout="row" *ngIf="wrapper.state === state.READY">
+      <app-news-info [news]="wrapper.model">
+      </app-news-info>
+    </div>
+  </div>
+</div>

@@ -9,6 +9,7 @@ import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
 import at.ac.tuwien.sepm.groupphase.backend.util.validation.EventValidator;
+import org.apache.tomcat.jni.Local;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,8 +67,12 @@ public class CustomEventService implements EventService {
     public Event createNewEvent(Event event){
         LOGGER.debug("Moving Event Entity through Service Layer: " + event);
         event.setEventCode(getNewEventCode());
+        event.setEventCategory(EventCategoryEnum.valueOf(event.getCategory()));
+        event.setEventType(EventTypeEnum.valueOf(event.getType()));
         validator.validate(event).throwIfViolated();
-
+        for (Artist a : event.getArtists()) {
+            artistRepository.save(a);
+        }
         //Give shows new EventLocation Entities (copies of existing ones) to make sure they all can have different seating assignments
         for(Show show: event.getShows()) {
             EventLocationOriginal eventLocation = eventLocationRepository.findEventLocationById(show.getEventLocationOriginalId());
@@ -126,5 +131,11 @@ public class CustomEventService implements EventService {
     public List<Event> findEventsAdvanced(String name, String type, String category, LocalDateTime startsAt, LocalDateTime endsAt, String showLength, Long price) {
         return null;
         // return eventRepository.findEventsByNameAndEventTypeAndEventCategoryAndStartsAtAfterAndEndsAtBeforeAndShows_DurationLessThanAndPricesLessThanEqual(name, EventTypeEnum.valueOf(type), EventCategoryEnum.valueOf(category), startsAt, endsAt, LocalDateTime.parse(showLength), price);
+    }
+
+    @Override
+    public List<Event> findSimpleEventsByParam(String eventCode, String name, LocalDateTime startRange, LocalDateTime endRange) {
+        List<Event> events =  eventRepository.findAllByEventCodeContainingIgnoreCaseAndNameContainingIgnoreCaseAndStartsAtBetween(eventCode, name, startRange, endRange);
+        return events;
     }
 }
