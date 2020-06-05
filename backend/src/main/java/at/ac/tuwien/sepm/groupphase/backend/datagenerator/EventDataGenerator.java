@@ -112,21 +112,26 @@ public class EventDataGenerator {
             }
             addedArtists.add(artists.get(artistIndex));
 
+            EventTypeEnum[] types = EventTypeEnum.values();
+            EventCategoryEnum[] categories = EventCategoryEnum.values();
+            int typeIndex = i % EventTypeEnum.values().length;
+            int categoryIndex = i % EventCategoryEnum.values().length;
+
             Event event = Event.builder()
-                .category("MUSICAL")
                 .description(resources.getText("event_text.txt"))
                 .startsAt(LocalDateTime.now())
-                .endsAt(LocalDateTime.now())
+                .endsAt(LocalDateTime.now().plusHours(eventDurationInHours))
                 .eventCode("E1234" + i)
                 .name("Event " + i)
                 .photo(resources.getImageEncoded(imgName))
                 .prices(List.of(1,2,3))
                 .totalTicketsSold(5*i*i*i)
                 .shows(generateShows(eventLocations.get(eventLocationIndex), EventTypeEnum.MUSIC, EventCategoryEnum.HIPHOP, "Event " + i))
-                .type("MUSIC")
                 .artists(addedArtists)
-                .eventType(EventTypeEnum.MUSIC)
-                .eventCategory(EventCategoryEnum.HIPHOP)
+                .type(types[typeIndex].toString())
+                .eventType(types[typeIndex])
+                .category(categories[categoryIndex].toString())
+                .eventCategory(categories[categoryIndex])
                 .duration(Duration.ofHours(eventDurationInHours))
                 .build();
             event = eventService.createNewEvent(event);
