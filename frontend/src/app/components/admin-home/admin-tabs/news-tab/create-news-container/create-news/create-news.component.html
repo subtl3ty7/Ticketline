@@ -1,0 +1,37 @@
+<div class="news-wrapper">
+  <div fxLayout="row" class="news-line">
+    <div class="link opacity" (click)="newsNavigate()">
+      <span class="bread-crumps">Users</span>
+    </div>
+
+    <div class="bread-crumps news-padding">
+      > News Erstellen
+    </div>
+  </div>
+</div>
+
+<div fxLayout="row" >
+  <div class="administration-tabs">
+    <app-admin-side-menu></app-admin-side-menu>
+  </div>
+  <div class="center-block">
+    <app-error-notification *ngIf = "error" [error]="error"></app-error-notification>
+    <div>
+      <app-create-news-form [news]="wrapper.model">
+        <div fxLayout="row" class="buttons-wrapper">
+          <div class="save-button-wrapper">
+            <button id="news-save-button" mat-raised-button
+                    (click)="saveNews()">Erstellen
+            </button>
+          </div>
+          <div class="cancel-button-wrapper">
+            <button id="news-cancel-button" mat-raised-button color = "warn"
+                    (click)="cancelCreateNewsMode()">Abbrechen
+            </button>
+          </div>
+        </div>
+      </app-create-news-form>
+    </div>
+  </div>
+</div>
+

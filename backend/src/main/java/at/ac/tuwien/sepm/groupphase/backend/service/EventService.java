@@ -25,4 +25,6 @@ public interface EventService {
     List<Event> findEventsByName(String name);
 
     List<Event> findEventsAdvanced(String name, String type, String category, LocalDateTime startsAt, LocalDateTime endsAt, String showLength, Long price);
+
+    List<Event> findSimpleEventsByParam(String eventCode, String name, LocalDateTime startRange, LocalDateTime endRange);
 }

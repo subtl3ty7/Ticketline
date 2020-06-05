@@ -1,9 +1,12 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 
 
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.DetailedTicketDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.MerchandiseDto;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleTicketDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.MerchandiseMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Merchandise;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
 import at.ac.tuwien.sepm.groupphase.backend.service.MerchandiseService;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
@@ -62,6 +65,18 @@ public class MerchandiseEndpoint {
         LOGGER.info("GET /api/v1/merchandise/premium");
         List<MerchandiseDto> result = merchandiseMapper.merchandiseToMerchandiseDto(merchandiseService.findAllMerchandisePremiumProducts());
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/purchasingWithPremiumPoints/{userCode}")
+    @ApiOperation(
+        value = "Purchasing a merchandise product with premium points.",
+        notes = "Purchasing a merchandise product with premium points.",
+        authorizations = {@Authorization(value = "apiKey")})
+    @ApiResponse(code = 201, message = "Product is successfully purchased")
+    public MerchandiseDto buyMerchandiseWithPremiumPoints(@RequestBody MerchandiseDto merchandiseDto, @PathVariable String userCode) {
+        LOGGER.info("POST " + merchandiseDto);
+        Merchandise merchandise = merchandiseService.purchaseWithPremiumPoints(merchandiseMapper.merchandiseDtoToMerchandise(merchandiseDto), userCode);
+        return merchandiseMapper.merchandiseToMerchandiseDto(merchandise);
     }
 
 

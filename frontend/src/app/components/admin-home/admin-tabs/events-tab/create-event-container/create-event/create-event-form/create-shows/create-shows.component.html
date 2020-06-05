@@ -1,0 +1,133 @@
+<h2 mat-dialog-title> Artists Erstellen </h2>
+
+<mat-dialog-content>
+
+  <app-error-notification *ngIf="error" [error]="error"></app-error-notification>
+  <div class="center-block" *ngIf="!error">
+    <!--STARTS AT-->
+    <div fxLayout="row" class="info-wrapper">
+      <div class="info">
+        <div class="info-label">Beginn</div>
+      </div>
+    </div>
+    <mat-form-field>
+      <mat-label>Wählen Sie ein Datum aus</mat-label>
+      <input required matInput [matDatepicker]="picker" (dateInput)="addStartsAt('input', $event)" (dateChange)="addStartsAt('change', $event)">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="!show.startsAt">Beginndatum ist erforderlich!</mat-error>
+    </mat-form-field>
+
+    <div *ngIf="show.startsAt">
+    <div fxLayout="row" class="info-wrapper">
+      <div class="info">
+        <div class="info-label">Beginn Uhrzeit</div>
+      </div>
+    </div>
+    <p *ngIf="!startTime" style="color: #ff1f20; font-size: 14px">Uhrzeit sind erforderlich!</p>
+    <input style="border-radius: 2px; margin-left: 10px;"  required type="time" name="mytime"  [(ngModel)]="startTime">
+    </div>
+
+
+    <!--ENDS AT-->
+    <div fxLayout="row" class="info-wrapper">
+      <div class="info">
+        <div class="info-label">Ende</div>
+      </div>
+    </div>
+    <mat-form-field>
+      <mat-label>Wählen Sie ein Datum aus</mat-label>
+      <input required matInput [matDatepicker]="picker2" (dateInput)="addEndsAt('input', $event)" (dateChange)="addEndsAt('change', $event)">
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+      <mat-error *ngIf="!show.endsAt">Enddatum ist erforderlich!</mat-error>
+    </mat-form-field>
+
+    <div *ngIf="show.endsAt">
+      <div fxLayout="row" class="info-wrapper">
+        <div class="info">
+          <div class="info-label">Ende Uhrzeit</div>
+        </div>
+      </div>
+      <p *ngIf="!endTime" style="color: #ff1f20; font-size: 14px">Uhrzeit sind erforderlich!</p>
+      <input style="border-radius: 2px; margin-left: 10px;"  required type="time" name="mytime"  [(ngModel)]="endTime">
+    </div>
+
+
+    <!--EVENT LOCATION-->
+    <div fxLayout="row" class="info-wrapper">
+      <div class="info">
+        <div class="info-label">Ort</div>
+      </div>
+    </div>
+    <mat-form-field style="width: 200px">
+      <mat-label>Eventsort wählen</mat-label>
+      <mat-select [(value)]="show.eventLocationCopy">
+        <mat-option *ngFor="let eventLocation of eventLocations" [value]="eventLocation">
+          {{eventLocation.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="buttons-wrapper">
+      <button mat-raised-button color="basic" (click) = "createShow()" style=""> Show in Tabelle hinzufügen</button>
+      <button mat-raised-button color="primary" (click) = "closeModal()"> Alle Shows in Event speichern</button>
+    </div>
+  </div>
+
+  <div class="table-container all-height" #table>
+
+
+    <div class="table">
+      <mat-table #table [dataSource]="dataSource" matSort>
+
+        <!--START TIME-->
+        <ng-container matColumnDef="startsAt">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Starts At</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <div class="cell-padding">
+              {{element?.startsAt | date:'MMM d, y, HH:mm'}}
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <!--END TIME-->
+        <ng-container matColumnDef="endsAt">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Ends At</mat-header-cell>
+          <mat-cell *matCellDef="let element" >
+            <div class="cell-padding">
+              {{element?.endsAt | date:'MMM d, y, HH:mm'}}
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <!--EVENT LOCATION-->
+        <ng-container matColumnDef="eventLocation">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Event Location</mat-header-cell>
+          <mat-cell *matCellDef="let element" >
+            <div class="cell-padding">
+              {{element?.eventLocationCopy.name}}
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <!--DELETE-->
+        <ng-container matColumnDef="delete">
+          <mat-header-cell *matHeaderCellDef ></mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <div class="cell-padding">
+              <button mat-raised-button color="warn" (click)="delete(element)">Löschen</button>
+            </div>
+          </mat-cell>
+        </ng-container>
+
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row;
+             columns: displayedColumns;"></mat-row>
+      </mat-table>
+      <mat-paginator showFirstLastButtons [pageSizeOptions]="[5, 10, 15]"></mat-paginator>
+    </div>
+  </div>
+</mat-dialog-content>
+

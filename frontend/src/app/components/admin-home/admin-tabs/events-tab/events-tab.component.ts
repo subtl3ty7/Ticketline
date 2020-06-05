@@ -7,6 +7,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {SimpleEvent} from '../../../../dtos/simple-event';
 import {DetailedEvent} from '../../../../dtos/detailed-event';
 import {MatPaginator} from '@angular/material/paginator';
+import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 
 
 @Component({
@@ -25,16 +26,20 @@ export class EventsTabComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('scrollBlock') scrollBlock: ElementRef;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  error = false;
-  errorMessage = '';
-  private event: SimpleEvent;
+  error;
   private events: Array<SimpleEvent>;
+  private searchEvent;
   constructor(private eventService: EventService,
               public  router: Router,
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.loadAllEvents();
+    this.searchEvent = new SimpleEvent();
+    this.searchEvent.eventCode = '';
+    this.searchEvent.name = '';
+    this.searchEvent.startsAt = new Date(2000, 1, 1);
+    this.searchEvent.endsAt = new Date(3000, 1, 1);
   }
 
   private loadAllEvents() {
@@ -43,11 +48,24 @@ export class EventsTabComponent implements OnInit {
         this.events = event;
         this.initTable();
       },
-      error => {
-        this.defaultServiceErrorHandling(error);
+      (error) => {
+        this.error = error.error;
       }
     );
   }
+  private loadAllEventsByParameters() {
+    console.log(this.searchEvent);
+    this.eventService.getSimpleEventsByParameters(this.searchEvent).subscribe(
+      (events: SimpleEvent[]) => {
+        this.events = events;
+        this.initTable();
+      },
+      (error) => {
+        this.error = error.error;
+      }
+    );
+  }
+
   private initTable() {
     if (this.events) {
       this.dataSource = new MatTableDataSource(this.events);
@@ -56,28 +74,20 @@ export class EventsTabComponent implements OnInit {
     }
   }
 
+  addStart(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.searchEvent.startsAt = event.value;
+  }
+
+
+  addEnd(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.searchEvent.endsAt = event.value;
+  }
+
   private createNewEvent() {
     this.router.navigate(['create-event']);
   }
 
   public eventDetails(event) {
     this.router.navigate(['event-details/' + event.eventCode]);
-  }
-
-  private defaultServiceErrorHandling(error: any) {
-    console.log(error);
-    this.error = true;
-    if (error.status === 0) {
-      // If status is 0, the backend is probably down
-      this.errorMessage = 'The backend seems not to be reachable';
-    } else if (error.error.message === 'No message available') {
-      // If no detailed error message is provided, fall back to the simple error name
-      this.errorMessage = error.error.error;
-    } else {
-      this.errorMessage = error.error.message;
-    }
-  }
-  public getName(): string {
-    return this.event.name;
   }
 }

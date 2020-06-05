@@ -1,0 +1,68 @@
+:host {
+  display: block;
+}
+
+.event-wrapper {
+  margin-left: 14.8%;
+  margin-right: 3%;
+}
+
+.event-line {
+  align-items: center;
+  border-bottom: 1px solid #888888;
+}
+
+.bread-crumps {
+  font-family: SansSerif, sans-serif;
+  font-size: 24px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.2px;
+  color: #000000;
+}
+
+.opacity {
+  opacity: 0.5;
+}
+
+.link {
+  cursor: pointer;
+  border: none;
+}
+
+.event-padding {
+  padding-left: 8px;
+}
+
+
+.center-block {
+  width: 480px;
+  margin: 0 70px;
+  padding-top: 30px;
+  padding-bottom: 110px;
+}
+
+.button-wrapper {
+  padding-top: 50px;
+}
+.buttons-wrapper {
+  display: flex;
+  width: 100%;
+  padding-bottom: 5%;
+}
+
+.save-button-wrapper {
+  padding-top: 25px;
+}
+
+.cancel-button-wrapper {
+  padding-top: 25px;
+  padding-left: 10%;
+}
+
+button {
+  outline: none;
+  cursor: pointer;
+}

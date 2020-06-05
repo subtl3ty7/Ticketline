@@ -1,11 +1,15 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
+import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Merchandise;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.MerchandiseRepository;
+import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.MerchandiseService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
+import at.ac.tuwien.sepm.groupphase.backend.util.validation.MerchandiseValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +25,14 @@ public class CustomMerchandiseService implements MerchandiseService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final MerchandiseRepository merchandiseRepository;
+    private final MerchandiseValidator validator;
+    private final UserRepository userRepository;
 
     @Autowired
-    public CustomMerchandiseService(MerchandiseRepository merchandiseRepository) {
+    public CustomMerchandiseService(MerchandiseRepository merchandiseRepository, MerchandiseValidator validator, UserRepository userRepository) {
         this.merchandiseRepository = merchandiseRepository;
+        this.validator = validator;
+        this.userRepository = userRepository;
     }
 
 
@@ -63,5 +71,21 @@ public class CustomMerchandiseService implements MerchandiseService {
     @Override
     public Merchandise findMerchandiseByMerchandiseProductCode(String merchandiseProductCode) {
         return merchandiseRepository.findMerchandiseByMerchandiseProductCode(merchandiseProductCode);
+
+    public Merchandise purchaseWithPremiumPoints(Merchandise merchandise, String userCode) {
+        LOGGER.info("Validating merchandise " + merchandise + " for user with userCode " + userCode);
+
+        validator.validateMerchandisePurchaseWithPremiumPoints(merchandise, userCode).throwIfViolated();
+        Merchandise saveMerchandise = merchandiseRepository.findMerchandiseById(merchandise.getId());
+        saveMerchandise.setStockCount(saveMerchandise.getStockCount() - 1);
+
+        AbstractUser user = userRepository.findAbstractUserByUserCode(userCode);
+        long currentPoints = ((Customer) user).getPoints();
+        ((Customer) user).setPoints(currentPoints - saveMerchandise.getPremiumPrice());
+
+        merchandiseRepository.save(saveMerchandise);
+        userRepository.save(user);
+
+        return saveMerchandise;
     }
 }

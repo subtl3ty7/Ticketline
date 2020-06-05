@@ -80,6 +80,8 @@
       maxlength="255"
       [(ngModel)]="password" type="password" (change)="passwordChange()">
     <mat-error *ngIf="!password">Passwort ist erforderlich!</mat-error>
+    <mat-error *ngIf="password < 8">Passwort ist zu kurz!</mat-error>
+    <mat-hint align="start">Passwort muss länger als 8 Zeichen</mat-hint>
   </mat-form-field>
 
   <!--BIRTHDATE-->
