@@ -4,6 +4,10 @@
   color: black;
 }
 
+.card-title {
+  display: -webkit-flex;
+}
+
 .card-title-font {
   display: -webkit-inline-flex;
   -webkit-box-orient: vertical;

@@ -19,36 +19,82 @@
       <div class="zoom col-4"
            *ngFor="let product of merchandise"
            routerLink="/merchandise/{{product.merchandiseProductCode}}">
-        <div class="card" style="padding-bottom: 10px">
-          <img class="card-img-top img-fluid image-crop-big"
-               src="https://i.picsum.photos/id/100/2500/1656.jpg">
 
+
+        <!-- Card Light -->
+        <div class="card">
+
+          <!-- Card image -->
+          <div class="view overlay">
+            <img class="card-img-top"
+                 src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%28131%29.jpg" alt="Card image cap">
+            <a>
+              <div class="mask rgba-white-slight"></div>
+            </a>
+          </div>
+
+          <!-- Card content -->
           <div class="card-body">
 
-            <div class = "card-title">
-
-              <div class="nameAndPremiumInfo">
-                <div class="col-sm card-title-font">{{product.merchandiseProductName}}
-
-                  <div class="premiumIcon" *ngIf="product.premium">
-                    <i class="fas fa-star"></i>
-                  </div>
-
-                </div>
-
+            <!-- Title -->
+            <h4 class="card-title"> {{product.merchandiseProductName}}
+              <div class="premiumIcon" *ngIf="product.premium">
+                <i class="fas fa-star"></i>
               </div>
+            </h4>
 
+            <hr>
+
+            <!-- Text -->
+            <div class="whenPremium" *ngIf="product.premium">
+              <p class="card-text">Regular Price: €{{product.price}}</p>
+              <p class="card-text">Premium Price: €{{product.premiumPrice}}</p>
             </div>
 
-
-            <div class = "card-text">
-              <div class="col-sm card-text-font"> € {{product.price}}</div>
-
-
+            <div class="whenPremium" *ngIf="!product.premium">
+              <p class="card-text">Price: €{{product.price}}</p>
             </div>
+
+            <!-- Link -->
+            <a href="/merchandise/{{product.merchandiseProductCode}}" class="black-text d-flex justify-content-end">
+              <h5>Details<i class="fas fa-angle-double-right"></i></h5>
+            </a>
+
           </div>
+
         </div>
+        <!-- Card Light -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       </div>
     </div>
   </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
