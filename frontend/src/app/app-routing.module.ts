@@ -30,6 +30,8 @@ import {ArtistEventComponent} from './components/search/artist/artist-event/arti
 import {LocationShowComponent} from './components/search/location/location-show/location-show.component';
 import {ResetPasswordAdminContainerComponent} from './components/admin-home/admin-tabs/users-tab/reset-password-admin-container/root/reset-password-admin-container.component';
 import {MyInvoiceComponent} from './components/my-profile/my-profile-tabs/my-tickets-tab/my-invoice/my-invoice.component';
+import {MerchandiseComponent} from './components/merchandise/merchandise.component';
+import {ProductDetailsComponent} from './components/merchandise/product-details/product-details.component';
 import {NewsDetailsContainerComponent} from './components/admin-home/admin-tabs/news-tab/news-details-container/root/news-details-container.component';
 import {CreateNewsContainerComponent} from './components/admin-home/admin-tabs/news-tab/create-news-container/root/create-news-container.component';
 import {EventAdvancedComponent} from './components/search/event/event-advanced/event-advanced.component';
@@ -69,6 +71,8 @@ const routes: Routes = [
   {path: 'search/location-advanced', component: LocationAdvancedComponent},
   {path: 'search/location-shows', component: LocationShowComponent},
   {path: 'my-profile/my-tickets/my-invoice', component: MyInvoiceComponent},
+  {path: 'merchandise', component: MerchandiseComponent},
+  {path: 'merchandise/:merchandiseProductCode', component: ProductDetailsComponent}
   ];
 
 @NgModule({

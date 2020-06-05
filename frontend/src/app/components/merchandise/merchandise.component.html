@@ -1,0 +1,83 @@
+<app-customer-header></app-customer-header>
+
+
+
+<app-error-notification *ngIf="error" [error]="error"></app-error-notification>
+
+<div class="card-body">
+  <div class="row" style="padding-left: 30px; padding-right: 30px">
+
+    <h1 class="mb-7">MERCHANDISE</h1>
+    <p class="infoAboutPremium">
+      <i class="fas fa-star"></i>
+      Prämienpunkte einlösbar
+    </p>
+
+
+
+    <div *ngIf="merchandise">
+    <div class="row" style="padding-left: 25px; padding-right: 25px; padding-bottom: 25px">
+
+      <div class="zoom col-4"
+           *ngFor="let product of merchandise"
+           routerLink="/merchandise/{{product.merchandiseProductCode}}">
+
+        <div class="card-deck h-100">
+
+        <!-- Card Light -->
+        <div class="card">
+          <!-- Card image -->
+          <div class="view overlay">
+            <img class="card-img-top"
+                 src="{{product.photo}}" alt="Card image cap">
+            <a>
+              <div class="mask rgba-white-slight"></div>
+            </a>
+          </div>
+
+          <!-- Card content -->
+          <div class="card-body">
+
+            <!-- Title -->
+            <h4 class="card-title"> {{product.merchandiseProductName}}
+              <div class="premiumIcon" *ngIf="product.premium">
+                <i class="fas fa-star"></i>
+              </div>
+            </h4>
+
+            <hr>
+
+            <!-- Text -->
+            <div class="whenPremium" *ngIf="product.premium">
+              <p class="card-text">Regular Price: {{product.price}} €</p>
+              <p class="card-text">Premium Price: {{product.premiumPrice}} <i class="fas fa-coins"></i></p>
+            </div>
+
+            <div class="whenPremium" *ngIf="!product.premium">
+              <p class="card-text">Price: €{{product.price}}</p>
+              <br>
+            </div>
+
+            <a class="detailsText black-text d-flex justify-content-end">
+              <h5>Details<i class="fas fa-angle-double-right"></i></h5>
+            </a>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
