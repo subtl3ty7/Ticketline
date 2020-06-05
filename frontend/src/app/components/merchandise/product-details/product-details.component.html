@@ -24,33 +24,46 @@
 
             <div class="col">
 
-              <div class="nameAndPremiumInfo">
-                <h2 class="mb-0 headline">{{merchandiseProduct.merchandiseProductName}}</h2><br>
+              <h2 class="mb-0 headline">{{merchandiseProduct.merchandiseProductName}}
+              <div *ngIf="merchandiseProduct.premium">
+                <i class="fas fa-star fa-1x"></i>
+               </div>
+              </h2><br>
+
+
+              <div>
+                <p class="h3">Preis: {{merchandiseProduct.price}} €</p>
+              </div>
+
+
+              <div class="whenPremium">
 
                 <div *ngIf="merchandiseProduct.premium">
 
-                  <p class="h3">Premium Preis: €{{merchandiseProduct.premiumPrice}}</p>
-                  <i class="fas fa-star fa-1x"></i>
+                  <p class="h3">Premium Preis: {{merchandiseProduct.premiumPrice}} <i class="fas fa-coins"></i></p>
 
                 </div>
 
               </div>
 
+              <br>
 
-              <div>
-                <p class="h3">Preis: €{{merchandiseProduct.price}}</p>
-              </div>
-
-
-              <div id="checkAvailability">
+              <div class="checkAvailability">
+                <br>
                 <p>Available: </p>
+                <p *ngIf="merchandiseProduct.stockCount > 0">
+                  Yes
+                </p>
+
+                <p *ngIf="merchandiseProduct.stockCount == 0">
+                  No
+                </p>
 
 
               </div>
 
+              <br>
               <button type="button" class="btn btn-success btn-sm m-0">Jetzt kaufen</button>
-
-
 
             </div>
             </div>

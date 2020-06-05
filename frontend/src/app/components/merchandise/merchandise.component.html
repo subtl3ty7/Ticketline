@@ -48,8 +48,8 @@
 
             <!-- Text -->
             <div class="whenPremium" *ngIf="product.premium">
-              <p class="card-text">Regular Price: €{{product.price}}</p>
-              <p class="card-text">Premium Price: €{{product.premiumPrice}}</p>
+              <p class="card-text">Regular Price: {{product.price}} €</p>
+              <p class="card-text">Premium Price: {{product.premiumPrice}} <i class="fas fa-coins"></i></p>
             </div>
 
             <div class="whenPremium" *ngIf="!product.premium">

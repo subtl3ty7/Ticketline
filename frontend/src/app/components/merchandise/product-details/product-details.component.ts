@@ -25,7 +25,7 @@ export class ProductDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadMerchandiseProduct();
- }
+  }
 
   public loadMerchandiseProduct(): void {
     const merchandiseProductCode = this.route.snapshot.paramMap.get('merchandiseProductCode');
@@ -38,5 +38,8 @@ export class ProductDetailsComponent implements OnInit {
       }
     );
   }
+
+
+
 
 }

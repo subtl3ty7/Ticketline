@@ -1,0 +1,17 @@
+.checkAvailability, .whenPremium {
+  display: inline-flex;
+}
+
+.mb-0 {
+  display: inline-flex;
+  padding-bottom: 15px;
+}
+
+.fas {
+  color: #ff9800;
+  font-size: 25px;
+}
+
+.fa-coins {
+  color: black;
+}
