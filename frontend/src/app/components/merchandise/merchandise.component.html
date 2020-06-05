@@ -13,7 +13,9 @@
       Prämienpunkte einlösbar
     </p>
 
-
+    <p class="infoAboutMyPoints" *ngIf="user">
+      Meine Prämienpunkte: {{user.points}}
+    </p>
 
     <div *ngIf="merchandise">
     <div class="row" style="padding-left: 25px; padding-right: 25px; padding-bottom: 25px">

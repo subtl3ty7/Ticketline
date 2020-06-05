@@ -75,4 +75,10 @@
   height: 450px;
   margin: 0px;
   border-radius: 0px;
-  filter: grayscale(20%) contrast(110%);}
+  filter: grayscale(20%) contrast(110%);
+}
+
+.infoAboutMyPoints {
+  padding-left: 10px;
+  padding-right: 10px;
+}
