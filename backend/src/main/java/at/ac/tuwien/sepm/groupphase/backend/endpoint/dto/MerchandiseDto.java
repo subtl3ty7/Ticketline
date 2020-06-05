@@ -13,6 +13,7 @@ public class MerchandiseDto {
     private String merchandiseProductCode;
     private String merchandiseProductName;
     private int stockCount;
+    private String photo;
     private int price;
     private int premiumPrice;
     private boolean premium;

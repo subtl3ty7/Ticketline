@@ -33,12 +33,12 @@ public class Merchandise {
     @Column(nullable = false, name = "product_name")
     private String merchandiseProductName;
 
-   /* @ToString.Exclude
+    @ToString.Exclude
     @NotNull
     @Lob
     @Column(nullable = false, name = "photo")
     private String photo;
-*/
+
 
     @NotNull
     @Column(nullable = false, name = "stock_count")
