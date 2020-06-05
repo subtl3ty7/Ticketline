@@ -68,3 +68,11 @@
   color: cornflowerblue;
 }
 
+.card-img-top {
+  object-fit: cover; /* scale the image */
+  object-position: center; /* Center the image within the element */
+  width: 100%;
+  height: 450px;
+  margin: 0px;
+  border-radius: 0px;
+  filter: grayscale(20%) contrast(110%);}
