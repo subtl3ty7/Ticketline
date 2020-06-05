@@ -24,8 +24,16 @@
 
             <div class="col">
 
-              <div>
+              <div class="nameAndPremiumInfo">
                 <h2 class="mb-0 headline">{{merchandiseProduct.merchandiseProductName}}</h2><br>
+
+                <div *ngIf="merchandiseProduct.premium">
+
+                  <p class="h3">Premium Preis: €{{merchandiseProduct.premiumPrice}}</p>
+                  <i class="fas fa-star fa-1x"></i>
+
+                </div>
+
               </div>
 
 
@@ -33,12 +41,6 @@
                 <p class="h3">Preis: €{{merchandiseProduct.price}}</p>
               </div>
 
-              <div *ngIf="merchandiseProduct.premium">
-
-                <p class="h3">Premium Preis: €{{merchandiseProduct.premiumPrice}}</p>
-                <i class="fas fa-star fa-1x"></i>
-
-              </div>
 
               <div id="checkAvailability">
                 <p>Available: </p>

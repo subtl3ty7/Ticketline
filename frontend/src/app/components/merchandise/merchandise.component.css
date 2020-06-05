@@ -1,11 +1,11 @@
 
-.zoom:hover {
-  transform: scale(1.05);
+.card-body, .card {
+  background-color: white;
+  color: black;
 }
 
-
 .card-title-font {
-  display: -webkit-box;
+  display: -webkit-inline-flex;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2; /* number of lines to show */
   line-height: 40px; /* fallback */
@@ -17,6 +17,9 @@
   color: black;
 }
 
+.nameAndPremiumInfo {
+  display: -webkit-flex;
+}
 
 .card-text-font {
   color: black;
@@ -31,7 +34,6 @@
   overflow: hidden;
 }
 
-
 .card {
   margin: 10px;
   padding-bottom: 15px;
@@ -40,7 +42,15 @@
   box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.32);
 }
 
+.zoom:hover {
+  transform: scale(1.05);
+}
 
 .row {
   margin: 0px;
+}
+
+.fa-star {
+  color: #ff9800;
+  font-size: 20px;
 }
