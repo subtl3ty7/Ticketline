@@ -21,9 +21,6 @@
   color: black;
 }
 
-.nameAndPremiumInfo {
-  display: -webkit-flex;
-}
 
 .card-text-font {
   color: black;
@@ -57,4 +54,8 @@
 .fa-star {
   color: #ff9800;
   font-size: 20px;
+}
+
+.card-deck {
+  padding: 15px;
 }
