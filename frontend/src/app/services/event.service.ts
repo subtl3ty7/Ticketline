@@ -89,7 +89,7 @@ export class EventService {
   }
 
 
-  getDetailedEventsBy(name: string, type: string, category: string, startsAt: string, endsAt: string, duration: string): Observable<DetailedEvent[]> {
+  getSimpleEventsBy(name: string, type: string, category: string, startsAt: string, endsAt: string, duration: string): Observable<SimpleEvent[]> {
     console.log('Load events advanced');
     if (startsAt !== '') {
       startsAt += 'T00:00';
@@ -98,7 +98,7 @@ export class EventService {
       endsAt += 'T23:59';
     }
     console.log('url: ' + this.eventBaseUri + '?eventName=' + name + '&type=' + type + '&category=' + category + '&startsAt=' + startsAt + '&endsAt=' + endsAt + '&showDuration=' + duration);
-    return this.httpClient.get<DetailedEvent[]>(this.eventBaseUri + '?' + 'eventName=' + name + '&type=' + type + '&category=' + category + '&startsAt=' + startsAt + '&endsAt=' + endsAt + '&showDuration=' + duration).pipe(
+    return this.httpClient.get<SimpleEvent[]>(this.eventBaseUri + '?' + 'eventName=' + name + '&type=' + type + '&category=' + category + '&startsAt=' + startsAt + '&endsAt=' + endsAt + '&showDuration=' + duration).pipe(
       catchError(this.handleError)
     );
   }
