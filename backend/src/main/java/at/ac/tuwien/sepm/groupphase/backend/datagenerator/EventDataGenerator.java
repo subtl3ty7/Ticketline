@@ -159,6 +159,7 @@ public class EventDataGenerator {
                 .eventType(typeEnum)
                 .eventCategory(categoryEnum)
                 .eventName(eventName)
+                .duration(Duration.ofHours(eventDurationInHours))
                 .price(50)
                 .build();
             shows.add(show);
