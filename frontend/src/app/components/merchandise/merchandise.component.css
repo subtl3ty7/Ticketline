@@ -59,3 +59,12 @@
 .card-deck {
   padding: 15px;
 }
+
+.detailsText {
+  color: cornflowerblue;
+}
+
+.detailsText:hover {
+  color: cornflowerblue;
+}
+

@@ -30,6 +30,7 @@
                </div>
               </h2><br>
 
+            <div class="infos">
 
               <div>
                 <p class="h3">Preis: {{merchandiseProduct.price}} €</p>
@@ -50,20 +51,21 @@
 
               <div class="checkAvailability">
                 <br>
-                <p>Available: </p>
-                <p *ngIf="merchandiseProduct.stockCount > 0">
-                  Yes
+                <p class="h3" *ngIf="merchandiseProduct.stockCount > 0">
+                  <br>
+                  <button type="button" class="btn btn-success btn-sm m-0">Jetzt kaufen</button>
                 </p>
 
-                <p *ngIf="merchandiseProduct.stockCount == 0">
-                  No
+                <p class="h3" *ngIf="merchandiseProduct.stockCount == 0">
+                  Das Produkt ist nicht auf Lager.
                 </p>
 
 
               </div>
 
-              <br>
-              <button type="button" class="btn btn-success btn-sm m-0">Jetzt kaufen</button>
+
+
+            </div>
 
             </div>
             </div>
