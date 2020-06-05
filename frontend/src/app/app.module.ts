@@ -34,7 +34,6 @@ import { UserInfoComponent } from './components/admin-home/admin-tabs/users-tab/
 import { CreateUserContainerComponent } from './components/admin-home/admin-tabs/users-tab/create-user-container/root/create-user-container.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 // tslint:disable-next-line:max-line-length
 import { CreateUserComponent } from './components/admin-home/admin-tabs/users-tab/create-user-container/create-user/create-user.component';
 import { CreateUserFormComponent } from './components/admin-home/admin-tabs/users-tab/create-user-container/create-user/create-user-form/create-user-form.component';
@@ -98,6 +97,9 @@ import { PaymentDoneComponent } from './components/ticket-purchase/payment-done/
 import { MyInvoiceComponent } from './components/my-profile/my-profile-tabs/my-tickets-tab/my-invoice/my-invoice.component';
 import {EventAdvancedComponent} from './components/search/event/event-advanced/event-advanced.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { MerchandiseComponent } from './components/merchandise/merchandise.component';
+import { ProductDetailsComponent } from './components/merchandise/product-details/product-details.component';
+
 import { NewsTabComponent } from './components/admin-home/admin-tabs/news-tab/news-tab.component';
 import { NewsDetailsContainerComponent } from './components/admin-home/admin-tabs/news-tab/news-details-container/root/news-details-container.component';
 import { AdminNewsDetailsComponent } from './components/admin-home/admin-tabs/news-tab/news-details-container/admin-news-details/admin-news-details.component';
@@ -186,6 +188,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     MyTicketsTabComponent,
     PaymentDoneComponent,
     MyInvoiceComponent,
+    MerchandiseComponent,
+    ProductDetailsComponent,
     EventAdvancedComponent,
     SpinnerComponent,
     MyInvoiceComponent,
@@ -225,8 +229,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     FlexModule,
     MatStepperModule,
     MatSelectModule,
-    MatDialogModule,
-    MatProgressSpinnerModule
+    MatDialogModule
   ],
   providers: [httpInterceptorProviders, MatDatepickerModule, MatNativeDateModule, ChooseTicketComponent],
   bootstrap: [AppComponent]

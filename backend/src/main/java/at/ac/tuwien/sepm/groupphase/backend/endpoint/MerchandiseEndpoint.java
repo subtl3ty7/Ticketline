@@ -8,10 +8,7 @@ import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.MerchandiseMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Merchandise;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
 import at.ac.tuwien.sepm.groupphase.backend.service.MerchandiseService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import io.swagger.annotations.Authorization;
+import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -80,6 +77,25 @@ public class MerchandiseEndpoint {
         LOGGER.info("POST " + merchandiseDto);
         Merchandise merchandise = merchandiseService.purchaseWithPremiumPoints(merchandiseMapper.merchandiseDtoToMerchandise(merchandiseDto), userCode);
         return merchandiseMapper.merchandiseToMerchandiseDto(merchandise);
+    }
+
+
+
+    @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
+    @GetMapping(value = "/{merchandiseProductCode}")
+    @ApiOperation(
+        value = "Find Merchandise Product by its code",
+        notes = "Find Merchandise Product by its code"
+    )
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "Merchandise product successfully retrieved"),
+        @ApiResponse(code = 404, message = "No Merchandise Product found"),
+        @ApiResponse(code = 500, message = "Connection Refused"),
+    })
+    public ResponseEntity<MerchandiseDto> findMerchandiseByMerchandiseProductCode(@PathVariable String merchandiseProductCode) {
+        LOGGER.info("GET /api/v1/merchandise/" + merchandiseProductCode);
+        MerchandiseDto result = merchandiseMapper.merchandiseToMerchandiseDto(merchandiseService.findMerchandiseByMerchandiseProductCode(merchandiseProductCode));
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 

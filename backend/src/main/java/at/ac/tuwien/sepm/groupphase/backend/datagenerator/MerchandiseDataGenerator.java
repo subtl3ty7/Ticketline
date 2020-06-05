@@ -66,9 +66,13 @@ public class MerchandiseDataGenerator {
         for(int i = 0; i < numberOfProducts; i++) {
 
 
+            String imgName = "merch_img" + i + ".jpg";
+
+
             Merchandise product = Merchandise.builder()
                 .merchandiseProductCode("M1234" + i)
                 .merchandiseProductName("Product" + i)
+                .photo(resources.getImageEncoded(imgName))
                 .stockCount(20 * i + 1)
                 .price(10 * i + 1)
                 .premiumPrice(5 * i +1)
