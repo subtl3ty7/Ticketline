@@ -59,4 +59,6 @@
     </div>
   </div>
   <p *ngIf="searchShared.entities && searchShared.entities.length == 0" style="font-size: 20px; padding-top: 40px; text-align: center">Es konnten keine Veranstaltungen mit diesen Kriterien gefunden werden.</p>
+  <app-spinner *ngIf="searchShared.entities === undefined">
+  </app-spinner>
 </div>

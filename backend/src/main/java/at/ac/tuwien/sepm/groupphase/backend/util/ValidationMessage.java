@@ -122,6 +122,12 @@ public class ValidationMessage {
             put("news_author", "News author has to be given and cannot be longer than 100 characters.");
             put("news_photo", "News image has to be given.");
             put("seenBy_notNull", "SeenBy List cannot be null.");
+
+            //merchandise
+            put("merchandise_premium", "Merchandise is not premium and can not be purchased with premium points.");
+            put("merchandise_outOfStock", "Merchandise is out of stock.");
+            put("merchandise_exists", "Merchandise is not found in the database.");
+            put("user_noPoints", "User does not have enough premium points to purchase this product.");
         }
     };
 

@@ -41,6 +41,7 @@ public class EventDataGenerator {
     private final static int numberOfEventLocations = 5;
     private static final int numberOfEvents = 15;
     private static final int numberOfArtists = 5;
+    private static final int eventDurationInHours = 2;
 
     @Autowired
     public EventDataGenerator(SectionRepository sectionRepository,
@@ -111,21 +112,27 @@ public class EventDataGenerator {
             }
             addedArtists.add(artists.get(artistIndex));
 
+            EventTypeEnum[] types = EventTypeEnum.values();
+            EventCategoryEnum[] categories = EventCategoryEnum.values();
+            int typeIndex = i % EventTypeEnum.values().length;
+            int categoryIndex = i % EventCategoryEnum.values().length;
+
             Event event = Event.builder()
-                .category("Talk")
                 .description(resources.getText("event_text.txt"))
                 .startsAt(LocalDateTime.now())
-                .endsAt(LocalDateTime.now())
+                .endsAt(LocalDateTime.now().plusHours(eventDurationInHours))
                 .eventCode("E1234" + i)
                 .name("Event " + i)
                 .photo(resources.getImageEncoded(imgName))
                 .prices(List.of(1,2,3))
                 .totalTicketsSold(5*i*i*i)
-                .type("Of the cool type")
-                .shows(generateShows(eventLocations.get(eventLocationIndex)))
+                .shows(generateShows(eventLocations.get(eventLocationIndex), EventTypeEnum.MUSIC, EventCategoryEnum.HIPHOP, "Event " + i))
                 .artists(addedArtists)
-                .eventType(EventTypeEnum.MUSIC)
-                .eventCategory(EventCategoryEnum.HIPHOP)
+                .type(types[typeIndex].toString())
+                .eventType(types[typeIndex])
+                .category(categories[categoryIndex].toString())
+                .eventCategory(categories[categoryIndex])
+                .duration(Duration.ofHours(eventDurationInHours))
                 .build();
             event = eventService.createNewEvent(event);
             events.add(event);
@@ -134,7 +141,7 @@ public class EventDataGenerator {
         return events;
     }
 
-    private List<Show> generateShows(EventLocation eventLocation) {
+    private List<Show> generateShows(EventLocation eventLocation, EventTypeEnum typeEnum, EventCategoryEnum categoryEnum, String eventName) {
         int numberOfShows = 2;
 
         List<Show> shows = new ArrayList<>();
@@ -142,14 +149,18 @@ public class EventDataGenerator {
             //List<EventLocation> location = new ArrayList<>();
             //location.add(new EventLocation(eventLocation));
             LocalDateTime start = LocalDateTime.now();
-            LocalDateTime end = start.plusHours(2);
+            LocalDateTime end = start.plusHours(eventDurationInHours);
             Show show = Show.builder()
                 .startsAt(start)
                 .endsAt(end)
                 .ticketsAvailable(1000)
                 .ticketsSold(300)
                 .eventLocationOriginalId(eventLocation.getId())
-                .duration(Duration.between(start, end))
+                .eventType(typeEnum)
+                .eventCategory(categoryEnum)
+                .eventName(eventName)
+                .duration(Duration.ofHours(eventDurationInHours))
+                .price(50)
                 .build();
             shows.add(show);
         }

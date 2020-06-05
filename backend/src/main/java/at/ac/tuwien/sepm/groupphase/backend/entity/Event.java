@@ -3,13 +3,12 @@ package at.ac.tuwien.sepm.groupphase.backend.entity;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -43,12 +42,12 @@ public class Event implements Serializable {
 
     @NotNull
     @Size(min=1, max=100)
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false)
     private String category;
 
     @NotNull
     @Size(min=1, max=100)
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false)
     private String type;
 
     @NotNull
@@ -91,4 +90,7 @@ public class Event implements Serializable {
     @Column
     private EventCategoryEnum eventCategory;
 
+    @NotNull
+    @Column
+    public Duration duration;
 }

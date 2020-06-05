@@ -66,4 +66,10 @@ public abstract class CodeGenerator {
         char type = 'N';
         return generateCode(newsCodeLength, type).toUpperCase();
     }
+
+    public static String generateMerchandiseProductCode() {
+        int merchandiseProductCodeLength = 6;
+        char type = 'M';
+        return generateCode(merchandiseProductCodeLength, type).toUpperCase();
+    }
 }
