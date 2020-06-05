@@ -9,17 +9,18 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Entity
+@Entity(name = "invoice")
 @Setter
 @Getter
 @AllArgsConstructor
 @SuperBuilder
 @ToString
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn (name = "INVOICE_CATEGORY", discriminatorType= DiscriminatorType.STRING)
 public abstract class AbstractInvoice implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull

@@ -16,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @SuperBuilder
 @ToString
+@DiscriminatorValue("TICKET_INVOICE")
 public class TicketInvoice extends AbstractInvoice {
 
     @ToString.Exclude
