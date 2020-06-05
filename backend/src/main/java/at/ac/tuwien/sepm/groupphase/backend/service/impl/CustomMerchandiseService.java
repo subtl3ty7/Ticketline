@@ -69,6 +69,9 @@ public class CustomMerchandiseService implements MerchandiseService {
     }
 
     @Override
+    public Merchandise findMerchandiseByMerchandiseProductCode(String merchandiseProductCode) {
+        return merchandiseRepository.findMerchandiseByMerchandiseProductCode(merchandiseProductCode);
+
     public Merchandise purchaseWithPremiumPoints(Merchandise merchandise, String userCode) {
         LOGGER.info("Validating merchandise " + merchandise + " for user with userCode " + userCode);
 

@@ -94,6 +94,9 @@ import { ResetPasswordAdminFormComponent } from './components/admin-home/admin-t
 import { MyTicketsTabComponent } from './components/my-profile/my-profile-tabs/my-tickets-tab/my-tickets-tab.component';
 import { PaymentDoneComponent } from './components/ticket-purchase/payment-done/payment-done.component';
 import { MyInvoiceComponent } from './components/my-profile/my-profile-tabs/my-tickets-tab/my-invoice/my-invoice.component';
+import { MerchandiseComponent } from './components/merchandise/merchandise.component';
+import { ProductDetailsComponent } from './components/merchandise/product-details/product-details.component';
+
 import { NewsTabComponent } from './components/admin-home/admin-tabs/news-tab/news-tab.component';
 import { NewsDetailsContainerComponent } from './components/admin-home/admin-tabs/news-tab/news-details-container/root/news-details-container.component';
 import { AdminNewsDetailsComponent } from './components/admin-home/admin-tabs/news-tab/news-details-container/admin-news-details/admin-news-details.component';
@@ -182,6 +185,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     MyTicketsTabComponent,
     PaymentDoneComponent,
     MyInvoiceComponent,
+    MerchandiseComponent,
+    ProductDetailsComponent
     NewsTabComponent,
     NewsDetailsContainerComponent,
     AdminNewsDetailsComponent,
