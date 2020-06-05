@@ -13,7 +13,7 @@ import {DetailedEvent} from '../../../dtos/detailed-event';
 export class ProductDetailsComponent implements OnInit {
 
   error;
-  merchandiseProduct: Merchandise[];
+  merchandiseProduct: Merchandise;
 
   constructor(
     private merchandiseService: MerchandiseService,
@@ -24,12 +24,13 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  }
+    this.loadMerchandiseProduct();
+ }
 
   public loadMerchandiseProduct(): void {
     const merchandiseProductCode = this.route.snapshot.paramMap.get('merchandiseProductCode');
     this.merchandiseService.getMerchandiseProductByProductCode(merchandiseProductCode).subscribe(
-      (merchandiseProduct: Merchandise[]) => {
+      (merchandiseProduct: Merchandise) => {
         this.merchandiseProduct = merchandiseProduct;
       },
       (error) => {
@@ -37,6 +38,5 @@ export class ProductDetailsComponent implements OnInit {
       }
     );
   }
-
 
 }

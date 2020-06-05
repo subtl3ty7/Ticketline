@@ -1,0 +1,58 @@
+<app-customer-header></app-customer-header>
+<app-error-notification *ngIf="error" [error]="error"></app-error-notification>
+
+
+<div *ngIf="merchandiseProduct" class="container-fluid" style="padding-left: 5%; padding-right: 5%;">
+  <div class="row">
+    <div class="mx-auto" style="max-width: 1320px; width: 100%;">
+
+    <div class="card main-body">
+
+      <div class="card-header row align-items-center" style="margin: 0px">
+        <h1 class="col-4 page-title">{{merchandiseProduct.merchandiseProductName}}</h1>
+      </div>
+
+
+      <div class="card-body">
+          <div class="row">
+
+            <div class="col">
+              <img src="https://i.picsum.photos/id/100/2500/1656.jpg" class="img-fluid image-crop-big" alt="some Image">
+            </div>
+
+
+            <div class="col">
+
+              <div>
+                <h2 class="mb-0 headline">{{merchandiseProduct.merchandiseProductName}}</h2><br>
+              </div>
+
+
+              <div>
+                <p class="h3">Preis: €{{merchandiseProduct.price}}</p>
+              </div>
+
+              <div *ngIf="merchandiseProduct.premium">
+
+                <p class="h3">Premium Preis: €{{merchandiseProduct.premiumPrice}}</p>
+                <i class="fas fa-star fa-1x"></i>
+
+              </div>
+
+              <div id="checkAvailability">
+                <p>Available: </p>
+
+
+              </div>
+
+              <button type="button" class="btn btn-success btn-sm m-0">Jetzt kaufen</button>
+
+
+
+            </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    </div>
+    </div>
