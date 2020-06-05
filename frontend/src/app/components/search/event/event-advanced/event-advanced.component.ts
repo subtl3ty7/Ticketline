@@ -81,10 +81,10 @@ export class EventAdvancedComponent implements OnInit {
       sessionStorage.setItem('eventStartsAt', this.startsAt);
       sessionStorage.setItem('eventEndsAt', this.endsAt);
       sessionStorage.setItem('eventDuration', this.duration);
+      sessionStorage.setItem('eventStartPrice', this.startPrice);
+      sessionStorage.setItem('eventShowStartsAt', this.showStartsAt);
+      sessionStorage.setItem('eventShowEndsAt', this.showEndsAt);
       if (this.startPrice !== '' || this.showStartsAt !== '' || this.showEndsAt !== '') {
-        sessionStorage.setItem('eventStartPrice', this.startPrice);
-        sessionStorage.setItem('eventShowStartsAt', this.showStartsAt);
-        sessionStorage.setItem('eventShowEndsAt', this.showEndsAt);
         sessionStorage.setItem('searchEntity', 'Show');
       } else {
         sessionStorage.setItem('searchEntity', 'Event');
