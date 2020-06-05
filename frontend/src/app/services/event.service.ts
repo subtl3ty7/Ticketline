@@ -97,6 +97,9 @@ export class EventService {
     if (endsAt !== '') {
       endsAt += 'T23:59';
     }
+    if (duration !== '') {
+      duration = 'PT' + duration + 'H';
+    }
     console.log('url: ' + this.eventBaseUri + '?eventName=' + name + '&type=' + type + '&category=' + category + '&startsAt=' + startsAt + '&endsAt=' + endsAt + '&showDuration=' + duration);
     return this.httpClient.get<SimpleEvent[]>(this.eventBaseUri + '?' + 'eventName=' + name + '&type=' + type + '&category=' + category + '&startsAt=' + startsAt + '&endsAt=' + endsAt + '&showDuration=' + duration).pipe(
       catchError(this.handleError)
