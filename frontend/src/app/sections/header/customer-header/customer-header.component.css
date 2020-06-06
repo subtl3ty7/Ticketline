@@ -153,6 +153,7 @@ li {
 
 .entity-row:hover {
   cursor: pointer;
+  background-color: #E6EBEA;
 }
 
 .entity-term {
@@ -169,6 +170,11 @@ li {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+.entity-term:hover {
+  background-color: #E6EBEA;
+}
+
 
 /*Mobile screen*/
 @media screen and (max-width: 992px) {
