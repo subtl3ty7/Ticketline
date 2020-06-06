@@ -71,8 +71,8 @@ const routes: Routes = [
   {path: 'search/location-advanced', component: LocationAdvancedComponent},
   {path: 'search/location-shows', component: LocationShowComponent},
   {path: 'my-profile/my-tickets/my-invoice', component: MyInvoiceComponent},
-  {path: 'merchandise', component: MerchandiseComponent},
-  {path: 'merchandise/:merchandiseProductCode', component: ProductDetailsComponent}
+  {path: 'merchandise', canActivate: [NotAdminGuard], component: MerchandiseComponent},
+  {path: 'merchandise/:merchandiseProductCode', canActivate: [NotAdminGuard],  component: ProductDetailsComponent}
   ];
 
 @NgModule({

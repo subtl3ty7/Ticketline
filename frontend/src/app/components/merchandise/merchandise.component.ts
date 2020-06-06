@@ -7,6 +7,7 @@ import {Merchandise} from '../../dtos/merchandise';
 import {User} from '../../dtos/user';
 
 import {ActivatedRoute} from '@angular/router';
+import {LoggedInGuard} from '../../guards/logged-in.guard';
 
 
 @Component({
@@ -26,7 +27,9 @@ export class MerchandiseComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllMerchandiseProducts();
-    this.loadUserByUserCode();
+    if (LoggedInGuard) {
+      this.loadUserByUserCode();
+    }
   }
 
   public getAllMerchandiseProducts(): void {

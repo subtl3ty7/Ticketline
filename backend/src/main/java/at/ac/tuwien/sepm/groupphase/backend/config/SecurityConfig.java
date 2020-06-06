@@ -62,6 +62,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         whiteList.add("/api/v1/artists");
         whiteList.add("/api/v1/eventLocations");
         whiteList.add("/api/v1/shows");
+        whiteList.add("/api/v1/merchandise/all");
+        whiteList.add("/api/v1/merchandise/premium");
 
         this.whiteListedRequests = new OrRequestMatcher(
             whiteList.stream()
