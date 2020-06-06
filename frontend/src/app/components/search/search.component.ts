@@ -34,7 +34,6 @@ export class SearchComponent implements OnInit {
     } else {
       console.log('No search entered, redirecting to home page');
       this.router.navigate(['/home']);
-
     }
   }
 }
