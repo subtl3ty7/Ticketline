@@ -39,7 +39,7 @@ public class EventDataGenerator {
 
 
     private final static int numberOfEventLocations = 5;
-    private static final int numberOfEvents = 15;
+    private static final int numberOfEvents = 30;
     private static final int numberOfArtists = 5;
     private static final int eventDurationInHours = 2;
 
@@ -103,7 +103,7 @@ public class EventDataGenerator {
                 eventLocationIndex = eventLocations.size()-1;
             }
 
-            String imgName = "event_img" + i + ".jpg";
+            String imgName = "event_img" + i%15 + ".jpg";
 
             List<Artist> addedArtists = new ArrayList<>();
             int artistIndex = i;
@@ -126,7 +126,7 @@ public class EventDataGenerator {
                 .photo(resources.getImageEncoded(imgName))
                 .prices(List.of(1,2,3))
                 .totalTicketsSold(5*i*i*i)
-                .shows(generateShows(eventLocations.get(eventLocationIndex), EventTypeEnum.MUSIC, EventCategoryEnum.HIPHOP, "Event " + i))
+                .shows(generateShows(eventLocations.get(eventLocationIndex), EventTypeEnum.MUSIC, EventCategoryEnum.HIPHOP, "Event " + i, imgName))
                 .artists(addedArtists)
                 .type(types[typeIndex].toString())
                 .eventType(types[typeIndex])
@@ -141,7 +141,7 @@ public class EventDataGenerator {
         return events;
     }
 
-    private List<Show> generateShows(EventLocation eventLocation, EventTypeEnum typeEnum, EventCategoryEnum categoryEnum, String eventName) {
+    private List<Show> generateShows(EventLocation eventLocation, EventTypeEnum typeEnum, EventCategoryEnum categoryEnum, String eventName, String imgName) {
         int numberOfShows = 2;
 
         List<Show> shows = new ArrayList<>();
@@ -159,6 +159,8 @@ public class EventDataGenerator {
                 .eventType(typeEnum)
                 .eventCategory(categoryEnum)
                 .eventName(eventName)
+                .photo(resources.getImageEncoded(imgName))
+                .description(resources.getText("event_text.txt"))
                 .duration(Duration.ofHours(eventDurationInHours))
                 .price(50)
                 .build();

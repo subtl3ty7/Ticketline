@@ -112,9 +112,7 @@ public class ShowEndpoint {
         }
 
         List<ShowDto> shows = showMapper.showToShowDto(showService.findShowsAdvanced(eventName, eventTypeEnumOrdinal, eventCategoryEnumOrdinal, startsAtParsed, endsAtParsed, durationParsed, priceInteger));
-        for(ShowDto show: shows) {
-            show.setEvent(eventMapper.eventToSimpleEventDto(eventService.findByEventCode(show.getEventCode())));
-        }
+
         return new ResponseEntity<>(shows, HttpStatus.OK);
     }
 }
