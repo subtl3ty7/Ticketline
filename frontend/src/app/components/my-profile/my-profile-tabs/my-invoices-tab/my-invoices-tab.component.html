@@ -1,0 +1,30 @@
+<h1 class="col-5 page-title" style="white-space: nowrap; padding-top: 50px; padding-left: 50px">Meine Rechnungen</h1>
+
+<div class="center-block">
+  <div class="info-wrapper">
+    <div class="info">
+      <div class="info-label"></div>
+      <div class="info-field">
+        <div class="center-block" *ngIf="invoices">
+          <div class="table-wrapper-scroll-y my-custom-scrollbar">
+            <table class="table table-responsive-lg table-hover mb-0">
+              <tbody>
+              <tr *ngFor="let invoice1 of invoices">
+                <th scope="row"></th>
+                <td> {{invoice1.invoice_type.toLowerCase()}}, {{ invoice1.tickets.pop().eventName }}</td>
+                <button type="button" class="btn btn-outline-dark" style="white-space: nowrap; border-radius: 10px; margin-right: 10px;"  >
+                  Anzeigen </button>
+                <button type="button" class="btn btn-outline-primary" style="white-space: nowrap; border-radius: 10px; padding-right: 30px; text-align: center;" >
+                  PDF </button>
+              </tr>
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
