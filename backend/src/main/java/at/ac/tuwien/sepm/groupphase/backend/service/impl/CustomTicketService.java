@@ -4,6 +4,7 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.*;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.*;
+import at.ac.tuwien.sepm.groupphase.backend.service.InvoiceService;
 import at.ac.tuwien.sepm.groupphase.backend.service.TicketService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
 import at.ac.tuwien.sepm.groupphase.backend.util.validation.TicketValidator;
@@ -30,16 +31,18 @@ public class CustomTicketService implements TicketService {
     private final ShowRepository showRepository;
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
+    private final InvoiceService invoiceService;
 
     @Autowired
     public CustomTicketService(TicketRepository ticketRepository, TicketValidator validator, SeatRepository seatRepository, ShowRepository showRepository,
-                               EventRepository eventRepository, UserRepository userRepository) {
+                               EventRepository eventRepository, UserRepository userRepository, InvoiceService invoiceService) {
         this.ticketRepository = ticketRepository;
         this.validator = validator;
         this.seatRepository = seatRepository;
         this.showRepository = showRepository;
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
+        this.invoiceService = invoiceService;
     }
 
     @Override
