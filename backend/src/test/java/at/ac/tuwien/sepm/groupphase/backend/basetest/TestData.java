@@ -98,8 +98,8 @@ public interface TestData {
 
     String TYP_I = "purchase";
     String PAY = "card";
-    LocalDateTime PURCHASE = LocalDateTime.of(2020,6,1,10,0,0);
-    int NUM = 100;
+    LocalDateTime GENERATE = LocalDateTime.of(2020,6,1,10,0,0);
+    String NUM = "000001";
     List<Ticket> TICKETS = new ArrayList<>(){
         {
             add(Ticket.builder().ticketId(ID).ticketCode(USER_CODE).isPurchased(false).isReserved(false)

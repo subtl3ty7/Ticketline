@@ -17,9 +17,8 @@ public class InvoiceDto {
     private Long id;
     private List<Ticket> tickets;
     private String userCode;
-    private String merchandise_code;
-    private LocalDateTime purchased_at;
+    private LocalDateTime generatedAt;
     private String payment_method;
     private String invoice_type;
-    private Integer receipt_number;
+    private String invoice_number;
 }
