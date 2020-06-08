@@ -33,12 +33,12 @@ export class EventComponent implements OnInit {
       const startsAt = sessionStorage.getItem('eventStartsAt');
       const endsAt = sessionStorage.getItem('eventEndsAt');
       const duration = sessionStorage.getItem('eventDuration');
-      const startPrice = sessionStorage.getItem('eventStartPrice');
-      console.log('event name: ' + this.name + ', event type: ' + type + ' event category: ' + category + 'starts at: ' + startsAt + ', event ends at: ' + endsAt + ', event duration: ' + duration + ', event start price: ' + startPrice);
-      this.searchShared.getEventsBy(name, type, category, startsAt, endsAt, duration, startPrice);
+      console.log('event name: ' + this.name + ', event type: ' + type + ' event category: ' + category + 'starts at: ' + startsAt + ', event ends at: ' + endsAt + ', event duration: ' + duration);
+      this.searchShared.getEventsBy(this.name, type, category, startsAt, endsAt, duration);
+    } else {
+      console.log('event name: ' + this.name);
+      this.searchShared.getEventsByName(this.name);
     }
-    console.log('event name: ' + this.name);
-    this.searchShared.getEventsByName(this.name);
   }
 
 }

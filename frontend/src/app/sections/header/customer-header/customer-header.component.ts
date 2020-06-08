@@ -20,8 +20,8 @@ export class CustomerHeaderComponent implements OnInit {
   ngOnInit(): void {
     this.isSearchActive = false;
     this.isCollapsed = true;
-    this.isMobileLayout = window.innerWidth <= 992;
-    window.onresize = () => this.isMobileLayout = window.innerWidth <= 992;
+    this.isMobileLayout = window.innerWidth < 992;
+    window.onresize = () => this.isMobileLayout = window.innerWidth < 992;
   }
 
   refreshSearchTerm(event): void {
@@ -55,9 +55,6 @@ export class CustomerHeaderComponent implements OnInit {
         const locationTerm = searchTerm;
         console.log('location name: ' + locationTerm);
         this.searchShared.getLocationByName(locationTerm);
-        break;
-      case SearchEntity.SHOW:
-        this.searchShared.searchEntity = 'Show';
         break;
     }
     this.router.navigate(['/search']);

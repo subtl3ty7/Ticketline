@@ -30,6 +30,11 @@ import {ArtistEventComponent} from './components/search/artist/artist-event/arti
 import {LocationShowComponent} from './components/search/location/location-show/location-show.component';
 import {ResetPasswordAdminContainerComponent} from './components/admin-home/admin-tabs/users-tab/reset-password-admin-container/root/reset-password-admin-container.component';
 import {MyInvoiceComponent} from './components/my-profile/my-profile-tabs/my-tickets-tab/my-invoice/my-invoice.component';
+import {MerchandiseComponent} from './components/merchandise/merchandise.component';
+import {ProductDetailsComponent} from './components/merchandise/product-details/product-details.component';
+import {NewsDetailsContainerComponent} from './components/admin-home/admin-tabs/news-tab/news-details-container/root/news-details-container.component';
+import {CreateNewsContainerComponent} from './components/admin-home/admin-tabs/news-tab/create-news-container/root/create-news-container.component';
+import {EventAdvancedComponent} from './components/search/event/event-advanced/event-advanced.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -42,9 +47,11 @@ const routes: Routes = [
   {path: 'user-details/:uc/reset-password', canActivate: [AdminGuard], component: ResetPasswordAdminContainerComponent},
   {path: 'create-user', canActivate: [AdminGuard], component: CreateUserContainerComponent},
   {path: 'event-details/:ec', canActivate: [AdminGuard], component: EventDetailsContainerComponent},
+  {path: 'news-details/:nc', canActivate: [AdminGuard], component: NewsDetailsContainerComponent},
   {path: 'my-profile', canActivate: [LoggedInGuard], redirectTo: 'my-profile/my-info'},
   {path: 'my-profile/:tabId', canActivate: [LoggedInGuard], component: MyProfileContainerComponent},
   {path: 'registration', canActivate: [NotLoggedInGuard], component: RegistrationComponent},
+  {path: 'create-news', canActivate: [AdminGuard], component: CreateNewsContainerComponent},
   {path: 'create-event', canActivate: [AdminGuard], component: CreateEventContainerComponent},
   {path: 'create-user', canActivate: [AdminGuard], component: CreateUserContainerComponent},
   {path: 'events/:eventCode', canActivate: [LoggedInGuard], component: EventDetailsUserViewComponent},
@@ -60,9 +67,12 @@ const routes: Routes = [
   {path: 'ticket-purchase', canActivate: [LoggedInGuard], component: TicketPurchaseComponent},
   {path: 'search/artist-events', component: ArtistEventComponent},
   {path: 'search/artist-advanced', component: ArtistAdvancedComponent},
+  {path: 'search/event-advanced', component: EventAdvancedComponent},
   {path: 'search/location-advanced', component: LocationAdvancedComponent},
   {path: 'search/location-shows', component: LocationShowComponent},
   {path: 'my-profile/my-tickets/my-invoice', component: MyInvoiceComponent},
+  {path: 'merchandise', canActivate: [NotAdminGuard], component: MerchandiseComponent},
+  {path: 'merchandise/:merchandiseProductCode', canActivate: [NotAdminGuard],  component: ProductDetailsComponent}
   ];
 
 @NgModule({

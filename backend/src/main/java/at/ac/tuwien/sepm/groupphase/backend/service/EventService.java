@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.service;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Artist;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,5 +25,7 @@ public interface EventService {
 
     List<Event> findEventsByName(String name);
 
-    List<Event> findEventsAdvanced(String name, String type, String category, LocalDateTime startsAt, LocalDateTime endsAt, String showLength, Long price);
+    List<Event> findEventsAdvanced(String name, Integer type, Integer category, LocalDateTime startsAt, LocalDateTime endsAt, Duration showDuration);
+
+    List<Event> findSimpleEventsByParam(String eventCode, String name, LocalDateTime startRange, LocalDateTime endRange);
 }

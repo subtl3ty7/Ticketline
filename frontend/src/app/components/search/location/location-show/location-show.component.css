@@ -64,6 +64,7 @@ a:hover {
 }
 
 .show-block {
+  background-color: #FFFFFF;
   width: 100%;
 }
 
@@ -98,3 +99,8 @@ a:hover {
     padding-left: 30px;
   }
 }
+
+.header-row {
+  padding-top: 18px;
+}
+

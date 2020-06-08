@@ -1,13 +1,6 @@
 <span style="font-size: 18px">Shows</span>
 <div class="table-container all-height" #table>
-  <div class="flex">
-    <mat-form-field class="input-wrapper">
-      <mat-label>Search</mat-label>
-      <input matInput
-             name="searchUser"
-             (keyup)="searchForAllShows($event)">
-    </mat-form-field>
-  </div>
+
 
   <div class="table">
     <mat-table #table [dataSource]="dataSource" matSort>
@@ -17,7 +10,7 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header>Starts At</mat-header-cell>
         <mat-cell *matCellDef="let element">
           <div class="cell-padding">
-            {{element?.startsAt | date:'MMM d, y, h:mm'}}
+            {{element?.startsAt | date:'MMM d, y, HH:mm'}}
           </div>
         </mat-cell>
       </ng-container>
@@ -27,7 +20,7 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header>Ends At</mat-header-cell>
         <mat-cell *matCellDef="let element" >
           <div class="cell-padding">
-            {{element?.endsAt | date:'MMM d, y, h:mm'}}
+            {{element?.endsAt | date:'MMM d, y, HH:mm'}}
           </div>
         </mat-cell>
       </ng-container>

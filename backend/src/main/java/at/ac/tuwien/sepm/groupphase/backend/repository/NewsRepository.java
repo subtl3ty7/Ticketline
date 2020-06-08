@@ -39,4 +39,10 @@ public interface NewsRepository extends JpaRepository<News, Long> {
      * @return a single News entry which has the corresponding event code
      */
     News findByNewsCode(String newsCode);
+
+    List<News> findAllByNewsCodeContainingIgnoreCaseAndTitleContainingIgnoreCaseAndAuthorContainingIgnoreCaseAndPublishedAtBetween(String newsCode,
+                                                                                                                                   String title,
+                                                                                                                                   String author,
+                                                                                                                                   LocalDateTime startRangeDate,
+                                                                                                                                   LocalDateTime endRangeDate);
 }

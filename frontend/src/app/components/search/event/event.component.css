@@ -26,11 +26,11 @@
   color: #FBFBFB;
 }
 
-.artist-name {
+.event-name {
   font-size: 25px;
 }
 
-.artist-row {
+.event-row {
   height: 100%;
 }
 
@@ -62,6 +62,7 @@ a:hover {
 }
 
 .event-block {
+  background-color: #FFFFFF;
   width: 100%;
 }
 

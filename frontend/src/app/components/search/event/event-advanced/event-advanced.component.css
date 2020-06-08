@@ -1,0 +1,79 @@
+.reset-search:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.reset-search {
+  color: black;
+  margin-top: 10px;
+}
+
+
+.reset-search a {
+  color: black;
+}
+
+.apply-filter {
+  text-align: right;
+  float: right;
+}
+
+.form-control {
+  height: 50px;
+}
+
+.card-header {
+  padding-top: 30px;
+}
+
+.event-block {
+  width: 100%;
+  height: 100px;
+  box-shadow: 0px 3px 6px #00000029;
+}
+
+.event-button {
+  width: 200px;
+  height: 50px;
+  float: right;
+  border: 0;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.event-button:hover {
+  color: #FBFBFB;
+}
+
+.event-details {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.event-row {
+  height: 100%;
+  margin-bottom: 8px;
+}
+
+.advanced-search {
+  text-align: right;
+  margin-top: 5px;
+  font-size: 18px;
+}
+
+a {
+  color: #FBFBFB;
+}
+
+.input-group {
+  margin-top: -5px;
+  margin-bottom: 5px;
+}
+
+label {
+  font-size: 20px;
+}
+
+.input-group-prepend span {
+  width: 54px;
+}

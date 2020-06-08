@@ -1,16 +1,9 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Seat;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
+import at.ac.tuwien.sepm.groupphase.backend.entity.*;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
-import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
-import at.ac.tuwien.sepm.groupphase.backend.repository.SeatRepository;
-import at.ac.tuwien.sepm.groupphase.backend.repository.ShowRepository;
-import at.ac.tuwien.sepm.groupphase.backend.repository.TicketRepository;
-import at.ac.tuwien.sepm.groupphase.backend.service.InvoiceService;
+import at.ac.tuwien.sepm.groupphase.backend.repository.*;
 import at.ac.tuwien.sepm.groupphase.backend.service.TicketService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
 import at.ac.tuwien.sepm.groupphase.backend.util.validation.TicketValidator;
@@ -18,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import javax.xml.crypto.Data;
@@ -35,16 +29,17 @@ public class CustomTicketService implements TicketService {
     private final SeatRepository seatRepository;
     private final ShowRepository showRepository;
     private final EventRepository eventRepository;
-    private final InvoiceService invoiceService;
+    private final UserRepository userRepository;
 
     @Autowired
-    public CustomTicketService(TicketRepository ticketRepository, TicketValidator validator, SeatRepository seatRepository, ShowRepository showRepository, EventRepository eventRepository, InvoiceService invoiceService) {
+    public CustomTicketService(TicketRepository ticketRepository, TicketValidator validator, SeatRepository seatRepository, ShowRepository showRepository,
+                               EventRepository eventRepository, UserRepository userRepository) {
         this.ticketRepository = ticketRepository;
         this.validator = validator;
         this.seatRepository = seatRepository;
         this.showRepository = showRepository;
         this.eventRepository = eventRepository;
-        this.invoiceService = invoiceService;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -55,6 +50,13 @@ public class CustomTicketService implements TicketService {
         ) {
             save(ticketEntity);
             ticketEntity.setPurchased(true);
+
+            // updating premium points
+            AbstractUser user = userRepository.findAbstractUserByUserCode(ticketEntity.getUserCode());
+            long currentPoints = ((Customer) user).getPoints();
+            ((Customer) user).setPoints(Long.sum(currentPoints, ticketEntity.getPrice()));
+            userRepository.save(user);
+
             Ticket savedTicket = ticketRepository.save(ticketEntity);
             savedTickets.add(savedTicket);
 
@@ -162,7 +164,13 @@ public class CustomTicketService implements TicketService {
         Ticket ticket = ticketRepository.findTicketByTicketCode(ticketCode);
         ticket.setPurchased(true);
         ticket.setReserved(false);
-        ticket.setPurchaseDate(LocalDateTime.now());
+
+        // updating premium points
+        AbstractUser user = userRepository.findAbstractUserByUserCode(ticket.getUserCode());
+        long currentPoints = ((Customer) user).getPoints();
+        ((Customer) user).setPoints(Long.sum(currentPoints, ticket.getPrice()));
+        userRepository.save(user);
+
         ticketRepository.save(ticket);
 
         LOGGER.info("Purchased ticket " + ticket);

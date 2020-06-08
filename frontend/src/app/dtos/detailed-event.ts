@@ -8,7 +8,7 @@ export class DetailedEvent {
   public name: string;
   public description: string;
   public startPrice: number;
-  public photo: number;
+  public photo: string;
   public shows: Show[];
   public artists: Artist[];
   public type: string;

@@ -1,0 +1,63 @@
+
+<div class="center-block">
+  <ng-content></ng-content>
+  <div class="container">
+    <img src="{{news?.photo}}" class="img-fluid img-thumbnail" style="width: 200px;" alt="" >
+    <button mat-raised-button color = "basic" (click)="openNewsDetailsDialog()" style="margin-left: 61%;margin-bottom: 1%">Details</button>
+  </div>
+
+  <!--NEWS CODE-->
+  <div class="info-wrapper">
+    <div class="info">
+      <div class="info-label">News Code</div>
+      <div class="info-field code-field">
+        {{news?.newsCode}}
+      </div>
+    </div>
+  </div>
+
+  <!--TITLE-->
+  <div class="info-wrapper">
+    <div class="info">
+      <div class="info-label">Titel</div>
+      <div class="info-field">
+        {{news?.title.substring(0,50)}}...
+      </div>
+    </div>
+  </div>
+
+  <!--AUTHOR-->
+  <div class="info-wrapper">
+    <div class="info">
+      <div class="info-label">Author</div>
+      <div class="info-field">
+        {{news?.author}}
+      </div>
+    </div>
+  </div>
+
+  <!--PUBLISH DATE-->
+  <div class="info-wrapper">
+    <div class="info">
+      <div class="info-label">Veröffentlicht Am</div>
+      <div class="info-field">{{news?.publishedAt | date}}</div>
+    </div>
+  </div>
+
+  <!--SUMMARY-->
+  <div class="info-wrapper">
+    <div class="info">
+      <div class="info-label">Summary</div>
+      <div class="info-field" style ="line-height: 25px; /* fallback */height: 22px; /* fallback */text-overflow: ellipsis; overflow: hidden;">{{news?.summary.substring(0,50)}}...</div>
+    </div>
+  </div>
+
+  <!--TEXT-->
+  <div class="info-wrapper">
+    <div class="info">
+      <div class="info-label">Text</div>
+      <div class="info-field ">{{news?.text.substring(0,50)}}...</div>
+    </div>
+  </div>
+
+</div>
