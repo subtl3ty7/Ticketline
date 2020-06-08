@@ -28,8 +28,8 @@
                     </div>
                   </div>
                 </div>
-                <div class="row mt-2">
-                  <div class="col-xl-4 col-12">
+                <div class="row mt-2" style="margin-bottom: -10px">
+                  <div class="col-xl-4 col-12" >
                     <div class="form-group">
                       <div class="container">
                         <div class="row" style="margin-bottom: -10px">
@@ -37,7 +37,7 @@
                         </div>
                         <div class="row">
                           <select name="type" id="inputEventType" formControlName="type" class="form-control">
-                            <option value="" disabled selected >Bitte ausw&auml;hlen ...</option>
+                            <option value="" selected >Bitte ausw&auml;hlen ...</option>
                             <option value="SPORT">Sport</option>
                             <option value="CULTURE">Kultur</option>
                             <option value="MUSIC">Musik</option>
@@ -55,7 +55,7 @@
                         </div>
                         <div class="row">
                           <select id="inputEventCategory" formControlName="category" class="form-control">
-                            <option value="" disabled selected >Bitte ausw&auml;hlen ...</option>
+                            <option value="" selected >Bitte ausw&auml;hlen ...</option>
                             <option value="POP">Pop</option>
                             <option value="HIPHOP">Hip-Hop</option>
                             <option value="JAZZ">Jazz</option>
@@ -103,6 +103,24 @@
                 </div>
               </div>
             </div>
+            <div class="row">
+              <div class="container">
+                <div class="row mt-2">
+                  <div class="col-xl-4 col-12">
+                    <div class="form-group">
+                      <div class="container">
+                        <div class="row" style="margin-bottom: -10px">
+                          <label for="inputDuration">Dauer</label><br>
+                        </div>
+                        <div class="row">
+                          <input type="number" name="duration" min="0" formControlName="duration" placeholder="Dauer (in Std.)" value="{{duration}}" autocomplete="off" class="form-control" id="inputDuration"/>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <hr style="margin-top: 30px; margin-bottom: 30px;">
             <div class="row">
               <div class="container">
@@ -111,7 +129,7 @@
                 </div>
                 <div class="row mt-2">
                     <div class="col">
-                      <label>Dauer</label>
+                      <label>Datum</label>
                     </div>
                 </div>
                 <div class="row">

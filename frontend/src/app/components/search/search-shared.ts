@@ -73,8 +73,8 @@ export class SearchShared {
   }
 
   getEventsBy(name: string, type: string, category: string, startsAt: string, endsAt: string, duration: string) {
-    this.eventService.getDetailedEventsBy(name, type, category, startsAt, endsAt, duration).subscribe(
-      (events: DetailedEvent[]) => {
+    this.eventService.getSimpleEventsBy(name, type, category, startsAt, endsAt, duration).subscribe(
+      (events: SimpleEvent[]) => {
         this.entities = events;
       }, error => {
         this.entities = null;

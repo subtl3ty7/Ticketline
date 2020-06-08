@@ -46,8 +46,19 @@ export class EventAdvancedComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('advanced event search');
-    this.name = sessionStorage.getItem('searchTerm');
-    this.advancedEventSearchForm.setControl('name', new FormControl(this.name));
+    this.advancedEventSearchForm.setControl('name', new FormControl(sessionStorage.getItem('searchTerm')));
+    if (sessionStorage.getItem('eventType') === undefined) {
+      this.advancedEventSearchForm.controls.type.setValue('');
+    } else {
+      this.advancedEventSearchForm.controls.type.setValue(sessionStorage.getItem('eventType'));
+    }
+    this.advancedEventSearchForm.controls.category.setValue(sessionStorage.getItem('eventCategory'));
+    this.advancedEventSearchForm.controls.startsAt.setValue(sessionStorage.getItem('eventStartsAt'));
+    this.advancedEventSearchForm.controls.endsAt.setValue(sessionStorage.getItem('eventEndsAt'));
+    this.advancedEventSearchForm.controls.duration.setValue(sessionStorage.getItem('eventDuration'));
+    this.advancedEventSearchForm.controls.startPrice.setValue(sessionStorage.getItem('eventStartPrice'));
+    this.advancedEventSearchForm.controls.showStartsAt.setValue(sessionStorage.getItem('eventShowStartsAt'));
+    this.advancedEventSearchForm.controls.showEndsAt.setValue(sessionStorage.getItem('eventShowEndsAt'));
   }
 
   advancedSearch() {
@@ -70,10 +81,10 @@ export class EventAdvancedComponent implements OnInit {
       sessionStorage.setItem('eventStartsAt', this.startsAt);
       sessionStorage.setItem('eventEndsAt', this.endsAt);
       sessionStorage.setItem('eventDuration', this.duration);
+      sessionStorage.setItem('eventStartPrice', this.startPrice);
+      sessionStorage.setItem('eventShowStartsAt', this.showStartsAt);
+      sessionStorage.setItem('eventShowEndsAt', this.showEndsAt);
       if (this.startPrice !== '' || this.showStartsAt !== '' || this.showEndsAt !== '') {
-        sessionStorage.setItem('eventStartPrice', this.startPrice);
-        sessionStorage.setItem('eventShowStartsAt', this.showStartsAt);
-        sessionStorage.setItem('eventShowEndsAt', this.showEndsAt);
         sessionStorage.setItem('searchEntity', 'Show');
       } else {
         sessionStorage.setItem('searchEntity', 'Event');
@@ -90,5 +101,7 @@ export class EventAdvancedComponent implements OnInit {
     this.advancedEventSearchForm.controls.endsAt.setValue('');
     this.advancedEventSearchForm.controls.duration.setValue('');
     this.advancedEventSearchForm.controls.startPrice.setValue('');
+    this.advancedEventSearchForm.controls.showStartsAt.setValue('');
+    this.advancedEventSearchForm.controls.showEndsAt.setValue('');
   }
 }

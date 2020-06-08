@@ -37,8 +37,8 @@ public class MerchandiseEndpoint {
     @GetMapping(value = "/all")
     @ApiOperation(
         value = "Get all merchandise products",
-        notes = "Get all merchandise products",
-        authorizations = {@Authorization(value = "apiKey")})
+        notes = "Get all merchandise products"
+    )
     @ApiResponses({
         @ApiResponse(code = 200, message = "Merchandise products are successfully retrieved"),
         @ApiResponse(code = 404, message = "No Merchandise product is found"),
@@ -54,8 +54,8 @@ public class MerchandiseEndpoint {
     @GetMapping(value = "/premium")
     @ApiOperation(
         value = "Get all merchandise premium products",
-        notes = "Get all merchandise premium products",
-        authorizations = {@Authorization(value = "apiKey")})
+        notes = "Get all merchandise premium products"
+    )
     @ApiResponses({
         @ApiResponse(code = 200, message = "Merchandise premium products are successfully retrieved"),
         @ApiResponse(code = 404, message = "No Merchandise premium product is found"),

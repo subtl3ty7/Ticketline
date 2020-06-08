@@ -99,7 +99,6 @@ import {EventAdvancedComponent} from './components/search/event/event-advanced/e
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { MerchandiseComponent } from './components/merchandise/merchandise.component';
 import { ProductDetailsComponent } from './components/merchandise/product-details/product-details.component';
-
 import { NewsTabComponent } from './components/admin-home/admin-tabs/news-tab/news-tab.component';
 import { NewsDetailsContainerComponent } from './components/admin-home/admin-tabs/news-tab/news-details-container/root/news-details-container.component';
 import { AdminNewsDetailsComponent } from './components/admin-home/admin-tabs/news-tab/news-details-container/admin-news-details/admin-news-details.component';
@@ -193,6 +192,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     EventAdvancedComponent,
     SpinnerComponent,
     MyInvoiceComponent,
+    MerchandiseComponent,
+    ProductDetailsComponent,
     NewsTabComponent,
     NewsDetailsContainerComponent,
     AdminNewsDetailsComponent,

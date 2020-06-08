@@ -1,19 +1,26 @@
-<app-customer-header></app-customer-header>
-
-
-
+<app-header></app-header>
 <app-error-notification *ngIf="error" [error]="error"></app-error-notification>
 
 <div class="card-body">
   <div class="row" style="padding-left: 30px; padding-right: 30px">
 
-    <h1 class="mb-7">MERCHANDISE</h1>
-    <p class="infoAboutPremium">
-      <i class="fas fa-star"></i>
-      Prämienpunkte einlösbar
-    </p>
+    <div class="col-5">
+      <h1 class="mb-7">MERCHANDISE</h1>
+    </div>
 
+    <div class="col-4">
+      <p class="infoAboutMyPoints" *ngIf="user">
+        Meine Prämienpunkte: {{user.points}}
+      </p>
+    </div>
 
+    <div class="col-3">
+      <p class="infoAboutPremium">
+        <i class="fas fa-star"></i>
+        Prämienpunkte einlösbar
+      </p>
+    </div>
+  </div>
 
     <div *ngIf="merchandise">
     <div class="row" style="padding-left: 25px; padding-right: 25px; padding-bottom: 25px">
@@ -34,6 +41,8 @@
               <div class="mask rgba-white-slight"></div>
             </a>
           </div>
+
+
 
           <!-- Card content -->
           <div class="card-body">
@@ -68,7 +77,6 @@
       </div>
     </div>
   </div>
-</div>
 </div>
 </div>
 
