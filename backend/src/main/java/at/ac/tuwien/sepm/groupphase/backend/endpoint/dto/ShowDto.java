@@ -24,6 +24,9 @@ public class ShowDto {
     private EventCategoryEnum category;
     private Period period;
     private float price;
+    private String eventName;
+    private String photo;
+    private String description;
     @ToString.Exclude
     private EventLocationDto eventLocationCopy;
     private Long eventLocationOriginalId;
