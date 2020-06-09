@@ -11,6 +11,6 @@ import java.util.List;
 public interface InvoiceService {
 
     TicketInvoice createTicketInvoice(List<Ticket> tickets, String type, LocalDateTime generated_st);
-    List<AbstractInvoice> allInvoicesOfUser(String userCode);
+    List<TicketInvoice> allInvoicesOfUser(String userCode);
 
 }

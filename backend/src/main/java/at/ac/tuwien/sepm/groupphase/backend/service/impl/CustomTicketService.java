@@ -65,7 +65,7 @@ public class CustomTicketService implements TicketService {
 
             LOGGER.info("Purchased ticket " + savedTicket);
         }
-        invoiceService.createTicketInvoice(tickets, "PURCHASE", tickets.get(0).getPurchaseDate());
+        invoiceService.createTicketInvoice(savedTickets, "Kauf Rechnung", savedTickets.get(0).getPurchaseDate());
         return savedTickets;
     }
 
@@ -151,7 +151,7 @@ public class CustomTicketService implements TicketService {
         seat.setFree(true);
         seatRepository.save(seat);
 
-        invoiceService.createTicketInvoice(List.of(ticket1), "PURCHASE CANCELLATION", LocalDateTime.now());
+        invoiceService.createTicketInvoice(List.of(ticket1), "Kauf Stornorechnung", LocalDateTime.now());
         ticketRepository.delete(ticket1);
         // do the money return  and invoices stuff
 
@@ -177,7 +177,7 @@ public class CustomTicketService implements TicketService {
         ticketRepository.save(ticket);
 
         LOGGER.info("Purchased ticket " + ticket);
-        invoiceService.createTicketInvoice(List.of(ticket), "PURCHASE", ticket.getPurchaseDate());
+        invoiceService.createTicketInvoice(List.of(ticket), "Kauf Rechnung", ticket.getPurchaseDate());
 
         return ticket;
     }
@@ -193,7 +193,7 @@ public class CustomTicketService implements TicketService {
         seat.setFree(true);
         seatRepository.save(seat);
 
-        invoiceService.createTicketInvoice(List.of(chosenTicket), "RESERVATION CANCELLATION", LocalDateTime.now());
+        invoiceService.createTicketInvoice(List.of(chosenTicket), "Reservation Stornorechnung", LocalDateTime.now());
         ticketRepository.delete(chosenTicket);
         LOGGER.info("Reservation with the ticket code" + ticketCode +  " cancelled!");
     }

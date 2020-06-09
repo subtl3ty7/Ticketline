@@ -15,7 +15,7 @@ import java.util.List;
 public class InvoiceDto {
 
     private Long id;
-    private List<Ticket> tickets;
+    private List<SimpleTicketDto> tickets;
     private String userCode;
     private LocalDateTime generatedAt;
     private String payment_method;

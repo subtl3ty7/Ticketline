@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ActiveProfiles("test")
 public class InvoiceMappingTest implements TestData {
 
-    private final AbstractInvoice invoice = TicketInvoice.builder()
+    private final TicketInvoice invoice = TicketInvoice.builder()
         .id(ID)
         .invoice_type(TYP_I)
         .userCode(USER_CODE)
@@ -49,7 +49,7 @@ public class InvoiceMappingTest implements TestData {
 
     @Test
     public void shouldMapInvoiceListToInvoiceDtoList() {
-        List<AbstractInvoice> invoices = new ArrayList<>();
+        List<TicketInvoice> invoices = new ArrayList<>();
         invoices.add(invoice);
         invoices.add(invoice);
 

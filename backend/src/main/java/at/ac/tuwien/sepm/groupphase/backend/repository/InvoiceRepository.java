@@ -10,11 +10,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-public interface InvoiceRepository extends JpaRepository<AbstractInvoice, Long> {
+public interface InvoiceRepository extends JpaRepository<TicketInvoice, Long> {
 
     AbstractInvoice findInvoiceById(Long id);
 
-    List<AbstractInvoice> findInvoicesByUserCode(String userCode);
+    List<TicketInvoice> findInvoicesByUserCode(String userCode);
 
-    AbstractInvoice findInvoiceByUserCodeAndGeneratedAt(String userCode, LocalDateTime generatedAt);
+    TicketInvoice findInvoiceByUserCodeAndGeneratedAt(String userCode, LocalDateTime generatedAt);
 }

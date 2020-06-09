@@ -11,7 +11,7 @@
               <tbody>
               <tr *ngFor="let invoice1 of invoices">
                 <th scope="row"></th>
-                <td> {{invoice1.invoice_type.toLowerCase()}}, {{ invoice1.tickets.pop().eventName }}</td>
+                <td> {{invoice1.invoice_type}}, {{ invoice1.tickets[0].eventName }}</td>
                 <button type="button" class="btn btn-outline-dark" style="white-space: nowrap; border-radius: 10px; margin-right: 10px;"  >
                   Anzeigen </button>
                 <button type="button" class="btn btn-outline-primary" style="white-space: nowrap; border-radius: 10px; padding-right: 30px; text-align: center;" >
