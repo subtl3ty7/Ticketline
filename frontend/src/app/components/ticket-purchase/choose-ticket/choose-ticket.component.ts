@@ -109,5 +109,15 @@ export class ChooseTicketComponent implements OnInit, DoCheck {
   setSuccess() {
     this.firstFormGroup.controls['success'].setErrors(null);
   }
+
+  getSectionNameById(sectionId) {
+    let name;
+    this.eventLocation.sections.forEach((next) => {
+      if (next.id === sectionId) {
+        name = next.name;
+      }
+    });
+    return name;
+  }
 }
 

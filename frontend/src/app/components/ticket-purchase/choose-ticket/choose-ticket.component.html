@@ -20,7 +20,7 @@
               <tbody *ngFor="let seat of selectedSeats">
               <tr>
                 <th scope="row"></th>
-                <td>{{seat.seatRow}}{{seat.seatColumn}}</td>
+                <td>Section {{getSectionNameById(seat.sectionId)}}-{{seat.seatRow}}{{seat.seatColumn}}</td>
               </tr>
               </tbody>
             </table>

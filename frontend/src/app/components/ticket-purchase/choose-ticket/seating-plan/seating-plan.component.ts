@@ -84,7 +84,7 @@ export class SeatingPlanComponent implements OnInit {
     let row;
     const sectionSizeX = 160;
     let sectionSizeY;
-    const column = 3;
+    let column = 3;
     if (layout === 3) {
       row = 1;
     } else {
@@ -93,12 +93,23 @@ export class SeatingPlanComponent implements OnInit {
     this.sectionGroups = [];
     let currentSection = 0;
     for (i = 0; i < row; i++) {
-      for (j = 0; j < column; j++) {
+      j = 0;
+      if (i > 0 ) {
+        if (layout === 4) {
+          j = 1;
+          column = 2;
+        }
+      }
+
+      for (j; j < column; j++) {
+        if (layout === 5 && j === 1 && i === 1) {
+          continue;
+        }
       const section = this.g.append('g');
       let x;
       // set section X position
       if (j === 0) {
-        x = (sectionSizeX * j) + this.sectionXOffset;
+        x = this.sectionXOffset;
       } else {
         x = (sectionSizeX + this.sectionDistance) * j + this.sectionXOffset;
       }
@@ -108,7 +119,7 @@ export class SeatingPlanComponent implements OnInit {
       sectionSizeY = (verticalSeatAmount * this.seatHeight) + (verticalSeatAmount * this.seatYDistance) + this.seatYDistance;
         // set section Y position
       if (j === 1) {
-        y = this.stageSizeY + this.sectionYOffset;
+        y = (this.stageSizeY + this.sectionYOffset - (this.sectionYOffset * i)) * (i + 1) + (sectionSizeY * i);
       } else {
         y = (sectionSizeY + this.sectionDistance) * i + this.sectionYOffset;
       }
@@ -171,6 +182,7 @@ export class SeatingPlanComponent implements OnInit {
               .attr('sectionId', seatObject.sectionId)
               .attr('rowCol', seatObject.seatRow + seatObject.seatColumn)
               .attr('fill',  color)
+              .attr('sectionName', this.sections[currentSectionIndex].name)
               .on('click', function() {
                 if (seatObject.free) {
                   if (!selected.includes(seatObject)) {
