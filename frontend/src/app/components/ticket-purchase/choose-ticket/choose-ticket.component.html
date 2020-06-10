@@ -20,7 +20,7 @@
               <tbody *ngFor="let seat of selectedSeats">
               <tr>
                 <th scope="row"></th>
-                <td>Section {{getSectionNameById(seat.sectionId)}}-{{seat.seatRow}}{{seat.seatColumn}}</td>
+                <td>Sektor {{getSectionNameById(seat.sectionId)}}, Reihe {{seat.seatRow}}, Platz {{seat.seatColumn}}</td>
               </tr>
               </tbody>
             </table>
@@ -31,7 +31,7 @@
           <div class="gap">{{this.price}} EUR</div>
         </div>
         <!-- Purchase/Reserve Buttons -->
-        <button matStepperNext (click)="nextStep()" class="buy-button row align-items-center btn"><div class="col button-font">Jetzt kaufen</div></button>
+        <button (click)="nextStep()" class="buy-button row align-items-center btn"><div class="col button-font">Jetzt kaufen</div></button>
         <button class="reserve-button row align-items-center btn" data-toggle="modal" data-target="#exampleModal"><div class="col button-font">Reservieren</div></button>
 
 
