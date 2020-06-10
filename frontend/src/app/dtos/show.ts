@@ -22,4 +22,6 @@ export class Show {
   public duration: number;
   public price: number;
   public eventName: string;
+  public description: string;
+  public photo: string;
 }
