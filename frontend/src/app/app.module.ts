@@ -112,6 +112,7 @@ import { CreateEventFormComponent } from './components/admin-home/admin-tabs/eve
 import { CreateArtistsComponent } from './components/admin-home/admin-tabs/events-tab/create-event-container/create-event/create-event-form/create-artists/create-artists.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { MyInvoicesTabComponent } from './components/my-profile/my-profile-tabs/my-invoices-tab/my-invoices-tab.component';
+import { InvoiceDetailsComponent } from './components/my-profile/my-profile-tabs/my-invoices-tab/invoice-details/invoice-details.component';
 
 @NgModule({
   declarations: [
@@ -204,7 +205,8 @@ import { MyInvoicesTabComponent } from './components/my-profile/my-profile-tabs/
     CreateShowsComponent,
     CreateEventFormComponent,
     CreateArtistsComponent,
-    MyInvoicesTabComponent
+    MyInvoicesTabComponent,
+    InvoiceDetailsComponent
   ],
   imports: [
     BrowserModule,
