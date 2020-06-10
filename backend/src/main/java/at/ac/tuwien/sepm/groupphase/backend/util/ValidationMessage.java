@@ -19,115 +19,115 @@ public class ValidationMessage {
     private static final Map<String, String> constraintMessageMap = new HashMap<>() {
         {
             //user
-            put("user_id", "Id has to be unique and not null.");
-            put("user_userCode", "User Code had to be 6 characters long.");
-            put("user_email","Email cannot be empty or longer than 100 characters.");
-            put("user_firstName",  "First name cannot be empty or longer than 30 characters.");
-            put("user_lastName","Last name cannot be empty or longer than 30 characters.");
-            put("user_password", "Password has to be between 8 and 30 characters.");
-            put("user_createdAt", "Created-At field cannot be empty.");
-            put("user_updatedAt", "Updated-At field cannot be empty.");
-            put("user_birthday","Birthday field cannot be empty.");
-            put("points_zero", "Points have to be zero on Registration.");
-            put("password_encoded", "Password has to be bCrypt encoded.");
-            put("birthday_16yo", "Needs to be at least 16 years old.");
-            put("userCode_unique", "User Code is already present in database.");
-            put("userCode_notNull", "User Code cannot be null.");
-            put("isLogged_false", "Logged-In field cannot be true on Registration.");
-            put("isBlocked_false", "Is-Blocked field cannot be true on Registration.");
-            put("email_notNull", "EMail can't be null.");
-            put("email_unique", "Email is already present in database.");
-            put("email_valid", "Email does not look like a valid EMail Address.");
-            put("user_isLogged", "Needs to be logged in.");
-            put("user_exists", "User does not exist.");
-            put("user_notAdmin", "User can't be an Admin.");
-            put("user_keepsRole", "Can't change role.");
-            put("user_isCustomer", "Need to be a Customer.");
-            put("user_isUnblocked", "Needs to be unblocked to get blocked.");
-            put("user_iBlocked", "Needs to be blocked to get unblocked.");
-            put("user_isSelf", "User is not the self");
-            put("user_isSelf_or_auth_isAdmin", "Either user is not self or the user does not have enough rights for this action.");
+            put("user_id", "Id muss eindeutig und nicht null sein.");
+            put("user_userCode", "User Code muss 6 Zeichnen lang sein.");
+            put("user_email","Email darf nicht leer oder länger als 100 Zeichnen sein.");
+            put("user_firstName",  "Vorname darf nicht leer oder länger als 30 Zeichnen sein.");
+            put("user_lastName","Nachname darf nicht leer oder länger als 30 Zeichnen sein.");
+            put("user_password", "Passwort muss zwischen 8 und 30 Zeichnen lang sein.");
+            put("user_createdAt", "Created-At Feld darf nicht leer sein.");
+            put("user_updatedAt", "Updated-At Feld darf nicht leer sein.");
+            put("user_birthday","Geburtsdatum Feld darf nicht leer sein.");
+            put("points_zero", "Punktestand muss bei der Registirerung 0 sein.");
+            put("password_encoded", "Passwort muss bCrypt codiert sein.");
+            put("birthday_16yo", "UserIn muss mindestens 16 Jahr alt sein.");
+            put("userCode_unique", "User Code ist bereits in der Datenbank vorhanden.");
+            put("userCode_notNull", "User Code darf nicht null sein.");
+            put("isLogged_false", "Logged-In Feld darf nicht 'true' bei der Registrierung sein.");
+            put("isBlocked_false", "Is-Blocked Feld darf nicht 'true' bei der Registrierung sein.");
+            put("email_notNull", "EMail darf nicht null sein.");
+            put("email_unique", "Email ist beretis in der Datenbank vorhanden.");
+            put("email_valid", "EMail sieht nicht wie eine gültige Email-Adresse aus.");
+            put("user_isLogged", "User muss eingeloggt sein.");
+            put("user_exists", "User existiert nicht.");
+            put("user_notAdmin", "User darf nicht Admin sein.");
+            put("user_keepsRole", "User darf nicht die Rolle wechseln.");
+            put("user_isCustomer", "User muss Kunde/Kundin sein.");
+            put("user_isUnblocked", "User muss entsperrt sein, um gesperrt zu werden.");
+            put("user_iBlocked", "User muss gesperrt sein, um entsperrt zu werden.");
+            put("user_isSelf", "User ist nicht selbst.");
+            put("user_isSelf_or_auth_isAdmin", "Entweder ist user nicht selbst oder User hat nicht Recht für diese Aktion.");
 
 
             //seat
-            put("seat_seatRow", "Row cannot be empty.");
-            put("seat_seatColumn", "Column cannot be empty.");
+            put("seat_seatRow", "Reihe darf nicht leer sein.");
+            put("seat_seatColumn", "Säule darf nicht leer sein.");
 
             //section
-            put("section_sectionName", "Name cannot be empty or longer than 100 characters.");
-            put("section_sectionDescription", "Description cannot be empty or longer than 1000 characters.");
-            put("section_seats", "List of seats cannot be null.");
-            put("section_capacity", "Section capacity cannot be smaller than the number of section seats.");
+            put("section_sectionName", "Name darf nicht leer oder länger als 100 Zeichnen sein.");
+            put("section_sectionDescription", "Beschreibung darf nicht leer oder länger als 1000 Zeichnen sein.");
+            put("section_seats", "Sitzliste darf nicht null sein.");
+            put("section_capacity", "Die Sektionsskapazität darf nicht kleiner sein als die Anzahl der Sektionssplätze.");
 
             //eventLocation
-            put("eventLocation_eventLocationName", "Name cannot be empty or longer than 100 characters.");
-            put("eventLocation_eventLocationDescription", "Description cannot be empty or longer than 1000 characters.");
-            put("eventLocation_sections", "List of sections cannot be null.");
-            put("eventLocation_capacity", "Event Location capacity cannot be smaller than the capacity sum of its sections.");
+            put("eventLocation_eventLocationName", "Name darf nicht leer oder länger als 100 Zeichnen sein.");
+            put("eventLocation_eventLocationDescription", "Beschreibung darf nicht leer oder länger als 1000 Zeichnen sein.");
+            put("eventLocation_sections", "Sektionsliste darf nicht null sein.");
+            put("eventLocation_capacity", "Veranstaltungsortskapazität darf nicht kleiner sein als die Kapazitätssumme seiner Sektionen.");
 
             //show
-            put("show_startsAt", "Show needs a start-At field.");
-            put("show_endsAt", "Show needs an ends-At field.");
-            put("show_eventLocation", "List of Event Locations cannot be null.");
-            put("eventLocation_given", "Event Location has to be given.");
-            put("eventLocation_onlyOne", "Only one Event Location allowed in list.");
-            put("eventLocation_exists", "Event Location does not exist in database.");
-            put("eventLocation_unassigned", "Event Location is already assigned to a show.");
-            put("show_idNull", "Show ID should be null.");
+            put("show_startsAt", "Aufführung braucht start-At Feld.");
+            put("show_endsAt", "Aufführung braucht ends-At Feld.");
+            put("show_eventLocation", "Veranstaltungsortliste darf nicht null sein.");
+            put("eventLocation_given", "Veranstaltungsort muss vorhanden sein.");
+            put("eventLocation_onlyOne", "In der Liste ist nur ein Veranstaltungsort zulässig.");
+            put("eventLocation_exists", "Veranstaltungsort existiert nicht in der Datenbank.");
+            put("eventLocation_unassigned", "Der Veranstaltungsort ist bereits einer Aufführung zugeordnet.");
+            put("show_idNull", "Aufführung ID sollte null sein.");
 
             //event
-            put("event_eventCode", "Event Code cannot be empty and has to be 6 characters long.");
-            put("event_name", "Name cannot be empty and cannot be longer than 100 characters.");
-            put("event_description", "Description cannot be empty and cannot be longer than 1000 characters.");
-            put("event_category", "Category cannot be empty and cannot be longer than 100 characters.");
-            put("event_type", "type cannot be empty and cannot be longer than 100 characters.");
-            put("event_startsAt", "Event needs a start-At field.");
-            put("event_endsAt", "Event needs an ends-At field.");
-            put("event_photo", "Event needs an image.");
-            put("event_shows", "Show list cannot be null.");
-            put("event_artists", "Artist list cannot be null.");
-            put("event_prices", "Prices list cannot be null.");
-            put("eventCode_unique", "Event Code is already present in database.");
-            put("event_exists", "Event was not found in the database.");
+            put("event_eventCode", "Event Code darf nicht leer sein und muss 6 Zeichnen lang sein.");
+            put("event_name", "Name darf nicht leer oder länger als 100 Zeichnen sein.");
+            put("event_description", "Beschreibung darf nicht leer oder länger als 1000 Zeichnen sein.");
+            put("event_category", "Kategorie darf nicht leer oder länger als 100 Zeichnen sein.");
+            put("event_type", "Typ darf nicht leer oder länger als 100 Zeichnen sein.");
+            put("event_startsAt", "Veranstaltung braucht start-At Feld.");
+            put("event_endsAt", "Veranstaltung braucht ends-At Feld.");
+            put("event_photo", "Veranstaltung muss ein Foto beinhalten.");
+            put("event_shows", "Aufführungliste darf nicht null sein.");
+            put("event_artists", "KünstlerInnenliste darf nicht null sein.");
+            put("event_prices", "Preisliste darf nicht null sein.");
+            put("eventCode_unique", "Veranstaltungscode ist bereits in der Datenbank vorhanden.");
+            put("event_exists", "Veranstaltung wurde nicht in der Datenbank gefunden.");
 
             //ticket
-            put("ticketCode_unique", "Ticket code is already present in the database.");
-            put("userCode_exists", "User was not found in the database.");
-            put("show_exists", "Show was not found in the database.");
-            put("seat_notFree", "The seat is already taken.");
-            put("seat_exists", "The seat was not found in the database.");
-            put("tickets_sold", "This show is sold out.");
-            put("no_tickets", "This user has no tickets.");
-            put("ticket_exists", "This ticket is already saved in the database.");
-            put("admin_purchase", "Admin can not reserve or purchase tickets.");
-            put("price_exists", "Price has to be inputed.");
-            put("price_zero", "Price can not be zero.");
-            put("seat_zero", "Seat id can not be zero.");
-            put("show_zero", "Show id can not be zero.");
-            put("seat_null", "Seat id can not be null.");
-            put("show_null", "Show id can not be null.");
-            put("price_null", "Price can not be null.");
-            put("ticket_notExist", "Ticket is not found in the database.");
-            put("ticket_purchased", "Ticket is not purchased yet.");
-            put("ticket_reserved", "Ticket is already purchased.");
+            put("ticketCode_unique", "Ticket code ist schon in der Datenbank vorhanden.");
+            put("userCode_exists", "User wurde nicht in der Datenbank gefunden.");
+            put("show_exists", "SAufführung wurde nicht in der Datenbank gefunden.");
+            put("seat_notFree", "Platz ist bereits besetzt.");
+            put("seat_exists", "Platz wurde nicht in der Datenbank gefunden.");
+            put("tickets_sold", "Diese Aufführung ist ausverkauft.");
+            put("no_tickets", "Dieser User hat keine Tickets.");
+            put("ticket_exists", "Dieses Ticket ist schon in der Datenbank gespeichert.");
+            put("admin_purchase", "Admin kann nicht die Tickets kaufen oder reservieren.");
+            put("price_exists", "Preis muss eingegeben werden.");
+            put("price_zero", "Preis darf nicht 0 sein.");
+            put("seat_zero", "Platz id darf nicht 0 sein.");
+            put("show_zero", "Aufführung id darf nicht 0 sein.");
+            put("seat_null", "Platz id darf nicht null sein.");
+            put("show_null", "Aufführung id darf nicht null sein.");
+            put("price_null", "Preis darf nicht null sein.");
+            put("ticket_notExist", "Ticket wurde nicht in der Datenbank gefunden.");
+            put("ticket_purchased", "Ticket wurde noch nicht gekauft.");
+            put("ticket_reserved", "Ticket wurde schon gekauft.");
 
             //news
-            put("newsCode_unique", "News code is already present in the database.");
-            put("news_newsCode", "News code has to be 6 characters long.");
-            put("news_title", "News title cannot be empty or longer than 100 characters.");
-            put("news_publishedAt", "Published Date has to be given.");
-            put("news_stopsBeingRelevantAt", " Relevancy Date has to be given.");
-            put("news_summary", "News summary cannot be empty or longer than 1000 characters.");
-            put("news_text", "News text cannot be empty or longer than 100.000 characters.");
-            put("news_author", "News author has to be given and cannot be longer than 100 characters.");
-            put("news_photo", "News image has to be given.");
-            put("seenBy_notNull", "SeenBy List cannot be null.");
+            put("newsCode_unique", "News code ist schon in der Datenbank vorhanden.");
+            put("news_newsCode", "News code muss 6 Zeichen lang sein.");
+            put("news_title", "News Titel darf nicht leer oder länger als 100 Zeichnen sein.");
+            put("news_publishedAt", "Veröffentlichungsdatum muss vorhanden sein.");
+            put("news_stopsBeingRelevantAt", "Relevanzdatum muss vorhanden sein.");
+            put("news_summary", "News Zusammenfassung darf nicht leer oder länger als 1000 Zeichnen sein.");
+            put("news_text", "News text darf nicht leer oder länger als 100.000 Zeichnen sein.");
+            put("news_author", "News autor muss vorhanden und nicht länger als 100 Zeichnen sein.");
+            put("news_photo", "News Foto muss vorhanden sein.");
+            put("seenBy_notNull", "SeenBy Liste darf nicht null sein.");
 
             //merchandise
-            put("merchandise_premium", "Merchandise is not premium and can not be purchased with premium points.");
-            put("merchandise_outOfStock", "Merchandise is out of stock.");
-            put("merchandise_exists", "Merchandise is not found in the database.");
-            put("user_noPoints", "User does not have enough premium points to purchase this product.");
+            put("merchandise_premium", "Merchandise ist keine Prämie und kann nicht mit Prämienpunkten gekauft werden.");
+            put("merchandise_outOfStock", "Merchandise ist ausverkauft.");
+            put("merchandise_exists", "Merchandise wurde in der Datenbank nicht gefunden.");
+            put("user_noPoints", "User hat nicht genügend Premium-Punkte, um dieses Produkt zu kaufen.");
         }
     };
 
