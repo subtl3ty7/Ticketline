@@ -20,6 +20,7 @@ export class PaymentMethodOverviewComponent implements OnInit {
   public error;
   @Input() show: Show;
   @Input() event = new DetailedEvent();
+  @Input() firstFormGroup: FormGroup;
   @Input() secondFormGroup: FormGroup;
   @Input() sharedVars: FormGroup;
   @Input() stepper: MatHorizontalStepper;
@@ -40,12 +41,12 @@ export class PaymentMethodOverviewComponent implements OnInit {
         (tickets) => {
           // success from backend, go to next step
           console.log('Successfully bought ticket');
-          this.secondFormGroup.controls['purchased'].setErrors(null);
+          this.setSuccess();
           this.lockOtherSteps();
           this.stepper.next();
+          this.setFailure();
         },
         (error) => {
-          console.log(error);
           this.error = error;
         }
       );
@@ -70,6 +71,16 @@ export class PaymentMethodOverviewComponent implements OnInit {
   lockOtherSteps() {
     console.log('Lock other steps');
     this.sharedVars.get('editable').setValue(false);
+  }
+
+  setSuccess() {
+    this.firstFormGroup.controls['success'].setErrors(null);
+    this.secondFormGroup.controls['purchased'].setErrors(null);
+  }
+
+  setFailure() {
+    this.firstFormGroup.controls['success'].setErrors({'incorrect': true});
+    this.secondFormGroup.controls['purchased'].setErrors({'incorrect': true});
   }
 
   getSectionNameById(sectionId) {
