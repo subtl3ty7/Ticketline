@@ -28,6 +28,8 @@ public class ShowRepositoryTest implements TestData {
         .eventCode(USER_CODE)
         .ticketsAvailable(TOTAL)
         .ticketsSold(TOTAL)
+        .eventCategory(CAT1)
+        .eventType(TYP1)
         .build();
 
     @BeforeEach
@@ -40,6 +42,8 @@ public class ShowRepositoryTest implements TestData {
             .eventCode(USER_CODE)
             .ticketsAvailable(TOTAL)
             .ticketsSold(TOTAL)
+            .eventCategory(CAT1)
+            .eventType(TYP1)
             .build();
     }
 

@@ -4,6 +4,7 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.*;
 import org.hibernate.mapping.Table;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,11 +60,13 @@ public interface TestData {
         LocalDateTime.of(2020, 11, 13, 12, 15, 0, 0);
     LocalDateTime END =
         LocalDateTime.of(2020, 11, 13, 18, 15, 0, 0);
+    Duration DURATION = Duration.between(START, END);
     List<Integer> PRICES = List.of(30, 40);
     List<Show> SHOWS = new ArrayList<>() {
         {
             add(Show.builder()
-                .id(ID).eventCode(USER_CODE).startsAt(START).endsAt(END).ticketsSold(TOTAL).ticketsAvailable(TOTAL).eventLocationOriginalId(LOCATIONID).build());
+                .id(ID).eventCode(USER_CODE).startsAt(START).endsAt(END).ticketsSold(TOTAL).ticketsAvailable(TOTAL)
+                .eventLocationOriginalId(LOCATIONID).eventCategory(CAT1).eventType(TYP1).build());
         }
     };
     int TOTAL = 500;
