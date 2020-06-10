@@ -14,6 +14,7 @@ import {EventService} from '../../services/event.service';
 import {DetailedEvent} from '../../dtos/detailed-event';
 import {DatePipe} from '@angular/common';
 import {delay} from 'rxjs/operators';
+import {ChooseTicketComponent} from './choose-ticket/choose-ticket.component';
 
 @Component({
   selector: 'app-ticket-purchase',
@@ -27,11 +28,13 @@ import {delay} from 'rxjs/operators';
 
 export class TicketPurchaseComponent implements OnInit, AfterViewInit {
   @ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
+  @ViewChild(ChooseTicketComponent) chooseTicketComponent: ChooseTicketComponent;
   private error;
   private isLinear: boolean;
-  private ticket: DetailedTicket;
+  private tickets: DetailedTicket[];
   private show: Show;
   private event: DetailedEvent;
+  private userCode: string;
   sharedVars: FormGroup;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
@@ -49,7 +52,7 @@ export class TicketPurchaseComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.show = JSON.parse(sessionStorage.getItem('show'));
     if (this.sanitycheck()) {
-      this.initTicket();
+      this.initEventUserTickets();
       this.initForms();
     }
   }
@@ -59,32 +62,26 @@ export class TicketPurchaseComponent implements OnInit, AfterViewInit {
     this.stepper._getIndicatorType = () => 'number';
   }
 
-  // initialize ticket and event
-  initTicket() {
+  // initialize usercode, tickets and event
+  initEventUserTickets() {
     this.ticketPurchaseSharingService.ticketState = TicketState.BEGIN;
     this.isLinear = false;
-    this.ticket = new DetailedTicket();
+    this.tickets = [];
     forkJoin(
       this.userService.getCurrentUser(),
       this.eventService.getDetailedEventByUserCode(this.show.eventCode)
     ).subscribe(([user, event]) => {
-        this.ticket.userCode = user.userCode;
+        this.userCode = user.userCode;
         this.event = event;
         console.log(event.name);
       }
     );
-
-    this.userService.getCurrentUser().subscribe((user) => {
-      this.ticket.userCode = user.userCode;
-    });
   }
 
   // initialize forms used for validating whether the User is allowed to proceed to the next step
   initForms() {
     this.firstFormGroup = this._formBuilder.group({
-      count: ['', Validators.required],
-      section: ['', Validators.required],
-      seat: ['', Validators.required],
+      // selectedSeats: [[], ],
       success: ['', Validators.required]
     });
     this.secondFormGroup = this._formBuilder.group({
@@ -112,6 +109,10 @@ export class TicketPurchaseComponent implements OnInit, AfterViewInit {
       };
       return false;
     }
+  }
+
+  chooseTicketComponentNextStep() {
+    this.chooseTicketComponent.nextStep();
   }
 }
 

@@ -11,27 +11,30 @@
   </div>
 </div>
 <div class="card-body">
-  <div *ngIf="searchShared.entities.length > 0">
-    <div *ngFor="let a of searchShared.entities">
-      <div class="row">
-        <div class="artist-block">
-          <div class="row artist-row">
-            <div class="col">
-              <div class="artist-name pl-5" style="margin-top: 45px;">
-                {{a.firstName}} {{a.lastName}}
+  <app-error-notification *ngIf="searchShared.error" [error]="searchShared.error"></app-error-notification>
+  <div *ngIf="!searchShared.error && searchShared.entities">
+    <div *ngIf="searchShared.entities.length > 0">
+      <div *ngFor="let a of searchShared.entities">
+        <div class="row artist-row">
+          <div class="artist-block">
+            <div class="row ">
+              <div class="col">
+                <div class="artist-name pl-5" style="margin-top: 45px;">
+                  {{a.firstName}} {{a.lastName}}
+                </div>
               </div>
-            </div>
-            <div class="col pr-5">
-              <button class="btn default artist-button align-middle" style="margin-top: 30px;" (click)="searchEvents(a)">
-                Zu den Events
-              </button>
+              <div class="col pr-5">
+                <button class="btn default artist-button align-middle" style="margin-top: 30px;" (click)="searchEvents(a)">
+                  Zu den Events
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <p *ngIf="searchShared.entities.length == 0" style="font-size: 20px; padding-top: 40px; text-align: center">Es konnten keine KünstlerInnen mit diesen Kriterien gefunden werden.</p>
   </div>
-  <p *ngIf="searchShared.entities.length == 0" style="font-size: 20px; padding-top: 40px; text-align: center">Es konnten keine KünstlerInnen mit diesen Kriterien gefunden werden.</p>
   <app-spinner *ngIf="searchShared.entities === undefined">
   </app-spinner>
 </div>

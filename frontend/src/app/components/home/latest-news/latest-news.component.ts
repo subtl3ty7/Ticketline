@@ -48,7 +48,7 @@ export class LatestNewsComponent implements OnInit {
       },
       (error) => {
         this.latestNews = null;
-        this.error = error.error;
+        this.error = error;
       }
     );
   }
