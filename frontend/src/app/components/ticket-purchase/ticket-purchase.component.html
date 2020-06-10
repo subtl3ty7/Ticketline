@@ -29,12 +29,9 @@
                                    [stepper]="stepper">
                 </app-choose-ticket>
             </mat-step>
-            <mat-step *ngIf="show && sharedVars.value.stepTwo" [stepControl]="secondFormGroup" [editable]="sharedVars.value.editable" >
-              <ng-template matStepLabel>
-                <!--<div(click)="chooseTicketComponentNextStep()">Bezahlungsmethode auswählen</div>-->
-                <div>Bezahlungsmethode auswählen</div>
-              </ng-template>
+            <mat-step *ngIf="show && sharedVars.value.stepTwo" [stepControl]="secondFormGroup" [editable]="sharedVars.value.editable" label="Bezahlungsmethode auswählen">
               <app-payment-method-overview *ngIf="event && show && tickets && tickets.length>0"
+                                           [firstFormGroup]="firstFormGroup"
                                            [secondFormGroup]="secondFormGroup"
                                            [sharedVars]="sharedVars"
                                            [show] = "show"
