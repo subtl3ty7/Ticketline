@@ -1,0 +1,65 @@
+<div class="center-block">
+  <div>
+    <div class="password-button-wrapper">
+      <ng-content></ng-content>
+    </div>
+
+    <div class="info-wrapper">
+      <div class="info">
+        <div class="info-label"></div>
+        <div class="info-field">
+          Invoice type: {{invoice.invoice_type}}
+        </div>
+      </div>
+    </div>
+
+    <div class="info-wrapper">
+      <div class="info">
+        <div class="info-label"></div>
+        <div class="info-field">
+          Invoice number: {{invoice.invoice_number}}
+        </div>
+      </div>
+    </div>
+
+    <div class="info-wrapper">
+      <div class="info">
+        <div class="info-label"></div>
+        <div class="info-field">
+          Event name: {{invoice.tickets.pop().eventName}}
+        </div>
+      </div>
+    </div>
+
+    <div class="info-wrapper">
+      <div class="info">
+        <div class="info-label"></div>
+        <div class="info-field">
+          Ticket id: {{invoice.tickets.pop().id}}
+        </div>
+      </div>
+    </div>
+
+    <div class="info-wrapper">
+      <div class="info">
+        <div class="info-label"></div>
+        <div class="info-field">
+          Invoice generated at: {{invoice.generatedAt | date:'short'}}
+        </div>
+      </div>
+    </div>
+
+    <nav>
+      <div class="bottom-button-wrapper">
+        <div class="edit-button-wrapper">
+          <button id="userInfoForm_editButton"
+                  class="btn btn-outline-primary" style="white-space: nowrap; border-radius: 10px">
+            PDF Herunterladen
+          </button>
+        </div>
+
+      </div>
+    </nav>
+  </div>
+</div>
+

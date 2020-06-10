@@ -3,6 +3,7 @@ import {Invoice} from '../../../../dtos/invoice';
 import {UserService} from '../../../../services/user.service';
 import {InvoiceService} from '../../../../services/invoice.service';
 import {User} from '../../../../dtos/user';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-my-invoices-tab',
@@ -14,9 +15,12 @@ export class MyInvoicesTabComponent implements OnInit {
   public currentUser: User = new User();
   error = false;
   errorMessage = '';
+  details = false;
+  public selectedInvoice: Invoice;
 
   constructor( private userService: UserService,
-               private invoiceService: InvoiceService) { }
+               private invoiceService: InvoiceService,
+               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.loadUser();
@@ -41,6 +45,10 @@ export class MyInvoicesTabComponent implements OnInit {
         this.error = error.error;
         }
     );
+  }
+  public showInvoiceDetails(invoice: Invoice) {
+    this.details = true;
+    this.selectedInvoice = invoice;
   }
 
 }
