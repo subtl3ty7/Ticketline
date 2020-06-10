@@ -29,6 +29,8 @@ public class ShowMappingTest implements TestData {
         .eventCode(USER_CODE)
         .ticketsAvailable(TOTAL)
         .ticketsSold(TOTAL)
+        .description(DESC)
+        .photo(PHOTO)
         .build();
 
     @Autowired
@@ -43,7 +45,8 @@ public class ShowMappingTest implements TestData {
             () -> assertEquals(END, showDto.getEndsAt()),
             () -> assertEquals(USER_CODE, showDto.getEventCode()),
             () -> assertEquals(TOTAL, showDto.getTicketsAvailable()),
-            () -> assertEquals(TOTAL, showDto.getTicketsAvailable())
+            () -> assertEquals(TOTAL, showDto.getTicketsAvailable()),
+            () -> assertEquals(DESC, showDto.getDescription())
         );
     }
 
@@ -60,7 +63,8 @@ public class ShowMappingTest implements TestData {
             () -> assertEquals(END, showDto.getEndsAt()),
             () -> assertEquals(USER_CODE, showDto.getEventCode()),
             () -> assertEquals(TOTAL, showDto.getTicketsAvailable()),
-            () -> assertEquals(TOTAL, showDto.getTicketsAvailable())
+            () -> assertEquals(TOTAL, showDto.getTicketsAvailable()),
+            () -> assertEquals(DESC, showDto.getDescription())
         );
     }
 

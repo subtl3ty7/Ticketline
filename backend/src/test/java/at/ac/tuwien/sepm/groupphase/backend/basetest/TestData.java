@@ -66,7 +66,7 @@ public interface TestData {
         {
             add(Show.builder()
                 .id(ID).eventCode(USER_CODE).startsAt(START).endsAt(END).ticketsSold(TOTAL).ticketsAvailable(TOTAL)
-                .eventLocationOriginalId(LOCATIONID).eventCategory(CAT1).eventType(TYP1).build());
+                .eventLocationOriginalId(LOCATIONID).eventCategory(CAT1).eventType(TYP1).description(DESC).photo(PHOTO).build());
         }
     };
     int TOTAL = 500;
