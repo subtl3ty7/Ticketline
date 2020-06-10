@@ -7,6 +7,7 @@ import {DetailedTicket} from '../../../dtos/detailed-ticket';
 import {TicketService} from '../../../services/ticket.service';
 import {MatHorizontalStepper} from '@angular/material/stepper';
 import {Seat} from '../../../dtos/seat';
+import {tick} from '@angular/core/testing';
 
 @Component({
   selector: 'app-choose-ticket',
@@ -16,28 +17,26 @@ import {Seat} from '../../../dtos/seat';
 export class ChooseTicketComponent implements OnInit, DoCheck {
   private error;
   @Input() stepper: MatHorizontalStepper;
-  @Input() ticketPurchaseSharingService: TicketPurchaseSharedServiceService;
-  private show: Show;
+  @Input() show: Show;
   @Input() firstFormGroup: FormGroup;
   @Input() sharedVars: FormGroup;
   selectedSeats: Seat[] = [];
   currentSeats = 0;
   price = 0;
-  @Input() ticket: DetailedTicket;
-  tickets: DetailedTicket[] = [];
-  private ticketState = TicketState;
+  @Input() tickets: DetailedTicket[];
+  @Input() userCode: string;
   private eventLocation: EventLocation;
   constructor(private ticketService: TicketService, private _formBuilder: FormBuilder) {
   }
 
   ngOnInit(): void {
-    this.show = JSON.parse(sessionStorage.getItem('show'));
+    // this.show = JSON.parse(sessionStorage.getItem('show'));
     this.eventLocation = this.show.eventLocationCopy;
-    this.firstFormGroup.statusChanges.subscribe(
+    /*this.firstFormGroup.statusChanges.subscribe(
       status => {
         if (status === 'VALID') { this.nextStep(); }
       }
-    );
+    );*/
   }
   ngDoCheck() {
     if (this.selectedSeats.length !== this.currentSeats) {
@@ -48,13 +47,15 @@ export class ChooseTicketComponent implements OnInit, DoCheck {
   }
 
   nextStep() {
-    if (this.selectedSeats.length > 0 && this.show) {
+    if (this.selectedSeats.length > 0) {
+      console.log('Next step');
       // all requirements fulfilled, go to next step
       this.setSuccess();
-      this.setTicket();
+      this.setTickets(false);
       this.stepper.next();
-      this.ticketPurchaseSharingService.ticketState = TicketState.PROCESSING;
+      this.setFailure();
     } else {
+      this.setFailure();
       this.error = {
         messages: ['Bitte wähle mindestens einen Platz aus.']
       };
@@ -62,11 +63,8 @@ export class ChooseTicketComponent implements OnInit, DoCheck {
   }
 
   reserve() {
-    if (this.selectedSeats.length > 0 && this.show) {
-      this.setTicket();
-      this.ticketPurchaseSharingService.ticketState = TicketState.RESERVED;
-      this.ticket.reserved = true;
-      this.tickets = [this.ticket];
+    if (this.selectedSeats.length > 0) {
+      this.setTickets(true);
       this.ticketService.reserve(this.tickets).subscribe(
         (ret) => {
           // success from backend, go to next step
@@ -77,21 +75,31 @@ export class ChooseTicketComponent implements OnInit, DoCheck {
           this.stepper.next();
         },
         (error) => {
+          this.setFailure();
           this.error = error;
         }
       );
     } else {
+      this.setFailure();
       this.error = {
         messages: ['Bitte wähle mindestens einen Platz aus.']
       };
     }
   }
 
-  setTicket() {
-      this.ticket.show = this.show;
-      this.ticket.seat = this.selectedSeats[0];
-      this.ticket.seat.sectionId = this.selectedSeats[0].sectionId;
-      this.ticket.price = this.price;
+  setTickets(reserve: boolean) {
+    // empty the previous ticketlist
+    while (this.tickets.pop()) {}
+    // fill it with new tickets
+    for (const seat of this.selectedSeats) {
+      const ticket = new DetailedTicket();
+      ticket.userCode = this.userCode;
+      ticket.show = this.show;
+      ticket.seat = seat;
+      ticket.price = this.price;
+      ticket.reserved = reserve;
+      this.tickets.push(ticket);
+    }
 
   }
 
@@ -108,6 +116,10 @@ export class ChooseTicketComponent implements OnInit, DoCheck {
 
   setSuccess() {
     this.firstFormGroup.controls['success'].setErrors(null);
+  }
+
+  setFailure() {
+    this.firstFormGroup.controls['success'].setErrors({'incorrect': true});
   }
 
   getSectionNameById(sectionId) {
