@@ -228,13 +228,13 @@ public class TicketEndpointTest implements TestData {
         );
 
         ticketRepository.deleteAll();
-        seatRepository.deleteAll();
+        /*seatRepository.deleteAll();
         showRepository.deleteAll();
         sectionRepository.deleteAll();
         eventLocationRepository.deleteAll();
         eventRepository.deleteAll();
         artistRepository.deleteAll();
-        userRepository.deleteAll();
+        userRepository.deleteAll();*/
     }
 
 }

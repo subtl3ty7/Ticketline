@@ -78,7 +78,6 @@
   filter: grayscale(20%) contrast(110%);
 }
 
-.infoAboutMyPoints {
-  padding-left: 10px;
-  padding-right: 10px;
+.infoAboutPremium {
+  text-align: right;
 }
