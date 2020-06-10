@@ -15,8 +15,7 @@ import {Section} from '../../../dtos/section';
 export class PaymentDoneComponent implements OnInit {
   @Input() show: Show;
   @Input() event: DetailedEvent;
-  @Input() ticket: DetailedTicket;
-  @Input() section: Section;
+  @Input() tickets: DetailedTicket[];
 
   constructor(private datePipe: DatePipe) { }
 
@@ -27,4 +26,13 @@ export class PaymentDoneComponent implements OnInit {
     return this.datePipe.transform(date, 'EE dd.MM.yyyy - hh:mm');
   }
 
+  getSectionNameById(sectionId) {
+    let name;
+    this.show.eventLocationCopy.sections.forEach((next) => {
+      if (next.id === sectionId) {
+        name = next.name;
+      }
+    });
+    return name;
+  }
 }

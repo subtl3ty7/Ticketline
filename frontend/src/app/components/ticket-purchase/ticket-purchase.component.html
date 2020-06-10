@@ -20,13 +20,35 @@
           <mat-horizontal-stepper linear #stepper>
 
             <mat-step *ngIf="show" [stepControl]="firstFormGroup" [editable]="sharedVars.value.editable" label="Tickets auswählen" class="blueee">
-                <app-choose-ticket *ngIf="ticket" [ticketPurchaseSharingService]="ticketPurchaseSharingService" [sharedVars]="sharedVars" [ticket]="ticket" [firstFormGroup]="firstFormGroup" [stepper]="stepper"></app-choose-ticket>
+                <app-choose-ticket *ngIf="show && tickets && userCode"
+                                   [firstFormGroup]="firstFormGroup"
+                                   [sharedVars]="sharedVars"
+                                   [show] = "show"
+                                   [tickets]="tickets"
+                                   [userCode] = "userCode"
+                                   [stepper]="stepper">
+                </app-choose-ticket>
             </mat-step>
-            <mat-step *ngIf="show && sharedVars.value.stepTwo" [stepControl]="secondFormGroup" [editable]="sharedVars.value.editable" label="Zahlungsmethode auswählen" >
-                <app-payment-method-overview *ngIf="ticket" [secondFormGroup]="secondFormGroup" [sharedVars]="sharedVars" [event]="event" [ticket]="ticket" [stepper]="stepper"></app-payment-method-overview>
+            <mat-step *ngIf="show && sharedVars.value.stepTwo" [stepControl]="secondFormGroup" [editable]="sharedVars.value.editable" >
+              <ng-template matStepLabel>
+                <!--<div(click)="chooseTicketComponentNextStep()">Bezahlungsmethode auswählen</div>-->
+                <div>Bezahlungsmethode auswählen</div>
+              </ng-template>
+              <app-payment-method-overview *ngIf="event && show && tickets && tickets.length>0"
+                                           [secondFormGroup]="secondFormGroup"
+                                           [sharedVars]="sharedVars"
+                                           [show] = "show"
+                                           [event]="event"
+                                           [tickets]="tickets"
+                                           [stepper]="stepper">
+              </app-payment-method-overview>
             </mat-step>
             <mat-step *ngIf="show" label="Erledigt">
-              <app-payment-done [event]="event" [show]="show" [ticket]="ticket" [section]="firstFormGroup.value.section"></app-payment-done>
+              <app-payment-done *ngIf="event && show && tickets && tickets.length>0"
+                                [show]="show"
+                                [event]="event"
+                                [tickets]="tickets">
+              </app-payment-done>
             </mat-step>
           </mat-horizontal-stepper>
 

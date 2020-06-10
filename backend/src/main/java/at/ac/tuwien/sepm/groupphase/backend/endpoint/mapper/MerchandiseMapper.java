@@ -19,7 +19,7 @@ public interface MerchandiseMapper {
     @IterableMapping(qualifiedByName = "merchandiseToMerchandiseDto")
     List<MerchandiseDto> merchandiseToMerchandiseDto(List<Merchandise> merchandise);
 
-    @Name(value = "merchandiseDtoToMerchandise")
+    @Named(value = "merchandiseDtoToMerchandise")
     Merchandise merchandiseDtoToMerchandise(MerchandiseDto merchandiseDto);
 
     @IterableMapping(qualifiedByName = "merchandiseDtoToMerchandise")
