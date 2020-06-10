@@ -86,11 +86,12 @@ public class TicketDataGenerator {
         for (int i = 0; i < NUMBER_OF_TICKETS_TO_GENERATE; i++) {
             Ticket ticket = Ticket.builder()
                 .price(40 + i*2)
+                .ticketCode("T1234" + i)
                 .purchaseDate(LocalDateTime.now())
-                .seat(seatRepository.findSeatById(((long)i + 1)))
-                .show(showRepository.findShowById((long) i + 1))
+                .seat(seatRepository.findSeatById(((long)i%72 + 1)))
+                .show(showRepository.findShowById((long) i%EventDataGenerator.numberOfShowsPerEvent + 1))
                 .userCode(customer0.getUserCode())
-                .event(eventRepository.findEventById((long)i+1))
+                .event(eventRepository.findEventById((long)i%EventDataGenerator.numberOfEvents + 1))
                 .build();
             tickets.add(ticket);
             randomPurchaseReserve(tickets, bool);
@@ -103,10 +104,10 @@ public class TicketDataGenerator {
             Ticket ticket = Ticket.builder()
                 .price(100 - i*3 )
                 .purchaseDate(LocalDateTime.now())
-                .seat(seatRepository.findSeatById(((long) i + 1)))
-                .show(showRepository.findShowById((long) i + 1))
+                .seat(seatRepository.findSeatById(((long) i%72 + 1)))
+                .show(showRepository.findShowById((long) i%EventDataGenerator.numberOfShowsPerEvent + 1))
                 .userCode(customer1.getUserCode())
-                .event(eventRepository.findEventById((long)i+1))
+                .event(eventRepository.findEventById((long) i%EventDataGenerator.numberOfEvents + 1))
                 .build();
             tickets.add(ticket);
             randomPurchaseReserve(tickets, bool);

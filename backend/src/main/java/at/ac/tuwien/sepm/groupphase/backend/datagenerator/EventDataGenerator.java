@@ -38,10 +38,12 @@ public class EventDataGenerator {
     private final Resources resources;
 
 
-    private final static int numberOfEventLocations = 5;
-    private static final int numberOfEvents = 30;
+    private final static int numberOfEventLocations = 25;
+    public static final int numberOfEvents = 25;
     private static final int numberOfArtists = 5;
     private static final int eventDurationInHours = 2;
+    public static final int numberOfShowsPerEvent = 2;
+
 
     @Autowired
     public EventDataGenerator(SectionRepository sectionRepository,
@@ -142,10 +144,9 @@ public class EventDataGenerator {
     }
 
     private List<Show> generateShows(EventLocation eventLocation, EventTypeEnum typeEnum, EventCategoryEnum categoryEnum, String eventName, String imgName) {
-        int numberOfShows = 2;
 
         List<Show> shows = new ArrayList<>();
-        for(int i=0; i<numberOfShows; i++) {
+        for(int i=0; i<numberOfShowsPerEvent; i++) {
             //List<EventLocation> location = new ArrayList<>();
             //location.add(new EventLocation(eventLocation));
             LocalDateTime start = LocalDateTime.now();
@@ -174,7 +175,7 @@ public class EventDataGenerator {
     private List<EventLocationOriginal> generateEventLocations(boolean doSave) {
 
         List<EventLocationOriginal> eventLocations = new ArrayList<>();
-        for(int i=0; i<numberOfEventLocations; i++) {
+        for(int i=0; i< numberOfEventLocations; i++) {
             List<Section> sections = generateSections();
             EventLocationOriginal eventLocation = EventLocationOriginal.builder()
                 .name("Stephansplatz " + i)
