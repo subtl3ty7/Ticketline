@@ -1,7 +1,11 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint.dto;
 
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventCategoryEnum;
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventTypeEnum;
 import lombok.*;
+
 import java.time.LocalDateTime;
+import java.time.Period;
 
 @Getter
 @Setter
@@ -16,6 +20,10 @@ public class ShowDto {
     private LocalDateTime endsAt;
     private int ticketsSold;
     private int ticketsAvailable;
+    private EventTypeEnum type;
+    private EventCategoryEnum category;
+    private Period period;
+    private float price;
     @ToString.Exclude
     private EventLocationDto eventLocationCopy;
     private Long eventLocationOriginalId;

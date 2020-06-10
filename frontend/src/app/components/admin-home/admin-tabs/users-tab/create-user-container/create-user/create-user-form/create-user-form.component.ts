@@ -16,6 +16,7 @@ export class CreateUserFormComponent implements OnInit {
   matDatePicker: MatDatepicker<any>;
   adminFlag = false;
   password: string;
+  passwordShort;
   constructor() {
     const currentDate = new Date();
     this.maxDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDay());
@@ -23,6 +24,7 @@ export class CreateUserFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.user.admin = false;
+    this.passwordShort = false;
   }
   changeUserType() {
     this.adminFlag = !this.adminFlag;
@@ -32,6 +34,7 @@ export class CreateUserFormComponent implements OnInit {
     this.user.birthday = event.value;
   }
   passwordChange() {
+    this.passwordShort = this.password.length < 8;
     this.user.password = this.password;
   }
 }

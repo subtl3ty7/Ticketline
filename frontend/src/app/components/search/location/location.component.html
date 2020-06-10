@@ -11,25 +11,30 @@
   </div>
 </div>
 <div class="card-body">
-  <div *ngIf="searchShared.entities.length > 0">
-    <div *ngFor="let l of searchShared.entities">
-      <div class="row location-row">
-        <div class="location-block">
-          <div class="row ">
-            <div class="col">
-              <div class="location-details pl-5" style="margin-top: 45px;">
-                {{l.name}}, {{l.plz}} {{l.city}}
+  <app-error-notification *ngIf="searchShared.error" [error]="searchShared.error"></app-error-notification>
+  <div *ngIf="!searchShared.error && searchShared.entities">
+    <div *ngIf="searchShared.entities.length > 0">
+      <div *ngFor="let l of searchShared.entities">
+        <div class="row location-row">
+          <div class="location-block">
+            <div class="row ">
+              <div class="col">
+                <div class="location-details pl-5" style="margin-top: 45px;">
+                  {{l.name}}, {{l.plz}} {{l.city}}
+                </div>
               </div>
-            </div>
-            <div class="col pr-5">
-              <button (click)="searchShows(l)" class="btn default location-button align-middle" style="margin-top: 25px;">
-                Aufführungen
-              </button>
+              <div class="col pr-5">
+                <button (click)="searchShows(l)" class="btn default location-button align-middle" style="margin-top: 25px;">
+                  Aufführungen
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <p *ngIf="searchShared.entities.length == 0" style="font-size: 20px; padding-top: 40px; text-align: center">Es konnten keine Veranstaltungsorte mit diesen Kriterien gefunden werden.</p>
   </div>
-  <p *ngIf="searchShared.entities.length == 0" style="font-size: 20px; padding-top: 40px; text-align: center">Es konnten keine Veranstaltungsorte mit diesen Kriterien gefunden werden.</p>
+  <app-spinner *ngIf="searchShared.entities === undefined">
+  </app-spinner>
 </div>

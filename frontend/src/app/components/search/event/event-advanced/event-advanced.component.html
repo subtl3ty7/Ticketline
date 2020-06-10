@@ -1,0 +1,190 @@
+<app-customer-header></app-customer-header>
+<div class="container-fluid justify-content-center" style="padding-left: 5%; padding-right: 5%;">
+  <div class="row">
+    <div class="mx-auto" style="max-width: 1320px; width: 100%;">
+      <span class="anchor" id="formLogin"></span>
+      <div class="card main-body">
+        <div class="card-header align-items-center">
+          <h1 class="mb-0 ml-3 page-title">Erweiterte Suche - Events</h1>
+        </div>
+        <div class="card-body">
+          <form class="form" [formGroup]="advancedEventSearchForm" (ngSubmit)="advancedSearch()">
+            <div class="row">
+              <div class="container">
+                <div class="row">
+                  <h3>Events</h3>
+                </div>
+                <div class="row mt-2">
+                  <div class="col-xl-4 col-12">
+                    <div class="form-group">
+                      <div class="container">
+                        <div class="row" style="margin-bottom: -10px">
+                            <label for="inputName">Name</label><br>
+                        </div>
+                        <div class="row">
+                          <input type="text" name="name" formControlName="name" placeholder="Name" value="{{name}}" autocomplete="off" class="form-control" id="inputName"/>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt-2" style="margin-bottom: -10px">
+                  <div class="col-xl-4 col-12" >
+                    <div class="form-group">
+                      <div class="container">
+                        <div class="row" style="margin-bottom: -10px">
+                          <label for="inputEventType">Typ der Veranstaltung</label>
+                        </div>
+                        <div class="row">
+                          <select name="type" id="inputEventType" formControlName="type" class="form-control">
+                            <option value="" selected >Bitte ausw&auml;hlen ...</option>
+                            <option value="SPORT">Sport</option>
+                            <option value="CULTURE">Kultur</option>
+                            <option value="MUSIC">Musik</option>
+                            <option value="OTHER">Sonstiges</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-4 col-12">
+                    <div class="form-group">
+                      <div class="container">
+                        <div class="row" style="margin-bottom: -10px">
+                          <label for="inputEventCategory">Kategorie der Veranstaltung</label>
+                        </div>
+                        <div class="row">
+                          <select id="inputEventCategory" formControlName="category" class="form-control">
+                            <option value="" selected >Bitte ausw&auml;hlen ...</option>
+                            <option value="POP">Pop</option>
+                            <option value="HIPHOP">Hip-Hop</option>
+                            <option value="JAZZ">Jazz</option>
+                            <option value="ROCK">Rock</option>
+                            <option value="SCHLAGER">Schlager</option>
+                            <option value="CLASSICAL">Klassik</option>
+                            <option value="THEATRE">Theater</option>
+                            <option value="OPERA">Oper</option>
+                            <option value="MUSICAL">Musical</option>
+                            <option value="INDOORS">Indoor</option>
+                            <option value="OUTDOORS">Outdoor</option>
+                          </select>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="container">
+                <div class="row" style="margin-bottom: -10px">
+                  <div class="col">
+                    <label>Datum</label>
+                  </div>
+                </div>
+                <div class="row mt-1">
+                  <div class="col-xl-4 col-12">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Von</span>
+                      </div>
+                      <input type="date" min="2019-01-01" name="startsAt" formControlName="startsAt" id="inputEventDateFrom" class="form-control"/>
+                    </div>
+                  </div>
+                  <div class="col-xl-4 col-12 mt-xl-0 mt-2">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2">Bis</span>
+                      </div>
+                      <input type="date" min="2019-01-01" name="endsAt" formControlName="endsAt" id="inputEventDateTo" class="form-control"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="container">
+                <div class="row mt-2">
+                  <div class="col-xl-4 col-12">
+                    <div class="form-group">
+                      <div class="container">
+                        <div class="row" style="margin-bottom: -10px">
+                          <label for="inputDuration">Dauer</label><br>
+                        </div>
+                        <div class="row">
+                          <input type="number" name="duration" min="0" formControlName="duration" placeholder="Dauer (in Std.)" value="{{duration}}" autocomplete="off" class="form-control" id="inputDuration"/>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr style="margin-top: 30px; margin-bottom: 30px;">
+            <div class="row">
+              <div class="container">
+                <div class="row">
+                  <h3>Aufführungen</h3>
+                </div>
+                <div class="row mt-2">
+                    <div class="col">
+                      <label>Datum</label>
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="col-xl-4 col-12">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon3">Von</span>
+                      </div>
+                      <input type="datetime-local" min="2019-01-01" name="showStartsAt" formControlName="showStartsAt" class="form-control" id="inputShowDateTimeFrom"/>
+                    </div>
+                  </div>
+                  <div class="col-xl-4 col-12 mt-xl-0 mt-2">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon4">Bis</span>
+                      </div>
+                      <input type="datetime-local" min="2019-01-01" name="showEndsAt" formControlName="showEndsAt" class="form-control" id="inputShowDateTimeTo"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="container">
+                    <div class="row" style="margin-bottom: -10px">
+                      <div class="col">
+                        <label>Preis</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xl-4 col-12">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon5">Bis</span>
+                          </div>
+                          <input type="number" min="0" name="startPrice" formControlName="startPrice" class="form-control" id="inputShowStartPrice"/>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row apply-filter">
+              <div class="container pr-5 align-middle">
+                <div class="row reset-search">
+                  <a (click)="resetForm()">Filter zurücksetzen</a>
+                </div>
+                <div class="row" style="float: right; padding-right: 2px">
+                  <button class="btn default search-button " style="margin-top: 5px;">Anwenden</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

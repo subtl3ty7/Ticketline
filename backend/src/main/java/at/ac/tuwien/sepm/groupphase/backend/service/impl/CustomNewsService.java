@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -84,6 +85,7 @@ public class CustomNewsService implements NewsService {
         if(news != null) {
             news.setNewsCode(this.getNewNewsCode());
             news.setPublishedAt(LocalDateTime.now());
+            news.setSeenBy(new ArrayList<>());
         }
 
         validator.validate(news).throwIfViolated();
@@ -94,14 +96,32 @@ public class CustomNewsService implements NewsService {
     public News findByNewsCode(String newsCode, Authentication auth) {
         AbstractUser user = userService.getAuthenticatedUser(auth);
         validator.validateUser(user).throwIfViolated();
-        Customer customer = (Customer) user;
         News news = newsRepository.findByNewsCode(newsCode);
         if (news==null) {
             throw new NotFoundException("Could not find this News entry");
         } else {
-            //if news entry was found, then mark the news entry as seen by the customer
-            this.markAsSeen(customer, news);
+            if(user instanceof Customer) {
+                //if news entry was found, then mark the news entry as seen by the customer
+                Customer customer = (Customer) user;
+                this.markAsSeen(customer, news);
+            }
         }
+        return news;
+    }
+
+    @Override
+    public List<News> findAll() {
+        return newsRepository.findAll();
+    }
+
+    @Override
+    public List<News> findSimpleNewsByParam(String newsCode,
+                                            String title,
+                                            String author,
+                                            LocalDateTime startRange,
+                                            LocalDateTime endRange) {
+
+        List<News> news =  newsRepository.findAllByNewsCodeContainingIgnoreCaseAndTitleContainingIgnoreCaseAndAuthorContainingIgnoreCaseAndPublishedAtBetween(newsCode, title, author, startRange, endRange);
         return news;
     }
 

@@ -1,0 +1,93 @@
+<div class="center-block">
+
+  <!--NAME-->
+  <div fxLayout="row" class="info-wrapper">
+    <div class="info">
+      <div class="info-label">Name</div>
+    </div>
+  </div>
+  <mat-form-field class="mat-form-field" >
+    <input
+      id="eventInfoForm_inputName"
+      matInput
+      required
+      [(ngModel)]="event.name">
+    <mat-error *ngIf="!event.name">Name ist erforderlich!</mat-error>
+  </mat-form-field>
+
+  <!--DESCRIPTION-->
+  <div fxLayout="row" class="info-wrapper">
+    <div class="info">
+      <div class="info-label">Beschreibung</div>
+    </div>
+  </div>
+  <mat-form-field class="mat-form-field" >
+    <textarea
+      id="newsInfoForm_inputDescription"
+      matInput
+      required
+      [(ngModel)]="event.description"></textarea>
+    <mat-error *ngIf="!event.description">Beschreibung ist erforderlich!</mat-error>
+  </mat-form-field>
+
+  <!--TYPE-->
+  <div fxLayout="row" class="info-wrapper">
+    <div class="info">
+      <div class="info-label">Typ</div>
+    </div>
+  </div>
+  <mat-form-field  style="width: 200px">
+    <mat-label>Typ wählen</mat-label>
+    <mat-select [(value)]="event.type">
+      <mat-option *ngFor="let type of eventTypes" [value]="type.toString()">
+        {{type.toString()}}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="!event.category">Kategorie ist erforderlich!</mat-error>
+  </mat-form-field>
+
+  <!--CATEGORY-->
+  <div fxLayout="row" class="info-wrapper">
+    <div class="info">
+      <div class="info-label">Kategorie</div>
+    </div>
+  </div>
+  <mat-form-field  style="width: 200px">
+    <mat-label>Kategorie wählen</mat-label>
+    <mat-select [(value)]="event.category">
+      <mat-option *ngFor="let category of eventCategories" [value]="category.toString()">
+        {{category.toString()}}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="!event.category">Kategorie ist erforderlich!</mat-error>
+  </mat-form-field>
+
+  <!--PHOTO-->
+  <div fxLayout="row" class="info-wrapper">
+    <div class="info">
+      <div class="info-label">Bild</div>
+    </div>
+  </div>
+  <p *ngIf="!event.photo" style="color: #ff1f20; font-size: 14px">Bild ist erforderlich!</p>
+  <input  type="file" onclick="this.value=null" (change)="inputChange($event);" accept="image/jpeg,image/png">
+
+  <!--SHOWS-->
+  <div fxLayout="row" class="info-wrapper">
+    <div class="info">
+      <div class="info-label">Aufführungen</div>
+    </div>
+  </div>
+  <p *ngIf="event.shows.length<1" style="color: #ff1f20; font-size: 14px">Aufführungen sind erforderlich!</p>
+  <button mat-raised-button color="basic" (click) = "openShowDialog()"> Aufführungen hinzufügen</button>
+
+  <!--ARTISTS-->
+  <div fxLayout="row" class="info-wrapper">
+    <div class="info">
+      <div class="info-label">Artists</div>
+    </div>
+  </div>
+  <p *ngIf="event.artists.length<1" style="color: #ff1f20; font-size: 14px">Artists sind erforderlich!</p>
+  <button mat-raised-button color="basic" (click) = "openArtistsDialog()"> Artists hinzufügen</button>
+  <ng-content></ng-content>
+
+</div>

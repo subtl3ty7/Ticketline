@@ -9,6 +9,8 @@ import {EventService} from '../../services/event.service';
 import {SimpleEvent} from '../../dtos/simple-event';
 import {DetailedEvent} from '../../dtos/detailed-event';
 import {Background} from '../../utils/background';
+import {ShowService} from '../../services/show.service';
+import {Show} from '../../dtos/show';
 
 export enum SearchEntity {
   ARTIST = 'Artist',
@@ -24,11 +26,14 @@ export class SearchShared {
   public searchTerm: string = '';
   public searchEntity: string;
   public entities: object[];
+  public error;
 
   constructor(public authService: AuthService,
               private artistService: ArtistService,
               private eventService: EventService,
-              private eventLocationService: EventLocationService, private background: Background) {
+              private eventLocationService: EventLocationService,
+              private showService: ShowService,
+              private background: Background) {
     this.background.defineBackground();
   }
 
@@ -37,9 +42,11 @@ export class SearchShared {
     this.artistService.getArtistsByFirstAndLastName(firstName, lastName).subscribe(
       (artists: Artist[]) => {
         this.entities = artists;
+        this.error = null;
       },
       error => {
         this.entities = null;
+        this.error = error;
       }
     );
   }
@@ -49,9 +56,11 @@ export class SearchShared {
     this.eventLocationService.getLocationsByName(locationTerm).subscribe(
       (eventLocations: EventLocation[]) => {
         this.entities = eventLocations;
+        this.error = null;
       },
       error => {
         this.entities = null;
+        this.error = error;
       }
     );
   }
@@ -61,24 +70,48 @@ export class SearchShared {
     this.eventLocationService.getLocationsAdvanced(name, street, city, country, plz).subscribe(
       (eventLocations: EventLocation[]) => {
         this.entities = eventLocations;
+        this.error = null;
       },
       error => {
         this.entities = null;
+        this.error = error;
       }
     );
   }
 
-  getEventsBy(name: string, type: string, category: string, startsAt: string, endsAt: string, duration: string, startPrice: string) {
-    // this.eventService.getDetailedEventsBy(name, type, category, startsAt, endsAt, duration, startPrice);
+  getEventsBy(name: string, type: string, category: string, startsAt: string, endsAt: string, duration: string) {
+    this.eventService.getSimpleEventsBy(name, type, category, startsAt, endsAt, duration).subscribe(
+      (events: SimpleEvent[]) => {
+        this.entities = events;
+        this.error = null;
+      }, error => {
+        this.entities = null;
+        this.error = error;
+      }
+    );
   }
 
   getEventsByName(name: string) {
     this.eventService.getDetailedEventsByName(name).subscribe(
       (events: DetailedEvent[]) => {
         this.entities = events;
+        this.error = null;
       },
       error => {
         this.entities = null;
+        this.error = error;
+      }
+    );
+  }
+
+  getShowsBy(name: never, type: string, category: string, showStartsAt: string, showEndsAt: string, duration: string, startPrice: string) {
+    this.showService.getDetailedShowsBy(name, type, category, showStartsAt, showEndsAt, duration, startPrice).subscribe(
+      (shows: Show[]) => {
+        this.entities = shows;
+        this.error = null;
+      }, error => {
+        this.entities = null;
+        this.error = error;
       }
     );
   }

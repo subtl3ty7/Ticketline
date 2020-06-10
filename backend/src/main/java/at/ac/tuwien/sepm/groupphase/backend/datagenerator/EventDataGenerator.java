@@ -21,6 +21,7 @@ import java.lang.invoke.MethodHandles;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Profile("generateData")
 @Component("EventDataGenerator")
@@ -38,9 +39,10 @@ public class EventDataGenerator {
     private final Resources resources;
 
 
-    private final static int numberOfEventLocations = 5;
+    private final static int numberOfEventLocations = 10;
     private static final int numberOfEvents = 15;
     private static final int numberOfArtists = 5;
+    private static final int eventDurationInHours = 2;
 
     @Autowired
     public EventDataGenerator(SectionRepository sectionRepository,
@@ -112,7 +114,7 @@ public class EventDataGenerator {
             addedArtists.add(artists.get(artistIndex));
 
             Event event = Event.builder()
-                .category("Talk")
+                .category("MUSICAL")
                 .description(resources.getText("event_text.txt"))
                 .startsAt(LocalDateTime.now())
                 .endsAt(LocalDateTime.now())
@@ -121,11 +123,12 @@ public class EventDataGenerator {
                 .photo(resources.getImageEncoded(imgName))
                 .prices(List.of(1,2,3))
                 .totalTicketsSold(5*i*i*i)
-                .type("Of the cool type")
-                .shows(generateShows(eventLocations.get(eventLocationIndex)))
+                .shows(generateShows(eventLocations.get(eventLocationIndex), EventTypeEnum.MUSIC, EventCategoryEnum.HIPHOP, "Event " + i))
+                .type("MUSIC")
                 .artists(addedArtists)
                 .eventType(EventTypeEnum.MUSIC)
                 .eventCategory(EventCategoryEnum.HIPHOP)
+                .duration(Duration.ofHours(eventDurationInHours))
                 .build();
             event = eventService.createNewEvent(event);
             events.add(event);
@@ -134,7 +137,7 @@ public class EventDataGenerator {
         return events;
     }
 
-    private List<Show> generateShows(EventLocation eventLocation) {
+    private List<Show> generateShows(EventLocation eventLocation, EventTypeEnum typeEnum, EventCategoryEnum categoryEnum, String eventName) {
         int numberOfShows = 2;
 
         List<Show> shows = new ArrayList<>();
@@ -142,14 +145,17 @@ public class EventDataGenerator {
             //List<EventLocation> location = new ArrayList<>();
             //location.add(new EventLocation(eventLocation));
             LocalDateTime start = LocalDateTime.now();
-            LocalDateTime end = start.plusHours(2);
+            LocalDateTime end = start.plusHours(eventDurationInHours);
             Show show = Show.builder()
                 .startsAt(start)
                 .endsAt(end)
                 .ticketsAvailable(1000)
                 .ticketsSold(300)
                 .eventLocationOriginalId(eventLocation.getId())
-                .duration(Duration.between(start, end))
+                .eventType(typeEnum)
+                .eventCategory(categoryEnum)
+                .eventName(eventName)
+                .price(50)
                 .build();
             shows.add(show);
         }
@@ -162,7 +168,8 @@ public class EventDataGenerator {
 
         List<EventLocationOriginal> eventLocations = new ArrayList<>();
         for(int i=0; i<numberOfEventLocations; i++) {
-            List<Section> sections = generateSections();
+            int randomNum = ThreadLocalRandom.current().nextInt(3, 6 + 1);
+            List<Section> sections = generateSections(randomNum);
             EventLocationOriginal eventLocation = EventLocationOriginal.builder()
                 .name("Stephansplatz " + i)
                 .city("Vienna")
@@ -198,18 +205,60 @@ public class EventDataGenerator {
         return artists;
     }
 
-    private List<Section> generateSections() {
-        String[] labels = new String[]{
-            "A",
-            "B",
-            "C",
-            "D",
-            "E"
-        };
+    private List<Section> generateSections(int layout) {
+        String[] labels = {};
+        switch (layout) {
+            case 3: labels = new String[]{
+                "A",
+                "B",
+                "C"
+            };
+                break;
+            case 4: labels = new String[]{
+                "A",
+                "B",
+                "C",
+                "D"
+            };
+                break;
+            case 5: labels = new String[]{
+                "A",
+                "B",
+                "C",
+                "D",
+                "E"
+            };
+                break;
+            case 6: labels = new String[]{
+                        "A",
+                        "B",
+                        "C",
+                        "D",
+                        "E",
+                        "F"
+                    };
+                    break;
+            default: break;
+        }
 
         List<Section> sections = new ArrayList<>();
+        int labelNumber= 0;
+        boolean midSection = false;
         for(String label: labels) {
-            List<Seat> seats = generateSeats();
+            if(layout == 3) {
+                midSection = labelNumber == 1;
+            }
+            if(layout == 4) {
+                midSection = (labelNumber == 1) || (labelNumber == 3);
+            }
+            if(layout == 5) {
+                midSection = false;
+            }
+            if(layout == 6) {
+                midSection = (labelNumber == 1) || (labelNumber == 4);
+            }
+
+            List<Seat> seats = generateSeats(midSection);
             Section section = Section.builder()
                 .name(label)
                 .description("Some Description")
@@ -220,33 +269,36 @@ public class EventDataGenerator {
                 .build();
 
             sections.add(section);
+            labelNumber++;
         }
 
         return sections;
     }
 
-    private List<Seat> generateSeats() {
+    private List<Seat> generateSeats(boolean midSection) {
         String[] columns = new String[]{
             "1",
             "2",
             "3",
             "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9"
+            "5"
         };
-        String[] rows = new String[] {
-            "A",
-            "B",
-            "C",
-            "D",
-            "E",
-            "F",
-            "G",
-            "H"
-        };
+        String[] rows;
+        if (midSection) {
+            rows = new String[]{
+                "A",
+                "B",
+                "C"
+            };
+        } else {
+            rows = new String[] {
+                "A",
+                "B",
+                "C",
+                "D",
+                "E"
+            };
+        }
 
         List<Seat> seats = new ArrayList<>();
         for(String i: rows) {
