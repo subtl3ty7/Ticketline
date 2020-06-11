@@ -63,6 +63,7 @@ public class TicketDataGenerator {
             LOGGER.info("Generating Tickets Test Data");
             LocalDateTime start = LocalDateTime.now();
             generateTickets();
+            generateMerchTickets();
             LocalDateTime end = LocalDateTime.now();
             float runningTime = Duration.between(start, end).toMillis();
             LOGGER.info("Generating Tickets Test Data took " + runningTime / 1000.0 + " seconds");
@@ -112,7 +113,7 @@ public class TicketDataGenerator {
 
         // reserve tickets for customer0
         List<Ticket> tickets = new ArrayList<>();
-        for (int i = 0; i < NUMBER_OF_TICKETS_TO_GENERATE; i++) {
+        for (int i = 0; i < NUMBER_OF_TICKETS_TO_GENERATE/2; i++) {
             int j = getShowNumber();
             int e = getEventNumber();
             Ticket ticket = Ticket.builder()
@@ -130,7 +131,7 @@ public class TicketDataGenerator {
         }
 
         // reserve tickets for customer1
-        for (int i = NUMBER_OF_TICKETS_TO_GENERATE; i < NUMBER_OF_TICKETS_TO_GENERATE + NUMBER_OF_TICKETS_TO_GENERATE; i++) {
+        for (int i = NUMBER_OF_TICKETS_TO_GENERATE/2; i < NUMBER_OF_TICKETS_TO_GENERATE; i++) {
             int j = getShowNumber();
             int e = getEventNumber();
             Ticket ticket = Ticket.builder()
@@ -147,6 +148,10 @@ public class TicketDataGenerator {
             tickets = new ArrayList<>();
         }
 
+
+    }
+
+    public void generateMerchTickets(){
 
     }
 
