@@ -63,7 +63,7 @@ public class CustomTicketService implements TicketService {
             Ticket savedTicket = ticketRepository.save(ticketEntity);
             savedTickets.add(savedTicket);
 
-            LOGGER.info("Purchased ticket " + savedTicket);
+            LOGGER.debug("Purchased ticket " + savedTicket);
         }
         invoiceService.createTicketInvoice(tickets, "PURCHASE", tickets.get(0).getPurchaseDate());
         return savedTickets;
@@ -93,7 +93,7 @@ public class CustomTicketService implements TicketService {
 
     @Override
     public Ticket save(Ticket ticketEntity) throws ValidationException, DataAccessException {
-            LOGGER.info("Validating ticket " + ticketEntity);
+            LOGGER.debug("Validating ticket " + ticketEntity);
             ticketEntity.setTicketCode(getNewTicketCode());
             LocalDateTime now = LocalDateTime.now();
             ticketEntity.setPurchaseDate(now);
@@ -134,14 +134,14 @@ public class CustomTicketService implements TicketService {
             Ticket reservedTicket = ticketRepository.save(ticketEntity);
             reservedTickets.add(reservedTicket);
 
-            LOGGER.info("Reserved ticket " + reservedTicket);
+            LOGGER.debug("Reserved ticket " + reservedTicket);
         }
         return reservedTickets;
     }
 
     @Override
     public void cancelPurchasedTicket(String ticketCode) throws ValidationException, DataAccessException{
-        LOGGER.info("Validating ticket with ticketCode " + ticketCode);
+        LOGGER.debug("Validating ticket with ticketCode " + ticketCode);
         validator.validatePurchased(ticketCode).throwIfViolated();
 
         Ticket ticket1 = ticketRepository.findTicketByTicketCode(ticketCode);

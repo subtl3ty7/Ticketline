@@ -94,8 +94,6 @@ public class TicketDataGenerator {
     }
 
     public void generateTickets(){
-        LOGGER.info("Generating ticket data.");
-
         boolean bool = true;
         List<AbstractUser> users = userService.loadAllUsers();
         Customer customer0 = (Customer) users.get(0);
