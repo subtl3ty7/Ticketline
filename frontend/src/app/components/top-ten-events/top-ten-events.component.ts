@@ -2,6 +2,7 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {SimpleEvent} from '../../dtos/simple-event';
 import {EventService} from '../../services/event.service';
+import {Background} from '../../utils/background';
 
 @Component({
   selector: 'app-top-ten-events',
@@ -14,14 +15,15 @@ export class TopTenEventsComponent implements OnInit {
   events: SimpleEvent[];
 
 
-  constructor(private eventService: EventService) {
+  constructor(private eventService: EventService, private background: Background) {
+    this.background.defineTopTenBackground();
   }
 
 
   async ngOnInit() {
     this.currentMonth = this.getCurrentMonth();
     this.getTop10Events();
-    this.defineBackground();
+    this.background.defineTopTenBackground();
   }
 
   getCurrentMonth(): string {
@@ -59,6 +61,7 @@ export class TopTenEventsComponent implements OnInit {
     document.body.style.backgroundPosition = 'center';
     document.body.style.backgroundRepeat = 'repeat';
     document.body.style.backgroundSize = 'cover';
+    console.log('change to top ten events background');
   }
 
   private delay(ms: number) {

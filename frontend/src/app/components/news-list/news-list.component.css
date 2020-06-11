@@ -26,14 +26,15 @@ label {
   border-radius: 0px;
 }
 
-.nav-pills > li {
-  margin-right: 10px;
-}
-
 .nav-pills > li > a {
   width: 120px;
   background-color: transparent;
   color: white;
+}
+
+.nav-pills > li {
+  padding-right: 10px;
+  margin-right: 10px;
 }
 
 .nav-pills > li > a.active {
@@ -44,7 +45,23 @@ label {
   border-radius: 0px;
 }
 
-.nav-pills > li > a:hover {
+.nav-pills > li > a > div > span {
+  border-right: 1px white solid;
+  padding-right: 55px;
+  padding-left: 55px;
+  height: 32px;
+  padding-top: 8px;
+}
+
+.nav-pills > li > a.active > div > span {
+  border-right: 1px white solid;
+  padding-right: 55px;
+  padding-left: 55px;
+  height: 30px;
+  padding-top: 8px;
+}
+
+.nav-pills > li > a.active:hover {
   background: rgba(100%, 100%, 100%, 0.25);
   border-bottom-width: 3px;
   border-bottom-color: white;
@@ -52,7 +69,18 @@ label {
   border-radius: 0px;
 }
 
+.nav-pills > li > a:hover {
+  background: rgba(100%, 100%, 100%, 0.10);
+  border-bottom-width: 3px;
+  border-bottom-color: white;
+  border-radius: 0px;
+}
+
 .nav-pill-font {
   font-family: Segue UI, Roboto, "Helvetica Neue", sans-serif !important;
   font-size: 20px;
+}
+
+.nav-item {
+  margin-right: 0px;
 }

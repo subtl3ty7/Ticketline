@@ -57,3 +57,8 @@
 .gap {
   padding: 20px;
 }
+
+.title-button {
+  background-color: transparent;
+  outline: transparent;
+}

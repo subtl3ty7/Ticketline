@@ -12,11 +12,11 @@
   <div id="top-ten-events-carousel" class="my-slider carousel slide carousel-multi-item" data-ride="carousel">
 
     <!--Indicators-->
-    <ol class="carousel-indicators">
+    <!--<ol class="carousel-indicators">
       <li data-target="#top-ten-events-carousel" data-slide-to="0" class="active"></li>
       <li data-target="#top-ten-events-carousel" data-slide-to="1"></li>
       <li data-target="#top-ten-events-carousel" data-slide-to="2"></li>
-    </ol>
+    </ol>-->
 
     <!--Inner Carousel-->
     <div class="carousel-inner" role="listbox">
@@ -35,14 +35,13 @@
                [class.clearfix]="event !== threeEvents[0]"
                [class.d-none]="event !== threeEvents[0]"
                [class.d-md-block]="event !== threeEvents[0]"
-               style="padding: 10px"
                routerLink="/events/{{event.eventCode}}">
             <div class="card">
               <img class="card-img-top img-fluid"
                    [class.image-crop-big]="event === threeEvents[0]"
                    [class.image-crop-small]="event !== threeEvents[0]"
                    src="{{event.photo}}">
-              <div class="card-body">
+              <div class="card-body" style="padding: 25px; height: 90px;">
                 <div class = "card-title row">
                   <div class="col-sm extra-pad card-title-font prevent-overflow-inline">{{event.name}}</div>
                   <button *ngIf="event === threeEvents[0]"

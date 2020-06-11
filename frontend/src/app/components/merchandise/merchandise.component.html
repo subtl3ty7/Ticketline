@@ -15,13 +15,13 @@
             </div>
 
             <div class="col-4">
-              <p class="infoAboutMyPoints" *ngIf="user">
+              <p class="infoAboutMyPoints" *ngIf="user" style="margin-top: 7px; margin-bottom: 0px">
                 Meine Prämienpunkte: {{user.points}}
               </p>
             </div>
 
             <div class="col-3">
-              <p class="infoAboutPremium">
+              <p class="infoAboutPremium" style="margin-top: 5px; margin-bottom: 0px">
                 <i class="fas fa-star"></i>
                 Prämienpunkte einlösbar
               </p>
@@ -30,7 +30,7 @@
 
           <div *ngIf="merchandise">
             <div class="container">
-              <div class="row" style="padding-left: 25px; padding-right: 25px; padding-bottom: 25px; width: 100%">
+              <div class="row" style="padding-left: 15px; padding-right: 15px; padding-bottom: 25px; width: 100%">
                 <div class="col-4 col-4-xl col-4-lg col-4-md col-12-sm" *ngFor="let product of merchandise" style="height: 665px; margin-bottom: 30px;">
                   <div class="zoom">
 
