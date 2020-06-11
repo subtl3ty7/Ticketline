@@ -79,6 +79,18 @@ public class MerchandiseEndpoint {
         return merchandiseMapper.merchandiseToMerchandiseDto(merchandise);
     }
 
+    @PostMapping(value = "/purchasingWithMoney/{userCode}")
+    @ApiOperation(
+        value = "Purchasing a merchandise product with money.",
+        notes = "Purchasing a merchandise product with money.",
+        authorizations = {@Authorization(value = "apiKey")})
+    @ApiResponse(code = 201, message = "Product is successfully purchased")
+    public MerchandiseDto buyMerchandiseWithMoney(@RequestBody MerchandiseDto merchandiseDto, @PathVariable String userCode) {
+        LOGGER.info("POST " + merchandiseDto);
+        Merchandise merchandise = merchandiseService.purchaseWithMoney(merchandiseMapper.merchandiseDtoToMerchandise(merchandiseDto), userCode);
+        return merchandiseMapper.merchandiseToMerchandiseDto(merchandise);
+    }
+
 
 
     @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")

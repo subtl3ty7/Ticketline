@@ -5,5 +5,5 @@ import at.ac.tuwien.sepm.groupphase.backend.util.Constraints;
 
 public interface MerchandiseValidator {
     Constraints validateMerchandisePurchaseWithPremiumPoints(Merchandise merchandise, String userCode);
-    Constraints validateMerchandisePurchaseWithMoney(Merchandise merchandise);
+    Constraints validateMerchandisePurchaseWithMoney(Merchandise merchandise, String userCode);
 }
