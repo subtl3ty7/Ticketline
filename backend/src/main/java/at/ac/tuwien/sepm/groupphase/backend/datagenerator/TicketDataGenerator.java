@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManagerFactory;
 import java.lang.invoke.MethodHandles;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +59,12 @@ public class TicketDataGenerator {
         if(ticketRepository.findAll().size() > 0) {
             LOGGER.debug("Ticket Data already generated");
         } else {
+            LOGGER.info("Generating Tickets Test Data");
+            LocalDateTime start = LocalDateTime.now();
             generateTickets();
+            LocalDateTime end = LocalDateTime.now();
+            float runningTime = Duration.between(start, end).toMillis();
+            LOGGER.info("Generating Tickets Test Data took " + runningTime / 1000.0 + " seconds");
         }
     }
 
@@ -95,6 +101,8 @@ public class TicketDataGenerator {
         if(shows.isEmpty()){
             throw new NotFoundException("No shows in argument list. Needs to contain at least one.");
         }
+
+
 
         // reserve tickets for customer0
         List<Ticket> tickets = new ArrayList<>();
