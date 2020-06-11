@@ -74,7 +74,7 @@ public class CustomMerchandiseService implements MerchandiseService {
     }
 
     public Merchandise purchaseWithPremiumPoints(Merchandise merchandise, String userCode) {
-        LOGGER.info("Validating merchandise " + merchandise + " for user with userCode " + userCode);
+        LOGGER.debug("Validating merchandise " + merchandise + " for user with userCode " + userCode);
 
         validator.validateMerchandisePurchaseWithPremiumPoints(merchandise, userCode).throwIfViolated();
         Merchandise saveMerchandise = merchandiseRepository.findMerchandiseById(merchandise.getId());
@@ -84,9 +84,28 @@ public class CustomMerchandiseService implements MerchandiseService {
         long currentPoints = ((Customer) user).getPoints();
         ((Customer) user).setPoints(currentPoints - saveMerchandise.getPremiumPrice());
 
+        // please generate invoice here
+
         merchandiseRepository.save(saveMerchandise);
         userRepository.save(user);
 
         return saveMerchandise;
     }
+
+    @Override
+    public Merchandise purchaseWithMoney(Merchandise merchandise, String userCode) {
+        LOGGER.debug("Validating merchandise " + merchandise + " for user with userCode " + userCode);
+
+        validator.validateMerchandisePurchaseWithMoney(merchandise, userCode).throwIfViolated();
+        Merchandise saveMerchandise = merchandiseRepository.findMerchandiseById(merchandise.getId());
+        saveMerchandise.setStockCount(saveMerchandise.getStockCount() - 1);
+
+        // please generate invoice here
+
+        merchandiseRepository.save(saveMerchandise);
+
+        return saveMerchandise;
+    }
+
+
 }
