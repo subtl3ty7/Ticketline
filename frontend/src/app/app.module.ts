@@ -112,6 +112,8 @@ import { CreateEventFormComponent } from './components/admin-home/admin-tabs/eve
 import { CreateArtistsComponent } from './components/admin-home/admin-tabs/events-tab/create-event-container/create-event/create-event-form/create-artists/create-artists.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { SeatingPlanComponent } from './components/ticket-purchase/choose-ticket/seating-plan/seating-plan.component';
+import { MyInvoicesTabComponent } from './components/my-profile/my-profile-tabs/my-invoices-tab/my-invoices-tab.component';
+import { InvoiceDetailsComponent } from './components/my-profile/my-profile-tabs/my-invoices-tab/invoice-details/invoice-details.component';
 
 @NgModule({
   declarations: [
@@ -206,7 +208,9 @@ import { SeatingPlanComponent } from './components/ticket-purchase/choose-ticket
     CreateShowsComponent,
     CreateEventFormComponent,
     CreateArtistsComponent,
-    SeatingPlanComponent
+    SeatingPlanComponent,
+    MyInvoicesTabComponent,
+    InvoiceDetailsComponent
   ],
   imports: [
     BrowserModule,

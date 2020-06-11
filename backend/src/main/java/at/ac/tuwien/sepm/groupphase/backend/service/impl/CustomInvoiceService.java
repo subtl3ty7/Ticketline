@@ -46,6 +46,7 @@ public class CustomInvoiceService implements InvoiceService {
             .tickets(tickets)
             .build();
 
+        LOGGER.debug("Invoice generated " + ticketInvoice);
         return invoiceRepository.save(ticketInvoice);
     }
 
