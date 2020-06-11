@@ -28,7 +28,7 @@ export class PaymentDoneComponent implements OnInit {
 
   getSectionNameById(sectionId) {
     let name;
-    this.show.eventLocationCopy.sections.forEach((next) => {
+    this.show.eventLocation.sections.forEach((next) => {
       if (next.id === sectionId) {
         name = next.name;
       }

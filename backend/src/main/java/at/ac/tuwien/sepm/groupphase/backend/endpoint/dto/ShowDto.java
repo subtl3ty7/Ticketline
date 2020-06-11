@@ -2,10 +2,12 @@ package at.ac.tuwien.sepm.groupphase.backend.endpoint.dto;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventCategoryEnum;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventTypeEnum;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Seat;
 import lombok.*;
 
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.util.List;
 
 @Getter
 @Setter
@@ -28,7 +30,7 @@ public class ShowDto {
     private String photo;
     private String description;
     @ToString.Exclude
-    private EventLocationDto eventLocationCopy;
-    private Long eventLocationOriginalId;
+    private EventLocationDto eventLocation;
+    private List<SeatDto> takenSeats;
     private SimpleEventDto event;
 }

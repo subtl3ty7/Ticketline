@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {EventService} from '../../services/event.service';
 import {DetailedEvent} from '../../dtos/detailed-event';
 import {Background} from '../../utils/background';
+import {Show} from '../../dtos/show';
 
 @Component({
   selector: 'app-event-details-user-view',
@@ -37,10 +38,13 @@ export class EventDetailsUserViewComponent implements OnInit {
     );
   }
 
-  openPurchase(show) {
+  openPurchase(show: Show) {
     if (show) {
-      sessionStorage.setItem('show', JSON.stringify(show));
-      this.router.navigate(['ticket-purchase']);
+      console.log('Show is:');
+      console.log(show);
+      // sessionStorage.clear();
+      // sessionStorage.setItem('show', JSON.stringify(show));
+      this.router.navigate(['ticket-purchase/' + show.id]);
     }
   }
 }

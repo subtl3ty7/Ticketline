@@ -43,7 +43,7 @@ public class TicketValidatorImpl implements TicketValidator {
     public Constraints validateSave(Ticket ticket) {
         Constraints constraints = new Constraints();
         AbstractUser userFromDataBase = userRepository.findAbstractUserByUserCode(ticket.getUserCode());
-        constraints.add("seat_notFree", seatRepository.findSeatById(ticket.getSeat().getId()).isFree());
+        constraints.add("seat_notFree", !showRepository.findShowById(ticket.getShow().getId()).getTakenSeats().contains(ticket.getSeat()));
         constraints.add("userCode_exists", userFromDataBase != null);
         constraints.add("show_exists", showRepository.findShowById(ticket.getShow().getId()) != null);
         constraints.add("seat_exists", seatRepository.findSeatById(ticket.getSeat().getId()) != null);

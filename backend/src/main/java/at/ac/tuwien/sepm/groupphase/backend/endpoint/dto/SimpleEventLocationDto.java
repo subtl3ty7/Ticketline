@@ -10,7 +10,7 @@ import java.util.List;
 @Builder
 @ToString
 @NoArgsConstructor
-public class EventLocationDto {
+public class SimpleEventLocationDto {
     private Long id;
     private Long parentId;
     private String name;
@@ -19,6 +19,5 @@ public class EventLocationDto {
     private String plz;
     private String city;
     private String country;
-    private List<SectionDto> sections;
     private int capacity;
 }

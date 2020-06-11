@@ -30,15 +30,15 @@
       </div>
       <div class="row">
         <h5 class="element-title">Veranstaltungsort: </h5>
-        <p>{{show.eventLocationCopy.name}}</p>
+        <p>{{show.eventLocation.name}}</p>
       </div>
       <div class="row">
         <h5 class="element-title">Stadt:</h5>
-        <p>{{show.eventLocationCopy.city}}</p>
+        <p>{{show.eventLocation.city}}</p>
       </div>
       <div class="row">
         <h5 class="element-title">Adresse:</h5>
-        <p>{{show.eventLocationCopy.street}}, {{show.eventLocationCopy.plz}} {{show.eventLocationCopy.city}}, {{show.eventLocationCopy.country}}</p>
+        <p>{{show.eventLocation.street}}, {{show.eventLocation.plz}} {{show.eventLocation.city}}, {{show.eventLocation.country}}</p>
       </div>
       <div class="row" *ngIf="this.tickets">
         <h5 class="element-title">Sitzplätze:</h5>
