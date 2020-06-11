@@ -62,7 +62,7 @@ export class CreateShowsComponent implements OnInit {
   }
 
   createShow() {
-    if (this.show && this.show.startsAt  && this.show.endsAt && this.show.eventLocationCopy && this.startTime && this.endTime) {
+    if (this.show && this.show.startsAt  && this.show.endsAt && this.show.eventLocation && this.startTime && this.endTime) {
       const show = new Show();
       show.startsAt = this.show.startsAt;
       const startHourAndMinute = this.startTime.split(':');
@@ -70,9 +70,8 @@ export class CreateShowsComponent implements OnInit {
       show.endsAt = this.show.endsAt;
       const endHourAndMinute = this.endTime.split(':');
       show.endsAt.setHours(+endHourAndMinute[0], +endHourAndMinute[1], 0, 0);
-      show.eventLocationCopy = this.show.eventLocationCopy;
-      show.ticketsAvailable = show.eventLocationCopy.capacity;
-      show.eventLocationOriginalId = show.eventLocationCopy.id;
+      show.eventLocation = this.show.eventLocation;
+      show.ticketsAvailable = show.eventLocation.capacity;
       this.data.push(show);
       this.show = new Show();
       this.initTable();

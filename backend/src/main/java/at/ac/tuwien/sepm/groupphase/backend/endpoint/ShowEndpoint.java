@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.ShowDto;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleShowDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EventMapper;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.ShowMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventCategoryEnum;
@@ -51,13 +52,10 @@ public class ShowEndpoint {
         @ApiResponse(code = 404, message = "No Show is found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<List<ShowDto>> findShowsByEventLocationName(@RequestParam Long eventLocationId) {
+    public ResponseEntity<List<SimpleShowDto>> findShowsByEventLocationName(@RequestParam Long eventLocationId) {
         LOGGER.info("GET /api/v1/shows?eventLocationId=" + eventLocationId);
         List<Show> showList = showService.getShowsByEventLocationId(eventLocationId);
-        List<ShowDto> shows = showMapper.showToShowDto(showList);
-        for(ShowDto show: shows) {
-            show.setEvent(eventMapper.eventToSimpleEventDto(eventService.findByEventCode(show.getEventCode())));
-        }
+        List<SimpleShowDto> shows = showMapper.showToSimpleShowDto(showList);
         return new ResponseEntity<>(shows, HttpStatus.OK);
     }
 
@@ -112,9 +110,20 @@ public class ShowEndpoint {
         }
 
         List<ShowDto> shows = showMapper.showToShowDto(showService.findShowsAdvanced(eventName, eventTypeEnumOrdinal, eventCategoryEnumOrdinal, startsAtParsed, endsAtParsed, durationParsed, priceInteger));
-        for(ShowDto show: shows) {
-            show.setEvent(eventMapper.eventToSimpleEventDto(eventService.findByEventCode(show.getEventCode())));
-        }
+
         return new ResponseEntity<>(shows, HttpStatus.OK);
+    }
+
+    @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
+    @GetMapping(value = "/{id}")
+    @ApiOperation(
+        value = "Get Show by ID",
+        authorizations = {@Authorization(value = "apiKey")}
+    )
+    @ApiResponse(code = 200, message = "Show is successfully retrieved")
+    public ResponseEntity<ShowDto> findShowById(@PathVariable Long id) {
+        LOGGER.info("GET /api/v1/show/" + id);
+        ShowDto show = showMapper.showToShowDto(showService.findShowById(id));
+        return new ResponseEntity<>(show, HttpStatus.OK);
     }
 }

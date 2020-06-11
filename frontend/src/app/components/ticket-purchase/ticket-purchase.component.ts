@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TicketPurchaseSharedServiceService, TicketState} from './ticket-purchase-shared-service.service';
 import {DetailedTicket} from '../../dtos/detailed-ticket';
 import {UserService} from '../../services/user.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Background} from '../../utils/background';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import {MatHorizontalStepper} from '@angular/material/stepper';
@@ -14,6 +14,8 @@ import {EventService} from '../../services/event.service';
 import {DetailedEvent} from '../../dtos/detailed-event';
 import {DatePipe} from '@angular/common';
 import {delay} from 'rxjs/operators';
+import {ChooseTicketComponent} from './choose-ticket/choose-ticket.component';
+import {ShowService} from '../../services/show.service';
 
 @Component({
   selector: 'app-ticket-purchase',
@@ -27,11 +29,13 @@ import {delay} from 'rxjs/operators';
 
 export class TicketPurchaseComponent implements OnInit, AfterViewInit {
   @ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
+  @ViewChild(ChooseTicketComponent) chooseTicketComponent: ChooseTicketComponent;
   private error;
   private isLinear: boolean;
-  private ticket: DetailedTicket;
+  private tickets: DetailedTicket[];
   private show: Show;
   private event: DetailedEvent;
+  private userCode: string;
   sharedVars: FormGroup;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
@@ -41,17 +45,18 @@ export class TicketPurchaseComponent implements OnInit, AfterViewInit {
     private ticketPurchaseSharingService: TicketPurchaseSharedServiceService,
     private userService: UserService,
     private eventService: EventService,
+    private showService: ShowService,
+    private router: Router,
+    private route: ActivatedRoute,
     private background: Background,
     private datePipe: DatePipe) {
     this.background.defineBackground();
   }
 
   ngOnInit(): void {
-    this.show = JSON.parse(sessionStorage.getItem('show'));
-    if (this.sanitycheck()) {
-      this.initTicket();
-      this.initForms();
-    }
+    // this.show = JSON.parse(sessionStorage.getItem('show'));
+    this.initData();
+    this.initForms();
   }
 
   // fixes the "create-instead-of-number-bug", replaces all icons (that are not working here) with numbers
@@ -59,32 +64,36 @@ export class TicketPurchaseComponent implements OnInit, AfterViewInit {
     this.stepper._getIndicatorType = () => 'number';
   }
 
-  // initialize ticket and event
-  initTicket() {
+  // initialize usercode, tickets, event and show
+  initData() {
+    const id = this.route.snapshot.paramMap.get('showId');
     this.ticketPurchaseSharingService.ticketState = TicketState.BEGIN;
     this.isLinear = false;
-    this.ticket = new DetailedTicket();
+    this.tickets = [];
     forkJoin(
       this.userService.getCurrentUser(),
-      this.eventService.getDetailedEventByUserCode(this.show.eventCode)
-    ).subscribe(([user, event]) => {
-        this.ticket.userCode = user.userCode;
-        this.event = event;
-        console.log(event.name);
+      this.showService.getShowById(Number(id))
+    ).subscribe(([user, show]) => {
+        this.userCode = user.userCode;
+        this.show = show;
+        this.initEvent();
       }
     );
+  }
 
-    this.userService.getCurrentUser().subscribe((user) => {
-      this.ticket.userCode = user.userCode;
-    });
+  // initialize event
+  initEvent() {
+    this.eventService.getDetailedEventByUserCode(this.show.eventCode).subscribe(
+      (event) => {
+        this.event = event;
+      }
+    );
   }
 
   // initialize forms used for validating whether the User is allowed to proceed to the next step
   initForms() {
     this.firstFormGroup = this._formBuilder.group({
-      count: ['', Validators.required],
-      section: ['', Validators.required],
-      seat: ['', Validators.required],
+      // selectedSeats: [[], ],
       success: ['', Validators.required]
     });
     this.secondFormGroup = this._formBuilder.group({
@@ -112,6 +121,10 @@ export class TicketPurchaseComponent implements OnInit, AfterViewInit {
       };
       return false;
     }
+  }
+
+  chooseTicketComponentNextStep() {
+    this.chooseTicketComponent.nextStep();
   }
 }
 

@@ -111,8 +111,7 @@ import { CreateShowsComponent } from './components/admin-home/admin-tabs/events-
 import { CreateEventFormComponent } from './components/admin-home/admin-tabs/events-tab/create-event-container/create-event/create-event-form/create-event-form.component';
 import { CreateArtistsComponent } from './components/admin-home/admin-tabs/events-tab/create-event-container/create-event/create-event-form/create-artists/create-artists.component';
 import {MatDialogModule} from '@angular/material/dialog';
-import { MyInvoicesTabComponent } from './components/my-profile/my-profile-tabs/my-invoices-tab/my-invoices-tab.component';
-import { InvoiceDetailsComponent } from './components/my-profile/my-profile-tabs/my-invoices-tab/invoice-details/invoice-details.component';
+import { SeatingPlanComponent } from './components/ticket-purchase/choose-ticket/seating-plan/seating-plan.component';
 
 @NgModule({
   declarations: [
@@ -189,6 +188,8 @@ import { InvoiceDetailsComponent } from './components/my-profile/my-profile-tabs
     MyTicketsTabComponent,
     PaymentDoneComponent,
     MyInvoiceComponent,
+    MerchandiseComponent,
+    ProductDetailsComponent,
     EventAdvancedComponent,
     SpinnerComponent,
     MyInvoiceComponent,
@@ -205,8 +206,7 @@ import { InvoiceDetailsComponent } from './components/my-profile/my-profile-tabs
     CreateShowsComponent,
     CreateEventFormComponent,
     CreateArtistsComponent,
-    MyInvoicesTabComponent,
-    InvoiceDetailsComponent
+    SeatingPlanComponent
   ],
   imports: [
     BrowserModule,

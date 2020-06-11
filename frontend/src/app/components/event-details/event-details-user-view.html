@@ -31,12 +31,38 @@
 
               <div class="table-wrapper-scroll-y my-custom-scrollbar">
 
-                <table class="table table-responsive-lg table-hover  mb-0">
-                  <tbody *ngFor="let s of event.shows">
-                  <tr>
-                    <th scope="row"></th>
-                    <td>{{s.startsAt | date:'short'}} - {{s.endsAt | date:'short' }}, {{s.eventLocationCopy.name}}, {{s.eventLocationCopy.city}}, {{s.eventLocationCopy.country}}</td>
-                    <button type="button" class="btn btn-success btn-sm m-0" (click) = "openPurchase(s)">Tickets</button>
+                <table class="align-middle table table-striped table-responsive-lg table-hover  mb-0">
+                  <tbody>
+                  <tr *ngFor="let s of event.shows">
+                    <td>
+                      <div class="container">
+                        <div class="row">
+                            <div class="col-3" style="padding-right: 0px">
+                              <div class="container">
+                                <div class="row">
+                                  <a>{{s.startsAt | date:'EEE, MMM d'}}</a>
+                                </div>
+                                <div class="row">
+                                  <a>{{s.startsAt | date:'H:mm'}} - {{s.endsAt | date:'H:mm' }}</a>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-6">
+                              <div class="container">
+                                <div class="row">
+                                  <a>{{s.eventLocation.name}}</a>
+                                </div>
+                                <div class="row">
+                                  <a>{{s.eventLocation.city}}, {{s.eventLocation.country}}</a>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col" style="padding-left: 0px;">
+                              <button type="button" class="btn default details-button btn m-0" (click) = "openPurchase(s)">Tickets</button>
+                            </div>
+                        </div>
+                      </div>
+                    </td>
                   </tr>
                   </tbody>
                 </table>

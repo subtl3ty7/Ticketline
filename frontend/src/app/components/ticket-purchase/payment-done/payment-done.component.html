@@ -1,11 +1,11 @@
-<div class="container" *ngIf="event && ticket && show && section">
+<div class="container">
   <!-- page title for bought tickets -->
-  <div *ngIf="!ticket.reserved" class="page-title row align-items-center">
+  <div *ngIf="!(tickets[0].reserved)" class="page-title row align-items-center">
     Danke für ihren Einkauf
     <i class="fas fa-check-circle ml-lg-5"></i>
   </div>
   <!-- page title for reserved tickets -->
-  <div *ngIf="ticket.reserved" class="page-title row align-items-center">
+  <div *ngIf="tickets[0].reserved" class="page-title row align-items-center">
     Danke für ihre Reservierung
     <i class="fas fa-check-circle ml-lg-5"></i>
   </div>
@@ -30,24 +30,26 @@
       </div>
       <div class="row">
         <h5 class="element-title">Veranstaltungsort: </h5>
-        <p>{{show.eventLocationCopy.name}}</p>
+        <p>{{show.eventLocation.name}}</p>
       </div>
       <div class="row">
         <h5 class="element-title">Stadt:</h5>
-        <p>{{show.eventLocationCopy.city}}</p>
+        <p>{{show.eventLocation.city}}</p>
       </div>
       <div class="row">
         <h5 class="element-title">Adresse:</h5>
-        <p>{{show.eventLocationCopy.street}}, {{show.eventLocationCopy.plz}} {{show.eventLocationCopy.city}}, {{show.eventLocationCopy.country}}</p>
+        <p>{{show.eventLocation.street}}, {{show.eventLocation.plz}} {{show.eventLocation.city}}, {{show.eventLocation.country}}</p>
       </div>
-      <div class="row" *ngIf="this.ticket.seat">
+      <div class="row" *ngIf="this.tickets">
         <h5 class="element-title">Sitzplätze:</h5>
-        <p>Sektor {{section.name}}, Reihe {{this.ticket.seat.seatRow}}, Platz {{this.ticket.seat.seatColumn}}</p>
+        <div>
+          <p *ngFor="let ticket of tickets">Sektor {{getSectionNameById(this.ticket.seat.sectionId)}}, Reihe {{this.ticket.seat.seatRow}}, Platz {{this.ticket.seat.seatColumn}}</p>
+        </div>
       </div>
       </div>
 
       <!-- Download Button for reserved tickets -->
-      <div *ngIf="ticket.reserved">
+      <div *ngIf="tickets[0].reserved">
         <button class="download-button row align-items-center">
           <div class="col button-font">
             <i class="fas fa-arrow-alt-circle-down"></i>
@@ -56,7 +58,7 @@
         </button>
       </div>
       <!-- Download Button for bought tickets -->
-      <div *ngIf="!ticket.reserved">
+      <div *ngIf="!(tickets[0].reserved)">
         <button class="download-button row align-items-center">
           <div class="col button-font">
             <i class="fas fa-arrow-alt-circle-down"></i>

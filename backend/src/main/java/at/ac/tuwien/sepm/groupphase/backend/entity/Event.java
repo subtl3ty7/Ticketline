@@ -41,16 +41,6 @@ public class Event implements Serializable {
     private String description;
 
     @NotNull
-    @Size(min=1, max=100)
-    @Column(nullable = false)
-    private String category;
-
-    @NotNull
-    @Size(min=1, max=100)
-    @Column(nullable = false)
-    private String type;
-
-    @NotNull
     @Column(nullable = false, name = "start_datetime")
     private LocalDateTime startsAt;
 
@@ -84,11 +74,11 @@ public class Event implements Serializable {
 
     @NotNull
     @Column
-    private EventTypeEnum eventType;
+    private EventTypeEnum type;
 
     @NotNull
     @Column
-    private EventCategoryEnum eventCategory;
+    private EventCategoryEnum category;
 
     @NotNull
     @Column

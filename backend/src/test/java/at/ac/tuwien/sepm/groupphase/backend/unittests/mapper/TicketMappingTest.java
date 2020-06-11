@@ -32,7 +32,7 @@ public class TicketMappingTest implements TestData {
         .isPurchased(false)
         .isReserved(false)
         .purchaseDate(START)
-        .price(TOTAL)
+        .price(PRICE)
         .userCode(USER_CODE)
         .seat(SEATS.get(0))
         .show(SHOWS.get(0))

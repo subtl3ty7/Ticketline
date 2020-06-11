@@ -1,8 +1,11 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint.dto;
 
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventCategoryEnum;
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventTypeEnum;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.time.Period;
 
 @Getter
 @Setter
@@ -17,4 +20,12 @@ public class SimpleShowDto {
     private LocalDateTime endsAt;
     private int ticketsSold;
     private int ticketsAvailable;
+    private EventTypeEnum type;
+    private EventCategoryEnum category;
+    private Period period;
+    private float price;
+    private String eventName;
+    private String photo;
+    private String description;
+    private SimpleEventLocationDto eventLocation;
 }

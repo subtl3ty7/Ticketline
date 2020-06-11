@@ -21,6 +21,7 @@ export class LocationShowComponent implements OnInit {
   public eventLocationPLZ: string;
   public shows: Show[];
   public showsEvents: SimpleEvent[];
+  public error;
 
   constructor(private showService: ShowService,
               private router: Router,
@@ -41,7 +42,7 @@ export class LocationShowComponent implements OnInit {
         console.log(this.shows);
       },
       error => {
-        // throw error
+        this.error = error;
       }
     );
   }

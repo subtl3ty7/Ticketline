@@ -4,9 +4,11 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Getter
@@ -38,12 +40,12 @@ public class Show implements Serializable {
     private int ticketsAvailable;
 
     @ToString.Exclude
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "EVENT_LOCATION_COPY_ID", referencedColumnName = "ID")
-    private EventLocationCopy eventLocationCopy;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private EventLocation eventLocation;
 
-    @Column(name = "EVENT_LOCATION_ORIGINAL_ID")
-    private Long eventLocationOriginalId;
+    @ToString.Exclude
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Seat> takenSeats;
 
     @NotNull
     @Enumerated(EnumType.ORDINAL)
@@ -63,6 +65,17 @@ public class Show implements Serializable {
 
     @Column
     private String eventName;
+
+    @ToString.Exclude
+    @NotNull
+    @Lob
+    @Column(nullable = false, name = "photo")
+    private String photo;
+
+    @NotNull
+    @Size(min=1, max=10000)
+    @Column(nullable = false, length = 10000)
+    private String description;
 
     public Show(){
     }

@@ -24,7 +24,7 @@ public class Artist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany(mappedBy = "artists", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "artists", fetch = FetchType.LAZY)
     private List<Event> performsAt;
 
     @NotNull

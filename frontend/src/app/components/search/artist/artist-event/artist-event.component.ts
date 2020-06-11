@@ -14,6 +14,7 @@ export class ArtistEventComponent implements OnInit {
   public artistId: string;
   public artistName: string;
   public events: SimpleEvent[];
+  public error;
 
   constructor(private eventService: EventService, private background: Background) {
     background.defineBackground();
@@ -27,7 +28,7 @@ export class ArtistEventComponent implements OnInit {
           this.events = events;
         },
         error => {
-          // throw error
+          this.error = error;
         }
       );
   }

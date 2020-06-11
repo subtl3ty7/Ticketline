@@ -70,9 +70,7 @@ public class EventValidatorImpl implements EventValidator {
         Constraints constraints = new Constraints();
         constraints.add(AccesoryValidator.validateJavaxConstraints(show));
         constraints.add("show_idNull", show.getId()==null);
-        if(show.getId() != null) {
-            constraints.add("eventLocation_exists", show.getEventLocationOriginalId() != null && eventLocationRepository.findEventLocationById(show.getEventLocationOriginalId()) != null);
-        }
+        constraints.add("eventLocation_exists", show.getEventLocation() != null && eventLocationRepository.findEventLocationById(show.getEventLocation().getId()) != null);
         return constraints;
     }
 

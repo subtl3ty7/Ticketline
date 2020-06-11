@@ -13,4 +13,6 @@ public interface ShowService {
     List<Show> getShowsByEventLocationId(Long eventLocationId);
 
     List<Show> findShowsAdvanced(String name, Integer type, Integer category, LocalDateTime startDate, LocalDateTime endDate, Duration showDuration, Integer price);
+
+    Show findShowById(Long id);
 }

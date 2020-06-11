@@ -26,6 +26,7 @@ export class SearchShared {
   public searchTerm: string = '';
   public searchEntity: string;
   public entities: object[];
+  public error;
 
   constructor(public authService: AuthService,
               private artistService: ArtistService,
@@ -41,9 +42,11 @@ export class SearchShared {
     this.artistService.getArtistsByFirstAndLastName(firstName, lastName).subscribe(
       (artists: Artist[]) => {
         this.entities = artists;
+        this.error = null;
       },
       error => {
         this.entities = null;
+        this.error = error;
       }
     );
   }
@@ -53,9 +56,11 @@ export class SearchShared {
     this.eventLocationService.getLocationsByName(locationTerm).subscribe(
       (eventLocations: EventLocation[]) => {
         this.entities = eventLocations;
+        this.error = null;
       },
       error => {
         this.entities = null;
+        this.error = error;
       }
     );
   }
@@ -65,9 +70,11 @@ export class SearchShared {
     this.eventLocationService.getLocationsAdvanced(name, street, city, country, plz).subscribe(
       (eventLocations: EventLocation[]) => {
         this.entities = eventLocations;
+        this.error = null;
       },
       error => {
         this.entities = null;
+        this.error = error;
       }
     );
   }
@@ -76,8 +83,10 @@ export class SearchShared {
     this.eventService.getSimpleEventsBy(name, type, category, startsAt, endsAt, duration).subscribe(
       (events: SimpleEvent[]) => {
         this.entities = events;
+        this.error = null;
       }, error => {
         this.entities = null;
+        this.error = error;
       }
     );
   }
@@ -86,9 +95,11 @@ export class SearchShared {
     this.eventService.getDetailedEventsByName(name).subscribe(
       (events: DetailedEvent[]) => {
         this.entities = events;
+        this.error = null;
       },
       error => {
         this.entities = null;
+        this.error = error;
       }
     );
   }
@@ -97,9 +108,11 @@ export class SearchShared {
     this.showService.getDetailedShowsBy(name, type, category, showStartsAt, showEndsAt, duration, startPrice).subscribe(
       (shows: Show[]) => {
         this.entities = shows;
+        this.error = null;
       }, error => {
         this.entities = null;
-    }
+        this.error = error;
+      }
     );
   }
 }

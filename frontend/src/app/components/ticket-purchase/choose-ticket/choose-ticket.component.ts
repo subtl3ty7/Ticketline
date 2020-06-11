@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, DoCheck, Input, OnInit} from '@angular/core';
 import {TicketPurchaseSharedServiceService, TicketState} from '../ticket-purchase-shared-service.service';
 import {EventLocation} from '../../../dtos/event-location';
 import {Show} from '../../../dtos/show';
@@ -6,45 +6,58 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {DetailedTicket} from '../../../dtos/detailed-ticket';
 import {TicketService} from '../../../services/ticket.service';
 import {MatHorizontalStepper} from '@angular/material/stepper';
+import {Seat} from '../../../dtos/seat';
+import {tick} from '@angular/core/testing';
+import {EventLocationService} from '../../../services/event-location.service';
+import {DetailedEvent} from '../../../dtos/detailed-event';
 
 @Component({
   selector: 'app-choose-ticket',
   templateUrl: './choose-ticket.component.html',
   styleUrls: ['./choose-ticket.component.css']
 })
-export class ChooseTicketComponent implements OnInit {
+export class ChooseTicketComponent implements OnInit, DoCheck {
   private error;
   @Input() stepper: MatHorizontalStepper;
-  @Input() ticketPurchaseSharingService: TicketPurchaseSharedServiceService;
-  private show: Show;
+  @Input() event: DetailedEvent;
+  @Input() show: Show;
   @Input() firstFormGroup: FormGroup;
   @Input() sharedVars: FormGroup;
-  @Input() ticket: DetailedTicket;
-  private ticketState = TicketState;
-  public tickets: DetailedTicket[];
+  selectedSeats: Seat[] = [];
+  currentSeats = 0;
+  price = 0;
+  @Input() tickets: DetailedTicket[];
+  @Input() userCode: string;
   private eventLocation: EventLocation;
-  constructor(private ticketService: TicketService, private _formBuilder: FormBuilder) {
+  constructor(private ticketService: TicketService, private eventLocationService: EventLocationService, private _formBuilder: FormBuilder) {
   }
 
   ngOnInit(): void {
-    this.show = JSON.parse(sessionStorage.getItem('show'));
-    this.eventLocation = this.show.eventLocationCopy;
-    this.firstFormGroup.statusChanges.subscribe(
-      status => {
-        if (status === 'VALID') { this.nextStep(); }
-        console.log(status);
+    this.eventLocation = this.show.eventLocation;
+  }
+  ngDoCheck() {
+    if (this.selectedSeats.length !== this.currentSeats) {
+      console.log('Changing price');
+      this.currentSeats = this.selectedSeats.length;
+      this.price = 0.00;
+      for (const seat of this.selectedSeats) {
+        this.price += this.show.price + seat.price;
       }
-    );
+      // this.price = this.selectedSeats.reduce((sum, current) => sum + current.price, 0);
+      this.price = +this.price.toFixed(2);
+    }
   }
 
   nextStep() {
-    if (this.firstFormGroup.value.count && this.firstFormGroup.value.section && this.firstFormGroup.value.seat && this.show) {
+    if (this.selectedSeats.length > 0) {
+      console.log('Next step');
       // all requirements fulfilled, go to next step
       this.setSuccess();
-      this.setTicket();
+      this.setTickets(false);
       this.stepper.next();
-      this.ticketPurchaseSharingService.ticketState = TicketState.PROCESSING;
+      this.setFailure();
     } else {
+      this.setFailure();
       this.error = {
         messages: ['Bitte wähle mindestens einen Platz aus.']
       };
@@ -52,11 +65,8 @@ export class ChooseTicketComponent implements OnInit {
   }
 
   reserve() {
-    if (this.firstFormGroup.value.count && this.firstFormGroup.value.section && this.firstFormGroup.value.seat && this.show) {
-      this.setTicket();
-      this.ticketPurchaseSharingService.ticketState = TicketState.RESERVED;
-      this.ticket.reserved = true;
-      this.tickets = [this.ticket];
+    if (this.selectedSeats.length > 0) {
+      this.setTickets(true);
       this.ticketService.reserve(this.tickets).subscribe(
         (ret) => {
           // success from backend, go to next step
@@ -67,21 +77,32 @@ export class ChooseTicketComponent implements OnInit {
           this.stepper.next();
         },
         (error) => {
+          this.setFailure();
           this.error = error;
         }
       );
     } else {
+      this.setFailure();
       this.error = {
         messages: ['Bitte wähle mindestens einen Platz aus.']
       };
     }
   }
 
-  setTicket() {
-    this.ticket.show = this.show;
-    this.ticket.seat = this.firstFormGroup.value.seat;
-    this.ticket.seat.sectionId = this.firstFormGroup.value.section.id;
-    this.ticket.price = this.ticket.seat.price;
+  setTickets(reserve: boolean) {
+    // empty the previous ticketlist
+    while (this.tickets.pop()) {}
+    // fill it with new tickets
+    for (const seat of this.selectedSeats) {
+      const ticket = new DetailedTicket();
+      ticket.userCode = this.userCode;
+      ticket.show = this.show;
+      ticket.seat = seat;
+      ticket.price = this.price;
+      ticket.reserved = reserve;
+      this.tickets.push(ticket);
+    }
+
   }
 
   skipStepTwo() {
@@ -97,6 +118,20 @@ export class ChooseTicketComponent implements OnInit {
 
   setSuccess() {
     this.firstFormGroup.controls['success'].setErrors(null);
+  }
+
+  setFailure() {
+    this.firstFormGroup.controls['success'].setErrors({'incorrect': true});
+  }
+
+  getSectionNameById(sectionId) {
+    let name;
+    this.eventLocation.sections.forEach((next) => {
+      if (next.id === sectionId) {
+        name = next.name;
+      }
+    });
+    return name;
   }
 }
 

@@ -18,41 +18,49 @@ import {MatHorizontalStepper} from '@angular/material/stepper';
 export class PaymentMethodOverviewComponent implements OnInit {
 
   public error;
-  private show: Show;
+  @Input() show: Show;
   @Input() event = new DetailedEvent();
-  private ticketState = TicketState;
-  @Input() ticket: DetailedTicket;
+  @Input() firstFormGroup: FormGroup;
   @Input() secondFormGroup: FormGroup;
   @Input() sharedVars: FormGroup;
   @Input() stepper: MatHorizontalStepper;
-  public tickets: DetailedTicket[];
+  @Input() tickets: DetailedTicket[];
 
-  constructor( private ticketPurchaseSharingService: TicketPurchaseSharedServiceService,
-               private eventService: EventService,
+  constructor( private eventService: EventService,
                private ticketService: TicketService,
                private datePipe: DatePipe) { }
 
   ngOnInit(): void {
-    this.show = JSON.parse(sessionStorage.getItem('show'));
+    // this.show = JSON.parse(sessionStorage.getItem('show'));
   }
 
   completePurchase() {
-    this.ticketPurchaseSharingService.ticketState = TicketState.PURCHASED;
-    this.ticket.purchased = true;
-    this.tickets = [this.ticket];
-    this.ticketService.purchase(this.tickets).subscribe(
-      (tickets) => {
-        // success from backend, go to next step
-        console.log('Successfully bought ticket');
-        this.secondFormGroup.controls['purchased'].setErrors(null);
-        this.lockOtherSteps();
-        this.stepper.next();
-      },
-      (error) => {
-        console.log(error);
-        this.error = error;
-      }
-    );
+    if (this.secondFormGroup.controls['paymentmethod'].valid) {
+      this.setTickets();
+      this.ticketService.purchase(this.tickets).subscribe(
+        (tickets) => {
+          // success from backend, go to next step
+          console.log('Successfully bought ticket');
+          this.setSuccess();
+          this.lockOtherSteps();
+          this.stepper.next();
+          this.setFailure();
+        },
+        (error) => {
+          this.error = error;
+        }
+      );
+    } else {
+      this.error = {
+        'messages' : ['Bitte wähle eine Bezahlungsmethode aus']
+      };
+    }
+  }
+
+  setTickets() {
+    for (const ticket of this.tickets) {
+      ticket.purchased = true;
+    }
   }
 
   formatDate(date: Date): string {
@@ -65,4 +73,27 @@ export class PaymentMethodOverviewComponent implements OnInit {
     this.sharedVars.get('editable').setValue(false);
   }
 
+  setSuccess() {
+    this.firstFormGroup.controls['success'].setErrors(null);
+    this.secondFormGroup.controls['purchased'].setErrors(null);
+  }
+
+  setFailure() {
+    this.firstFormGroup.controls['success'].setErrors({'incorrect': true});
+    this.secondFormGroup.controls['purchased'].setErrors({'incorrect': true});
+  }
+
+  getSectionNameById(sectionId) {
+    let name;
+    this.show.eventLocation.sections.forEach((next) => {
+      if (next.id === sectionId) {
+        name = next.name;
+      }
+    });
+    return name;
+  }
+
+  test() {
+    console.log('test');
+  }
 }

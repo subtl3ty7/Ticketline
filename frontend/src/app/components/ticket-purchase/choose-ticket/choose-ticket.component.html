@@ -7,51 +7,31 @@
     <div class="row">
       <!-- Seat Plan -->
       <div class="col-7">
-        <img class="img-fluid" src="assets/images/seatplan.png" style="width:auto; height:auto">
+        <app-seating-plan [show]="show" [sections]="eventLocation.sections" [selectedSeats]="selectedSeats"></app-seating-plan>-
       </div>
       <!-- Ticket Info and/or Selection -->
       <div class="col">
-        <!-- Number of Tickets Selection -->
-        <div class="row">
-          <div class="choosing-title align-items-center row">Anzahl der Tickets</div>
-          <mat-select class="form-control numberOfTickets"  formControlName="count" required>
-            <mat-option value="1"> 1 </mat-option>
-            <mat-option value="2"> 2 </mat-option>
-            <mat-option value="3"> 3 </mat-option>
-            <mat-option value="4"> 4 </mat-option>
-            <mat-option value="5"> 5 </mat-option>
-          </mat-select>
-        </div>
         <!-- Section and Seat Title -->
         <div class="gap"></div>
-        <div class="choosing-title align-items-center row">Sitzplätze</div>
+        <div class="choosing-title align-items-center row">Gewählte Sitzplätze</div>
         <!-- Section and Seat Info and/or Selection -->
-        <div class="container seat-select-container">
-          <div class="row selecting-row align-items-center">
-            <div class="choosing-subtitle align-items-center row">Sektion</div>
-            <mat-select class="form-control section-select" formControlName="section" required>
-              <mat-option *ngFor="let section of eventLocation.sections" [value]="section">
-                {{section.name}}
-              </mat-option>
-            </mat-select>
-          </div>
-          <div class="row selecting-row align-items-center">
-            <div class="choosing-subtitle align-items-center row">Seat</div>
-            <mat-select [disabled]="!this.firstFormGroup.value.section.seats" class="form-control seat-select" formControlName="seat" required>
-              <mat-option *ngFor="let seat of firstFormGroup.value.section.seats" [value]="seat">
-                {{seat.seatRow}}{{seat.seatColumn}}
-              </mat-option>
-            </mat-select>
-          </div>
-        </div>
+            <div class="table-wrapper-scroll-y my-custom-scrollbar" style="padding: 10px">
+              <table class="table table-responsive-lg table-hover mb-0">
+              <tbody *ngFor="let seat of selectedSeats">
+              <tr>
+                <th scope="row"></th>
+                <td>Sektor {{getSectionNameById(seat.sectionId)}}, Reihe {{seat.seatRow}}, Platz {{seat.seatColumn}}</td>
+              </tr>
+              </tbody>
+            </table>
+            </div>
         <!-- Price Overview -->
         <div class="price-title align-items-center row">
           Preis:
-          <div *ngIf="this.firstFormGroup.value.seat" class="gap">{{this.firstFormGroup.value.seat.price}} EUR</div>
-          <div *ngIf="!this.firstFormGroup.value.seat" class="gap">0 EUR</div>
+          <div class="gap">{{this.price}} EUR</div>
         </div>
         <!-- Purchase/Reserve Buttons -->
-        <button matStepperNext (click)="nextStep()" class="buy-button row align-items-center btn"><div class="col button-font">Jetzt kaufen</div></button>
+        <button (click)="nextStep()" class="buy-button row align-items-center btn"><div class="col button-font">Jetzt kaufen</div></button>
         <button class="reserve-button row align-items-center btn" data-toggle="modal" data-target="#exampleModal"><div class="col button-font">Reservieren</div></button>
 
 

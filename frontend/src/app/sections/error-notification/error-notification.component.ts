@@ -1,4 +1,4 @@
-import {Component, Directive, EventEmitter, HostBinding, Input, OnInit, Output} from '@angular/core';
+import {Component, Directive, EventEmitter, HostBinding, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {CustomError} from '../../dtos/customError';
 
 @Component({
@@ -6,7 +6,7 @@ import {CustomError} from '../../dtos/customError';
   templateUrl: './error-notification.component.html',
   styleUrls: ['./error-notification.component.css']
 })
-export class ErrorNotificationComponent implements OnInit {
+export class ErrorNotificationComponent implements OnInit, OnChanges {
   @Input() error;
   @Output() newError: EventEmitter<any> = new EventEmitter<any>();
   customError: CustomError;
@@ -14,6 +14,11 @@ export class ErrorNotificationComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.error);
+    this.getError();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
     console.log(this.error);
     this.getError();
   }
@@ -28,9 +33,11 @@ export class ErrorNotificationComponent implements OnInit {
     this.customError = new CustomError();
     const error = this.error.error;
     console.log(error);
-    if (error && (error.status || error.error || (error.messages && error.messages[0]))) {
-        this.customError = error;
-    } else if (this.error && (this.error.status || this.error.error || (this.error.messages && this.error.messages[0]))) {
+    if (error && error.status && (error.error || (error.messages && error.messages[0]))) {
+      this.customError.status = error.status;
+      this.customError.error = error.error;
+      this.customError.messages = error.messages;
+    } else if (this.error && (this.error.messages && this.error.messages[0])) {
       this.customError.status = this.error.status;
       this.customError.error = this.error.error;
       this.customError.messages = this.error.messages;
