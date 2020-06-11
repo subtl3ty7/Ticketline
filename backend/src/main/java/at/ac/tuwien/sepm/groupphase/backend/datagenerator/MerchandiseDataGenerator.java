@@ -73,7 +73,7 @@ public class MerchandiseDataGenerator {
                 .merchandiseProductCode("M1234" + i)
                 .merchandiseProductName("Product" + i)
                 .photo(resources.getImageEncoded(imgName))
-                .stockCount(20 * i + 1)
+                .stockCount(50)
                 .price(10 * i + 1)
                 .premiumPrice(5 * i +1)
                 .premium((i%2) == 0)

@@ -5,9 +5,11 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.Section;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public interface SeatRepository extends JpaRepository<Seat, Long> {
     Seat findSeatById(Long id);
+    ArrayList<Seat> findAll();
 }
