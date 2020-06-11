@@ -40,7 +40,7 @@ public class EventDataGenerator {
 
 
     private final static int numberOfEventLocations = 10;
-    private static final int numberOfEvents = 1000;
+    private static final int numberOfEvents = 100;
     private static final int numberOfArtists = 5;
     private static final int eventDurationInHours = 2;
 
