@@ -1,9 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.datagenerator;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
-import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
+import at.ac.tuwien.sepm.groupphase.backend.entity.*;
 import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.*;
 import at.ac.tuwien.sepm.groupphase.backend.datagenerator.EventDataGenerator;
@@ -37,7 +34,8 @@ public class TicketDataGenerator {
     private final UserService userService;
     private final EventRepository eventRepository;
     private final EntityManagerFactory entityManagerFactory;
-    private static final int NUMBER_OF_TICKETS_TO_GENERATE = 5;
+    private static final int NUMBER_OF_TICKETS_TO_GENERATE = 500; // will generate double the amount
+    private int counter = 0;
 
     public TicketDataGenerator(TicketRepository ticketRepository, ShowRepository showRepository, SeatRepository seatRepository
                                 , EntityManagerFactory entityManagerFactory, TicketService ticketService, UserService userService,
@@ -64,33 +62,51 @@ public class TicketDataGenerator {
         }
     }
 
+    public ArrayList<Show> getAllShows(){
+        return showRepository.findAll();
+    }
+
+    public ArrayList<Seat> getAllSeats(){
+        return seatRepository.findAll();
+    }
+
+    public int getShowNumber(){
+        if(counter >= 150){
+            counter = 1;
+        }
+        ++counter;
+        return counter;
+    }
+
     public void generateTickets(){
         LOGGER.info("Generating ticket data.");
+
         boolean bool = true;
-
-        if(seatRepository.findAll().isEmpty()){
-            throw new NotFoundException("No seats in argument list. Needs to contain at least one.");
-        }
-
-        if(showRepository.findAll().isEmpty()){
-            throw new NotFoundException("No shows in argument list. Needs to contain at least one.");
-        }
-
-
         List<AbstractUser> users = userService.loadAllUsers();
         Customer customer0 = (Customer) users.get(0);
         Customer customer1 = (Customer) users.get(1);
+        ArrayList<Show> shows = getAllShows();
+        ArrayList<Seat> seats = getAllSeats();
+
+        if(seats.isEmpty()){
+            throw new NotFoundException("No seats in argument list. Needs to contain at least one.");
+        }
+
+        if(shows.isEmpty()){
+            throw new NotFoundException("No shows in argument list. Needs to contain at least one.");
+        }
 
         // reserve tickets for customer0
         List<Ticket> tickets = new ArrayList<>();
         for (int i = 0; i < NUMBER_OF_TICKETS_TO_GENERATE; i++) {
+            int j = getShowNumber();
             Ticket ticket = Ticket.builder()
-                .price(40.0 + i*2)
+                .price(0d)
                 .purchaseDate(LocalDateTime.now())
-                .seat(seatRepository.findSeatById(((long)i + 1)))
-                .show(showRepository.findShowById((long) i + 1))
+                .seat(seats.get(i+ 1))
+                .show(shows.get(j))
                 .userCode(customer0.getUserCode())
-                .event(eventRepository.findEventById((long)i+1))
+                .event(eventRepository.findEventByEventCode(shows.get(j).getEventCode()))
                 .build();
             tickets.add(ticket);
             randomPurchaseReserve(tickets, bool);
@@ -100,13 +116,14 @@ public class TicketDataGenerator {
 
         // reserve tickets for customer1
         for (int i = NUMBER_OF_TICKETS_TO_GENERATE; i < NUMBER_OF_TICKETS_TO_GENERATE + NUMBER_OF_TICKETS_TO_GENERATE; i++) {
+            int j = getShowNumber();
             Ticket ticket = Ticket.builder()
                 .price(100.0 - i*3 )
                 .purchaseDate(LocalDateTime.now())
-                .seat(seatRepository.findSeatById(((long) i + 1)))
-                .show(showRepository.findShowById((long) i + 1))
+                .seat(seats.get(i+ 1))
+                .show(shows.get(getShowNumber()))
                 .userCode(customer1.getUserCode())
-                .event(eventRepository.findEventById((long)i+1))
+                .event(eventRepository.findEventByEventCode(shows.get(j).getEventCode()))
                 .build();
             tickets.add(ticket);
             randomPurchaseReserve(tickets, bool);

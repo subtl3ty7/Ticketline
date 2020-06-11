@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -20,6 +21,8 @@ public interface ShowRepository extends JpaRepository<Show, Long> {
      * @return a show with corresponding id.
      */
     Show findShowById(Long id);
+
+    ArrayList<Show> findAll();
 
     /**
      * Find all shows which belong to a single event with event code.
