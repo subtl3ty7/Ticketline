@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -22,6 +23,8 @@ public interface EventRepository extends JpaRepository<Event, Long> {
      * @return a list of event which are after a certain time
      */
     List<Event> findAllByStartsAtAfterOrderByTotalTicketsSoldDesc(LocalDateTime time);
+
+    ArrayList<Event> findAll();
 
     /**
      * Find all events which are after a certain time, matches a category and ordered by total tickets sold descending.

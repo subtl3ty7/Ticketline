@@ -37,6 +37,7 @@ public class TicketDataGenerator {
     private final EntityManagerFactory entityManagerFactory;
     private static final int NUMBER_OF_TICKETS_TO_GENERATE = 500; // will generate double the amount
     private int counter = 0;
+    private int eventCounter = 0;
 
     public TicketDataGenerator(TicketRepository ticketRepository, ShowRepository showRepository, SeatRepository seatRepository
                                 , EntityManagerFactory entityManagerFactory, TicketService ticketService, UserService userService,
@@ -84,6 +85,14 @@ public class TicketDataGenerator {
         return counter;
     }
 
+    public int getEventNumber(){
+        if(eventCounter >= 49){
+            eventCounter = 1;
+        }
+        ++eventCounter;
+        return eventCounter;
+    }
+
     public void generateTickets(){
         LOGGER.info("Generating ticket data.");
 
@@ -91,8 +100,9 @@ public class TicketDataGenerator {
         List<AbstractUser> users = userService.loadAllUsers();
         Customer customer0 = (Customer) users.get(0);
         Customer customer1 = (Customer) users.get(1);
-        ArrayList<Show> shows = getAllShows();
-        ArrayList<Seat> seats = getAllSeats();
+        ArrayList<Show> shows = showRepository.findAll();
+        ArrayList<Seat> seats = seatRepository.findAll();
+        ArrayList<Event> events = eventRepository.findAll();
 
         if(seats.isEmpty()){
             throw new NotFoundException("No seats in argument list. Needs to contain at least one.");
@@ -102,19 +112,18 @@ public class TicketDataGenerator {
             throw new NotFoundException("No shows in argument list. Needs to contain at least one.");
         }
 
-
-
         // reserve tickets for customer0
         List<Ticket> tickets = new ArrayList<>();
         for (int i = 0; i < NUMBER_OF_TICKETS_TO_GENERATE; i++) {
             int j = getShowNumber();
+            int e = getEventNumber();
             Ticket ticket = Ticket.builder()
                 .price(0d)
                 .purchaseDate(LocalDateTime.now())
                 .seat(seats.get(i+ 1))
                 .show(shows.get(j))
                 .userCode(customer0.getUserCode())
-                .event(eventRepository.findEventByEventCode(shows.get(j).getEventCode()))
+                .event(events.get(e))
                 .build();
             tickets.add(ticket);
             randomPurchaseReserve(tickets, bool);
@@ -125,13 +134,14 @@ public class TicketDataGenerator {
         // reserve tickets for customer1
         for (int i = NUMBER_OF_TICKETS_TO_GENERATE; i < NUMBER_OF_TICKETS_TO_GENERATE + NUMBER_OF_TICKETS_TO_GENERATE; i++) {
             int j = getShowNumber();
+            int e = getEventNumber();
             Ticket ticket = Ticket.builder()
                 .price(100.0 - i*3 )
                 .purchaseDate(LocalDateTime.now())
                 .seat(seats.get(i+ 1))
                 .show(shows.get(getShowNumber()))
                 .userCode(customer1.getUserCode())
-                .event(eventRepository.findEventByEventCode(shows.get(j).getEventCode()))
+                .event(events.get(e))
                 .build();
             tickets.add(ticket);
             randomPurchaseReserve(tickets, bool);
