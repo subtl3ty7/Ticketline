@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -32,24 +33,24 @@ public class CustomInvoiceService implements InvoiceService {
 
     @Override
     public TicketInvoice createTicketInvoice(List<Ticket> tickets, String type, LocalDateTime generatedAt) {
-        if(type.equals("PURCHASE CANCELLATION")) {
+        if(type.equals("Kauf Stornorechnung")) {
             invoiceRepository.delete(invoiceRepository.findInvoiceByUserCodeAndGeneratedAt(tickets.get(0).getUserCode(), tickets.get(0).getPurchaseDate()));
         }
+
         TicketInvoice ticketInvoice = TicketInvoice.builder()
             .invoice_type(type)
             .userCode(tickets.get(0).getUserCode())
-            .payment_method("Credit card")
+            .payment_method("Kreditkarte")
             .generatedAt(generatedAt)
             .invoice_number(CodeGenerator.generateInvoiceNumber())
             .tickets(tickets)
             .build();
 
-        LOGGER.debug("Invoice generated: " + ticketInvoice);
         return invoiceRepository.save(ticketInvoice);
     }
 
     @Override
-    public List<AbstractInvoice> allInvoicesOfUser(String userCode) {
+    public List<TicketInvoice> allInvoicesOfUser(String userCode) {
         return invoiceRepository.findInvoicesByUserCode(userCode);
     }
 }

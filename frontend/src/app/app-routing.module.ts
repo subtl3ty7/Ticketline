@@ -35,6 +35,8 @@ import {ProductDetailsComponent} from './components/merchandise/product-details/
 import {NewsDetailsContainerComponent} from './components/admin-home/admin-tabs/news-tab/news-details-container/root/news-details-container.component';
 import {CreateNewsContainerComponent} from './components/admin-home/admin-tabs/news-tab/create-news-container/root/create-news-container.component';
 import {EventAdvancedComponent} from './components/search/event/event-advanced/event-advanced.component';
+import {MyInvoicesTabComponent} from './components/my-profile/my-profile-tabs/my-invoices-tab/my-invoices-tab.component';
+import {InvoiceDetailsComponent} from './components/my-profile/my-profile-tabs/my-invoices-tab/invoice-details/invoice-details.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -70,6 +72,8 @@ const routes: Routes = [
   {path: 'search/location-advanced', component: LocationAdvancedComponent},
   {path: 'search/location-shows', component: LocationShowComponent},
   {path: 'my-profile/my-tickets/my-invoice', component: MyInvoiceComponent},
+  {path: 'my-profile/my-invoices', component: MyInvoicesTabComponent},
+  {path: 'my-profile/my-invoices/invoice-details', component: InvoiceDetailsComponent},
   {path: 'merchandise', canActivate: [NotAdminGuard], component: MerchandiseComponent},
   {path: 'merchandise/:merchandiseProductCode', canActivate: [NotAdminGuard],  component: ProductDetailsComponent}
   ];

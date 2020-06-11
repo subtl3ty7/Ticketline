@@ -5,6 +5,7 @@ import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleTicketDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.InvoiceMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractInvoice;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
+import at.ac.tuwien.sepm.groupphase.backend.entity.TicketInvoice;
 import at.ac.tuwien.sepm.groupphase.backend.service.InvoiceService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -46,7 +47,7 @@ public class InvoiceEndpoint {
     public ResponseEntity<InvoiceDto> getAllInvoicesOneUser(@PathVariable String userCode) {
         LOGGER.info("GET /api/v1/invoices/" + userCode);
 
-        List<AbstractInvoice> invoices = invoiceService.allInvoicesOfUser(userCode);
+        List<TicketInvoice> invoices = invoiceService.allInvoicesOfUser(userCode);
         return new ResponseEntity(invoiceMapper.invoiceListToInvoiceDtoList(invoices), HttpStatus.OK);
     }
 }
