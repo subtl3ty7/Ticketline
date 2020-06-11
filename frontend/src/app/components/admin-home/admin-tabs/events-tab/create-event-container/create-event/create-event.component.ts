@@ -47,10 +47,10 @@ export class CreateEventComponent implements OnInit {
     const prices: number[] = [];
     const distinctLocations: number[] = [];
     this.wrapper.model.shows.forEach(function(show) {
-      if (!distinctLocations.includes(show.eventLocationOriginalId)) {
-        show.eventLocationCopy.sections.forEach(function (section) {
-          prices.push(section.price);
-          distinctLocations.push(show.eventLocationOriginalId);
+      if (!distinctLocations.includes(show.eventLocation.id)) {
+        show.eventLocation.sections.forEach(function (section) {
+          prices.push(show.price + section.price);
+          distinctLocations.push(show.eventLocation.id);
         });
       }
     });

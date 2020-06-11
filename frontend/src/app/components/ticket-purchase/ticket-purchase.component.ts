@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TicketPurchaseSharedServiceService, TicketState} from './ticket-purchase-shared-service.service';
 import {DetailedTicket} from '../../dtos/detailed-ticket';
 import {UserService} from '../../services/user.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Background} from '../../utils/background';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import {MatHorizontalStepper} from '@angular/material/stepper';
@@ -15,6 +15,7 @@ import {DetailedEvent} from '../../dtos/detailed-event';
 import {DatePipe} from '@angular/common';
 import {delay} from 'rxjs/operators';
 import {ChooseTicketComponent} from './choose-ticket/choose-ticket.component';
+import {ShowService} from '../../services/show.service';
 
 @Component({
   selector: 'app-ticket-purchase',
@@ -44,17 +45,18 @@ export class TicketPurchaseComponent implements OnInit, AfterViewInit {
     private ticketPurchaseSharingService: TicketPurchaseSharedServiceService,
     private userService: UserService,
     private eventService: EventService,
+    private showService: ShowService,
+    private router: Router,
+    private route: ActivatedRoute,
     private background: Background,
     private datePipe: DatePipe) {
     this.background.defineBackground();
   }
 
   ngOnInit(): void {
-    this.show = JSON.parse(sessionStorage.getItem('show'));
-    if (this.sanitycheck()) {
-      this.initEventUserTickets();
-      this.initForms();
-    }
+    // this.show = JSON.parse(sessionStorage.getItem('show'));
+    this.initData();
+    this.initForms();
   }
 
   // fixes the "create-instead-of-number-bug", replaces all icons (that are not working here) with numbers
@@ -62,18 +64,28 @@ export class TicketPurchaseComponent implements OnInit, AfterViewInit {
     this.stepper._getIndicatorType = () => 'number';
   }
 
-  // initialize usercode, tickets and event
-  initEventUserTickets() {
+  // initialize usercode, tickets, event and show
+  initData() {
+    const id = this.route.snapshot.paramMap.get('showId');
     this.ticketPurchaseSharingService.ticketState = TicketState.BEGIN;
     this.isLinear = false;
     this.tickets = [];
     forkJoin(
       this.userService.getCurrentUser(),
-      this.eventService.getDetailedEventByUserCode(this.show.eventCode)
-    ).subscribe(([user, event]) => {
+      this.showService.getShowById(Number(id))
+    ).subscribe(([user, show]) => {
         this.userCode = user.userCode;
+        this.show = show;
+        this.initEvent();
+      }
+    );
+  }
+
+  // initialize event
+  initEvent() {
+    this.eventService.getDetailedEventByUserCode(this.show.eventCode).subscribe(
+      (event) => {
         this.event = event;
-        console.log(event.name);
       }
     );
   }

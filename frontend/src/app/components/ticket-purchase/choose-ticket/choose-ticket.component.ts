@@ -8,6 +8,8 @@ import {TicketService} from '../../../services/ticket.service';
 import {MatHorizontalStepper} from '@angular/material/stepper';
 import {Seat} from '../../../dtos/seat';
 import {tick} from '@angular/core/testing';
+import {EventLocationService} from '../../../services/event-location.service';
+import {DetailedEvent} from '../../../dtos/detailed-event';
 
 @Component({
   selector: 'app-choose-ticket',
@@ -17,6 +19,7 @@ import {tick} from '@angular/core/testing';
 export class ChooseTicketComponent implements OnInit, DoCheck {
   private error;
   @Input() stepper: MatHorizontalStepper;
+  @Input() event: DetailedEvent;
   @Input() show: Show;
   @Input() firstFormGroup: FormGroup;
   @Input() sharedVars: FormGroup;
@@ -26,22 +29,21 @@ export class ChooseTicketComponent implements OnInit, DoCheck {
   @Input() tickets: DetailedTicket[];
   @Input() userCode: string;
   private eventLocation: EventLocation;
-  constructor(private ticketService: TicketService, private _formBuilder: FormBuilder) {
+  constructor(private ticketService: TicketService, private eventLocationService: EventLocationService, private _formBuilder: FormBuilder) {
   }
 
   ngOnInit(): void {
-    // this.show = JSON.parse(sessionStorage.getItem('show'));
-    this.eventLocation = this.show.eventLocationCopy;
-    /*this.firstFormGroup.statusChanges.subscribe(
-      status => {
-        if (status === 'VALID') { this.nextStep(); }
-      }
-    );*/
+    this.eventLocation = this.show.eventLocation;
   }
   ngDoCheck() {
     if (this.selectedSeats.length !== this.currentSeats) {
+      console.log('Changing price');
       this.currentSeats = this.selectedSeats.length;
-      this.price = this.selectedSeats.reduce((sum, current) => sum + current.price, 0);
+      this.price = 0.00;
+      for (const seat of this.selectedSeats) {
+        this.price += this.show.price + seat.price;
+      }
+      // this.price = this.selectedSeats.reduce((sum, current) => sum + current.price, 0);
       this.price = +this.price.toFixed(2);
     }
   }

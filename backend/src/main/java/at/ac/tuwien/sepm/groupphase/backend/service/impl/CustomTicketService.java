@@ -57,7 +57,7 @@ public class CustomTicketService implements TicketService {
             // updating premium points
             AbstractUser user = userRepository.findAbstractUserByUserCode(ticketEntity.getUserCode());
             long currentPoints = ((Customer) user).getPoints();
-            ((Customer) user).setPoints(Long.sum(currentPoints, ticketEntity.getPrice()));
+            ((Customer) user).setPoints(Long.sum(currentPoints, ticketEntity.getPrice().intValue()));
             userRepository.save(user);
 
             Ticket savedTicket = ticketRepository.save(ticketEntity);
@@ -109,18 +109,16 @@ public class CustomTicketService implements TicketService {
             Event event = eventRepository.findEventByEventCode(ticketEntity.getShow().getEventCode());
             ticketEntity.setEvent(event);
 
-            ticketEntity.setPrice(50);
+            ticketEntity.setPrice(event.getPrices().get(0) + show.getPrice() + seat.getPrice());
             validator.validateSave(ticketEntity).throwIfViolated();
             validator.validate(ticketEntity).throwIfViolated();
 
             show.setTicketsSold(show.getTicketsSold() + 1);
             show.setTicketsAvailable(show.getTicketsAvailable() - 1);
             event.setTotalTicketsSold(event.getTotalTicketsSold() + 1);
+            show.getTakenSeats().add(seat);
             showRepository.save(show);
             eventRepository.save(event);
-
-            seat.setFree(false);
-            seatRepository.save(seat);
 
         return ticketEntity;
     }
@@ -148,8 +146,9 @@ public class CustomTicketService implements TicketService {
 
         Ticket ticket1 = ticketRepository.findTicketByTicketCode(ticketCode);
         Seat seat = ticket1.getSeat();
-        seat.setFree(true);
-        seatRepository.save(seat);
+        Show show = showRepository.findShowById(ticket1.getShow().getId());
+        show.getTakenSeats().remove(seat);
+        showRepository.save(show);
 
         invoiceService.createTicketInvoice(List.of(ticket1), "PURCHASE CANCELLATION", LocalDateTime.now());
         ticketRepository.delete(ticket1);
@@ -171,7 +170,7 @@ public class CustomTicketService implements TicketService {
         // updating premium points
         AbstractUser user = userRepository.findAbstractUserByUserCode(ticket.getUserCode());
         long currentPoints = ((Customer) user).getPoints();
-        ((Customer) user).setPoints(Long.sum(currentPoints, ticket.getPrice()));
+        ((Customer) user).setPoints(Long.sum(currentPoints, ticket.getPrice().intValue()));
         userRepository.save(user);
 
         ticketRepository.save(ticket);
@@ -190,8 +189,9 @@ public class CustomTicketService implements TicketService {
         Ticket chosenTicket = ticketRepository.findTicketByTicketCode(ticketCode);
 
         Seat seat = chosenTicket.getSeat();
-        seat.setFree(true);
-        seatRepository.save(seat);
+        Show show = showRepository.findShowById(chosenTicket.getShow().getId());
+        show.getTakenSeats().remove(seat);
+        showRepository.save(show);
 
         invoiceService.createTicketInvoice(List.of(chosenTicket), "RESERVATION CANCELLATION", LocalDateTime.now());
         ticketRepository.delete(chosenTicket);

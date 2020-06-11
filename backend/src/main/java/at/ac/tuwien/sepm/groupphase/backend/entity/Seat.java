@@ -35,9 +35,6 @@ public class Seat implements Serializable {
     @Column
     private double price;
 
-    @Column
-    private boolean isFree;
-
     public Seat() {}
 
     public Seat(String seatColumn, String seatRow) {
@@ -48,7 +45,6 @@ public class Seat implements Serializable {
     public Seat(Seat seat, double price) {
         this.seatRow = seat.getSeatRow();
         this.seatColumn = seat.getSeatColumn();
-        this.isFree = seat.isFree();
         this.price = price;
     }
 

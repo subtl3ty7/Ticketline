@@ -2,6 +2,7 @@ import {Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges} from '@a
 import * as d3 from 'd3';
 import {Section} from '../../../../dtos/section';
 import {Seat} from '../../../../dtos/seat';
+import {Show} from '../../../../dtos/show';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class SeatingPlanComponent implements OnInit {
   sectionDistance: number;
   sectionXOffset: number;
   sectionYOffset: number;
+  @Input() show: Show;
   @Input() sections: Section[];
   @Input() selectedSeats: Seat[];
   sectionGroups: any[];
@@ -58,7 +60,7 @@ export class SeatingPlanComponent implements OnInit {
   }
 
   private setSeatingPlanDimensions() {
-    const height = 1000;
+    const height = 600;
     const width = 600;
     this.svg = d3.select(this.host).append('svg')
       .attr('width', width)
@@ -137,6 +139,7 @@ export class SeatingPlanComponent implements OnInit {
   }
 
   private createSeats(layout: number) {
+    const show: Show = this.show;
     let currentSectionIndex;
     let currentSeatIndex;
     let currentRow;
@@ -153,7 +156,7 @@ export class SeatingPlanComponent implements OnInit {
           for (currentCol = 0; currentCol < colMax; currentCol++) {
             const seatObject = this.sections[currentSectionIndex].seats[currentSeatIndex];
             let color;
-            if (seatObject.free) {
+            if (show.takenSeats.indexOf(seatObject) === -1) {
               color = 'lemonchiffon';
             } else {
               color = 'gray';
@@ -184,7 +187,7 @@ export class SeatingPlanComponent implements OnInit {
               .attr('fill',  color)
               .attr('sectionName', this.sections[currentSectionIndex].name)
               .on('click', function() {
-                if (seatObject.free) {
+                if (show.takenSeats.indexOf(seatObject) === -1) {
                   if (!selected.includes(seatObject)) {
                     d3.select(this)
                       .attr('fill', 'green');
@@ -198,13 +201,13 @@ export class SeatingPlanComponent implements OnInit {
                 }
               })
               .on('mouseover', function() {
-                if (seatObject.free && !selected.includes(seatObject)) {
+                if ((show.takenSeats.indexOf(seatObject) === -1) && !selected.includes(seatObject)) {
                   d3.select(this)
                     .attr('fill', 'blue');
                 }
               })
               .on('mouseout', function() {
-                if (seatObject.free && !selected.includes(seatObject)) {
+                if ((show.takenSeats.indexOf(seatObject) === -1) && !selected.includes(seatObject)) {
                   d3.select(this)
                     .attr('fill', color);
                 }
@@ -214,5 +217,4 @@ export class SeatingPlanComponent implements OnInit {
         }
     }
   }
-
 }

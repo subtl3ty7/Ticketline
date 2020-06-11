@@ -3,7 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.unittests.mapper;
 import at.ac.tuwien.sepm.groupphase.backend.basetest.TestData;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.EventLocationDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EventLocationMapper;
-import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocationOriginal;
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ActiveProfiles("test")
 public class EventLocationMappingTest implements TestData {
 
-    private final EventLocationOriginal eventLocation = EventLocationOriginal.builder()
+    private final EventLocation eventLocation = EventLocation.builder()
         .id(ID)
         .name(FNAME)
         .eventLocationDescription(DESC)
@@ -39,7 +39,7 @@ public class EventLocationMappingTest implements TestData {
 
     @Test
     public void shouldMapEventLocationToEventLocationDto() {
-        EventLocationDto eventLocationDto = eventLocationMapper.eventLocationOriginalToEventLocationDto(eventLocation);
+        EventLocationDto eventLocationDto = eventLocationMapper.EventLocationToEventLocationDto(eventLocation);
         assertAll(
             () -> assertEquals(FNAME, eventLocationDto.getName()),
             () -> assertEquals(DESC, eventLocationDto.getEventLocationDescription()),
@@ -53,11 +53,11 @@ public class EventLocationMappingTest implements TestData {
 
     @Test
     public void shouldMapEventLocationListToEventLocationDto() {
-        List<EventLocationOriginal> eventLocations = new ArrayList<>();
+        List<EventLocation> eventLocations = new ArrayList<>();
         eventLocations.add(eventLocation);
         eventLocations.add(eventLocation);
 
-        List<EventLocationDto> eventLocationDtos = eventLocationMapper.eventLocationOriginalToEventLocationDto(eventLocations);
+        List<EventLocationDto> eventLocationDtos = eventLocationMapper.EventLocationToEventLocationDto(eventLocations);
         EventLocationDto eventLocationDto = eventLocationDtos.get(0);
         assertAll(
             () -> assertEquals(FNAME, eventLocationDto.getName()),

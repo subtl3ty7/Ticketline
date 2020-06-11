@@ -1,5 +1,6 @@
 import {EventLocation} from './event-location';
 import {SimpleEvent} from './simple-event';
+import {Seat} from './seat';
 
 enum EventTypeEnum {
 }
@@ -14,8 +15,8 @@ export class Show {
   public endsAt: Date;
   public ticketsSold: number;
   public ticketsAvailable: number;
-  public eventLocationCopy: EventLocation;
-  public eventLocationOriginalId: number;
+  public eventLocation: EventLocation;
+  public takenSeats: Seat[];
   public event: SimpleEvent;
   public eventType: EventTypeEnum;
   public eventCategory: EventCategoryEnum;

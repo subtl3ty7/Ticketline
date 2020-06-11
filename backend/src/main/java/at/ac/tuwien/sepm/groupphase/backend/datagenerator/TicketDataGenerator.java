@@ -85,7 +85,7 @@ public class TicketDataGenerator {
         List<Ticket> tickets = new ArrayList<>();
         for (int i = 0; i < NUMBER_OF_TICKETS_TO_GENERATE; i++) {
             Ticket ticket = Ticket.builder()
-                .price(40 + i*2)
+                .price(40.0 + i*2)
                 .purchaseDate(LocalDateTime.now())
                 .seat(seatRepository.findSeatById(((long)i + 1)))
                 .show(showRepository.findShowById((long) i + 1))
@@ -101,7 +101,7 @@ public class TicketDataGenerator {
         // reserve tickets for customer1
         for (int i = NUMBER_OF_TICKETS_TO_GENERATE; i < NUMBER_OF_TICKETS_TO_GENERATE + NUMBER_OF_TICKETS_TO_GENERATE; i++) {
             Ticket ticket = Ticket.builder()
-                .price(100 - i*3 )
+                .price(100.0 - i*3 )
                 .purchaseDate(LocalDateTime.now())
                 .seat(seatRepository.findSeatById(((long) i + 1)))
                 .show(showRepository.findShowById((long) i + 1))

@@ -171,9 +171,9 @@ public class EventEndpoint {
         @ApiResponse(code = 404, message = "No Event is found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<List<DetailedEventDto>> findEventByArtistId(@Valid @RequestParam Long artistId) {
+    public ResponseEntity<List<SimpleEventDto>> findEventByArtistId(@Valid @RequestParam Long artistId) {
         LOGGER.info("GET /api/v1/events?artistId=" + artistId);
-        List<DetailedEventDto> result = eventMapper.eventToDetailedEventDto(eventService.findEventsByArtistId(artistId));
+        List<SimpleEventDto> result = eventMapper.eventToSimpleEventDto(eventService.findEventsByArtistId(artistId));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -188,9 +188,9 @@ public class EventEndpoint {
         @ApiResponse(code = 404, message = "No Event is found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<List<DetailedEventDto>> findEventByName(@Valid @RequestParam String name) {
+    public ResponseEntity<List<SimpleEventDto>> findEventByName(@Valid @RequestParam String name) {
         LOGGER.info("GET /api/v1/events?name=" + name);
-        List<DetailedEventDto> result = eventMapper.eventToDetailedEventDto(eventService.findEventsByName(name));
+        List<SimpleEventDto> result = eventMapper.eventToSimpleEventDto(eventService.findEventsByName(name));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

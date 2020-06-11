@@ -35,8 +35,6 @@ public class EventMappingTest implements TestData {
         .description(DESC)
         .category(CAT)
         .type(TYP)
-        .eventCategory(CAT1)
-        .eventType(TYP1)
         .startsAt(START)
         .endsAt(END)
         .duration(DURATION)

@@ -29,7 +29,7 @@ public interface ShowRepository extends JpaRepository<Show, Long> {
      */
     List<Show> findShowsByEventCode(String eventCode);
 
-    List<Show> findShowsByEventLocationOriginalId(Long eventLocationId);
+    List<Show> findShowsByEventLocationId(Long eventLocationId);
 
     @Query(value = "" +
         "SELECT * FROM SHOW s " +

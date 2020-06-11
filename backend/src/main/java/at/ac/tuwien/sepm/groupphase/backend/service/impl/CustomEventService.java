@@ -10,10 +10,12 @@ import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
 import at.ac.tuwien.sepm.groupphase.backend.util.validation.EventValidator;
 import org.apache.tomcat.jni.Local;
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.invoke.MethodHandles;
 import java.time.Duration;
@@ -29,6 +31,11 @@ public class CustomEventService implements EventService {
     private final EventLocationRepository eventLocationRepository;
     private final EventValidator validator;
     private final ArtistRepository artistRepository;
+
+    private float runningTime1 = 0;
+    private float runningTime3= 0;
+    private float runningTime4 = 0;
+    private float runningTime5 = 0;
 
 
     @Autowired
@@ -66,20 +73,26 @@ public class CustomEventService implements EventService {
 
     @Override
     public Event createNewEvent(Event event){
-        LOGGER.debug("Moving Event Entity through Service Layer: " + event);
         event.setEventCode(getNewEventCode());
-        event.setEventCategory(event.getEventCategory());
-        event.setEventType(event.getEventType());
         validator.validate(event).throwIfViolated();
         for (Artist a : event.getArtists()) {
-            artistRepository.save(a);
+            //if the artist has an id assigned and it exists in the database, then replace it with the one in the database
+            //otherwise, set the id null so that a new artist entity can be created in the database
+            if(a.getId() != null) {
+                Artist artist = artistRepository.findArtistById(a.getId());
+                if(artist == null) {
+                    a.setId(null);
+                } else {
+                    event.getArtists().remove(a);
+                    event.getArtists().add(artist);
+                }
+            }
         }
+
         //Give shows new EventLocation Entities (copies of existing ones) to make sure they all can have different seating assignments
         for(Show show: event.getShows()) {
-            EventLocationOriginal eventLocation = eventLocationRepository.findEventLocationById(show.getEventLocationOriginalId());
-            EventLocationCopy eventLocationCopy = new EventLocationCopy(eventLocation);
-            eventLocationCopy.setParentId(eventLocation.getId());
-            show.setEventLocationCopy(eventLocationCopy);
+            EventLocation eventLocation = eventLocationRepository.findEventLocationById(show.getEventLocation().getId());
+            show.setEventLocation(eventLocation);
         }
 
         return eventRepository.save(event);
@@ -102,9 +115,13 @@ public class CustomEventService implements EventService {
     }
 
     @Override
+    @Transactional
     public Event findByEventCode(String eventCode) {
         validator.validateExists(eventCode).throwIfViolated();
         Event event = eventRepository.findEventByEventCode(eventCode);
+        for(Show show: event.getShows()) {
+            Hibernate.initialize(show.getEventLocation().getShows());
+        }
         return event;
     }
 
@@ -125,7 +142,8 @@ public class CustomEventService implements EventService {
 
     @Override
     public List<Event> findEventsByName(String name) {
-        return eventRepository.findEventsByNameContainingIgnoreCase(name);
+        List<Event> events = eventRepository.findEventsByNameContainingIgnoreCase(name);
+        return events;
     }
 
     @Override
