@@ -11,9 +11,10 @@
   </div>
 </div>
 <div class="card-body">
+  <app-error-notification *ngIf="searchShared.error" [error]="searchShared.error"></app-error-notification>
   <div *ngIf="searchShared.entities && searchShared.entities.length > 0">
     <div *ngFor="let e of searchShared.entities" style="margin-top: -5px;">
-      <div class="row" style="margin-top: 20px; height: 220px; box-shadow: 0px 3px 6px #00000029;">
+      <div class="row" style="margin-top: 20px; height: 220px; box-shadow: 0px 3px 6px #00000029">
         <div class="event-block">
           <div class="row event-row">
             <div class="col-4">
@@ -24,8 +25,8 @@
                 <div class="row" style="font-size: 18px; color: #3D3D3D; font-weight: bold">
                   {{e.startsAt | date}} - {{e.endsAt | date}}
                 </div>
-                <div class="row" style="font-size: 30px; font-weight: bold; padding-top: 25px; color: #1A1A1A">
-                  {{e.name}}
+                <div class="row" style="font-size: 30px; font-weight: bold; padding-top: 25px">
+                  <a routerLink="/events/{{e.eventCode}}" style="color: #1A1A1A">{{e.name}}</a>
                 </div>
                 <div class="row" style="padding-top: 30px;">
                   <div class="event-description-font">

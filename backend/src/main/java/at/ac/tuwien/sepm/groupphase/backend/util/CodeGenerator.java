@@ -25,6 +25,14 @@ public abstract class CodeGenerator {
             }
         }
 
+        if (type == 'I') {
+            for (int i = 0; i < length; i++) {
+                int position = random.nextInt(DIGITS.length());
+                code.append(DIGITS.charAt(position));
+            }
+            return code.toString();
+        }
+
         code.append(type);
         for (int i = 1; i < 4; i++) {
             int position = random.nextInt(DIGITS.length());
@@ -71,5 +79,11 @@ public abstract class CodeGenerator {
         int merchandiseProductCodeLength = 6;
         char type = 'M';
         return generateCode(merchandiseProductCodeLength, type).toUpperCase();
+    }
+
+    public static String generateInvoiceNumber() {
+        int invoiceNumberLength = 6;
+        char type = 'I';
+        return generateCode(invoiceNumberLength, type);
     }
 }

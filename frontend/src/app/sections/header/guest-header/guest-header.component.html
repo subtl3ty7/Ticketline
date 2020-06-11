@@ -1,5 +1,5 @@
 <!--Mobile Navbar -->
-<nav class="navbar-custom navbar-expand-lg d-flex" *ngIf="isMobileLayout">
+<nav class="navbar-custom navbar-expand-lg" *ngIf="isMobileLayout">
   <div class="container-fluid">
     <div class="row header-row">
       <div class="navbar-header">
@@ -21,7 +21,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContentMobile" [ngbCollapse]="isCollapsed">
         <ul class="navbar-nav ml-auto  align-items-center">
           <li><a class="nav-link font-weight-lighter" (click)="searchEntity('', searchedEntity.EVENT)">Events</a></li>
-          <li><a class="nav-link font-weight-lighter" routerLink="/news">News</a></li>
+          <li><a class="nav-link font-weight-lighter" routerLink="/news-list">News</a></li>
           <li><a class="nav-link font-weight-lighter" routerLink="/merchandise">Merch</a></li>
           <li><a class="nav-link font-weight-lighter" routerLink="/faq">FAQ</a></li>
         </ul>
@@ -42,12 +42,12 @@
               </div>
             </div>
             <div class="row entity-row" (click)="searchEntity(searchTerm, searchedEntity.ARTIST)" *ngIf="isSearchActive" style="margin: 0">
-              <a class="entity-term" style="background-color: white; width: 100%; color: black; height: 75px; border: 1px #c1c1c1 solid; padding: 25px; font-size: 20px; z-index: 99999; margin: 0">
+              <a class="entity-term" style="width: 100%; color: black; height: 75px; border: 1px #c1c1c1 solid; padding: 25px; font-size: 20px; z-index: 99999; margin: 0">
                 {{searchTerm}} in <b>Künstlern</b> suchen
               </a>
             </div>
             <div class="row entity-row" (click)="searchEntity(searchTerm, searchedEntity.LOCATION)" *ngIf="isSearchActive" style="margin: -1px 0 0;">
-              <a class="entity-term" style="background-color: white; width: 100%; color: black; height: 75px; border: 1px #c1c1c1 solid; border-top: 0px; padding: 25px; z-index: 99999; font-size: 20px; margin: 0">
+              <a class="entity-term" style="width: 100%; color: black; height: 75px; border: 1px #c1c1c1 solid; padding: 25px; z-index: 99999; font-size: 20px; margin: 0">
                 {{searchTerm}} in <b>Orten</b> suchen
               </a>
             </div>
@@ -61,7 +61,7 @@
 
 
 <!--Navbar for screens bigger than 1000px-->
-<nav class="navbar-custom navbar-expand-lg d-flex" *ngIf="!isMobileLayout">
+<nav class="navbar-custom navbar-expand-lg" *ngIf="!isMobileLayout">
   <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed">
     <span class="navbar-toggler-icon fas fa-bars" style="color: white;"><i class=""></i></span>
@@ -82,13 +82,13 @@
               </div>
             </div>
           </div>
-          <div class="row entity-row" (click)="searchEntity(searchTerm, searchedEntity.ARTIST)" *ngIf="isSearchActive" style="margin: 0">
-            <a style="background-color: white; width: 100%; color: black; height: 75px; border: 1px #c1c1c1 solid; padding: 25px; font-size: 20px; z-index: 99999; margin: 0;">
+          <div class="row entity-row" (click)="searchEntity(searchTerm, searchedEntity.ARTIST)" *ngIf="isSearchActive" style="margin: -1px 0 0;">
+            <a class="entity-term">
               {{searchTerm}} in <b>Künstlern</b> suchen
             </a>
           </div>
           <div class="row entity-row" (click)="searchEntity(searchTerm, searchedEntity.LOCATION)" *ngIf="isSearchActive" style="margin: -1px 0 0;">
-            <a style="background-color: white; width: 100%; color: black; height: 75px; border: 1px solid #c1c1c1;padding: 25px; z-index: 99999; font-size: 20px; margin: 0;">
+            <a class="entity-term">
               {{searchTerm}} in <b>Orten</b> suchen
             </a>
           </div>

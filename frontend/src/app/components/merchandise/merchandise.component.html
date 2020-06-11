@@ -1,83 +1,96 @@
-<app-customer-header></app-customer-header>
-
-
-
+<app-header></app-header>
 <app-error-notification *ngIf="error" [error]="error"></app-error-notification>
+<div class="container-fluid justify-content-center" style="padding-left: 5%; padding-right: 5%;">
+  <div class="row">
+    <div class="mx-auto" style="max-width: 1320px; width: 100%;">
+      <span class="anchor" id="formLogin"></span>
 
-<div class="card-body">
-  <div class="row" style="padding-left: 30px; padding-right: 30px">
+      <div class="card main-body" style="padding-top: 60px">
 
-    <h1 class="mb-7">MERCHANDISE</h1>
-    <p class="infoAboutPremium">
-      <i class="fas fa-star"></i>
-      Prämienpunkte einlösbar
-    </p>
+        <div class="card-body">
+          <div class="row" style="padding-left: 30px; padding-right: 30px">
 
+            <div class="col-5">
+              <h1 class="mb-7">Merchandise</h1>
+            </div>
 
+            <div class="col-4">
+              <p class="infoAboutMyPoints" *ngIf="user">
+                Meine Prämienpunkte: {{user.points}}
+              </p>
+            </div>
 
-    <div *ngIf="merchandise">
-    <div class="row" style="padding-left: 25px; padding-right: 25px; padding-bottom: 25px">
-
-      <div class="zoom col-4"
-           *ngFor="let product of merchandise"
-           routerLink="/merchandise/{{product.merchandiseProductCode}}">
-
-        <div class="card-deck h-100">
-
-        <!-- Card Light -->
-        <div class="card">
-          <!-- Card image -->
-          <div class="view overlay">
-            <img class="card-img-top"
-                 src="{{product.photo}}" alt="Card image cap">
-            <a>
-              <div class="mask rgba-white-slight"></div>
-            </a>
-          </div>
-
-          <!-- Card content -->
-          <div class="card-body">
-
-            <!-- Title -->
-            <h4 class="card-title"> {{product.merchandiseProductName}}
-              <div class="premiumIcon" *ngIf="product.premium">
+            <div class="col-3">
+              <p class="infoAboutPremium">
                 <i class="fas fa-star"></i>
-              </div>
-            </h4>
-
-            <hr>
-
-            <!-- Text -->
-            <div class="whenPremium" *ngIf="product.premium">
-              <p class="card-text">Regular Price: {{product.price}} €</p>
-              <p class="card-text">Premium Price: {{product.premiumPrice}} <i class="fas fa-coins"></i></p>
+                Prämienpunkte einlösbar
+              </p>
             </div>
-
-            <div class="whenPremium" *ngIf="!product.premium">
-              <p class="card-text">Price: €{{product.price}}</p>
-              <br>
-            </div>
-
-            <a class="detailsText black-text d-flex justify-content-end">
-              <h5>Details<i class="fas fa-angle-double-right"></i></h5>
-            </a>
-
           </div>
 
+          <div *ngIf="merchandise">
+            <div class="container">
+              <div class="row" style="padding-left: 25px; padding-right: 25px; padding-bottom: 25px; width: 100%">
+                <div class="col-4 col-4-xl col-4-lg col-4-md col-12-sm" *ngFor="let product of merchandise" style="height: 665px; margin-bottom: 30px;">
+                  <div class="zoom">
+
+                    <div class="card-deck h-100">
+
+                      <!-- Card Light -->
+                      <div class="card">
+                        <!-- Card image -->
+                        <div class="view overlay">
+                          <img class="card-img-top"
+                               src="{{product.photo}}" alt="Card image cap">
+                          <a>
+                            <div class="mask rgba-white-slight"></div>
+                          </a>
+                        </div>
+
+
+
+                        <!-- Card content -->
+                        <div class="card-body">
+
+                          <!-- Title -->
+                          <h4 class="card-title"> {{product.merchandiseProductName}}
+                            <div class="premiumIcon" *ngIf="product.premium">
+                              <i class="fas fa-star"></i>
+                            </div>
+                          </h4>
+
+                          <hr>
+
+                          <!-- Text -->
+                          <div class="whenPremium" *ngIf="product.premium">
+                            <p class="card-text">Regular Price: {{product.price}} €</p>
+                            <p class="card-text">Premium Price: {{product.premiumPrice}} <i class="fas fa-coins"></i></p>
+                          </div>
+
+                          <div class="whenPremium" *ngIf="!product.premium">
+                            <p class="card-text">Price: €{{product.price}}</p>
+                            <br>
+                          </div>
+
+                          <a class="detailsText black-text d-flex justify-content-end">
+                            <h5 routerLink="/merchandise/{{product.merchandiseProductCode}}">Details<i class="fas fa-angle-double-right"></i></h5>
+                          </a>
+
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="padding-bottom: 80px;">
+            <app-spinner *ngIf="merchandise === undefined">
+            </app-spinner>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-</div>
-</div>
-
-
-
-
-
-
-
-
-
-

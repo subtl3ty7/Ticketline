@@ -20,8 +20,8 @@ export class CustomerHeaderComponent implements OnInit {
   ngOnInit(): void {
     this.isSearchActive = false;
     this.isCollapsed = true;
-    this.isMobileLayout = window.innerWidth <= 992;
-    window.onresize = () => this.isMobileLayout = window.innerWidth <= 992;
+    this.isMobileLayout = window.innerWidth < 992;
+    window.onresize = () => this.isMobileLayout = window.innerWidth < 992;
   }
 
   refreshSearchTerm(event): void {

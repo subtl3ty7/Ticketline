@@ -80,4 +80,15 @@
 .page-title {
   padding-left: 20px;
   margin: 0px;
+  font-size: 40px;
+}
+
+.details-button {
+  width: 110px;
+  height: 54px;
+}
+
+a {
+  font-size: 18px;
+  color: #202020;
 }

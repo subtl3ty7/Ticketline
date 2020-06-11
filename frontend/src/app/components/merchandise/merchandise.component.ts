@@ -1,6 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+
 import {MerchandiseService} from '../../services/merchandise.service';
+import {UserService} from '../../services/user.service';
+
 import {Merchandise} from '../../dtos/merchandise';
+import {User} from '../../dtos/user';
+
+import {ActivatedRoute} from '@angular/router';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-merchandise',
@@ -11,11 +18,20 @@ export class MerchandiseComponent implements OnInit {
 
   error;
   merchandise: Merchandise[];
+  @Input() user: User;
 
-  constructor(private merchandiseService: MerchandiseService) { }
+  constructor(private merchandiseService: MerchandiseService,
+              private userService: UserService,
+              private route: ActivatedRoute,
+              private authService: AuthService) { }
 
   ngOnInit(): void {
     this.getAllMerchandiseProducts();
+
+    if (this.authService.isLoggedIn()) {
+      this.loadUserByUserCode();
+    }
+
   }
 
   public getAllMerchandiseProducts(): void {
@@ -28,5 +44,17 @@ export class MerchandiseComponent implements OnInit {
       }
     );
   }
+
+  public loadUserByUserCode(): void {
+    this.userService.getCurrentUser().subscribe(
+      (user: User) => {
+        this.user = user;
+      },
+      (error) => {
+        this.error = error;
+      }
+    );
+  }
+
 
 }

@@ -47,3 +47,8 @@
 .mat-step-header .mat-step-icon-selected {
   background-color: #2771BB!important;
 }
+
+/*
+::ng-deep .mat-horizontal-stepper-header{
+  pointer-events: none !important;
+}*/
