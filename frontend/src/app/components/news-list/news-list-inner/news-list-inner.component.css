@@ -41,9 +41,6 @@
 .card {
   margin: 10px;
   padding-bottom: 15px;
-  -webkit-box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.32);
-  -moz-box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.32);
-  box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.32);
 }
 
 .zoom:hover {

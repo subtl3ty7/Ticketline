@@ -4,6 +4,12 @@
   color: black;
 }
 
+.card-body {
+  margin-bottom: 0px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
 .card-title {
   display: -webkit-flex;
 }
@@ -37,10 +43,13 @@
 
 .card {
   margin: 10px;
-  padding-bottom: 15px;
-  -webkit-box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.32);
-  -moz-box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.32);
-  box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.32);
+  padding-bottom: 0px;
+}
+
+.zoom {
+  transition: transform .2s; /* Animation */
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .zoom:hover {
@@ -57,11 +66,14 @@
 }
 
 .card-deck {
-  padding: 15px;
+  padding: 0px;
+  padding-top: 15px;
 }
 
 .detailsText {
   color: cornflowerblue;
+  margin-top: 30px;
+  cursor: pointer;
 }
 
 .detailsText:hover {
@@ -74,8 +86,9 @@
   width: 100%;
   height: 450px;
   margin: 0px;
-  border-radius: 0px;
+  border-radius: 10px 10px 0px 0px;
   filter: grayscale(20%) contrast(110%);
+  cursor: pointer;
 }
 
 .infoAboutPremium {
