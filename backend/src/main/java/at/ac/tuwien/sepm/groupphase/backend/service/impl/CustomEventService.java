@@ -68,8 +68,8 @@ public class CustomEventService implements EventService {
     public Event createNewEvent(Event event){
         LOGGER.debug("Moving Event Entity through Service Layer: " + event);
         event.setEventCode(getNewEventCode());
-        event.setEventCategory(EventCategoryEnum.valueOf(event.getCategory()));
-        event.setEventType(EventTypeEnum.valueOf(event.getType()));
+        event.setEventCategory(event.getEventCategory());
+        event.setEventType(event.getEventType());
         validator.validate(event).throwIfViolated();
         for (Artist a : event.getArtists()) {
             artistRepository.save(a);

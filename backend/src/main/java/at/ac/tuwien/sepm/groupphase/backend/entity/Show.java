@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -63,6 +64,17 @@ public class Show implements Serializable {
 
     @Column
     private String eventName;
+
+    @ToString.Exclude
+    @NotNull
+    @Lob
+    @Column(nullable = false, name = "photo")
+    private String photo;
+
+    @NotNull
+    @Size(min=1, max=10000)
+    @Column(nullable = false, length = 10000)
+    private String description;
 
     public Show(){
     }

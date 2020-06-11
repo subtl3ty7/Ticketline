@@ -39,6 +39,7 @@ public class EventMappingTest implements TestData {
         .eventType(TYP1)
         .startsAt(START)
         .endsAt(END)
+        .duration(DURATION)
         .prices(PRICES)
         .totalTicketsSold(TOTAL)
         .shows(SHOWS)

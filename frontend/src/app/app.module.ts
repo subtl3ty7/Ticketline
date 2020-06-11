@@ -188,6 +188,8 @@ import { SeatingPlanComponent } from './components/ticket-purchase/choose-ticket
     MyTicketsTabComponent,
     PaymentDoneComponent,
     MyInvoiceComponent,
+    MerchandiseComponent,
+    ProductDetailsComponent,
     EventAdvancedComponent,
     SpinnerComponent,
     MyInvoiceComponent,
