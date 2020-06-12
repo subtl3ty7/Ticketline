@@ -123,6 +123,8 @@ public class CustomTicketService implements TicketService {
             showRepository.save(show);
             eventRepository.save(event);
 
+            ticketEntity.setPrice(show.getPrice() + seat.getPrice());
+
         return ticketEntity;
     }
 
