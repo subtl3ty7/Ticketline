@@ -26,7 +26,7 @@ public class News implements Serializable {
 
     @NotNull
     @Size(min=6, max=6)
-    @Column(nullable = false, length = 6, name = "event_code", unique = true)
+    @Column(nullable = false, length = 6, unique = true)
     private String newsCode;
 
     @NotNull
@@ -58,12 +58,11 @@ public class News implements Serializable {
     @Column(nullable = false, length = 100)
     private String author;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Customer> seenBy;
 
     @ToString.Exclude
     @NotNull
-    @Lob
-    @Column(nullable = false, name = "photo")
-    private String photo;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Image photo;
 }

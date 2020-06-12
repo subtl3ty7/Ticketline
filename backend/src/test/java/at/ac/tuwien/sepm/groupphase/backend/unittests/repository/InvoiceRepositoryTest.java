@@ -22,7 +22,7 @@ public class InvoiceRepositoryTest implements TestData {
     @Autowired
     private InvoiceRepository invoiceRepository;
 
-    private AbstractInvoice invoice = TicketInvoice.builder()
+    private TicketInvoice invoice = TicketInvoice.builder()
         .id(ID)
         .invoice_type(TYP_I)
         .userCode(USER_CODE)

@@ -3,7 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.integrationtest;
 import at.ac.tuwien.sepm.groupphase.backend.basetest.TestData;
 import at.ac.tuwien.sepm.groupphase.backend.config.properties.SecurityProperties;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.EventLocationDto;
-import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocationOriginal;
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventLocationRepository;
 import at.ac.tuwien.sepm.groupphase.backend.security.JwtTokenizer;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -50,7 +50,7 @@ public class EventLocationEndpointTest implements TestData {
     @Autowired
     private SecurityProperties securityProperties;
 
-    private EventLocationOriginal eventLocation = EventLocationOriginal.builder()
+    private EventLocation eventLocation = EventLocation.builder()
         .id(ID)
         .name(FNAME)
         .eventLocationDescription(DESC)
@@ -65,7 +65,7 @@ public class EventLocationEndpointTest implements TestData {
     @BeforeEach
     public void beforeEach() {
         eventLocationRepository.deleteAll();
-        eventLocation = EventLocationOriginal.builder()
+        eventLocation = EventLocation.builder()
             .id(ID)
             .name(FNAME)
             .eventLocationDescription(DESC)

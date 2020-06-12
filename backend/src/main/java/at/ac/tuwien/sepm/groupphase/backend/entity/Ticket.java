@@ -60,11 +60,13 @@ public class Ticket {
 
     @NotNull
     @Column(nullable = false, name = "price")
-    private Integer price;
+    private Double price;
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.EAGER)
     private Show show;
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.EAGER)
     private Event event;
 

@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.springframework.cache.annotation.CacheEvict;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,10 +17,9 @@ import java.util.List;
 @Setter
 @ToString
 @AllArgsConstructor
-@SuperBuilder
+@Builder(toBuilder = true)
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class EventLocation implements Serializable {
+public class EventLocation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
@@ -50,10 +50,15 @@ public abstract class EventLocation implements Serializable {
     private String country;
 
     @ToString.Exclude
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,  orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL,  orphanRemoval = true)
     @JoinColumn(name = "EVENT_LOCATION_ID", referencedColumnName = "ID")
-    @Fetch(FetchMode.SELECT) //only way to fetch more than two collections with type eager ...
+    //@Fetch(FetchMode.SELECT) //only way to fetch more than two collections with type eager ...
     private List<Section> sections;
+
+    @ToString.Exclude
+    @OneToMany(mappedBy = "eventLocation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    //@Fetch(FetchMode.SELECT) //only way to fetch more than two collections with type eager ...
+    private List<Show> shows;
 
     @Column
     private int capacity;

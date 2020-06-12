@@ -37,14 +37,22 @@ export class ShowService {
     return this.httpClient.get<Show[]>(this.eventBaseUri + '?eventLocationId=' + eventLocationId);
   }
 
+  // tslint:disable-next-line:max-line-length
   getDetailedShowsBy(name: string, type: string, category: string, showStartsAt: string, showEndsAt: string, duration: string, startPrice: string) {
     console.log('Load events advanced');
     if (duration !== null && duration !== '') {
       duration = 'PT' + duration + 'H';
     }
+    // tslint:disable-next-line:max-line-length
     console.log('url: ' + this.eventBaseUri + '?' + 'eventName=' + name + '&type=' + type + '&category=' + category + '&startsAt=' + showStartsAt + '&endsAt=' + showEndsAt + '&duration=' + duration + '&price=' + startPrice);
     return this.httpClient.get<Show[]>(this.eventBaseUri + '?' + 'eventName=' + name + '&type=' + type + '&category=' + category + '&startsAt=' + showStartsAt + '&endsAt=' + showEndsAt + '&duration=' + duration + '&price=' + startPrice).pipe(
       catchError(this.handleError)
     );
+  }
+
+  getShowById(id: number): Observable<Show> {
+    console.log('Find show by id ' + id);
+    console.log(this.eventBaseUri + '/' + id);
+    return this.httpClient.get<Show>(this.eventBaseUri + '/' + id);
   }
 }

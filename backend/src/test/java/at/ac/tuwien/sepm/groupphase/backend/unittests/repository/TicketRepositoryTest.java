@@ -27,7 +27,7 @@ public class TicketRepositoryTest implements TestData {
         .isPurchased(false)
         .isReserved(false)
         .purchaseDate(START)
-        .price(TOTAL)
+        .price(PRICE)
         .userCode(USER_CODE)
         .build();
 
@@ -40,7 +40,7 @@ public class TicketRepositoryTest implements TestData {
             .isPurchased(false)
             .isReserved(false)
             .purchaseDate(START)
-            .price(TOTAL)
+            .price(PRICE)
             .userCode(USER_CODE)
             .build();
     }

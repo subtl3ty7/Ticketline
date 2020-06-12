@@ -1,8 +1,8 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper;
 
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.EventLocationDto;
-import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocationCopy;
-import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocationOriginal;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleEventLocationDto;
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
 import org.mapstruct.*;
 import org.springframework.stereotype.Component;
 
@@ -11,21 +11,19 @@ import java.util.List;
 @Component
 @Mapper
 public interface EventLocationMapper {
-    @Named(value = "eventLocationCopyToEventLocationDto")
-    EventLocationDto eventLocationCopyToEventLocationDto(EventLocationCopy eventLocation);
+    @Named(value = "EventLocationToEventLocationDto")
+    EventLocationDto EventLocationToEventLocationDto(EventLocation eventLocation);
 
-    @IterableMapping(qualifiedByName = "eventLocationCopyToEventLocationDto")
-    List<EventLocationDto> eventLocationCopyToEventLocationDto(List<EventLocationCopy> eventLocations);
+    @IterableMapping(qualifiedByName = "EventLocationToEventLocationDto")
+    List<EventLocationDto> EventLocationToEventLocationDto(List<EventLocation> eventLocations);
 
+    @Named(value = "eventLocationDtoToEventLocation")
+    EventLocation eventLocationDtoToEventLocation(EventLocationDto eventLocation);
 
-    @Named(value = "eventLocationOriginalToEventLocationDto")
-    EventLocationDto eventLocationOriginalToEventLocationDto(EventLocationOriginal eventLocation);
+    @Named(value = "eventLocationToSimpleEventLocationDto")
+    SimpleEventLocationDto eventLocationToSimpleEventLocationDto(EventLocation eventLocation);
 
-    @IterableMapping(qualifiedByName = "eventLocationOriginalToEventLocationDto")
-    List<EventLocationDto> eventLocationOriginalToEventLocationDto(List<EventLocationOriginal> eventLocations);
-
-
-    @Named(value = "eventLocationDtoToEventLocationOriginal")
-    EventLocationOriginal eventLocationDtoToEventLocationOriginal(EventLocationDto eventLocation);
+    @IterableMapping(qualifiedByName = "eventLocationToSimpleEventLocationDto")
+    List<SimpleEventLocationDto> eventLocationToSimpleEventLocationDto(List<EventLocation> eventLocations);
 
 }

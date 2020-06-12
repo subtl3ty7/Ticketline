@@ -9,6 +9,7 @@ import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EventMapper;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.UserMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Image;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
@@ -66,8 +67,6 @@ public class EventEndpointTest implements TestData {
         .description(DESC)
         .category(CAT)
         .type(TYP)
-        .eventCategory(CAT1)
-        .eventType(TYP1)
         .startsAt(START)
         .endsAt(END)
         .duration(DURATION)
@@ -87,8 +86,6 @@ public class EventEndpointTest implements TestData {
             .description(DESC)
             .category(CAT)
             .type(TYP)
-            .eventCategory(CAT1)
-            .eventType(TYP1)
             .startsAt(START)
             .endsAt(END)
             .duration(DURATION)

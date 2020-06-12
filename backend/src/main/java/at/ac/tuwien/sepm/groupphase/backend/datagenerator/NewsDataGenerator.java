@@ -34,7 +34,7 @@ public class NewsDataGenerator {
     private final UserService userService;
     private final Resources resources;
 
-    private static final int NUMBER_OF_NEWS = 10;
+    private static final int NUMBER_OF_NEWS = 100;
 
     @Autowired
     public NewsDataGenerator(NewsService newsService, NewsRepository newsRepository, UserService userService, Resources resources) {
@@ -49,12 +49,12 @@ public class NewsDataGenerator {
         if(newsService.findLatest(null).size() > 0) {
             LOGGER.info("News Test Data already generated");
         } else {
-            LOGGER.info("Generating News Test Data");
+            LOGGER.info("Generating News Test Data...");
             LocalDateTime start = LocalDateTime.now();
             generateNews();
             LocalDateTime end = LocalDateTime.now();
             float runningTime = Duration.between(start, end).toMillis();
-            LOGGER.info("Generating News Test Data took " + runningTime/1000.0 + " seconds");
+            LOGGER.info("Generating News Test Data (" + NUMBER_OF_NEWS + " Entities) took " + runningTime/1000.0 + " seconds");
         }
     }
 
@@ -65,7 +65,7 @@ public class NewsDataGenerator {
 
         for(int i=0; i<NUMBER_OF_NEWS; i++) {
 
-            String imgName = "news_img" + i + ".jpg";
+            String imgName = "news_img" + i % 20 + ".jpg";
 
             News newsEntry = News.builder()
                 .author("J.K. Rowling")

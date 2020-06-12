@@ -1,9 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -14,9 +12,11 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 @Entity
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Seat implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
     @Column(name = "SECTION_ID")
@@ -35,9 +35,6 @@ public class Seat implements Serializable {
     @Column
     private double price;
 
-    @Column
-    private boolean isFree;
-
     public Seat() {}
 
     public Seat(String seatColumn, String seatRow) {
@@ -48,7 +45,6 @@ public class Seat implements Serializable {
     public Seat(Seat seat, double price) {
         this.seatRow = seat.getSeatRow();
         this.seatColumn = seat.getSeatColumn();
-        this.isFree = seat.isFree();
         this.price = price;
     }
 

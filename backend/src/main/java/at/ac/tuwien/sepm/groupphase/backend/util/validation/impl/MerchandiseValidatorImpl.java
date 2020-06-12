@@ -39,7 +39,15 @@ public class MerchandiseValidatorImpl implements MerchandiseValidator {
     }
 
     @Override
-    public Constraints validateMerchandisePurchaseWithMoney(Merchandise merchandise) {
-        return null;
+    public Constraints validateMerchandisePurchaseWithMoney(Merchandise merchandise, String userCode) {
+        Constraints constraints = new Constraints();
+        constraints.add("merchandise_exists", merchandiseRepository.findMerchandiseById(merchandise.getId()) != null);
+        constraints.add("user_exists", userRepository.findAbstractUserByUserCode(userCode) != null);
+        if(!constraints.isViolated()) {
+            Merchandise merchandise1 = merchandiseRepository.findMerchandiseById(merchandise.getId());
+            AbstractUser user1 = userRepository.findAbstractUserByUserCode(userCode);
+            constraints.add("merchandise_outOfStock", merchandise1.getStockCount() > 0);
+        }
+        return constraints;
     }
 }

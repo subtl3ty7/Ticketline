@@ -39,10 +39,16 @@ public class EventDataGenerator {
     private final Resources resources;
 
 
-    private final static int numberOfEventLocations = 10;
-    private static final int numberOfEvents = 15;
-    private static final int numberOfArtists = 5;
+    private final static int numberOfEventLocations = 20;
+    private static final int numberOfArtists = 50;
+    private static final int numberOfEvents = 1000;
+    private static final int numberOfShowsPerEvent = 4;
     private static final int eventDurationInHours = 2;
+
+
+
+    private float runningTimeTest = 0;
+
 
     @Autowired
     public EventDataGenerator(SectionRepository sectionRepository,
@@ -72,81 +78,91 @@ public class EventDataGenerator {
         if(seatRepository.findAll().size() > 0) {
             LOGGER.info("Event Test Data already generated");
         } else {
-            LOGGER.info("Generating Event Test Data");
-            LocalDateTime start = LocalDateTime.now();
             generateEvents();
-            LocalDateTime end = LocalDateTime.now();
-            float runningTime = Duration.between(start, end).toMillis();
-            LOGGER.info("Generating Event Test Data took " + runningTime/1000.0 + " seconds");
 
         }
     }
 
     private List<Event> generateEvents() {
+        LOGGER.info("Generating EventLocation Test Data...");
+        LocalDateTime start = LocalDateTime.now();
         generateEventLocations(true);
-        List<EventLocationOriginal> eventLocations = eventLocationService.getAllEventLocations();
+        List<EventLocation> eventLocations = eventLocationService.getAllEventLocations();
 
         if(eventLocations.isEmpty()) {
             throw new NotFoundException("No Event Locations in argument list. Needs to contain at least one.");
         }
+        LocalDateTime end = LocalDateTime.now();
+        float runningTime_EventLocations = Duration.between(start, end).toMillis();
+        LOGGER.info("Generating EventLocation Test Data (" + numberOfEventLocations + " Entities) took " + runningTime_EventLocations/1000.0 + " seconds");
 
+        LOGGER.info("Generating Artist Test Data...");
+        start = LocalDateTime.now();
         generateArtists();
         List<Artist> artists = artistService.getAllArtists();
 
         if(artists.isEmpty()) {
             throw new NotFoundException("No Artists in argument list. Needs to contain at least one.");
         }
+        end = LocalDateTime.now();
+        float runningTime_Artists = Duration.between(start, end).toMillis();
+        LOGGER.info("Generating Artist Test Data (" + numberOfArtists + " Entities) took " + runningTime_Artists/1000.0 + " seconds");
 
+        LOGGER.info("Generating Event Test Data...");
+        start = LocalDateTime.now();
         List<Event> events = new ArrayList<>();
         for(int i=0; i<numberOfEvents; i++) {
-            int eventLocationIndex = i;
-            if(eventLocationIndex >= eventLocations.size()) {
-                eventLocationIndex = eventLocations.size()-1;
-            }
-
-            String imgName = "event_img" + i%15 + ".jpg";
-
-            List<Artist> addedArtists = new ArrayList<>();
-            int artistIndex = i;
-            if (artistIndex >= artists.size()) {
-                artistIndex = artists.size()-1;
-            }
-            addedArtists.add(artists.get(artistIndex));
-
             EventTypeEnum[] types = EventTypeEnum.values();
             EventCategoryEnum[] categories = EventCategoryEnum.values();
             int typeIndex = i % EventTypeEnum.values().length;
             int categoryIndex = i % EventCategoryEnum.values().length;
+            int artistIndex = i % artists.size();
+            int eventLocationIndex = i % eventLocations.size();
+            String imgName = "event_img" + i % 15 + ".jpg";
+
+
+
+
+
+
+
+
+
+            LocalDateTime startTest = LocalDateTime.now();
+            LocalDateTime endTest = LocalDateTime.now();
+            this.runningTimeTest += Duration.between(startTest, endTest).toMillis();
+            //LOGGER.info("Creating Event took " + runningTimeTest/1000.0 + " seconds");
+
+
+
 
             Event event = Event.builder()
                 .description(resources.getText("event_text.txt"))
                 .startsAt(LocalDateTime.now())
                 .endsAt(LocalDateTime.now().plusHours(eventDurationInHours))
-                .eventCode("E1234" + i)
                 .name("Event " + i)
                 .photo(resources.getImageEncoded(imgName))
                 .prices(List.of(1,2,3))
                 .totalTicketsSold(5*i*i*i)
                 .shows(generateShows(eventLocations.get(eventLocationIndex), EventTypeEnum.MUSIC, EventCategoryEnum.HIPHOP, "Event " + i, imgName))
-                .artists(addedArtists)
-                .type(types[typeIndex].toString())
-                .eventType(types[typeIndex])
-                .category(categories[categoryIndex].toString())
-                .eventCategory(categories[categoryIndex])
+                .artists(List.of(artists.get(artistIndex)))
+                .type(types[typeIndex])
+                .category(categories[categoryIndex])
                 .duration(Duration.ofHours(eventDurationInHours))
                 .build();
             event = eventService.createNewEvent(event);
             events.add(event);
         }
+        end = LocalDateTime.now();
+        float runningTime_Events = Duration.between(start, end).toMillis();
+        LOGGER.info("Generating Event Test Data (" + numberOfEvents + " Entities) took " + runningTime_Events/1000.0 + " seconds");
 
         return events;
     }
 
     private List<Show> generateShows(EventLocation eventLocation, EventTypeEnum typeEnum, EventCategoryEnum categoryEnum, String eventName, String imgName) {
-        int numberOfShows = 2;
-
         List<Show> shows = new ArrayList<>();
-        for(int i=0; i<numberOfShows; i++) {
+        for(int i = 0; i< numberOfShowsPerEvent; i++) {
             //List<EventLocation> location = new ArrayList<>();
             //location.add(new EventLocation(eventLocation));
             LocalDateTime start = LocalDateTime.now();
@@ -156,11 +172,11 @@ public class EventDataGenerator {
                 .endsAt(end)
                 .ticketsAvailable(1000)
                 .ticketsSold(300)
-                .eventLocationOriginalId(eventLocation.getId())
+                .eventLocation(eventLocation)
                 .eventType(typeEnum)
                 .eventCategory(categoryEnum)
                 .eventName(eventName)
-                .photo(resources.getImageEncoded(imgName))
+                //.photo(resources.getImageEncoded(imgName))
                 .description(resources.getText("event_text.txt"))
                 .duration(Duration.ofHours(eventDurationInHours))
                 .price(50)
@@ -172,13 +188,13 @@ public class EventDataGenerator {
     }
 
 
-    private List<EventLocationOriginal> generateEventLocations(boolean doSave) {
+    private List<EventLocation> generateEventLocations(boolean doSave) {
 
-        List<EventLocationOriginal> eventLocations = new ArrayList<>();
+        List<EventLocation> eventLocations = new ArrayList<>();
         for(int i=0; i<numberOfEventLocations; i++) {
             int randomNum = ThreadLocalRandom.current().nextInt(3, 6 + 1);
             List<Section> sections = generateSections(randomNum);
-            EventLocationOriginal eventLocation = EventLocationOriginal.builder()
+            EventLocation eventLocation = EventLocation.builder()
                 .name("Stephansplatz " + i)
                 .city("Vienna")
                 .country("Austria")
@@ -200,11 +216,10 @@ public class EventDataGenerator {
         if (artistRepository.findAllByOrderByLastNameAscFirstNameAsc().size() > 0) {
             LOGGER.debug("artist already generated");
         } else {
-            LOGGER.debug("generating {} message entries", numberOfArtists);
             for (int i = 0; i < numberOfArtists; i++) {
-                Artist artist = Artist.ArtistBuilder.anArtist()
-                    .withFirstName(((char) (65 + (i%26))) + "test")
-                    .withLastName("Person")
+                Artist artist = Artist.builder()
+                    .firstName("Künstler")
+                    .lastName(((char) (65 + (i%26))) + "")
                     .build();
                 LOGGER.debug("saving artist {}", artist);
                 artistRepository.save(artist);
@@ -314,7 +329,6 @@ public class EventDataGenerator {
                 Seat seat = Seat.builder()
                     .seatRow(i)
                     .seatColumn(j)
-                    .isFree(true)
                     .build();
                 seats.add(seat);
             }

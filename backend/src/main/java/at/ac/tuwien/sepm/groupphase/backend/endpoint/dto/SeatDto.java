@@ -13,6 +13,5 @@ public class SeatDto {
     private Long sectionId;
     private String seatRow;
     private String seatColumn;
-    private boolean isFree;
     private double price;
 }
