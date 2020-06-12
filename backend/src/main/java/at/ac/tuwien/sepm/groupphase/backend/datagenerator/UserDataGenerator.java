@@ -47,12 +47,13 @@ public class UserDataGenerator {
         if (userService.loadAllUsers().size() > 0) {
             LOGGER.info("users already generated");
         } else {
-            LOGGER.info("Generating User Test Data");
+            LOGGER.info("Generating User Test Data...");
             LocalDateTime start = LocalDateTime.now();
             generateUsers();
             LocalDateTime end = LocalDateTime.now();
             float runningTime = Duration.between(start, end).toMillis();
-            LOGGER.info("Generating User Test Data took " + runningTime/1000.0 + " seconds");
+            int numberOfEntities = NUMBER_OF_ADMINISTRATORS_TO_GENERATE + NUMBER_OF_CUSTOMERS_TO_GENERATE;
+            LOGGER.info("Generating User Test Data (" + numberOfEntities + " Entities) took " + runningTime/1000.0 + " seconds");
         }
     }
 

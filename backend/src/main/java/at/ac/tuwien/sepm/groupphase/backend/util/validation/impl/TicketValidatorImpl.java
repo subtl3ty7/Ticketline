@@ -6,7 +6,9 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
 import at.ac.tuwien.sepm.groupphase.backend.repository.*;
 import at.ac.tuwien.sepm.groupphase.backend.service.ShowService;
 import at.ac.tuwien.sepm.groupphase.backend.util.Constraints;
+import at.ac.tuwien.sepm.groupphase.backend.util.validation.AccessoryValidator;
 import at.ac.tuwien.sepm.groupphase.backend.util.validation.TicketValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -17,14 +19,17 @@ public class TicketValidatorImpl implements TicketValidator {
     private final ShowRepository showRepository;
     private final SeatRepository seatRepository;
     private final ShowService showService;
+    private final AccessoryValidator accessoryValidator;
 
+    @Autowired
     public TicketValidatorImpl(TicketRepository ticketRepository, UserRepository userRepository, ShowRepository showRepository,
-                                SeatRepository seatRepository, ShowService showService){
+                               SeatRepository seatRepository, ShowService showService, AccessoryValidator accessoryValidator){
         this.ticketRepository = ticketRepository;
         this.userRepository = userRepository;
         this.showRepository = showRepository;
         this.seatRepository = seatRepository;
         this.showService = showService;
+        this.accessoryValidator = accessoryValidator;
     }
 
     @Override
@@ -38,7 +43,7 @@ public class TicketValidatorImpl implements TicketValidator {
     public Constraints validate(Ticket ticket) {
         Constraints constraints = new Constraints();
         constraints.add(validateUnique(ticket));
-        constraints.add(AccesoryValidator.validateJavaxConstraints(ticket));
+        constraints.add(accessoryValidator.validateJavaxConstraints(ticket));
         return constraints;
     }
 

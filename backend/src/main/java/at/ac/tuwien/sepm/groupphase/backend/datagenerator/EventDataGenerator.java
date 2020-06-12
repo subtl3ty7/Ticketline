@@ -41,9 +41,14 @@ public class EventDataGenerator {
 
     private final static int numberOfEventLocations = 20;
     private static final int numberOfArtists = 50;
-    private static final int numberOfEvents = 100;
+    private static final int numberOfEvents = 1000;
     private static final int numberOfShowsPerEvent = 4;
     private static final int eventDurationInHours = 2;
+
+
+
+    private float runningTimeTest = 0;
+
 
     @Autowired
     public EventDataGenerator(SectionRepository sectionRepository,
@@ -79,7 +84,7 @@ public class EventDataGenerator {
     }
 
     private List<Event> generateEvents() {
-        LOGGER.info("Generating EventLocation Test Data");
+        LOGGER.info("Generating EventLocation Test Data...");
         LocalDateTime start = LocalDateTime.now();
         generateEventLocations(true);
         List<EventLocation> eventLocations = eventLocationService.getAllEventLocations();
@@ -89,9 +94,9 @@ public class EventDataGenerator {
         }
         LocalDateTime end = LocalDateTime.now();
         float runningTime_EventLocations = Duration.between(start, end).toMillis();
-        LOGGER.info("Generating EventLocation Test Data took " + runningTime_EventLocations/1000.0 + " seconds");
+        LOGGER.info("Generating EventLocation Test Data (" + numberOfEventLocations + " Entities) took " + runningTime_EventLocations/1000.0 + " seconds");
 
-        LOGGER.info("Generating Artist Test Data");
+        LOGGER.info("Generating Artist Test Data...");
         start = LocalDateTime.now();
         generateArtists();
         List<Artist> artists = artistService.getAllArtists();
@@ -101,9 +106,9 @@ public class EventDataGenerator {
         }
         end = LocalDateTime.now();
         float runningTime_Artists = Duration.between(start, end).toMillis();
-        LOGGER.info("Generating Artist Test Data took " + runningTime_Artists/1000.0 + " seconds");
+        LOGGER.info("Generating Artist Test Data (" + numberOfArtists + " Entities) took " + runningTime_Artists/1000.0 + " seconds");
 
-        LOGGER.info("Generating Event Test Data");
+        LOGGER.info("Generating Event Test Data...");
         start = LocalDateTime.now();
         List<Event> events = new ArrayList<>();
         for(int i=0; i<numberOfEvents; i++) {
@@ -114,6 +119,22 @@ public class EventDataGenerator {
             int artistIndex = i % artists.size();
             int eventLocationIndex = i % eventLocations.size();
             String imgName = "event_img" + i % 15 + ".jpg";
+
+
+
+
+
+
+
+
+
+            LocalDateTime startTest = LocalDateTime.now();
+            LocalDateTime endTest = LocalDateTime.now();
+            this.runningTimeTest += Duration.between(startTest, endTest).toMillis();
+            //LOGGER.info("Creating Event took " + runningTimeTest/1000.0 + " seconds");
+
+
+
 
             Event event = Event.builder()
                 .description(resources.getText("event_text.txt"))
@@ -134,7 +155,7 @@ public class EventDataGenerator {
         }
         end = LocalDateTime.now();
         float runningTime_Events = Duration.between(start, end).toMillis();
-        LOGGER.info("Generating Event Test Data took " + runningTime_Events/1000.0 + " seconds");
+        LOGGER.info("Generating Event Test Data (" + numberOfEvents + " Entities) took " + runningTime_Events/1000.0 + " seconds");
 
         return events;
     }
@@ -155,7 +176,7 @@ public class EventDataGenerator {
                 .eventType(typeEnum)
                 .eventCategory(categoryEnum)
                 .eventName(eventName)
-                .photo(resources.getImageEncoded(imgName))
+                //.photo(resources.getImageEncoded(imgName))
                 .description(resources.getText("event_text.txt"))
                 .duration(Duration.ofHours(eventDurationInHours))
                 .price(50)
@@ -195,7 +216,6 @@ public class EventDataGenerator {
         if (artistRepository.findAllByOrderByLastNameAscFirstNameAsc().size() > 0) {
             LOGGER.debug("artist already generated");
         } else {
-            LOGGER.debug("generating {} message entries", numberOfArtists);
             for (int i = 0; i < numberOfArtists; i++) {
                 Artist artist = Artist.builder()
                     .firstName("Künstler")

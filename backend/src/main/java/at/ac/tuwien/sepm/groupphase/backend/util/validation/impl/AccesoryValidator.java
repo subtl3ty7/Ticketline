@@ -1,19 +1,29 @@
 package at.ac.tuwien.sepm.groupphase.backend.util.validation.impl;
 
 import at.ac.tuwien.sepm.groupphase.backend.util.Constraints;
+import at.ac.tuwien.sepm.groupphase.backend.util.validation.AccessoryValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.validation.*;
 import java.lang.invoke.MethodHandles;
 import java.util.Set;
 
-public class AccesoryValidator {
+@Component
+public class AccesoryValidator implements AccessoryValidator {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    public static Constraints validateJavaxConstraints(Object object) {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        javax.validation.Validator validator = factory.getValidator();
+    private final Validator validator;
+
+    @Autowired
+    public AccesoryValidator(Validator validator) {
+        this.validator = Validation.buildDefaultValidatorFactory().getValidator();
+    }
+
+    @Override
+    public Constraints validateJavaxConstraints(Object object) {
         Set<ConstraintViolation<Object>> violations = validator.validate(object);
 
         Constraints constraints = new Constraints();

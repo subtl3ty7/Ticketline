@@ -57,7 +57,7 @@ export class UserService {
 
   delete(user: User) {
     console.log('Deleting user ' + user.userCode + ' in the database');
-    return this.httpClient.delete(this.userBaseUri + '/delete/' + user.userCode);
+    return this.httpClient.delete(this.userBaseUri + '/' + user.userCode);
   }
 
   blockUser(userCode: string) {

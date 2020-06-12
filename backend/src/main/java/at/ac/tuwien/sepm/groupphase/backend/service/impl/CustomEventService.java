@@ -1,7 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.*;
-import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.ArtistRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventLocationRepository;
@@ -9,7 +8,6 @@ import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
 import at.ac.tuwien.sepm.groupphase.backend.util.validation.EventValidator;
-import org.apache.tomcat.jni.Local;
 import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,10 +30,10 @@ public class CustomEventService implements EventService {
     private final EventValidator validator;
     private final ArtistRepository artistRepository;
 
-    private float runningTime1 = 0;
-    private float runningTime3= 0;
+    private float runningTimeTest = 0;
+    private float runningTime2= 0;
+    private float runningTime3 = 0;
     private float runningTime4 = 0;
-    private float runningTime5 = 0;
 
 
     @Autowired
@@ -88,9 +86,18 @@ public class CustomEventService implements EventService {
         for(Show show: event.getShows()) {
             EventLocation eventLocation = eventLocationRepository.findEventLocationById(show.getEventLocation().getId());
             show.setEventLocation(eventLocation);
+            show.setPhoto(event.getPhoto());
         }
 
-        return eventRepository.save(event);
+        LocalDateTime startTest = LocalDateTime.now();
+        //event.setPhoto(new Image(null, "dd"));
+        //event.setShows(null);
+        Event event1 = eventRepository.save(event);
+        LocalDateTime endTest = LocalDateTime.now();
+        this.runningTimeTest += Duration.between(startTest, endTest).toMillis();
+        LOGGER.info("Test Area took " + runningTimeTest/1000.0 + " seconds");
+
+        return event1;
     }
 
     private String getNewEventCode() {

@@ -67,7 +67,6 @@ public class Show implements Serializable {
     private String eventName;
 
     @ToString.Exclude
-    @NotNull
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Image photo;
 
