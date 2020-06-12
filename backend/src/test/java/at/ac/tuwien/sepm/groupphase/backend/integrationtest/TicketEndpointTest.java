@@ -6,6 +6,7 @@ import at.ac.tuwien.sepm.groupphase.backend.datagenerator.EventDataGenerator;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.DetailedTicketDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleTicketDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.TicketMapper;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
 import at.ac.tuwien.sepm.groupphase.backend.repository.*;
 import at.ac.tuwien.sepm.groupphase.backend.security.JwtTokenizer;
 import at.ac.tuwien.sepm.groupphase.backend.service.ArtistService;
@@ -97,6 +98,7 @@ public class TicketEndpointTest implements TestData {
     private ArtistService artistService;
 
     private DetailedTicketDto detailedTicketDto;
+    private Ticket ticket;
 
     @Test
     @Order(1)
@@ -109,6 +111,19 @@ public class TicketEndpointTest implements TestData {
 
         detailedTicketDto = DetailedTicketDto.DetailedTicketDtoBuilder.aDetailedTicketDto(
             ID, USER_CODE, false, false, START, seatRepository.findSeatById(6L), USER_CODE_TICKET, TOTAL, showRepository.findShowById(6L), eventRepository.findEventById(1L)).build();
+
+        ticket = Ticket.builder()
+            .ticketId(ID)
+            .ticketCode(USER_CODE)
+            .isPurchased(false)
+            .isReserved(false)
+            .purchaseDate(START)
+            .seat(seatRepository.findSeatById(6L))
+            .userCode(USER_CODE_TICKET)
+            .price(PRICE)
+            .show(showRepository.findShowById(6L))
+            .event(eventRepository.findEventById(1L))
+            .build();
 
         List<DetailedTicketDto> ticketDtos = new ArrayList<>();
         ticketDtos.add(detailedTicketDto);

@@ -1,13 +1,12 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractInvoice;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Invoice;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Merchandise;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
-import at.ac.tuwien.sepm.groupphase.backend.entity.TicketInvoice;
 import at.ac.tuwien.sepm.groupphase.backend.repository.InvoiceRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.TicketRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.InvoiceService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
-import at.ac.tuwien.sepm.groupphase.backend.util.validation.TicketValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -32,13 +30,14 @@ public class CustomInvoiceService implements InvoiceService {
     }
 
     @Override
-    public TicketInvoice createTicketInvoice(List<Ticket> tickets, String type, LocalDateTime generatedAt) {
+    public Invoice createTicketInvoice(List<Ticket> tickets, String type, LocalDateTime generatedAt) {
         if(type.equals("Kauf Stornorechnung")) {
             invoiceRepository.delete(invoiceRepository.findInvoiceByUserCodeAndGeneratedAt(tickets.get(0).getUserCode(), tickets.get(0).getPurchaseDate()));
         }
 
-        TicketInvoice ticketInvoice = TicketInvoice.builder()
+        Invoice ticketInvoice = Invoice.builder()
             .invoice_type(type)
+            .invoice_category("Ticket invoice")
             .userCode(tickets.get(0).getUserCode())
             .payment_method("Kreditkarte")
             .generatedAt(generatedAt)
@@ -46,12 +45,29 @@ public class CustomInvoiceService implements InvoiceService {
             .tickets(tickets)
             .build();
 
-        LOGGER.debug("Invoice generated " + ticketInvoice);
+        LOGGER.debug("Ticket invoice generated " + ticketInvoice);
         return invoiceRepository.save(ticketInvoice);
     }
 
     @Override
-    public List<TicketInvoice> allInvoicesOfUser(String userCode) {
+    public Invoice createMerchandiseInvoice(Merchandise merchandise, String userCode, String pay) {
+
+        Invoice merchandiseInvoice = Invoice.builder()
+            .invoice_type("Kauf rechnung")
+            .invoice_category("Merchandise rechnung")
+            .userCode(userCode)
+            .payment_method(pay)
+            .generatedAt(LocalDateTime.now())
+            .invoice_number(CodeGenerator.generateInvoiceNumber())
+            .merchandise_code(merchandise.getMerchandiseProductCode())
+            .build();
+
+        LOGGER.debug("Merchandise invoice generated " + merchandiseInvoice);
+        return invoiceRepository.save(merchandiseInvoice);
+    }
+
+    @Override
+    public List<Invoice> allInvoicesOfUser(String userCode) {
         return invoiceRepository.findInvoicesByUserCode(userCode);
     }
 }

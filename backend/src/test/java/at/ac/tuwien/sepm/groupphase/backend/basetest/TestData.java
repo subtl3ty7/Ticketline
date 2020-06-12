@@ -66,7 +66,7 @@ public interface TestData {
         {
             add(Show.builder()
                 .id(ID).eventCode(USER_CODE).startsAt(START).endsAt(END).ticketsSold(TOTAL).ticketsAvailable(TOTAL)
-                .eventLocation(EventLocation.builder().id(LOCATIONID).build()).eventCategory(CAT1).eventType(TYP1).description(DESC).photo(PHOTO).build());
+                .eventCategory(CAT1).eventType(TYP1).description(DESC).photo(PHOTO).build());
         }
     };
     int TOTAL = 500;
@@ -101,6 +101,7 @@ public interface TestData {
     String TICKETS_BASE_URI = BASE_URI + "/tickets";
 
     String TYP_I = "purchase";
+    String CAT_I = "merchandise";
     String PAY = "card";
     LocalDateTime GENERATE = LocalDateTime.of(2020,6,1,10,0,0);
     String NUM = "000001";
