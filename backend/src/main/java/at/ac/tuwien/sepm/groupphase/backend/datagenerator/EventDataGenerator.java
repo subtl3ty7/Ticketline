@@ -39,9 +39,10 @@ public class EventDataGenerator {
     private final Resources resources;
 
 
-    private final static int numberOfEventLocations = 10;
+    private final static int numberOfEventLocations = 20;
+    private static final int numberOfArtists = 50;
     private static final int numberOfEvents = 100;
-    private static final int numberOfArtists = 5;
+    private static final int numberOfShowsPerEvent = 4;
     private static final int eventDurationInHours = 2;
 
     @Autowired
@@ -106,36 +107,24 @@ public class EventDataGenerator {
         start = LocalDateTime.now();
         List<Event> events = new ArrayList<>();
         for(int i=0; i<numberOfEvents; i++) {
-            int eventLocationIndex = i;
-            if(eventLocationIndex >= eventLocations.size()) {
-                eventLocationIndex = eventLocations.size()-1;
-            }
-
-            String imgName = "event_img" + i%15 + ".jpg";
-
-            List<Artist> addedArtists = new ArrayList<>();
-            int artistIndex = i;
-            if (artistIndex >= artists.size()) {
-                artistIndex = artists.size()-1;
-            }
-            addedArtists.add(artists.get(artistIndex));
-
             EventTypeEnum[] types = EventTypeEnum.values();
             EventCategoryEnum[] categories = EventCategoryEnum.values();
             int typeIndex = i % EventTypeEnum.values().length;
             int categoryIndex = i % EventCategoryEnum.values().length;
+            int artistIndex = i % artists.size();
+            int eventLocationIndex = i % eventLocations.size();
+            String imgName = "event_img" + i % 15 + ".jpg";
 
             Event event = Event.builder()
                 .description(resources.getText("event_text.txt"))
                 .startsAt(LocalDateTime.now())
                 .endsAt(LocalDateTime.now().plusHours(eventDurationInHours))
-                .eventCode("E1234" + i)
                 .name("Event " + i)
                 .photo(resources.getImageEncoded(imgName))
                 .prices(List.of(1,2,3))
                 .totalTicketsSold(5*i*i*i)
                 .shows(generateShows(eventLocations.get(eventLocationIndex), EventTypeEnum.MUSIC, EventCategoryEnum.HIPHOP, "Event " + i, imgName))
-                .artists(addedArtists)
+                .artists(List.of(artists.get(artistIndex)))
                 .type(types[typeIndex])
                 .category(categories[categoryIndex])
                 .duration(Duration.ofHours(eventDurationInHours))
@@ -151,10 +140,8 @@ public class EventDataGenerator {
     }
 
     private List<Show> generateShows(EventLocation eventLocation, EventTypeEnum typeEnum, EventCategoryEnum categoryEnum, String eventName, String imgName) {
-        int numberOfShows = 2;
-
         List<Show> shows = new ArrayList<>();
-        for(int i=0; i<numberOfShows; i++) {
+        for(int i = 0; i< numberOfShowsPerEvent; i++) {
             //List<EventLocation> location = new ArrayList<>();
             //location.add(new EventLocation(eventLocation));
             LocalDateTime start = LocalDateTime.now();
@@ -210,9 +197,9 @@ public class EventDataGenerator {
         } else {
             LOGGER.debug("generating {} message entries", numberOfArtists);
             for (int i = 0; i < numberOfArtists; i++) {
-                Artist artist = Artist.ArtistBuilder.anArtist()
-                    .withFirstName(((char) (65 + (i%26))) + "test")
-                    .withLastName("Person")
+                Artist artist = Artist.builder()
+                    .firstName("Künstler")
+                    .lastName(((char) (65 + (i%26))) + "")
                     .build();
                 LOGGER.debug("saving artist {}", artist);
                 artistRepository.save(artist);

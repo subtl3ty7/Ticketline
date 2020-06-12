@@ -63,7 +63,6 @@ public class News implements Serializable {
 
     @ToString.Exclude
     @NotNull
-    @Lob
-    @Column(nullable = false, name = "photo")
-    private String photo;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Image photo;
 }

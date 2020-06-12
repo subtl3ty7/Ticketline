@@ -55,7 +55,7 @@ public interface TestData {
     EventTypeEnum TYP = EventTypeEnum.MUSIC;
     EventCategoryEnum CAT1 = EventCategoryEnum.HIPHOP;
     EventTypeEnum TYP1 = EventTypeEnum.MUSIC;
-    String PHOTO = "no photo";
+    Image PHOTO = new Image(null, "no photo");
     LocalDateTime START =
         LocalDateTime.of(2020, 11, 13, 12, 15, 0, 0);
     LocalDateTime END =
