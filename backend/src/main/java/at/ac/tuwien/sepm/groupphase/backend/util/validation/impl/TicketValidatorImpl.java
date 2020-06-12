@@ -4,8 +4,11 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Administrator;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
 import at.ac.tuwien.sepm.groupphase.backend.repository.*;
+import at.ac.tuwien.sepm.groupphase.backend.service.ShowService;
 import at.ac.tuwien.sepm.groupphase.backend.util.Constraints;
+import at.ac.tuwien.sepm.groupphase.backend.util.validation.AccessoryValidator;
 import at.ac.tuwien.sepm.groupphase.backend.util.validation.TicketValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,13 +18,18 @@ public class TicketValidatorImpl implements TicketValidator {
     private final UserRepository userRepository;
     private final ShowRepository showRepository;
     private final SeatRepository seatRepository;
+    private final ShowService showService;
+    private final AccessoryValidator accessoryValidator;
 
+    @Autowired
     public TicketValidatorImpl(TicketRepository ticketRepository, UserRepository userRepository, ShowRepository showRepository,
-                                SeatRepository seatRepository){
+                               SeatRepository seatRepository, ShowService showService, AccessoryValidator accessoryValidator){
         this.ticketRepository = ticketRepository;
         this.userRepository = userRepository;
         this.showRepository = showRepository;
         this.seatRepository = seatRepository;
+        this.showService = showService;
+        this.accessoryValidator = accessoryValidator;
     }
 
     @Override
@@ -35,7 +43,7 @@ public class TicketValidatorImpl implements TicketValidator {
     public Constraints validate(Ticket ticket) {
         Constraints constraints = new Constraints();
         constraints.add(validateUnique(ticket));
-        constraints.add(AccesoryValidator.validateJavaxConstraints(ticket));
+        constraints.add(accessoryValidator.validateJavaxConstraints(ticket));
         return constraints;
     }
 
@@ -43,7 +51,7 @@ public class TicketValidatorImpl implements TicketValidator {
     public Constraints validateSave(Ticket ticket) {
         Constraints constraints = new Constraints();
         AbstractUser userFromDataBase = userRepository.findAbstractUserByUserCode(ticket.getUserCode());
-        constraints.add("seat_notFree", !showRepository.findShowById(ticket.getShow().getId()).getTakenSeats().contains(ticket.getSeat()));
+        constraints.add("seat_notFree", showService.isSeatFree(ticket.getShow(), ticket.getSeat()));
         constraints.add("userCode_exists", userFromDataBase != null);
         constraints.add("show_exists", showRepository.findShowById(ticket.getShow().getId()) != null);
         constraints.add("seat_exists", seatRepository.findSeatById(ticket.getSeat().getId()) != null);

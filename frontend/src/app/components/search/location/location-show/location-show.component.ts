@@ -47,10 +47,10 @@ export class LocationShowComponent implements OnInit {
     );
   }
 
-  openPurchase(show) {
+  openPurchase(show: Show) {
     if (show) {
       sessionStorage.setItem('show', JSON.stringify(show));
-      this.router.navigate(['ticket-purchase']);
+      this.router.navigate(['ticket-purchase/' + show.id]);
     }
   }
 }

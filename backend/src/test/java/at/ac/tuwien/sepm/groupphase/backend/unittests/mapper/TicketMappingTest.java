@@ -26,6 +26,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ActiveProfiles("test")
 public class TicketMappingTest implements TestData {
 
+    @Autowired
+    private TicketMapper ticketMapper;
+
     private final Ticket ticket = Ticket.builder()
         .ticketId(ID)
         .ticketCode(USER_CODE)
@@ -39,14 +42,20 @@ public class TicketMappingTest implements TestData {
         .event(EVENT)
         .build();
 
-    private final DetailedTicketDto ticketDto = DetailedTicketDto.
-        DetailedTicketDtoBuilder.aDetailedTicketDto
-        (ID, USER_CODE, false, false, START, SEATS.get(0), USER_CODE, TOTAL, SHOWS.get(0), EVENT)
-        .build();
-
-
-    @Autowired
-    private TicketMapper ticketMapper;
+    private final DetailedTicketDto ticketDto = ticketMapper.ticketToDetailedTicketDto(
+        Ticket.builder()
+            .ticketId(ID)
+            .userCode(USER_CODE)
+            .isPurchased(false)
+            .isReserved(false)
+            .purchaseDate(START)
+            .seat(SEATS.get(0))
+            .userCode(USER_CODE)
+            .price(PRICE)
+            .show(SHOWS.get(0))
+            .event(EVENT)
+            .build()
+    );
 
     @Test
     public void shouldMapTicketToSimpleTicketDTO() {

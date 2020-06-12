@@ -35,10 +35,8 @@ public class Merchandise {
 
     @ToString.Exclude
     @NotNull
-    @Lob
-    @Column(nullable = false, name = "photo")
-    private String photo;
-
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Image photo;
 
     @NotNull
     @Column(nullable = false, name = "stock_count")

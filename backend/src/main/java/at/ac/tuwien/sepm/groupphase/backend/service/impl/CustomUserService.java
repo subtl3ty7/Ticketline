@@ -119,7 +119,7 @@ public class CustomUserService implements UserService {
 
     @Override
     public String blockCustomer(String userCode) throws ValidationException, DataAccessException {
-        LOGGER.info("Blocking customer with user code " + userCode );
+        LOGGER.debug("Blocking customer with user code " + userCode );
         AbstractUser user = userRepository.findAbstractUserByUserCode(userCode);
         validator.validateBlock(userCode).throwIfViolated();
 
@@ -184,7 +184,7 @@ public class CustomUserService implements UserService {
 
     @Override
     public void deleteUserByUsercode(String userCode) throws ValidationException, DataAccessException{
-        LOGGER.info("Deleting Customer Entity in Service Layer");
+        LOGGER.debug("Deleting Customer Entity in Service Layer");
         validator.validateDelete(userCode).throwIfViolated();
         AbstractUser user = findUserByUserCode(userCode);
         UserAttempts userAttempts = userAttemptsRepository.findUserAttemptsByEmail(user.getEmail());
@@ -194,7 +194,7 @@ public class CustomUserService implements UserService {
 
     @Override
     public AbstractUser updateCustomer(Customer customer) throws ValidationException, DataAccessException{
-        LOGGER.info("Updating customer with the usercode " + customer.getUserCode());
+        LOGGER.debug("Updating customer with the usercode " + customer.getUserCode());
         validator.validateUpdate(customer).throwIfViolated();
         AbstractUser userFromDatabase = userRepository.findAbstractUserByUserCode(customer.getUserCode());
 

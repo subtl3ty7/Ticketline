@@ -1,5 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.util;
 
+import at.ac.tuwien.sepm.groupphase.backend.entity.Image;
 import com.google.common.io.CharStreams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
@@ -19,12 +20,12 @@ public class Resources {
         this.resourceLoader = resourceLoader;
     }
 
-    public String getImageEncoded(String imgName) {
+    public Image getImageEncoded(String imgName) {
         try {
             InputStream inputStream = resourceLoader.getResource("classpath:images/" + imgName).getInputStream();
             String encodedString = Base64.getEncoder().encodeToString(inputStream.readAllBytes());
             encodedString = "data:image/" + getFileExtension(imgName) + ";base64," + encodedString;
-            return encodedString;
+            return new Image(null, encodedString);
         } catch (IOException e) {
             throw new RuntimeException("Couldn't load Image File.", e);
         } catch (NullPointerException e) {

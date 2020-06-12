@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "artist")
@@ -18,10 +19,12 @@ import java.util.List;
 @Builder(toBuilder = true)
 @ToString
 @Transactional
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Artist {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
     @ManyToMany(mappedBy = "artists", fetch = FetchType.LAZY)
@@ -36,35 +39,4 @@ public class Artist {
     @Size(min=1, max=100)
     @Column(nullable = false, length = 100, name = "last_name")
     private String lastName;
-
-    public static final class ArtistBuilder {
-        private Long id;
-        private String firstName;
-        private String lastName;
-
-        public ArtistBuilder() {
-        }
-
-        public static Artist.ArtistBuilder anArtist() {
-            return new Artist.ArtistBuilder();
-        }
-
-        public Artist.ArtistBuilder withFirstName(String firstName) {
-            this.firstName = firstName;
-            return this;
-        }
-
-        public Artist.ArtistBuilder withLastName(String lastName) {
-            this.lastName = lastName;
-            return this;
-        }
-    }
-
-    public Artist build() {
-        Artist artist = new Artist();
-        artist.setId(id);
-        artist.setFirstName(firstName);
-        artist.setLastName(lastName);
-        return artist;
-    }
 }

@@ -5,6 +5,7 @@ import at.ac.tuwien.sepm.groupphase.backend.repository.ArtistRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventLocationRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
 import at.ac.tuwien.sepm.groupphase.backend.util.Constraints;
+import at.ac.tuwien.sepm.groupphase.backend.util.validation.AccessoryValidator;
 import at.ac.tuwien.sepm.groupphase.backend.util.validation.EventValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,12 +22,17 @@ public class EventValidatorImpl implements EventValidator {
     private final EventRepository eventRepository;
     private final EventLocationRepository eventLocationRepository;
     private final ArtistRepository artistRepository;
+    private final AccessoryValidator accessoryValidator;
 
     @Autowired
-    public EventValidatorImpl(EventRepository eventRepository, EventLocationRepository eventLocationRepository, ArtistRepository artistRepository) {
+    public EventValidatorImpl(EventRepository eventRepository,
+                              EventLocationRepository eventLocationRepository,
+                              ArtistRepository artistRepository,
+                              AccessoryValidator accessoryValidator) {
         this.eventRepository = eventRepository;
         this.eventLocationRepository = eventLocationRepository;
         this.artistRepository = artistRepository;
+        this.accessoryValidator = accessoryValidator;
     }
 
     @Override
@@ -34,7 +40,7 @@ public class EventValidatorImpl implements EventValidator {
         Constraints constraints = new Constraints();
         constraints.add("event_notNull", event != null);
         if(!constraints.isViolated()) {
-            constraints.add(AccesoryValidator.validateJavaxConstraints(event));
+            constraints.add(accessoryValidator.validateJavaxConstraints(event));
             constraints.add(validateEventCode(event.getEventCode()));
             constraints.add("prices_exist", event.getPrices() != null && event.getPrices().size() > 0);
             constraints.add("shows_exist", event.getShows() != null && event.getShows().size() > 0);
@@ -68,7 +74,7 @@ public class EventValidatorImpl implements EventValidator {
 
     private Constraints validate(Show show) {
         Constraints constraints = new Constraints();
-        constraints.add(AccesoryValidator.validateJavaxConstraints(show));
+        constraints.add(accessoryValidator.validateJavaxConstraints(show));
         constraints.add("show_idNull", show.getId()==null);
         constraints.add("eventLocation_exists", show.getEventLocation() != null && eventLocationRepository.findEventLocationById(show.getEventLocation().getId()) != null);
         return constraints;
@@ -79,7 +85,7 @@ public class EventValidatorImpl implements EventValidator {
         Constraints constraints = new Constraints();
         constraints.add("eventLocation_notNull", eventLocation != null);
         if (eventLocation != null) {
-            constraints.add(AccesoryValidator.validateJavaxConstraints(eventLocation));
+            constraints.add(accessoryValidator.validateJavaxConstraints(eventLocation));
             constraints.add("eventLocation_sectionsNotNull", eventLocation.getSections() != null);
             if (eventLocation.getSections() != null) {
                 constraints.add("eventLocation_capacity", eventLocation.getCapacity() >= getCapacitySum(eventLocation));
@@ -99,7 +105,7 @@ public class EventValidatorImpl implements EventValidator {
 
     private Constraints validate(Section section) {
         Constraints constraints = new Constraints();
-        constraints.add(AccesoryValidator.validateJavaxConstraints(section));
+        constraints.add(accessoryValidator.validateJavaxConstraints(section));
         constraints.add("section_capacity", section.getCapacity() >= section.getSeats().size());
         if(section.getSeats() != null) {
             constraints.add(validateSeats(section.getSeats()));
@@ -117,7 +123,7 @@ public class EventValidatorImpl implements EventValidator {
 
     private Constraints validate(Seat seat) {
         Constraints constraints = new Constraints();
-        constraints.add(AccesoryValidator.validateJavaxConstraints(seat));
+        constraints.add(accessoryValidator.validateJavaxConstraints(seat));
         return constraints;
     }
 

@@ -112,7 +112,7 @@ public class UserEndpoint {
         return response;
     }
 
-    @DeleteMapping(value = "/delete/{usercode}")
+    @DeleteMapping(value = "/{usercode}")
     @ApiOperation(
         value = "Delete user",
         notes = "Delete user by usercode",
@@ -123,7 +123,7 @@ public class UserEndpoint {
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
     public ResponseEntity<Void> deleteUser(@PathVariable String usercode) {
-        LOGGER.info("DELETE /api/v1/users/delete/" + usercode);
+        LOGGER.info("DELETE /api/v1/users/" + usercode);
         userService.deleteUserByUsercode(usercode);
         return ResponseEntity.noContent().build();
     }

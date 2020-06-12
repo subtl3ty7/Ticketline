@@ -47,9 +47,23 @@ public class CustomShowService implements ShowService {
 
     @Override
     @Transactional
-    public Show findShowById(Long id) {
+    public Show findShowById(Long id, boolean initEventLocation) {
         Show show = showRepository.findShowById(id);
-        Hibernate.initialize(show.getEventLocation().getShows());
+        if(initEventLocation) {
+            //Hibernate.initialize(show.getEventLocation().getShows());
+            Hibernate.initialize(show.getEventLocation().getSections());
+        }
+        Hibernate.initialize(show.getTakenSeats());
         return show;
+    }
+
+    @Override
+    @Transactional
+    public boolean isSeatFree(Show show, Seat seat) {
+        show = this.findShowById(show.getId(), false);
+        List<Seat> takenSeats = show.getTakenSeats();
+        boolean doesContain = takenSeats.contains(seat);
+
+        return !doesContain;
     }
 }

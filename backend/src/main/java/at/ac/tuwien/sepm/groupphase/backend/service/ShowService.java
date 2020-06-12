@@ -14,5 +14,7 @@ public interface ShowService {
 
     List<Show> findShowsAdvanced(String name, Integer type, Integer category, LocalDateTime startDate, LocalDateTime endDate, Duration showDuration, Integer price);
 
-    Show findShowById(Long id);
+    Show findShowById(Long id, boolean initEventLocation);
+
+    boolean isSeatFree(Show show, Seat seat);
 }
