@@ -34,10 +34,10 @@
       </div>
     </div>
 
-    <div class="info-wrapper">
+    <div class="info-wrapper" >
       <div class="info">
         <div class="info-label"></div>
-        <div class="info-field" *ngIf="invoice.invoice_category.startsWith('Ticket')">
+        <div class="info-field" *ngIf="invoice.invoice_category.startsWith('Ticket')" >
           Ticket code: {{invoice.tickets[0].ticketCode}}
         </div>
         <div class="info-field" *ngIf="invoice.invoice_category.startsWith('Merch')">

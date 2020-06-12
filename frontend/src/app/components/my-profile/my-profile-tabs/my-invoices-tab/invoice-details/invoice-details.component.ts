@@ -44,13 +44,14 @@ export class InvoiceDetailsComponent implements OnInit {
     date1 = date1.substring(0, date1.indexOf('.'));
     doc.setFontType('normal');
     doc.setFontSize(11);
-    doc.text('Kundennummer: ' + invoice.tickets[0].userCode, 15, 50, null, null, 'left');
-    doc.text('Rechnungsnummer: ' + invoice.invoice_number, 15, 60, null, null, 'left');
+    doc.text('Kundenname: ' + this.currentUser.firstName + ' ' + this.currentUser.lastName, 15, 50, null, null, 'left');
+    doc.text('Kundennummer: ' + invoice.tickets[0].userCode, 15, 60, null, null, 'left');
+    doc.text('Rechnungsnummer: ' + invoice.invoice_number, 15, 70, null, null, 'left');
 
     if (invoice.invoice_type === 'Kauf Rechnung') {
       doc.text('Rechnungsdatum: ' + date1, 130, 70, null, null);
     } else {
-      doc.text('Kaufdatum: ' + date, 15, 70, null, null, 'left');
+      doc.text('Kaufdatum: ' + date, 130, 60, null, null, 'left');
       doc.text('Stornierungsdatum: ' + date1, 130, 70, null, null);
     }
 
@@ -73,8 +74,8 @@ export class InvoiceDetailsComponent implements OnInit {
         seat_num = invoice.tickets[i].seatId.toString();
         doc.line(15, 95 + 10 * (j + 2), 180, 95 + 10 * (j + 2));
         doc.text('' + invoice.tickets[i].ticketCode, 20, 110 + j * 10, null, null);
-        doc.text('' + invoice.tickets[i].eventName + ' / ' + invoice.tickets[i].showId, 70, 110 + j * 10, null, null);
-        doc.text('' + seat_num, 130, 110 + j * 10, null, null);
+        doc.text('' + invoice.tickets[i].eventName + ' / ' + invoice.tickets[i].showId, 65, 110 + j * 10, null, null);
+        doc.text('' + seat_num, 125, 110 + j * 10, null, null);
         const price = invoice.tickets[i].price;
         doc.text('' + price.toFixed(2), 155, 110 + j * 10, null, null);
         sum += price;
