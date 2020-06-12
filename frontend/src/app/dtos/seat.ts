@@ -1,5 +1,5 @@
 export class Seat {
-  private id: number;
+  public id: number;
   public sectionId: number;
   public seatRow: string;
   public seatColumn: string;

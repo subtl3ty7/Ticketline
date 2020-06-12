@@ -45,6 +45,12 @@ public class Show implements Serializable {
 
     @ToString.Exclude
     @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "SHOW_TAKEN_SEATS",
+        joinColumns = { @JoinColumn(name = "show_id") },
+        inverseJoinColumns = { @JoinColumn(name = "seat_id") },
+        uniqueConstraints = { @UniqueConstraint(columnNames = {"show_id", "seat_id"}) }
+    )
     private List<Seat> takenSeats;
 
     @NotNull

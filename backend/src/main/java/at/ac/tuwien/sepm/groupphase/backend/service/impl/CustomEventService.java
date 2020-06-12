@@ -64,6 +64,7 @@ public class CustomEventService implements EventService {
 
     @Override
     public Event createNewEvent(Event event){
+        //LocalDateTime startTest = LocalDateTime.now();
         event.setEventCode(getNewEventCode());
         validator.validate(event).throwIfViolated();
 
@@ -89,13 +90,10 @@ public class CustomEventService implements EventService {
             show.setPhoto(event.getPhoto());
         }
 
-        LocalDateTime startTest = LocalDateTime.now();
-        //event.setPhoto(new Image(null, "dd"));
-        //event.setShows(null);
         Event event1 = eventRepository.save(event);
-        LocalDateTime endTest = LocalDateTime.now();
-        this.runningTimeTest += Duration.between(startTest, endTest).toMillis();
-        LOGGER.info("Test Area took " + runningTimeTest/1000.0 + " seconds");
+        //LocalDateTime endTest = LocalDateTime.now();
+        //this.runningTimeTest += Duration.between(startTest, endTest).toMillis();
+        //LOGGER.info("Test Area took " + runningTimeTest/1000.0 + " seconds");
 
         return event1;
     }

@@ -139,7 +139,6 @@ export class SeatingPlanComponent implements OnInit {
   }
 
   private createSeats(layout: number) {
-    const show: Show = this.show;
     let currentSectionIndex;
     let currentSeatIndex;
     let currentRow;
@@ -155,8 +154,10 @@ export class SeatingPlanComponent implements OnInit {
         for (currentRow = 0; currentRow < rowMax; currentRow++) {
           for (currentCol = 0; currentCol < colMax; currentCol++) {
             const seatObject = this.sections[currentSectionIndex].seats[currentSeatIndex];
+            const isSeatFree = this.isSeatFree(seatObject);
             let color;
-            if (show.takenSeats.indexOf(seatObject) === -1) {
+            console.log(seatObject)
+            if (isSeatFree) {
               color = 'lemonchiffon';
             } else {
               color = 'gray';
@@ -187,7 +188,7 @@ export class SeatingPlanComponent implements OnInit {
               .attr('fill',  color)
               .attr('sectionName', this.sections[currentSectionIndex].name)
               .on('click', function() {
-                if (show.takenSeats.indexOf(seatObject) === -1) {
+                if (isSeatFree) {
                   if (!selected.includes(seatObject)) {
                     d3.select(this)
                       .attr('fill', 'green');
@@ -201,13 +202,13 @@ export class SeatingPlanComponent implements OnInit {
                 }
               })
               .on('mouseover', function() {
-                if ((show.takenSeats.indexOf(seatObject) === -1) && !selected.includes(seatObject)) {
+                if (isSeatFree && !selected.includes(seatObject)) {
                   d3.select(this)
                     .attr('fill', 'blue');
                 }
               })
               .on('mouseout', function() {
-                if ((show.takenSeats.indexOf(seatObject) === -1) && !selected.includes(seatObject)) {
+                if (isSeatFree && !selected.includes(seatObject)) {
                   d3.select(this)
                     .attr('fill', color);
                 }
@@ -216,5 +217,9 @@ export class SeatingPlanComponent implements OnInit {
           }
         }
     }
+  }
+
+  isSeatFree(seat: Seat): boolean {
+    return (this.show.takenSeats.filter(s => s.id === seat.id).length === 0);
   }
 }

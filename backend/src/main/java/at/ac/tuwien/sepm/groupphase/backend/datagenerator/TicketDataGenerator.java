@@ -35,7 +35,7 @@ public class TicketDataGenerator {
     private final UserService userService;
     private final EventRepository eventRepository;
     private final EntityManagerFactory entityManagerFactory;
-    private static final int NUMBER_OF_TICKETS_TO_GENERATE = 1000; // will generate double the amount
+    private static final int NUMBER_OF_TICKETS_TO_GENERATE = 0; // will generate double the amount
     private int counter = 0;
     private int eventCounter = 0;
 

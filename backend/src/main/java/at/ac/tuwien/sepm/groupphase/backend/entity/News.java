@@ -26,7 +26,7 @@ public class News implements Serializable {
 
     @NotNull
     @Size(min=6, max=6)
-    @Column(nullable = false, length = 6, name = "event_code", unique = true)
+    @Column(nullable = false, length = 6, unique = true)
     private String newsCode;
 
     @NotNull

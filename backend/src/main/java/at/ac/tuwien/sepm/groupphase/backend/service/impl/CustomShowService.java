@@ -60,6 +60,10 @@ public class CustomShowService implements ShowService {
     @Override
     @Transactional
     public boolean isSeatFree(Show show, Seat seat) {
-        return !this.findShowById(show.getId(), false).getTakenSeats().contains(seat);
+        show = this.findShowById(show.getId(), false);
+        List<Seat> takenSeats = show.getTakenSeats();
+        boolean doesContain = takenSeats.contains(seat);
+
+        return !doesContain;
     }
 }

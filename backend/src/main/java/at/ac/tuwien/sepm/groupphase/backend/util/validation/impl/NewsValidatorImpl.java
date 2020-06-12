@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.util.validation.impl;
 import at.ac.tuwien.sepm.groupphase.backend.entity.*;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventLocationRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
+import at.ac.tuwien.sepm.groupphase.backend.repository.NewsRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.util.Constraints;
 import at.ac.tuwien.sepm.groupphase.backend.util.validation.AccessoryValidator;
@@ -26,24 +27,27 @@ public class NewsValidatorImpl implements NewsValidator {
     private final UserValidator userValidator;
     private final EventLocationRepository eventLocationRepository;
     private final AccessoryValidator accessoryValidator;
+    private final NewsRepository newsRepository;
 
     @Autowired
     public NewsValidatorImpl(EventRepository eventRepository,
                              UserRepository userRepository,
                              UserValidator userValidator,
                              EventLocationRepository eventLocationRepository,
-                             AccessoryValidator accessoryValidator) {
+                             AccessoryValidator accessoryValidator,
+                             NewsRepository newsRepository) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
         this.userValidator = userValidator;
         this.eventLocationRepository = eventLocationRepository;
         this.accessoryValidator = accessoryValidator;
+        this.newsRepository = newsRepository;
     }
 
     @Override
     public Constraints validateNewsCode(String newsCode) {
         Constraints constraints = new Constraints();
-        constraints.add("newsCode_unique", eventRepository.findEventByEventCode(newsCode) == null);
+        constraints.add("newsCode_unique", newsRepository.findByNewsCode(newsCode) == null);
         return constraints;
     }
 
