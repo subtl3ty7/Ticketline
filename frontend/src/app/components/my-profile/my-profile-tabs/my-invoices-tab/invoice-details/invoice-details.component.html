@@ -25,17 +25,23 @@
     <div class="info-wrapper">
       <div class="info">
         <div class="info-label"></div>
-        <div class="info-field">
+        <div class="info-field" *ngIf="invoice.invoice_category.startsWith('Ticket')" >
           Event name: {{invoice.tickets[0].eventName}}
+        </div>
+        <div class="info-field" *ngIf="invoice.invoice_category.startsWith('Merch')" >
+          Merchandise name: {{merchandise.merchandiseProductName}}
         </div>
       </div>
     </div>
 
-    <div class="info-wrapper">
+    <div class="info-wrapper" >
       <div class="info">
         <div class="info-label"></div>
-        <div class="info-field">
+        <div class="info-field" *ngIf="invoice.invoice_category.startsWith('Ticket')" >
           Ticket code: {{invoice.tickets[0].ticketCode}}
+        </div>
+        <div class="info-field" *ngIf="invoice.invoice_category.startsWith('Merch')">
+          Merchandise code: {{invoice.merchandise_code}}
         </div>
       </div>
     </div>

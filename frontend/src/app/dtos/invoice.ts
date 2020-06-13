@@ -7,5 +7,7 @@ export class Invoice {
   public invoice_number: string;
   public payment_method: string;
   public invoice_type: string;
+  public invoice_category: string;
+  public merchandise_code: string;
   public tickets: SimpleTicket[];
 }

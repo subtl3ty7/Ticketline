@@ -50,3 +50,14 @@
   width: 209px;
   height: 50px;
 }
+
+.my-custom-scrollbar {
+  position: relative;
+  max-width: 100%;
+  height: 550px;
+  overflow: auto;
+}
+
+.table-wrapper-scroll-y {
+  display: block;
+}

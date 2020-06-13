@@ -65,8 +65,8 @@ public class EventEndpointTest implements TestData {
         .eventCode(USER_CODE)
         .name(NAME)
         .description(DESC)
-        .category(CAT)
-        .type(TYP)
+        .category(CAT1)
+        .type(TYP1)
         .startsAt(START)
         .endsAt(END)
         .duration(DURATION)
@@ -84,8 +84,8 @@ public class EventEndpointTest implements TestData {
             .eventCode(USER_CODE)
             .name(NAME)
             .description(DESC)
-            .category(CAT)
-            .type(TYP)
+            .category(CAT1)
+            .type(TYP1)
             .startsAt(START)
             .endsAt(END)
             .duration(DURATION)
@@ -148,7 +148,8 @@ public class EventEndpointTest implements TestData {
     public void givenEvent_whenGetTop10ByCategory_then200andListWith1Element() throws Exception {
         eventRepository.save(event);
 
-        MvcResult mvcResult = this.mockMvc.perform(get(EVENT_TOP10 + "/" + CAT)
+        MvcResult mvcResult = this.mockMvc.perform(get(EVENT_TOP10)
+            .param("category", CAT1.toString())
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
             .andDo(print())
             .andReturn();
@@ -169,7 +170,8 @@ public class EventEndpointTest implements TestData {
     public void givenEvent_whenGetEventByCode_then200AndEventWithProperties() throws Exception {
         eventRepository.save(event);
 
-        MvcResult mvcResult = this.mockMvc.perform(get(EVENT_BASE_URI + "/" + event.getEventCode())
+        MvcResult mvcResult = this.mockMvc.perform(get(EVENT_BASE_URI)
+            .param("name", NAME)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
             .andDo(print())
             .andReturn();
@@ -180,7 +182,9 @@ public class EventEndpointTest implements TestData {
             () -> assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType())
         );
 
-        SimpleEventDto simpleEventDto = (objectMapper.readValue(response.getContentAsString(), SimpleEventDto.class));
+        List<SimpleEventDto> simpleEventDtos = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
+            SimpleEventDto[].class));
+        SimpleEventDto simpleEventDto = simpleEventDtos.get(0);
         assertAll(
             () -> assertEquals(USER_CODE, simpleEventDto.getEventCode()),
             () -> assertEquals(NAME, simpleEventDto.getName()),

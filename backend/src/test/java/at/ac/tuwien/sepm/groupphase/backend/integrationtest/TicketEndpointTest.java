@@ -98,6 +98,7 @@ public class TicketEndpointTest implements TestData {
     private ArtistService artistService;
 
     private DetailedTicketDto detailedTicketDto;
+    private Ticket ticket;
 
     @Test
     @Order(1)
@@ -122,6 +123,19 @@ public class TicketEndpointTest implements TestData {
                 .event(eventRepository.findEventById(1L))
                 .build()
         );
+
+        ticket = Ticket.builder()
+            .ticketId(ID)
+            .ticketCode(USER_CODE)
+            .isPurchased(false)
+            .isReserved(false)
+            .purchaseDate(START)
+            .seat(seatRepository.findSeatById(6L))
+            .userCode(USER_CODE_TICKET)
+            .price(PRICE)
+            .show(showRepository.findShowById(6L))
+            .event(eventRepository.findEventById(1L))
+            .build();
 
         List<DetailedTicketDto> ticketDtos = new ArrayList<>();
         ticketDtos.add(detailedTicketDto);

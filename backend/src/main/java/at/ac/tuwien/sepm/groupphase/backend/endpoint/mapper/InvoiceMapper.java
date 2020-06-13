@@ -14,30 +14,14 @@ import java.util.List;
 public interface InvoiceMapper {
 
     @Named("InvoiceToInvoiceDto")
-    InvoiceDto invoiceToInvoiceDto(TicketInvoice invoice);
+    InvoiceDto invoiceToInvoiceDto(Invoice invoice);
 
     @Named("InvoiceDtoToInvoice")
-    TicketInvoice invoiceDtoToInvoice(InvoiceDto invoiceDto);
+    Invoice invoiceDtoToInvoice(InvoiceDto invoiceDto);
 
     @IterableMapping(qualifiedByName = "InvoiceListToInvoiceDtoList")
-    List<InvoiceDto> invoiceListToInvoiceDtoList(List<TicketInvoice> invoices);
+    List<InvoiceDto> invoiceListToInvoiceDtoList(List<Invoice> invoices);
 
     @IterableMapping(qualifiedByName = "InvoiceDtoListToInvoiceList")
-    List<TicketInvoice> invoiceDtoListToInvoiceList(List<InvoiceDto> invoiceDtos);
-
-    /*@Named("setTickets")
-    default List<Ticket> setTickets(AbstractInvoice invoice) {
-        if(invoice instanceof TicketInvoice){
-            return ((TicketInvoice)invoice).getTickets();
-        }
-        return null;
-    }
-
-    @Named("setType")
-    default String setType(AbstractInvoice invoice) {
-        if(invoice instanceof TicketInvoice){
-            return ((TicketInvoice)invoice).getInvoice_type();
-        }
-        return null;
-    } */
+    List<Invoice> invoiceDtoListToInvoiceList(List<InvoiceDto> invoiceDtos);
 }
