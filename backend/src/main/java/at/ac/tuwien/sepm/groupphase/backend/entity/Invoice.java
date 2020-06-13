@@ -37,7 +37,7 @@ public class Invoice implements Serializable {
     @NotNull
     @Size(min = 6, max = 6)
     @Column(nullable = false, name = "invoice_number", length = 6)
-    private String invoice_number;
+    private String invoiceNumber;
 
     @ToString.Exclude
     @OneToMany(fetch = FetchType.EAGER)
@@ -49,7 +49,7 @@ public class Invoice implements Serializable {
 
     @NotNull
     @Column(nullable = false,  name = "invoice_category")
-    private String invoice_category;
+    private InvoiceCategoryEnum invoice_category;
 
     private String merchandise_code;
 

@@ -27,7 +27,7 @@ public class InvoiceRepositoryTest implements TestData {
         .userCode(USER_CODE)
         .payment_method(PAY)
         .generatedAt(GENERATE)
-        .invoice_number(NUM)
+        .invoiceNumber(NUM)
         .invoice_category(CAT_I)
         .merchandise_code(USER_CODE)
         .build();
@@ -41,7 +41,7 @@ public class InvoiceRepositoryTest implements TestData {
             .userCode(USER_CODE)
             .payment_method(PAY)
             .generatedAt(GENERATE)
-            .invoice_number(NUM)
+            .invoiceNumber(NUM)
             .invoice_category(CAT_I)
             .merchandise_code(USER_CODE)
             .build();

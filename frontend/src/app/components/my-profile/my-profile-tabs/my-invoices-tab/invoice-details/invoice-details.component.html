@@ -38,7 +38,7 @@
       <div class="info">
         <div class="info-label"></div>
         <div class="info-field" *ngIf="invoice.invoice_category.startsWith('Ticket')" >
-          Ticket code: {{invoice.tickets[0].ticketCode}}
+          Number of tickets: {{invoice.tickets.length}}
         </div>
         <div class="info-field" *ngIf="invoice.invoice_category.startsWith('Merch')">
           Merchandise code: {{invoice.merchandise_code}}

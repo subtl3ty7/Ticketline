@@ -101,7 +101,7 @@ public interface TestData {
     String TICKETS_BASE_URI = BASE_URI + "/tickets";
 
     String TYP_I = "purchase";
-    String CAT_I = "merchandise";
+    InvoiceCategoryEnum CAT_I = InvoiceCategoryEnum.MERCHANDISE_INVOICE;
     String PAY = "card";
     LocalDateTime GENERATE = LocalDateTime.of(2020,6,1,10,0,0);
     String NUM = "000001";

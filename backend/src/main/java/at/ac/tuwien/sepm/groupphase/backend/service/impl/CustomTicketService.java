@@ -159,7 +159,6 @@ public class CustomTicketService implements TicketService {
 
         invoiceService.createTicketInvoice(List.of(ticket1), "Kauf Stornorechnung", LocalDateTime.now());
         ticketRepository.delete(ticket1);
-        // do the money return  and invoices stuff
 
         LOGGER.info("Canceled ticket with ticketCode " + ticketCode);
     }
