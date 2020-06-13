@@ -1,11 +1,8 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.InvoiceDto;
-import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleTicketDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.InvoiceMapper;
-import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractInvoice;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
-import at.ac.tuwien.sepm.groupphase.backend.entity.TicketInvoice;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Invoice;
 import at.ac.tuwien.sepm.groupphase.backend.service.InvoiceService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -41,13 +38,13 @@ public class InvoiceEndpoint {
         notes = "Get all invoices of one user")
     @ApiResponses({
         @ApiResponse(code = 200, message = "Invoices are successfully retrieved"),
-        @ApiResponse(code = 404, message = "No Invoice is found"),
+        @ApiResponse(code = 404, message = "No invoice is found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
     public ResponseEntity<InvoiceDto> getAllInvoicesOneUser(@PathVariable String userCode) {
         LOGGER.info("GET /api/v1/invoices/" + userCode);
 
-        List<TicketInvoice> invoices = invoiceService.allInvoicesOfUser(userCode);
+        List<Invoice> invoices = invoiceService.allInvoicesOfUser(userCode);
         return new ResponseEntity(invoiceMapper.invoiceListToInvoiceDtoList(invoices), HttpStatus.OK);
     }
 }

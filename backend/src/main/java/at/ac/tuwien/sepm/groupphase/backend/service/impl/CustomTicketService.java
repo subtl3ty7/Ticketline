@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.xml.crypto.Data;
 import java.lang.invoke.MethodHandles;
@@ -145,6 +146,7 @@ public class CustomTicketService implements TicketService {
     }
 
     @Override
+    @Transactional
     public void cancelPurchasedTicket(String ticketCode) throws ValidationException, DataAccessException{
         LOGGER.debug("Validating ticket with ticketCode " + ticketCode);
         validator.validatePurchased(ticketCode).throwIfViolated();
@@ -187,6 +189,7 @@ public class CustomTicketService implements TicketService {
     }
 
     @Override
+    @Transactional
     public void cancelReservedTicket(String ticketCode) {
         LOGGER.info("Validating reservation with ticketCode: " + ticketCode);
         validator.validateReserved(ticketCode).throwIfViolated();

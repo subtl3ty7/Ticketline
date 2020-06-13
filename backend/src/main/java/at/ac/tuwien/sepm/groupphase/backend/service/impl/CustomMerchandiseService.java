@@ -5,8 +5,10 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Merchandise;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
+import at.ac.tuwien.sepm.groupphase.backend.repository.InvoiceRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.MerchandiseRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
+import at.ac.tuwien.sepm.groupphase.backend.service.InvoiceService;
 import at.ac.tuwien.sepm.groupphase.backend.service.MerchandiseService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
 import at.ac.tuwien.sepm.groupphase.backend.util.validation.MerchandiseValidator;
@@ -27,12 +29,14 @@ public class CustomMerchandiseService implements MerchandiseService {
     private final MerchandiseRepository merchandiseRepository;
     private final MerchandiseValidator validator;
     private final UserRepository userRepository;
+    private final InvoiceService invoiceService;
 
     @Autowired
-    public CustomMerchandiseService(MerchandiseRepository merchandiseRepository, MerchandiseValidator validator, UserRepository userRepository) {
+    public CustomMerchandiseService(MerchandiseRepository merchandiseRepository, MerchandiseValidator validator, UserRepository userRepository, InvoiceService invoiceService) {
         this.merchandiseRepository = merchandiseRepository;
         this.validator = validator;
         this.userRepository = userRepository;
+        this.invoiceService = invoiceService;
     }
 
 
@@ -84,7 +88,7 @@ public class CustomMerchandiseService implements MerchandiseService {
         long currentPoints = ((Customer) user).getPoints();
         ((Customer) user).setPoints(currentPoints - saveMerchandise.getPremiumPrice());
 
-        // please generate invoice here
+        invoiceService.createMerchandiseInvoice(merchandise, userCode, "premium points");
 
         merchandiseRepository.save(saveMerchandise);
         userRepository.save(user);
@@ -100,7 +104,7 @@ public class CustomMerchandiseService implements MerchandiseService {
         Merchandise saveMerchandise = merchandiseRepository.findMerchandiseById(merchandise.getId());
         saveMerchandise.setStockCount(saveMerchandise.getStockCount() - 1);
 
-        // please generate invoice here
+        invoiceService.createMerchandiseInvoice(merchandise, userCode, "money");
 
         merchandiseRepository.save(saveMerchandise);
 
