@@ -29,6 +29,7 @@ public class InvoiceRepositoryTest implements TestData {
         .generatedAt(GENERATE)
         .invoice_number(NUM)
         .invoice_category(CAT_I)
+        .merchandise_code(USER_CODE)
         .build();
 
     @BeforeEach
@@ -42,6 +43,7 @@ public class InvoiceRepositoryTest implements TestData {
             .generatedAt(GENERATE)
             .invoice_number(NUM)
             .invoice_category(CAT_I)
+            .merchandise_code(USER_CODE)
             .build();
     }
 
