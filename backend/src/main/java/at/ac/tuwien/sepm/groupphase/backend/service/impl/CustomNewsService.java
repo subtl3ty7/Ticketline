@@ -9,11 +9,13 @@ import at.ac.tuwien.sepm.groupphase.backend.service.NewsService;
 import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
 import at.ac.tuwien.sepm.groupphase.backend.util.validation.NewsValidator;
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDateTime;
@@ -93,10 +95,12 @@ public class CustomNewsService implements NewsService {
     }
 
     @Override
+    @Transactional
     public News findByNewsCode(String newsCode, Authentication auth) {
         AbstractUser user = userService.getAuthenticatedUser(auth);
         validator.validateUser(user).throwIfViolated();
         News news = newsRepository.findByNewsCode(newsCode);
+        Hibernate.initialize(news.getSeenBy());
         if (news==null) {
             throw new NotFoundException("Could not find this News entry");
         } else {

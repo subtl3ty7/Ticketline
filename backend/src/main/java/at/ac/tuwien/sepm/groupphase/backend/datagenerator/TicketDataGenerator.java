@@ -35,7 +35,7 @@ public class TicketDataGenerator {
     private final UserService userService;
     private final EventRepository eventRepository;
     private final EntityManagerFactory entityManagerFactory;
-    private static final int NUMBER_OF_TICKETS_TO_GENERATE = 500; // will generate double the amount
+    private static final int NUMBER_OF_TICKETS_TO_GENERATE = 1000; // will generate double the amount
     private int counter = 0;
     private int eventCounter = 0;
 
@@ -60,13 +60,13 @@ public class TicketDataGenerator {
         if(ticketRepository.findAll().size() > 0) {
             LOGGER.debug("Ticket Data already generated");
         } else {
-            LOGGER.info("Generating Tickets Test Data");
+            LOGGER.info("Generating Tickets Test Data...");
             LocalDateTime start = LocalDateTime.now();
             generateTickets();
             generateMerchTickets();
             LocalDateTime end = LocalDateTime.now();
             float runningTime = Duration.between(start, end).toMillis();
-            LOGGER.info("Generating Tickets Test Data took " + runningTime / 1000.0 + " seconds");
+            LOGGER.info("Generating Tickets Test Data (" + NUMBER_OF_TICKETS_TO_GENERATE + " Entities) took " + runningTime / 1000.0 + " seconds");
         }
     }
 
@@ -119,7 +119,7 @@ public class TicketDataGenerator {
             Ticket ticket = Ticket.builder()
                 .price(0d)
                 .purchaseDate(LocalDateTime.now())
-                .seat(seats.get(i+ 1))
+                .seat(seats.get(i))
                 .show(shows.get(j))
                 .userCode(customer0.getUserCode())
                 .event(events.get(e))
@@ -131,13 +131,13 @@ public class TicketDataGenerator {
         }
 
         // reserve tickets for customer1
-        for (int i = NUMBER_OF_TICKETS_TO_GENERATE/2; i < NUMBER_OF_TICKETS_TO_GENERATE; i++) {
+        for (int i = NUMBER_OF_TICKETS_TO_GENERATE/2; i < NUMBER_OF_TICKETS_TO_GENERATE && i < seats.size(); i++) {
             int j = getShowNumber();
             int e = getEventNumber();
             Ticket ticket = Ticket.builder()
                 .price(100.0 - i*3 )
                 .purchaseDate(LocalDateTime.now())
-                .seat(seats.get(i+ 1))
+                .seat(seats.get(i))
                 .show(shows.get(getShowNumber()))
                 .userCode(customer1.getUserCode())
                 .event(events.get(e))

@@ -23,7 +23,7 @@ public class DetailedEventDto {
     private String photo;
     private List<ArtistDto> artists;
     @ToString.Exclude
-    private List<ShowDto> shows;
+    private List<SimpleShowDto> shows;
     private String type;
     private String category;
     private List<Integer> prices;

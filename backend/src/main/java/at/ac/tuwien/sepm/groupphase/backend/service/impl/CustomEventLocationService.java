@@ -50,6 +50,7 @@ public class CustomEventLocationService implements EventLocationService {
     public EventLocation save(EventLocation eventLocation) {
         eventValidator.validate(eventLocation).throwIfViolated();
         eventLocation.setShows(new ArrayList<>());
+        this.setSeatPrices(eventLocation);
         return eventLocationRepository.save(eventLocation);
     }
 
@@ -69,5 +70,13 @@ public class CustomEventLocationService implements EventLocationService {
             Hibernate.initialize(eventLocation.getShows());
         }
         return eventLocations;
+    }
+
+    private void setSeatPrices(EventLocation eventLocation) {
+        for(Section section: eventLocation.getSections()) {
+            for(Seat seat: section.getSeats()) {
+                seat.setPrice(section.getPrice());
+            }
+        }
     }
 }

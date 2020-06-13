@@ -31,7 +31,7 @@ public class MerchandiseDataGenerator {
     private final EntityManagerFactory entityManagerFactory;
     private final Resources resources;
 
-    private final static int numberOfProducts = 10;
+    private final static int NUMBER_OF_MERCHANDISE_PRODUCTS = 10;
 
     @Autowired
     public MerchandiseDataGenerator(MerchandiseRepository merchandiseRepository, MerchandiseService merchandiseService, EntityManagerFactory entityManagerFactory, Resources resources) {
@@ -51,19 +51,19 @@ public class MerchandiseDataGenerator {
         if (merchandiseRepository.findAll().size() > 0) {
             LOGGER.info("Merchandise Test Data already generated");
         } else {
-            LOGGER.info("Generating Merchandise Test Data");
+            LOGGER.info("Generating Merchandise Test Data...");
             LocalDateTime start = LocalDateTime.now();
             generateMerchandiseProducts();
             LocalDateTime end = LocalDateTime.now();
             float runningTime = Duration.between(start, end).toMillis();
-            LOGGER.info("Generating Merchandise Test Data took " + runningTime / 1000.0 + " seconds");
+            LOGGER.info("Generating Merchandise Test Data (" + NUMBER_OF_MERCHANDISE_PRODUCTS + " Entities) took " + runningTime / 1000.0 + " seconds");
         }
     }
 
     private List<Merchandise> generateMerchandiseProducts() {
         List<Merchandise> merchandiseProducts = new ArrayList<>();
 
-        for(int i = 0; i < numberOfProducts; i++) {
+        for(int i = 0; i < NUMBER_OF_MERCHANDISE_PRODUCTS; i++) {
 
 
             String imgName = "merch_img" + i + ".jpg";

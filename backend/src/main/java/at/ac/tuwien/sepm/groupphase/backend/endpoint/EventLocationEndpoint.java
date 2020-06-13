@@ -2,6 +2,7 @@ package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.EventLocationDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleEventDto;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleEventLocationDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EventLocationMapper;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EventMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
@@ -68,10 +69,10 @@ public class EventLocationEndpoint {
         @ApiResponse(code = 404, message = "No EventLocation is found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<List<EventLocationDto>> findAllFilteredEventLocations(EventLocationDto searchEventLocationDto) {
+    public ResponseEntity<List<SimpleEventLocationDto>> findAllFilteredEventLocations(EventLocationDto searchEventLocationDto) {
         LOGGER.info("GET /api/v1/eventLocations?locationName=" + searchEventLocationDto.getName() + "&description=" + searchEventLocationDto.getEventLocationDescription() + "&street=" + searchEventLocationDto.getStreet() + "&city=" + searchEventLocationDto.getCity() + "&country=" + searchEventLocationDto.getCountry() + "&plz=" + searchEventLocationDto.getPlz());
         EventLocation searchEventLocation = eventLocationMapper.eventLocationDtoToEventLocation(searchEventLocationDto);
-        List<EventLocationDto> result = eventLocationMapper.EventLocationToEventLocationDto(eventLocationService.findAllFilteredEventLocations(searchEventLocation));
+        List<SimpleEventLocationDto> result = eventLocationMapper.eventLocationToSimpleEventLocationDto(eventLocationService.findAllFilteredEventLocations(searchEventLocation));
         return new ResponseEntity(result, HttpStatus.OK);
     }
 

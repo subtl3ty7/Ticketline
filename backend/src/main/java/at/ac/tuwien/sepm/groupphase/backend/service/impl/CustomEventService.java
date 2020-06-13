@@ -1,7 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.*;
-import at.ac.tuwien.sepm.groupphase.backend.exception.NotFoundException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.ArtistRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventLocationRepository;
@@ -9,7 +8,6 @@ import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
 import at.ac.tuwien.sepm.groupphase.backend.util.validation.EventValidator;
-import org.apache.tomcat.jni.Local;
 import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,10 +30,10 @@ public class CustomEventService implements EventService {
     private final EventValidator validator;
     private final ArtistRepository artistRepository;
 
-    private float runningTime1 = 0;
-    private float runningTime3= 0;
+    private float runningTimeTest = 0;
+    private float runningTime2= 0;
+    private float runningTime3 = 0;
     private float runningTime4 = 0;
-    private float runningTime5 = 0;
 
 
     @Autowired
@@ -48,20 +46,13 @@ public class CustomEventService implements EventService {
 
     @Override
     public List<Event> findTop10EventsOfMonth() {
-        List<Event> allEventsFromMonth = eventRepository.findAllByStartsAtAfterOrderByTotalTicketsSoldDesc(LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),1,0,0));
-        List<Event> top10 = new ArrayList<>();
-        for(int i = 0; i < Math.min(10, allEventsFromMonth.size()); i++) top10.add(allEventsFromMonth.get(i));
-        if(top10.size() < 1) {
-            throw new NotFoundException("Could not find any Event.");
-        }
+        List<Event> top10 = eventRepository.findTop10ByStartsAtAfterOrderByTotalTicketsSoldDesc(LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),1,0,0));
         return top10;
     }
 
     @Override
     public List<Event> findTop10EventsOfMonthByCategory(String category) {
-        List<Event> allEventsFromMonth = eventRepository.findAllByStartsAtAfterAndCategoryOrderByTotalTicketsSoldDesc(LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),1,0,0), category);
-        List<Event> top10 = new ArrayList<>();
-        for(int i = 0; i < Math.min(10, allEventsFromMonth.size()); i++) top10.add(allEventsFromMonth.get(i));
+        List<Event> top10 = eventRepository.findTop10ByStartsAtAfterAndCategoryOrderByTotalTicketsSoldDesc(LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),1,0,0), category);
         return top10;
     }
 
@@ -73,8 +64,11 @@ public class CustomEventService implements EventService {
 
     @Override
     public Event createNewEvent(Event event){
+        //LocalDateTime startTest = LocalDateTime.now();
         event.setEventCode(getNewEventCode());
         validator.validate(event).throwIfViolated();
+
+        List<Artist> artists = new ArrayList<>();
         for (Artist a : event.getArtists()) {
             //if the artist has an id assigned and it exists in the database, then replace it with the one in the database
             //otherwise, set the id null so that a new artist entity can be created in the database
@@ -82,9 +76,9 @@ public class CustomEventService implements EventService {
                 Artist artist = artistRepository.findArtistById(a.getId());
                 if(artist == null) {
                     a.setId(null);
+                    artists.add(a);
                 } else {
-                    event.getArtists().remove(a);
-                    event.getArtists().add(artist);
+                    artists.add(artist);
                 }
             }
         }
@@ -93,9 +87,15 @@ public class CustomEventService implements EventService {
         for(Show show: event.getShows()) {
             EventLocation eventLocation = eventLocationRepository.findEventLocationById(show.getEventLocation().getId());
             show.setEventLocation(eventLocation);
+            show.setPhoto(event.getPhoto());
         }
 
-        return eventRepository.save(event);
+        Event event1 = eventRepository.save(event);
+        //LocalDateTime endTest = LocalDateTime.now();
+        //this.runningTimeTest += Duration.between(startTest, endTest).toMillis();
+        //LOGGER.info("Test Area took " + runningTimeTest/1000.0 + " seconds");
+
+        return event1;
     }
 
     private String getNewEventCode() {
@@ -122,6 +122,7 @@ public class CustomEventService implements EventService {
         for(Show show: event.getShows()) {
             Hibernate.initialize(show.getEventLocation().getShows());
         }
+        Hibernate.initialize(event.getArtists());
         return event;
     }
 
@@ -148,7 +149,7 @@ public class CustomEventService implements EventService {
 
     @Override
     public List<Event> findEventsAdvanced(String name, Integer type, Integer category, LocalDateTime startsAt, LocalDateTime endsAt, Duration showDuration) {
-        return eventRepository.findEventsByNameContainingIgnoreCaseAndEventTypeContainingAndEventCategoryContainingAndStartsAtIsGreaterThanEqualAndEndsAtIsLessThanEqualAndShowsDurationLessThanEqual(name, type, category, startsAt, endsAt, showDuration);
+        return eventRepository.findEventsByNameContainingIgnoreCaseAndTypeContainingAndCategoryContainingAndStartsAtIsGreaterThanEqualAndEndsAtIsLessThanEqualAndShowsDurationLessThanEqual(name, type, category, startsAt, endsAt, showDuration);
     }
 
     @Override

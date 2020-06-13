@@ -5,6 +5,7 @@ import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.*;
 import at.ac.tuwien.sepm.groupphase.backend.service.InvoiceService;
+import at.ac.tuwien.sepm.groupphase.backend.service.ShowService;
 import at.ac.tuwien.sepm.groupphase.backend.service.TicketService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
 import at.ac.tuwien.sepm.groupphase.backend.util.validation.TicketValidator;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.xml.crypto.Data;
 import java.lang.invoke.MethodHandles;
@@ -32,10 +34,11 @@ public class CustomTicketService implements TicketService {
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
     private final InvoiceService invoiceService;
+    private final ShowService showService;
 
     @Autowired
     public CustomTicketService(TicketRepository ticketRepository, TicketValidator validator, SeatRepository seatRepository, ShowRepository showRepository,
-                               EventRepository eventRepository, UserRepository userRepository, InvoiceService invoiceService) {
+                               EventRepository eventRepository, UserRepository userRepository, InvoiceService invoiceService, ShowService showService) {
         this.ticketRepository = ticketRepository;
         this.validator = validator;
         this.seatRepository = seatRepository;
@@ -43,6 +46,7 @@ public class CustomTicketService implements TicketService {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
         this.invoiceService = invoiceService;
+        this.showService = showService;
     }
 
     @Override
@@ -103,7 +107,7 @@ public class CustomTicketService implements TicketService {
             Seat seat = seatRepository.findSeatById(ticketEntity.getSeat().getId());
             ticketEntity.setSeat(seat);
 
-            Show show = showRepository.findShowById(ticketEntity.getShow().getId());
+            Show show = showService.findShowById(ticketEntity.getShow().getId(), false);
             ticketEntity.setShow(show);
 
             Event event = eventRepository.findEventByEventCode(ticketEntity.getShow().getEventCode());
@@ -119,6 +123,8 @@ public class CustomTicketService implements TicketService {
             show.getTakenSeats().add(seat);
             showRepository.save(show);
             eventRepository.save(event);
+
+            ticketEntity.setPrice(show.getPrice() + seat.getPrice());
 
         return ticketEntity;
     }
@@ -140,6 +146,7 @@ public class CustomTicketService implements TicketService {
     }
 
     @Override
+    @Transactional
     public void cancelPurchasedTicket(String ticketCode) throws ValidationException, DataAccessException{
         LOGGER.debug("Validating ticket with ticketCode " + ticketCode);
         validator.validatePurchased(ticketCode).throwIfViolated();
@@ -182,6 +189,7 @@ public class CustomTicketService implements TicketService {
     }
 
     @Override
+    @Transactional
     public void cancelReservedTicket(String ticketCode) {
         LOGGER.info("Validating reservation with ticketCode: " + ticketCode);
         validator.validateReserved(ticketCode).throwIfViolated();

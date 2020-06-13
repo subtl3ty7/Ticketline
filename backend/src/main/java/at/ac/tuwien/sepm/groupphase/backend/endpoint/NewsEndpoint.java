@@ -140,11 +140,11 @@ public class NewsEndpoint {
         @ApiResponse(code = 404, message = "No News is found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<List<SimpleNewsDto>> findSimpleEventsByParam(@RequestParam String newsCode,
-                                                                        @RequestParam String title,
-                                                                        @RequestParam String author,
-                                                                        @RequestParam String startRange,
-                                                                        @RequestParam String endRange
+    public ResponseEntity<List<SimpleNewsDto>> findSimpleNewsByParam(@RequestParam String newsCode,
+                                                                     @RequestParam String title,
+                                                                     @RequestParam String author,
+                                                                     @RequestParam String startRange,
+                                                                     @RequestParam String endRange
     ) {
         LOGGER.info("GET /api/v1/news?newsCode=" + newsCode + "&title=" + title + "&author=" + author +  "&startRange=" + startRange + "&endRange=" + endRange);
         LocalDateTime startRangeDate = LocalDate.parse(startRange, DateTimeFormatter.ofPattern("E MMM dd yyyy")).atStartOfDay();

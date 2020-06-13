@@ -2,6 +2,7 @@ package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.ShowDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleShowDto;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimplerShowDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EventMapper;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.ShowMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventCategoryEnum;
@@ -52,10 +53,10 @@ public class ShowEndpoint {
         @ApiResponse(code = 404, message = "No Show is found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<List<SimpleShowDto>> findShowsByEventLocationName(@RequestParam Long eventLocationId) {
+    public ResponseEntity<List<SimplerShowDto>> findShowsByEventLocationId(@RequestParam Long eventLocationId) {
         LOGGER.info("GET /api/v1/shows?eventLocationId=" + eventLocationId);
         List<Show> showList = showService.getShowsByEventLocationId(eventLocationId);
-        List<SimpleShowDto> shows = showMapper.showToSimpleShowDto(showList);
+        List<SimplerShowDto> shows = showMapper.showToSimplerShowDto(showList);
         return new ResponseEntity<>(shows, HttpStatus.OK);
     }
 
@@ -123,7 +124,7 @@ public class ShowEndpoint {
     @ApiResponse(code = 200, message = "Show is successfully retrieved")
     public ResponseEntity<ShowDto> findShowById(@PathVariable Long id) {
         LOGGER.info("GET /api/v1/show/" + id);
-        ShowDto show = showMapper.showToShowDto(showService.findShowById(id));
+        ShowDto show = showMapper.showToShowDto(showService.findShowById(id, true));
         return new ResponseEntity<>(show, HttpStatus.OK);
     }
 }

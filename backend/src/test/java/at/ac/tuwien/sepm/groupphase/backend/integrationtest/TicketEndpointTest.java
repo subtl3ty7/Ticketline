@@ -109,8 +109,20 @@ public class TicketEndpointTest implements TestData {
             showRepository, eventService, eventLocationService, entityManagerFactory, artistRepository, artistService, resources);
         eventDataGenerator.generate();
 
-        detailedTicketDto = DetailedTicketDto.DetailedTicketDtoBuilder.aDetailedTicketDto(
-            ID, USER_CODE, false, false, START, seatRepository.findSeatById(6L), USER_CODE_TICKET, TOTAL, showRepository.findShowById(6L), eventRepository.findEventById(1L)).build();
+        detailedTicketDto = ticketMapper.ticketToDetailedTicketDto(
+            Ticket.builder()
+                .ticketId(ID)
+                .userCode(USER_CODE)
+                .isPurchased(false)
+                .isReserved(false)
+                .purchaseDate(START)
+                .seat(seatRepository.findSeatById(6L))
+                .userCode(USER_CODE_TICKET)
+                .price(PRICE)
+                .show(showRepository.findShowById(6L))
+                .event(eventRepository.findEventById(1L))
+                .build()
+        );
 
         ticket = Ticket.builder()
             .ticketId(ID)
@@ -151,9 +163,20 @@ public class TicketEndpointTest implements TestData {
     @Test
     @Order(2)
     public void givenNothing_whenReserveTicket_then201AndTicketList_AndTicketReservedTrue() throws Exception{
-
-        detailedTicketDto = DetailedTicketDto.DetailedTicketDtoBuilder.aDetailedTicketDto(
-            2L, "code12", false, false, START, seatRepository.findSeatById(7L), USER_CODE_TICKET, TOTAL, showRepository.findShowById(7L), eventRepository.findEventById(1L)).build();
+        detailedTicketDto = ticketMapper.ticketToDetailedTicketDto(
+            Ticket.builder()
+                .ticketId(2L)
+                .userCode("code12")
+                .isPurchased(false)
+                .isReserved(false)
+                .purchaseDate(START)
+                .seat(seatRepository.findSeatById(7L))
+                .userCode(USER_CODE_TICKET)
+                .price(PRICE)
+                .show(showRepository.findShowById(7L))
+                .event(eventRepository.findEventById(1L))
+                .build()
+        );
 
         List<DetailedTicketDto> ticketDtos = new ArrayList<>();
         ticketDtos.add(detailedTicketDto);

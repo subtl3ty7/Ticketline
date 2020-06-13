@@ -20,10 +20,10 @@ public interface EventLocationMapper {
     @Named(value = "eventLocationDtoToEventLocation")
     EventLocation eventLocationDtoToEventLocation(EventLocationDto eventLocation);
 
-    @Named(value = "EventLocationToSimpleEventLocationDto")
-    SimpleEventLocationDto EventLocationToSimpleEventLocationDto(EventLocation eventLocation);
+    @Named(value = "eventLocationToSimpleEventLocationDto")
+    SimpleEventLocationDto eventLocationToSimpleEventLocationDto(EventLocation eventLocation);
 
-    @IterableMapping(qualifiedByName = "EventLocationToSimpleEventLocationDto")
-    List<SimpleEventLocationDto> EventLocationToSimpleEventLocationDto(List<EventLocation> eventLocations);
+    @IterableMapping(qualifiedByName = "eventLocationToSimpleEventLocationDto")
+    List<SimpleEventLocationDto> eventLocationToSimpleEventLocationDto(List<EventLocation> eventLocations);
 
 }

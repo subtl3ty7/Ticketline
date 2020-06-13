@@ -3,6 +3,9 @@ import {Invoice} from '../../../../../dtos/invoice';
 import * as jsPDF from 'jspdf';
 import {Merchandise} from '../../../../../dtos/merchandise';
 import {MerchandiseService} from '../../../../../services/merchandise.service';
+import {User} from '../../../../../dtos/user';
+import {InvoiceService} from '../../../../../services/invoice.service';
+import {UserService} from '../../../../../services/user.service';
 
 @Component({
   selector: 'app-invoice-details',
@@ -12,8 +15,10 @@ import {MerchandiseService} from '../../../../../services/merchandise.service';
 export class InvoiceDetailsComponent implements OnInit {
   @Input() invoice: Invoice;
   private merchandise: Merchandise;
+  public currentUser: User = new User();
   error = false;
-  constructor( private merchandiseService: MerchandiseService ) {
+  constructor( private merchandiseService: MerchandiseService,
+               private userService: UserService) {
   }
   printInvoice(invoice: Invoice) {
     const doc = new jsPDF('p', 'mm', 'a4');
@@ -139,9 +144,19 @@ export class InvoiceDetailsComponent implements OnInit {
     );
   }
   ngOnInit(): void {
-    if (this.invoice.invoice_category === 'Merchandice invoice') {
-      this.loadMerch(this.invoice.merchandise_code);
-    }
+    this.loadUser();
   }
-
+  private loadUser() {
+    this.userService.getCurrentUser().subscribe(
+      (user: User) => {
+        Object.assign(this.currentUser, user);
+        if (this.invoice.invoice_category === 'Merchandice invoice') {
+          this.loadMerch(this.invoice.merchandise_code);
+        }
+      },
+      (error) => {
+        this.error = error.error;
+      }
+    );
+  }
 }

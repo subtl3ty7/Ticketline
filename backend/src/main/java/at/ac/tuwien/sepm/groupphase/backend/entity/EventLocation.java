@@ -50,9 +50,9 @@ public class EventLocation implements Serializable {
     private String country;
 
     @ToString.Exclude
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,  orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL,  orphanRemoval = true)
     @JoinColumn(name = "EVENT_LOCATION_ID", referencedColumnName = "ID")
-    @Fetch(FetchMode.SELECT) //only way to fetch more than two collections with type eager ...
+    //@Fetch(FetchMode.SELECT) //only way to fetch more than two collections with type eager ...
     private List<Section> sections;
 
     @ToString.Exclude
