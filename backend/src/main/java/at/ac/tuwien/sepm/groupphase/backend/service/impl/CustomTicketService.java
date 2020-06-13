@@ -146,6 +146,7 @@ public class CustomTicketService implements TicketService {
     }
 
     @Override
+    @Transactional
     public void cancelPurchasedTicket(String ticketCode) throws ValidationException, DataAccessException{
         LOGGER.debug("Validating ticket with ticketCode " + ticketCode);
         validator.validatePurchased(ticketCode).throwIfViolated();
