@@ -25,17 +25,19 @@
       <div class="carousel-item"
            *ngFor="let threeEvents of events"
            [class.active]="threeEvents === events[0]">
-        <div class="row">
+        <div class="row" style="height: 415px">
 
           <!--The three Events inside a Carousel Item-->
           <div class="zoom"
-               *ngFor="let event of threeEvents"
+               *ngFor="let event of threeEvents; index as i"
                [class.col-md-6]="event === threeEvents[0]"
                [class.col-md-3]="event !== threeEvents[0]"
                [class.clearfix]="event !== threeEvents[0]"
                [class.d-none]="event !== threeEvents[0]"
                [class.d-md-block]="event !== threeEvents[0]"
-               routerLink="/events/{{event.eventCode}}">
+               routerLink="/events/{{event.eventCode}}" style="
+            padding-bottom: 15px;
+            ">
             <div class="card">
               <img class="card-img-top img-fluid"
                    [class.image-crop-big]="event === threeEvents[0]"
@@ -43,7 +45,18 @@
                    src="{{event.photo}}">
               <div class="card-body" style="padding: 25px; height: 90px;">
                 <div class = "card-title row">
-                  <div class="col-sm extra-pad card-title-font prevent-overflow-inline">{{event.name}}</div>
+                  <div class="col-sm extra-pad card-title-font prevent-overflow-inline">
+                    <div class="container" style="padding: 0px">
+                      <div class="row" style="padding: 0px">
+                        <div class="col-2" style="padding-left: 10px; ">
+                          <a style="font-size: 32px;">#{{i+1}}</a>
+                        </div>
+                        <div class="col-10">
+                          <a style="margin-left: 10px; ">{{event.name}}</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <button *ngIf="event === threeEvents[0]"
                           class="btn default event-button col-sm"
                           routerLinkActive="active" style="margin-right: 20px">

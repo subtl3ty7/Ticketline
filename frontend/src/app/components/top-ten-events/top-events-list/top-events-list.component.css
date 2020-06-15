@@ -68,6 +68,17 @@
 }
 */
 
+.bottom-zoom:hover {
+  transform: scale(1.05);
+}
+
+/* Gray */
+.default {
+  border-color: #FBFBFB;
+  color: #FBFBFB;
+  background-color: transparent;
+}
+
 .zoom:hover img {
   opacity: 1;
   filter: brightness(110%) contrast(110%);
