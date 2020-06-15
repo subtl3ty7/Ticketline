@@ -17,7 +17,7 @@
       <div class="info">
         <div class="info-label"></div>
         <div class="info-field">
-          Invoice number: {{invoice.invoice_number}}
+          Invoice number: {{invoice.invoiceNumber}}
         </div>
       </div>
     </div>
@@ -25,10 +25,10 @@
     <div class="info-wrapper">
       <div class="info">
         <div class="info-label"></div>
-        <div class="info-field" *ngIf="invoice.invoice_category.startsWith('Ticket')" >
+        <div class="info-field" *ngIf="invoice.invoice_category.startsWith('TICKET')" >
           Event name: {{invoice.tickets[0].eventName}}
         </div>
-        <div class="info-field" *ngIf="invoice.invoice_category.startsWith('Merch')" >
+        <div class="info-field" *ngIf="invoice.invoice_category.startsWith('MERCH')" >
           Merchandise name: {{merchandise.merchandiseProductName}}
         </div>
       </div>
@@ -37,10 +37,10 @@
     <div class="info-wrapper" >
       <div class="info">
         <div class="info-label"></div>
-        <div class="info-field" *ngIf="invoice.invoice_category.startsWith('Ticket')" >
+        <div class="info-field" *ngIf="invoice.invoice_category.startsWith('TICKET')" >
           Number of tickets: {{invoice.tickets.length}}
         </div>
-        <div class="info-field" *ngIf="invoice.invoice_category.startsWith('Merch')">
+        <div class="info-field" *ngIf="invoice.invoice_category.startsWith('MERCH')">
           Merchandise code: {{invoice.merchandise_code}}
         </div>
       </div>

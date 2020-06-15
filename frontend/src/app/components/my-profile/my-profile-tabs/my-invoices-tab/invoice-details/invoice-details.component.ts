@@ -31,7 +31,7 @@ export class InvoiceDetailsComponent implements OnInit {
     doc.setFontType('bold');
     doc.setFontSize(30);
 
-    if (invoice.invoice_category === 'Ticket invoice') {
+    if (invoice.invoice_category.startsWith('TICKET')) {
       if (invoice.invoice_type === 'Kauf Rechnung') {
         doc.text('Ticket Kaufrechnung ', 15, 20, null, null, 'left');
       } else {
@@ -51,7 +51,7 @@ export class InvoiceDetailsComponent implements OnInit {
     doc.setFontSize(11);
     doc.text('Kundenname: ' + this.currentUser.firstName + ' ' + this.currentUser.lastName, 15, 50, null, null, 'left');
     doc.text('Kundennummer: ' + invoice.tickets[0].userCode, 15, 60, null, null, 'left');
-    doc.text('Rechnungsnummer: ' + invoice.invoice_number, 15, 70, null, null, 'left');
+    doc.text('Rechnungsnummer: ' + invoice.invoiceNumber, 15, 70, null, null, 'left');
 
     if (invoice.invoice_type === 'Kauf Rechnung') {
       doc.text('Rechnungsdatum: ' + date1, 130, 70, null, null);
@@ -60,7 +60,7 @@ export class InvoiceDetailsComponent implements OnInit {
       doc.text('Stornierungsdatum: ' + date1, 130, 70, null, null);
     }
 
-    if (invoice.invoice_category === 'Ticket invoice') {
+    if (invoice.invoice_category.startsWith('TICKET')) {
       doc.setFontType('bold');
       // tslint:disable-next-line:max-line-length
       doc.text('Ticket Code                          Event / Show id                                   Seat id                   Price(€)', 20, 100, null, null, 'left');
@@ -150,7 +150,7 @@ export class InvoiceDetailsComponent implements OnInit {
     this.userService.getCurrentUser().subscribe(
       (user: User) => {
         Object.assign(this.currentUser, user);
-        if (this.invoice.invoice_category === 'Merchandice invoice') {
+        if (this.invoice.invoice_category.startsWith('MERCH')) {
           this.loadMerch(this.invoice.merchandise_code);
         }
       },

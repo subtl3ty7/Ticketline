@@ -4,7 +4,7 @@ export class Invoice {
   public id: number;
   public userCode: string;
   public generatedAt: string;
-  public invoice_number: string;
+  public invoiceNumber: string;
   public payment_method: string;
   public invoice_type: string;
   public invoice_category: string;

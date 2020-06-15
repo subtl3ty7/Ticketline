@@ -79,7 +79,7 @@ public class CustomInvoiceService implements InvoiceService {
         int i;
         for(i=0; i<maxAttempts; i++) {
             invoiceNumber = CodeGenerator.generateInvoiceNumber();
-            if(invoiceRepository.findInvoiceByInvoiceNumber(invoiceNumber) != null) {
+            if(invoiceRepository.findInvoiceByInvoiceNumber(invoiceNumber) == null) {
                 break;
             }
         }
