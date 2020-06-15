@@ -57,12 +57,7 @@ export class LoginComponent implements OnInit {
       error => {
         console.log('Could not log in due to:');
         console.log(error);
-        this.error = true;
-        if (typeof error.error === 'object') {
-          this.errorMessage = error.error.error;
-        } else {
-          this.errorMessage = error.error;
-        }
+        this.error = error;
       }
     );
   }
