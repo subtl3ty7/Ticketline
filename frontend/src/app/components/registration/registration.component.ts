@@ -59,12 +59,7 @@ export class RegistrationComponent implements OnInit {
         error1 => {
           console.log('Could not register due to:');
           console.log(error1);
-          this.error = true;
-          if (typeof error1.error === 'object') {
-            this.errorMessage = error1.error.error;
-          } else {
-            this.errorMessage = error1.error;
-          }
+          this.error = error1;
         }
       );
     } else {

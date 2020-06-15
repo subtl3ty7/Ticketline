@@ -1,10 +1,6 @@
 <app-guest-header></app-guest-header>
-<div *ngIf="error" class="alert alert-warning alert-dismissible fade show" role="alert">
-  <strong>Authentication problems!</strong> {{ errorMessage }}
-  <button type="button" (click)="vanishError()" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
+<app-error-notification *ngIf="error" [error]="error"></app-error-notification>
+
 <div class="container">
   <div class="row">
     <div class="col-md-7 mx-auto" style="max-width: 660px;" >
@@ -40,7 +36,8 @@
 
           </form>
 
-          <p class="account-lock-info">You have in total 5 login attempts. If your account gets locked, please contact us.</p>
+          <p class="account-lock-info">Sie haben insgesamt 5 Anmeldeversuche. Wenn Ihr Konto gesperrt wird, kontaktieren Sie uns bitte.
+          </p>
           <div class="h-divider"></div>
           <p class="registration-info">Noch kein Konto? <a href="/registration" class="registration-link">Jetzt registrieren</a></p>
         </div>
