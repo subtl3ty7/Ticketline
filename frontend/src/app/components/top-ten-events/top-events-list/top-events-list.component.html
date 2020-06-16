@@ -1,4 +1,4 @@
-<div class="row mx-auto" style="padding: 0px">
+<div class="row" style="margin-left: 30px; margin-right: 30px">
   <div *ngFor="let i of [0,1,2]"
        class="col-4">
     <div class="top-three-element zoom" routerLink="/events/{{events[i].eventCode}}">
@@ -18,21 +18,38 @@
 
 <div style="padding-top: 50px;">
   <div *ngFor="let i of [3,4,5,6,7,8,9]"
-       class="zoom"
-       style="padding:80px 30px 0px 30px"
+       class="zoom bottom-zoom"
+       style="margin:80px 60px 0px 60px"
        routerLink="/events/{{events[i].eventCode}}">
-    <div class="card" style="padding: 0px 15px 0px 15px; background-color: white">
-      <div class="row align-items-center">
-        <div class="col-sm">
-          <div class="row">
-            <h1 class="bottom-rank">#{{i+1}}</h1>
-            <h2 class="bottom-name">{{events[i].name}}</h2>
+    <div class="container">
+      <div class="row" style="height: 120px">
+        <div class="col-9" style="padding: 0">
+          <div class="card" style="padding: 0px 15px 0px 15px; height: 120px; margin-top: 10px; background-color: white">
+            <div class="row align-items-center">
+              <div class="col-sm">
+                <div class="row" style="padding-top: 40px">
+                  <h1 class="bottom-rank">#{{i+1}}</h1>
+                  <h2 class="bottom-name">{{events[i].name}}</h2>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
-          <div class="zoom col-3 card">
+        <div class="col-3" style="padding: 0">
+          <div class="zoom card">
             <img class="img-fluid bottom-image" src="{{events[i].photo}}">
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="padding-top: 80px; padding-bottom: 50px">
+  <div class="container">
+    <div class="row justify-content-center">
+      <button class="btn default font-weight-bold" routerLink="/events">Mehr Events</button>
     </div>
   </div>
 </div>
