@@ -18,6 +18,7 @@ export class CreateShowsComponent implements OnInit {
   public displayedColumns = [
     'startsAt',
     'endsAt',
+    'price',
     'eventLocation',
     'delete'
   ];
@@ -72,11 +73,13 @@ export class CreateShowsComponent implements OnInit {
       show.endsAt.setHours(+endHourAndMinute[0], +endHourAndMinute[1], 0, 0);
       show.eventLocation = this.show.eventLocation;
       show.ticketsAvailable = show.eventLocation.capacity;
+      show.price = this.show.price;
       this.data.push(show);
       this.show = new Show();
       this.initTable();
     }
   }
+
 
   addStartsAt(type: string, event: MatDatepickerInputEvent<Date>) {
     this.show.startsAt = event.value;
