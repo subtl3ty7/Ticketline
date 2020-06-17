@@ -101,7 +101,7 @@ public class TicketDataGenerator {
         Customer customer1 = (Customer) users.get(1);
         ArrayList<Show> shows = showRepository.findAll();
         ArrayList<Seat> seats = seatRepository.findAll();
-        ArrayList<Event> events = eventRepository.findAll();
+        List<Event> events = eventRepository.findAll();
 
         if(seats.isEmpty()){
             throw new NotFoundException("No seats in argument list. Needs to contain at least one.");

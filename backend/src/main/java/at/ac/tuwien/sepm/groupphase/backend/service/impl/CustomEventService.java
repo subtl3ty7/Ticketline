@@ -12,6 +12,8 @@ import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CustomEventService implements EventService {
@@ -57,29 +60,32 @@ public class CustomEventService implements EventService {
     }
 
     @Override
-    public List<Event> findAllEvents() {
-        List<Event> allEvents = eventRepository.findAll();
-        return allEvents;
+    public List<Event> findAllEvents(int size) {
+        int page = calculateNumberOfPage(size);
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        Page<Event> eventsPage = eventRepository.findAll(pageRequest);
+        return eventsPage.toList();
     }
 
+
+    private int calculateNumberOfPage(int size) {
+        int result = 0;
+        if (size != 0) {
+            result = size / 10;
+        }
+        return result;
+    }
     @Override
     public Event createNewEvent(Event event){
         //LocalDateTime startTest = LocalDateTime.now();
         event.setEventCode(getNewEventCode());
+        event.setDuration(Duration.between(event.getStartsAt(), event.getEndsAt()));
         validator.validate(event).throwIfViolated();
 
-        List<Artist> artists = new ArrayList<>();
         for (Artist a : event.getArtists()) {
-            //if the artist has an id assigned and it exists in the database, then replace it with the one in the database
-            //otherwise, set the id null so that a new artist entity can be created in the database
-            if(a.getId() != null) {
-                Artist artist = artistRepository.findArtistById(a.getId());
-                if(artist == null) {
-                    a.setId(null);
-                    artists.add(a);
-                } else {
-                    artists.add(artist);
-                }
+            List<Artist> artists = artistRepository.findArtistsByFirstNameAndLastName(a.getFirstName(), a.getLastName());
+            if(artists.isEmpty()) {
+                artistRepository.save(a);
             }
         }
 
@@ -88,6 +94,7 @@ public class CustomEventService implements EventService {
             EventLocation eventLocation = eventLocationRepository.findEventLocationById(show.getEventLocation().getId());
             show.setEventLocation(eventLocation);
             show.setPhoto(event.getPhoto());
+            show.setDuration(Duration.between(show.getStartsAt(), show.getEndsAt()));
         }
 
         Event event1 = eventRepository.save(event);

@@ -139,9 +139,9 @@ public class EventEndpoint {
         @ApiResponse(code = 404, message = "No Event is found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<List<SimpleEventDto>> findAllEvents() {
+    public ResponseEntity<List<SimpleEventDto>> findAllEvents(@RequestParam int size) {
         LOGGER.info("GET /api/v1/events/all");
-        List<SimpleEventDto> result = eventMapper.eventToSimpleEventDto(eventService.findAllEvents());
+        List<SimpleEventDto> result = eventMapper.eventToSimpleEventDto(eventService.findAllEvents(size));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

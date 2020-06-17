@@ -8,7 +8,6 @@ import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
-import org.springframework.context.annotation.Import;
 
 import java.util.List;
 
@@ -19,6 +18,7 @@ public interface EventMapper {
     @Mapping(expression = "java(event.getPrices().get(0))", target = "startPrice")
     @Mapping(expression = "java(event.getTotalTicketsSold())", target = "totalTicketsSold")
     @Mapping(expression = "java(event.getPhoto().getImage())", target = "photo")
+    @Mapping(expression = "java(event.getDuration().toMillis())", target = "duration")
     SimpleEventDto eventToSimpleEventDto(Event event);
 
     @IterableMapping(qualifiedByName = "eventToSimpleEventDto")
@@ -27,6 +27,7 @@ public interface EventMapper {
     @Named("eventToDetailedEventDto")
     @Mapping(expression = "java(event.getPrices().get(0))", target = "startPrice")
     @Mapping(expression = "java(event.getPhoto().getImage())", target = "photo")
+    @Mapping(expression = "java(event.getDuration().toMillis())", target = "duration")
     @Mapping(target = "shows", qualifiedByName = { "ShowMapper", "showToSimpleShowDto" })
     DetailedEventDto eventToDetailedEventDto(Event event);
 
@@ -36,11 +37,13 @@ public interface EventMapper {
     @Named("detailedEventDtoToEvent")
     @Mapping(expression = "java(new Image(null, event.getPhoto()))", target = "photo")
     @Mapping(target = "shows", qualifiedByName = { "ShowMapper", "simpleShowDtoToShow" })
+    @Mapping(target = "duration", ignore = true)
     Event detailedEventDtoToEvent(DetailedEventDto event);
 
     @Named("simpleEventDtoToEvent")
-    @Mapping(expression = "java(List.of(event.getStartPrice()))", target = "prices")
     @Mapping(expression = "java(event.getTotalTicketsSold())", target = "totalTicketsSold")
     @Mapping(expression = "java(new Image(null, event.getPhoto()))", target = "photo")
+    @Mapping(target = "duration", ignore = true)
+    @Mapping(target = "prices", ignore = true)
     Event simpleEventDtoToEvent(SimpleEventDto event);
 }

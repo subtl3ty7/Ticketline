@@ -9,5 +9,6 @@ export class SimpleEvent {
   public startPrice: number;
   public totalTicketsSold: number;
   public photo: number;
+  public duration: number;
 
 }
