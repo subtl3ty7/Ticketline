@@ -42,6 +42,7 @@ public class CustomEventLocationService implements EventLocationService {
         List<EventLocation> eventLocations = eventLocationRepository.findAll();
         for(EventLocation eventLocation: eventLocations) {
             Hibernate.initialize(eventLocation.getShows());
+            Hibernate.initialize(eventLocation.getSections());
         }
         return eventLocations;
     }

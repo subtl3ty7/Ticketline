@@ -24,7 +24,7 @@ public class SimpleEventDto {
     private LocalDateTime endsAt;
     private String photo;
     private int totalTicketsSold;
-    private Duration duration;
+    private long duration;
     private EventTypeEnum eventType;
     private EventCategoryEnum eventCategory;
 }
