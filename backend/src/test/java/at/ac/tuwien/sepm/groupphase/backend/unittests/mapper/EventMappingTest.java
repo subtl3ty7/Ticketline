@@ -88,7 +88,7 @@ public class EventMappingTest implements TestData {
             () -> assertEquals(START, detailedEventDto.getStartsAt()),
             () -> assertEquals(END, detailedEventDto.getEndsAt()),
             () -> assertEquals(PRICES, detailedEventDto.getPrices()),
-            () -> assertEquals(PRICES.get(0), detailedEventDto.getStartPrice()),
+            () -> assertEquals(java.util.Optional.ofNullable(PRICES.get(0)), detailedEventDto.getStartPrice()),
             () -> assertEquals(TOTAL, detailedEventDto.getTotalTicketsSold())
         );
     }

@@ -22,6 +22,7 @@ import java.util.List;
 public interface ShowMapper {
     @Named("showToShowDto")
     @Mapping(expression = "java(show.getPhoto().getImage())", target = "photo")
+    @Mapping(expression = "java(show.getDuration().toMillis())", target = "duration")
     ShowDto showToShowDto(Show show);
 
     @IterableMapping(qualifiedByName = "showToShowDto")
@@ -29,6 +30,7 @@ public interface ShowMapper {
 
     @Named("showToSimpleShowDto")
     @Mapping(expression = "java(show.getPhoto().getImage())", target = "photo")
+    @Mapping(expression = "java(show.getDuration().toMillis())", target = "duration")
     SimpleShowDto showToSimpleShowDto(Show show);
 
     @IterableMapping(qualifiedByName = "showToSimpleShowDto")
@@ -36,6 +38,7 @@ public interface ShowMapper {
 
     @Named("showDtoToShow")
     @Mapping(expression = "java(new Image(null, show.getPhoto()))", target = "photo")
+    @Mapping(target = "duration", ignore = true)
     Show showDtoToShow(ShowDto show);
 
     @IterableMapping(qualifiedByName = "showDtoToShow")
@@ -43,6 +46,7 @@ public interface ShowMapper {
 
     @Named("simpleShowDtoToShow")
     @Mapping(expression = "java(new Image(null, show.getPhoto()))", target = "photo")
+    @Mapping(target = "duration", ignore = true)
     Show simpleShowDtoToShow(SimpleShowDto show);
 
     @IterableMapping(qualifiedByName = "simpleShowDtoToShow")
@@ -50,6 +54,7 @@ public interface ShowMapper {
 
     @Named("showToSimplerShowDto")
     @Mapping(expression = "java(show.getPhoto().getImage())", target = "photo")
+    @Mapping(expression = "java(show.getDuration().toMillis())", target = "duration")
     SimplerShowDto showToSimplerShowDto(Show show);
 
     @IterableMapping(qualifiedByName = "showToSimplerShowDto")

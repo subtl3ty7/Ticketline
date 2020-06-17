@@ -28,4 +28,5 @@ public class SimpleShowDto {
     private String photo;
     private String description;
     private SimpleEventLocationDto eventLocation;
+    private long duration;
 }

@@ -13,7 +13,7 @@ public interface EventService {
 
     List<Event> findTop10EventsOfMonthByCategory(String category);
 
-    List<Event> findAllEvents();
+    List<Event> findAllEvents(int size);
 
     Event createNewEvent(Event event);
 
