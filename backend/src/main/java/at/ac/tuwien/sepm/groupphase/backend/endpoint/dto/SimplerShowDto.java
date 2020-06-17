@@ -27,4 +27,5 @@ public class SimplerShowDto {
     private String eventName;
     private String photo;
     private String description;
+    private long duration;
 }

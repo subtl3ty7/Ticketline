@@ -4,6 +4,8 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.Artist;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
 import org.hibernate.annotations.LazyCollection;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -27,7 +29,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     List<Event> findTop10ByStartsAtAfterOrderByTotalTicketsSoldDesc(LocalDateTime time);
 
-    ArrayList<Event> findAll();
+    Page<Event> findAll(Pageable pageable);
 
     /**
      * Find all events which are after a certain time, matches a category and ordered by total tickets sold descending.
