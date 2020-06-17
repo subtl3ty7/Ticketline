@@ -1,4 +1,5 @@
 <app-header></app-header>
+<app-error-notification *ngIf="error" [error]="error"></app-error-notification>
 
 
 <div *ngIf="merchandiseProduct" class="container-fluid" style="padding-left: 5%; padding-right: 5%;">
@@ -18,23 +19,24 @@
 
           <div class="col">
 
+            <img src="{{merchandiseProduct.photo}}" class="img-fluid image-crop-big">
 
 
-      <!--    <div class="select-quantity-title">
-            Zahlungsmethode
-          </div>
-          <div class="container-fluid payment-method">
-            <mat-select placeholder="Wähle Bezahlungsmethode" class="form-control payment-method-form" required>
-              <mat-option value="'creditcard'">Kredit-/Debitkarte</mat-option>
-              <mat-option value="'paypal'">Paypal</mat-option>
-            </mat-select>
-          </div>
--->
           </div>
 
 
           <div class="col">
 
+            <h3> Bitte Menge auswählen </h3>
+            <div class="container-fluid choose-quantity">
+              <mat-select placeholder="Menge auswählen" class="form-control choose-quantity-form" required>
+                <mat-option value="'1'">1</mat-option>
+                <mat-option value="'2'">2</mat-option>
+                <mat-option value="'3'">3</mat-option>
+                <mat-option value="'4'">4</mat-option>
+                <mat-option value="'5'">5</mat-option>
+              </mat-select>
+            </div>
             <div class="gap"> <br> </div>
 
             <h4> Bestellwert: {{merchandiseProduct.price}} €</h4>
