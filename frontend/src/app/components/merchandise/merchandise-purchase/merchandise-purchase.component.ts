@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {Merchandise} from '../../../dtos/merchandise';
+import {MerchandiseService} from '../../../services/merchandise.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Background} from '../../../utils/background';
 
 @Component({
   selector: 'app-merchandise-purchase',
@@ -7,11 +11,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MerchandisePurchaseComponent implements OnInit {
 
-  constructor() { }
+  error;
+  merchandiseProduct: Merchandise;
 
-  ngOnInit(): void {
+
+  constructor(
+    private merchandiseService: MerchandiseService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private background: Background) {
+    this.background.defineBackground();
   }
 
+
+  ngOnInit(): void {
+    this.loadMerchandiseProduct();
+  }
+
+
+  public loadMerchandiseProduct(): void {
+    const merchandiseProductCode = this.route.snapshot.paramMap.get('merchandiseProductCode');
+    this.merchandiseService.getMerchandiseProductByProductCode(merchandiseProductCode).subscribe(
+      (merchandiseProduct: Merchandise) => {
+        this.merchandiseProduct = merchandiseProduct;
+      },
+      (error) => {
+        this.error = error;
+      }
+    );
+  }
 
 
 
