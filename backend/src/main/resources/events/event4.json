@@ -1,0 +1,6 @@
+{
+  "name": "AJsonedEvent",
+  "artists": [{"firstName": "AJsonedArtist"}],
+  "shows": [{"eventLocation": {"name": "AJsonedEventLocation"}}],
+  "description": "AJsonedDescription"
+}

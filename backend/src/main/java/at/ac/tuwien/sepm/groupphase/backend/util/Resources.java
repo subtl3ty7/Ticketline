@@ -1,12 +1,17 @@
 package at.ac.tuwien.sepm.groupphase.backend.util;
 
+import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Image;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.CharStreams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
+import java.lang.reflect.ParameterizedType;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -14,10 +19,22 @@ import java.util.Base64;
 @Component
 public class Resources {
     private ResourceLoader resourceLoader;
+    private ObjectMapper objectMapper;
 
     @Autowired
-    public Resources(ResourceLoader resourceLoader) {
+    public Resources(ResourceLoader resourceLoader, ObjectMapper objectMapper) {
         this.resourceLoader = resourceLoader;
+        this.objectMapper = objectMapper;
+    }
+
+    public <T> T getObjectFromJson(String fileName, Class<T> returnType) {
+        try {
+            String json = getText(fileName);
+            T obj = objectMapper.readValue(json, returnType);
+            return obj;
+        } catch (IOException e) {
+            throw new RuntimeException("Couldn't load or map File.", e);
+        }
     }
 
     public Image getImageEncoded(String imgName) {
@@ -35,7 +52,7 @@ public class Resources {
 
     public String getText(String fileName) {
         try {
-            InputStream inputStream = resourceLoader.getResource("classpath:text/" + fileName).getInputStream();
+            InputStream inputStream = resourceLoader.getResource("classpath:/" + fileName).getInputStream();
             StringBuilder textBuilder = new StringBuilder();
             try (Reader reader = new BufferedReader(new InputStreamReader
                 (inputStream, Charset.forName(StandardCharsets.UTF_8.name())))) {
