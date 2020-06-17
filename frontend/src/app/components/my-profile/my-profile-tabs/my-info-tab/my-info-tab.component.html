@@ -1,68 +1,78 @@
 <app-error-notification *ngIf="error" [error]="error"></app-error-notification>
 <div *ngIf="wrapper.state !== state.DELETING && !error">
-
-  <h1 class="col-5 page-title" style="white-space: nowrap; padding-top: 50px; padding-left: 50px">Meine Info</h1>
-<div class="center-block">
-  <div *ngIf="wrapper.state === state.READY">
-    <div>
-      <div class="password-button-wrapper">
-      <button id="userInfoForm_PasswordButton"
-            class="btn btn-outline-dark" style="white-space: nowrap; border-radius: 10px"
-            (click)="openPasswordMode()">
-        Passwort Ändern
-      </button>
+  <div class="container">
+    <div class="row" style="border-bottom: 2px solid #efefef; z-index: 0; white-space: nowrap; padding: 50px 80px 16px 50px;margin-bottom: 0px">
+      <div class="col-5">
+        <h1 class="page-title" style="margin-bottom: 0px">Meine Info</h1>
       </div>
-
-      <app-profile-info [currentUser]="wrapper.model">
-      </app-profile-info>
-      <div class="bottom-button-wrapper">
-        <div class="edit-button-wrapper">
-          <button id="userInfoForm_editButton"
-                class="btn btn-outline-primary" style="white-space: nowrap; border-radius: 10px"
-                (click)="openEditMode()">
-          Bearbeiten
-          </button>
-        </div>
-
-        <div class="delete-button-wrapper">
-        <span id="userInfoForm_deleteButton"
-            class="btn btn-outline-danger" style="white-space: nowrap; border-radius: 10px"
-            (click)="openDeleteDialog()">
-        Konto Löschen
-        </span>
-        </div>
+      <div class="col text-right">
+        <button id="userInfoForm_editButton"
+                class="btn btn-outline-dark" style="white-space: nowrap; border-radius: 10px; padding-right: 8px"
+                (click)="openEditMode()" *ngIf="wrapper.state === state.READY"><i class="fas fa-user-edit"></i></button>
+        <button id="userInfoForm_editButton1"
+                class="btn btn-outline-dark" style="white-space: nowrap; border-radius: 10px; padding-right: 8px"
+                (click)="openEditMode()" *ngIf="wrapper.state !== state.READY" disabled><i class="fas fa-user-edit"></i></button>
       </div>
     </div>
+    <div class="row" style="padding-left: 110px; padding-right: 110px">
+      <div class="container" *ngIf="wrapper.state === state.READY">
+        <div class="row mb-4">
+          <app-profile-info [currentUser]="wrapper.model" style="width: 100%">
+          </app-profile-info>
+        </div>
+        <div class="row">
+          <div class="col">
+            <button id="userInfoForm_PasswordButton"
+                    class="btn btn-outline-primary" style="white-space: nowrap; border-radius: 10px"
+                    (click)="openPasswordMode()">
+              Passwort ändern
+            </button>
+          </div>
+          <div class="col text-right">
+            <button id="userInfoForm_deleteButton"
+                    class="btn btn-outline-danger pull-right" style="white-space: nowrap; border-radius: 10px"
+                    (click)="openDeleteDialog()">
+              Konto löschen
+            </button>
+          </div>
+        </div>
+      </div>
+      <app-edit-profile [wrapper]= "wrapper" *ngIf="wrapper.state === state.EDIT && !error" style="width: 100%; padding-top: 50px">
+        <div class="container" style="padding-top: 20px">
+          <div class="row">
+            <div class="col">
+              <button id="userInfoForm_saveButton"
+                      class="btn btn-outline-primary" style="white-space: nowrap; border-radius: 10px"
+                      (click)="saveUserInfo()">Speichern
+              </button>
+            </div>
+            <div class="col text-right">
+              <button id="userInfoForm_closeButton"
+                      class="btn btn-outline-danger" style="white-space: nowrap; border-radius: 10px"
+                      (click)="closeEditMode()">Abbrechen
+              </button>
+            </div>
+          </div>
+        </div>
+      </app-edit-profile>
+      <app-change-password [changePassword]= "changePassword" *ngIf="wrapper.state === state.PASSWORD && !error" style="width: 100%; padding-top: 60px">
+        <div class="container" style="padding-top: 30px">
+          <div class="row">
+            <div class="col">
+              <button id="userInfoForm_changeButton"
+                      class="btn btn-outline-primary" style="white-space: nowrap; border-radius: 10px"
+                      (click)="savePassword()">Ändern
+              </button>
+            </div>
+            <div class="col text-right">
+              <button id="userInfoForm_cancelButton"
+                      class="btn btn-outline-danger" style="white-space: nowrap; border-radius: 10px"
+                      (click)="closePasswordMode()">Abbrechen
+              </button>
+            </div>
+          </div>
+        </div>
+      </app-change-password>
+    </div>
   </div>
-</div>
-
-<div style="padding-top: 100px; z-index: 3;" *ngIf="wrapper.state === state.EDIT && !error">
-  <app-edit-profile [wrapper]= "wrapper">
-
-      <button id="userInfoForm_saveButton"
-              class="btn btn-outline-primary" style="white-space: nowrap; border-radius: 10px"
-              (click)="saveUserInfo()">Speichern
-      </button>
-
-      <button id="userInfoForm_closeButton"
-              class="btn btn-outline-danger" style="white-space: nowrap; border-radius: 10px"
-              (click)="closeEditMode()">Abbrechen
-      </button>
-  </app-edit-profile>
-</div>
-
-<div style="padding-top: 150px;" *ngIf="wrapper.state === state.PASSWORD && !error">
-  <app-change-password [changePassword]= "changePassword">
-      <button id="userInfoForm_changeButton"
-              class="btn btn-outline-primary" style="white-space: nowrap; border-radius: 10px"
-              (click)="savePassword()">Ändern
-      </button>
-
-      <button id="userInfoForm_cancelButton"
-              class="btn btn-outline-danger" style="white-space: nowrap; border-radius: 10px"
-              (click)="closePasswordMode()">Abbrechen
-      </button>
-
-  </app-change-password>
-</div>
 </div>

@@ -3,6 +3,7 @@
   margin: 0 125px;
   padding-top: 10px;
   padding-bottom: 40px;
+  border-top: 1px solid black;
 }
 
 .edit-button-wrapper {

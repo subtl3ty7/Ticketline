@@ -1,40 +1,41 @@
-
 <div *ngIf="!invoice">
-<h1 class="col-5 page-title" style="white-space: nowrap; padding-top: 50px; padding-left: 50px">Meine Buchungen</h1>
-
-<div >
-<div class="info-wrapper">
-  <div class="info">
-    <div class="info-label"></div>
-    <div class="info-field">
-<div class="center-block" *ngIf="tickets">
-  <div class="table-wrapper-scroll-y my-custom-scrollbar">
-    <table class="table table-responsive-lg table-hover mb-0">
-      <tbody>
-        <tr *ngFor="let ticket1 of tickets">
-          <th scope="row"></th>
-            <td> {{ticket1.showTime | date:'medium' }}, {{ ticket1.eventName }}</td>
-            <button type="button" class="btn btn-outline-dark" style="white-space: nowrap; border-radius: 10px; margin-right: 10px;"  (click) = "showInvoice(ticket1)"> Anzeigen </button>
-              <button type="button" class="btn btn-outline-primary" style="white-space: nowrap; border-radius: 10px; padding-right: 30px; text-align: center;" *ngIf="ticket1?.purchased">
-                PDF </button>
-              <button type="button" class="btn btn-outline-primary" style="white-space: nowrap; border-radius: 10px" *ngIf="ticket1?.reserved" (click)="purchaseTicket(ticket1.ticketCode, ticket1)">
-                Kaufen </button>
-        </tr>
-      </tbody>
-
-    </table>
-
+  <div class="container">
+    <div class="row" style="border-bottom: 2px solid #efefef; z-index: 0;">
+      <h1 class="page-title" style="white-space: nowrap; padding-top: 50px; padding-left: 50px; padding-bottom: 26px; margin-bottom: 0px">Meine Buchungen</h1>
+    </div>
+    <div class="row" *ngIf="tickets" style="padding-left: 50px; padding-right: 50px">
+      <div class="table-wrapper-scroll-y my-custom-scrollbar" style="width: 100%">
+        <table class="table table-responsive-lg table-hover mb-0">
+          <tbody>
+            <tr *ngFor="let ticket1 of tickets">
+              <div class="container pt-3 pb-3" style="border-bottom: 1px solid #dee2e6">
+                <div class="row">
+                  <div class="col" style="padding-top: 12px" >
+                    <a style="font-size: 18px">{{ticket1.showTime | date:'medium' }}, {{ ticket1.eventName }}</a>
+                  </div>
+                  <div class="col-4">
+                    <button type="button" class="btn btn-outline-dark" style="white-space: nowrap; border-radius: 10px; margin-right: 10px;"  (click) = "showInvoice(ticket1)"> Anzeigen </button>
+                    <button type="button" class="btn btn-outline-primary" style="white-space: nowrap; border-radius: 10px; width: 100px; text-align: center;" *ngIf="ticket1?.purchased">
+                      PDF
+                    </button>
+                    <button type="button" class="btn btn-outline-primary" style="white-space: nowrap; border-radius: 10px; width: 100px" *ngIf="ticket1?.reserved" (click)="purchaseTicket(ticket1.ticketCode, ticket1)">
+                      Kaufen </button>
+                  </div>
+                </div>
+              </div>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row justify-content-center" *ngIf= "tickets === undefined" style="padding-left: 50px; padding-right: 50px; padding-top: 20px">
+      <app-spinner></app-spinner>
+    </div>
   </div>
-
-</div>
-</div>
-</div>
-</div>
-</div>
 </div>
 
 <div *ngIf="invoice">
-  <app-my-invoice [ticket] = "selectedTicket" >
+  <app-my-invoice [ticket] = "selectedTicket">
       <button type="button" class="btn btn-outline-dark" style="white-space: nowrap; border-radius: 10px; text-align: center;" (click)="invoice=false;">Zurück</button>
   </app-my-invoice>
 </div>
