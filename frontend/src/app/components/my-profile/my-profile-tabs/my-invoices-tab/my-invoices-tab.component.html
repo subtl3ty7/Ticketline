@@ -33,7 +33,7 @@
 </div>
 
 <div *ngIf="details">
-  <app-invoice-details [invoice] = "selectedInvoice" >
+  <app-invoice-details [invoice] = "selectedInvoice" [merchandise] = "merchandise" >
     <button type="button" class="btn btn-outline-dark" style="white-space: nowrap; border-radius: 10px; text-align: center;" (click)="details=false;">Zurück</button>
   </app-invoice-details>
 </div>

@@ -55,7 +55,7 @@ public class CustomInvoiceService implements InvoiceService {
     public Invoice createMerchandiseInvoice(Merchandise merchandise, String userCode, String pay) {
 
         Invoice merchandiseInvoice = Invoice.builder()
-            .invoice_type("Kauf rechnung")
+            .invoice_type("Kaufrechnung")
             .invoice_category(InvoiceCategoryEnum.MERCHANDISE_INVOICE)
             .userCode(userCode)
             .payment_method(pay)
