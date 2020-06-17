@@ -39,6 +39,11 @@ export class ProductDetailsComponent implements OnInit {
     );
   }
 
+  openPurchase(product: Merchandise) {
+    if (product) {
+      this.router.navigate(['merchandise-purchase/' + product.merchandiseProductCode]);
+    }
+  }
 
 
 
