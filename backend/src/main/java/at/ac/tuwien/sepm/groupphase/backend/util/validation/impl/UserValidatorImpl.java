@@ -48,7 +48,11 @@ public class UserValidatorImpl implements UserValidator {
                 constraints.add("points_zero", ((Customer) user).getPoints() == 0);
             }
             if (user.getBirthday() != null) {
-                constraints.add("birthday_16yo", ChronoUnit.YEARS.between(user.getBirthday(), LocalDateTime.now()) > 16);
+                constraints.add("birthday_16yo", ChronoUnit.YEARS.between(user.getBirthday(), LocalDateTime.now()) >= 16);
+
+            }
+            if(constraints.isViolated()) {
+                int debug=0;
             }
         }
         return constraints;

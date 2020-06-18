@@ -4,6 +4,7 @@ import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.DetailedEventDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleEventDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EventMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventCategoryEnum;
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventTypeEnum;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
 import io.swagger.annotations.ApiOperation;
@@ -124,7 +125,11 @@ public class EventEndpoint {
     })
     public ResponseEntity<DetailedEventDto> findByEventCode(@PathVariable String eventCode) {
         LOGGER.info("GET /api/v1/events/" + eventCode);
+        LocalDateTime start = LocalDateTime.now();
         DetailedEventDto result = eventMapper.eventToDetailedEventDto(eventService.findByEventCode(eventCode));
+        LocalDateTime end = LocalDateTime.now();
+        float runningTime = Duration.between(start, end).toMillis();
+        LOGGER.info("Getting Event took " + runningTime/1000.0 + " seconds");
         return new ResponseEntity(result, HttpStatus.OK);
     }
 

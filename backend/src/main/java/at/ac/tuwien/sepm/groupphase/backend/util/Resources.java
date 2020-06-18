@@ -15,6 +15,7 @@ import java.lang.reflect.ParameterizedType;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.List;
 
 @Component
 public class Resources {
@@ -32,6 +33,14 @@ public class Resources {
             String json = getText(fileName);
             T obj = objectMapper.readValue(json, returnType);
             return obj;
+        } catch (IOException e) {
+            throw new RuntimeException("Couldn't load or map File.", e);
+        }
+    }
+    public <T> List<T> getListFromJson(String fileName, Class<T> returnType) {
+        try {
+            String json = getText(fileName);
+            return objectMapper.readValue(json, List.class);
         } catch (IOException e) {
             throw new RuntimeException("Couldn't load or map File.", e);
         }

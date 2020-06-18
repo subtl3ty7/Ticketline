@@ -60,7 +60,7 @@ public interface TestData {
     LocalDateTime END =
         LocalDateTime.of(2020, 11, 13, 18, 15, 0, 0);
     Duration DURATION = Duration.between(START, END);
-    List<Integer> PRICES = List.of(30, 40);
+    List<Double> PRICES = List.of(30.0, 40.0);
     List<Show> SHOWS = new ArrayList<>() {
         {
             add(Show.builder()

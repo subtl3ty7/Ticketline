@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.datagenerator;
 
 
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Merchandise;
 import at.ac.tuwien.sepm.groupphase.backend.repository.MerchandiseRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.MerchandiseService;
@@ -19,6 +20,7 @@ import java.lang.invoke.MethodHandles;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Profile("generateData")
@@ -61,21 +63,21 @@ public class MerchandiseDataGenerator {
     }
 
     private List<Merchandise> generateMerchandiseProducts() {
+        List<Merchandise> dataList = Arrays.asList(resources.getObjectFromJson("entities/merchandise.json", Merchandise[].class));
         List<Merchandise> merchandiseProducts = new ArrayList<>();
 
         for(int i = 0; i < NUMBER_OF_MERCHANDISE_PRODUCTS; i++) {
-
-
-            String imgName = "merch_img" + i + ".jpg";
+            int dataIndex = i % dataList.size();
+            Merchandise data = dataList.get(dataIndex);
+            String imgName = data.getPhoto().getImage();
 
 
             Merchandise product = Merchandise.builder()
-                .merchandiseProductCode("M1234" + i)
-                .merchandiseProductName("Product" + i)
+                .merchandiseProductName(data.getMerchandiseProductName())
                 .photo(resources.getImageEncoded(imgName))
-                .stockCount(50)
-                .price(10 * i + 1)
-                .premiumPrice(5 * i +1)
+                .stockCount((int)(Math.random() * 50))
+                .price(data.getPrice())
+                .premiumPrice(data.getPrice() * 2)
                 .premium((i%2) == 0)
                 .build();
 

@@ -44,4 +44,7 @@ public interface ShowRepository extends JpaRepository<Show, Long> {
         "AND ((:price IS NULL) OR (:price IS NOT NULL AND s.price <= :price))  " +
         "AND ((:duration IS NULL) OR (:duration IS NOT NULL AND s.duration <= :duration))", nativeQuery = true)
     List<Show> findShowsByEventNameContainingIgnoreCaseAndEventTypeOrEventTypeIsNullAndEventCategoryOrEventCategoryIsNullAndStartsAtIsGreaterThanEqualAndEndsAtIsLessThanEqualAndDurationLessThanEqualAndPriceLessThanEqualOrPriceIsNull(@Param("eventName") String eventName, @Param("type") Integer type, @Param("category") Integer category, @Param("startsAt") LocalDateTime startsAt, @Param("endsAt") LocalDateTime endsAt, @Param("duration") Duration duration, @Param("price") Integer price);
+
+    @Query(value = "SELECT ID FROM SHOW", nativeQuery = true)
+    List<Long> findAllShowIds();
 }

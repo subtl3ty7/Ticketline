@@ -59,7 +59,7 @@ public class Ticket {
     private String userCode;
 
     @NotNull
-    @Column(nullable = false, name = "price")
+    @Column(nullable = false, name = "price", columnDefinition = "DECIMAL (10, 2)")
     private Double price;
 
     @ToString.Exclude

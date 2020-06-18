@@ -1,7 +1,0 @@
-{
-  "name": "AJsonedEventLocation",
-  "street": "AJsonedStreet",
-  "plz": "AJsonedPlz",
-  "city": "AJsonedCity",
-  "country": "AJsonedCountry"
-}

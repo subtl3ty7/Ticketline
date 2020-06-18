@@ -20,6 +20,7 @@ import java.lang.invoke.MethodHandles;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 
@@ -62,23 +63,25 @@ public class NewsDataGenerator {
         List<Customer> customers = getCustomers();
         int splitUp = customers.size()/NUMBER_OF_NEWS;
 
+        List<News> dataList = Arrays.asList(resources.getObjectFromJson("entities/news.json", News[].class));
 
         for(int i=0; i<NUMBER_OF_NEWS; i++) {
-
-            String imgName = "news_img" + i % 20 + ".jpg";
+            int dataIndex = i % dataList.size();
+            News data = dataList.get(dataIndex);
+            String imgName = data.getPhoto().getImage();
 
             News newsEntry = News.builder()
-                .author("J.K. Rowling")
+                .author(data.getAuthor())
                 .photo(resources.getImageEncoded(imgName))
                 .publishedAt(null)
                 .stopsBeingRelevantAt(LocalDateTime.now().plusWeeks(i))
-                .title("News " + i + ": " + resources.getText("text/news_title.txt"))
-                .summary(resources.getText("text/news_summary.txt"))
-                .text(resources.getText("text/news_text.txt"))
+                .title(data.getTitle())
+                .summary(data.getSummary())
+                .text(data.getText())
                 .seenBy(customers.subList(i*splitUp, (i+1)*splitUp))
                 .build();
             newsService.createNewNewsEntry(newsEntry);
-            newsEntry.setPublishedAt(LocalDateTime.now().minusWeeks(i));
+            newsEntry.setPublishedAt(LocalDateTime.now().minusDays(i).minusHours(i).minusMinutes(i));
             newsRepository.save(newsEntry);
         }
 

@@ -7,7 +7,6 @@ import at.ac.tuwien.sepm.groupphase.backend.service.ArtistService;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventLocationService;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
 import at.ac.tuwien.sepm.groupphase.backend.util.Resources;
-import com.fasterxml.jackson.databind.JsonNode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -40,12 +39,12 @@ public class EventDataGenerator {
     private final EntityManagerFactory entityManagerFactory;
     private final Resources resources;
 
-    private final static int numberOfEventLocations = 20;
+    private static final boolean ignoreNumberOfEventLocations = true;
+    private static final int numberOfEventLocations = 27;
     private static final int numberOfArtists = 50;
-    private static final int numberOfEvents = 1000;
+    private static final int numberOfEvents = 200;
     private static final int numberOfShowsPerEvent = 4;
     private static final int eventDurationInHours = 2;
-    private static final int eventRotation = 5;
 
     @Autowired
     public EventDataGenerator(SectionRepository sectionRepository,
@@ -118,28 +117,29 @@ public class EventDataGenerator {
         EventTypeEnum[] types = EventTypeEnum.values();
         EventCategoryEnum[] categories = EventCategoryEnum.values();
 
-       //checkResources();
+        //checkResources();
+        List<Event> dataList = Arrays.asList(resources.getObjectFromJson("entities/events.json", Event[].class));
 
         for(int i=0; i<numberOfEvents; i++) {
-            String jsonFileName = "events/event" + i % eventRotation + ".json";
-            Event data = resources.getObjectFromJson(jsonFileName, Event.class);
             int typeIndex = i % EventTypeEnum.values().length;
             int categoryIndex = i % EventCategoryEnum.values().length;
-            int eventLocationIndex = i % eventRotation;
-            String imgName = "event_img" + i % eventRotation + ".jpg";
+            int dataIndex = i % dataList.size();
+            Event data = dataList.get(dataIndex);
+            String imgName = data.getPhoto().getImage();
+            String eventLocationName = data.getShows().get(0).getEventLocation().getName();
 
-            //find an eventLocation with the name stored in "data"
-            List<EventLocation> eventLocations1 = eventLocationRepository.findAll();
-            EventLocation eventLocation = eventLocationRepository.findByName(data.getShows().get(0).getEventLocation().getName()).get(0);
+            //find an eventLocation with the name that was given in "data"
+            List<EventLocation> list = eventLocationRepository.findByName(eventLocationName);
+            if(list.isEmpty()) {
+                throw new RuntimeException("Can't find EventLocation with name '" + eventLocationName + "'");
+            }
+            EventLocation eventLocation = list.get(0);
 
             Event event = Event.builder()
                 .description(data.getDescription())
-                .startsAt(LocalDateTime.now())
-                .endsAt(LocalDateTime.now().plusHours(eventDurationInHours))
                 .name(data.getName())
                 .photo(resources.getImageEncoded(imgName))
-                .prices(List.of(1,2,3))
-                .totalTicketsSold(5*i*i)
+                .totalTicketsSold(0)
                 .shows(generateShows(eventLocation, types[typeIndex], categories[categoryIndex], "Event " + i, imgName))
                 .artists(data.getArtists())
                 .type(types[typeIndex])
@@ -161,13 +161,13 @@ public class EventDataGenerator {
         for(int i = 0; i< numberOfShowsPerEvent; i++) {
             //List<EventLocation> location = new ArrayList<>();
             //location.add(new EventLocation(eventLocation));
-            LocalDateTime start = LocalDateTime.now();
-            LocalDateTime end = start.plusHours(eventDurationInHours);
+            LocalDateTime start = LocalDateTime.now().plusDays((int)(Math.random() * 700)).plusHours((int)(Math.random() * 24)).plusMinutes((int)(Math.random() * 60));
+            LocalDateTime end = start.plusHours((int)(Math.random() * 24));
             Show show = Show.builder()
                 .startsAt(start)
                 .endsAt(end)
-                .ticketsAvailable(1000)
-                .ticketsSold(300)
+                .ticketsAvailable(eventLocation.getCapacity())
+                .ticketsSold(0)
                 .eventLocation(eventLocation)
                 .eventType(typeEnum)
                 .eventCategory(categoryEnum)
@@ -175,7 +175,7 @@ public class EventDataGenerator {
                 //.photo(resources.getImageEncoded(imgName))
                 .description(resources.getText("text/event_text.txt"))
                 .duration(Duration.ofHours(eventDurationInHours))
-                .price(50)
+                .price(Math.random()*53)
                 .build();
             shows.add(show);
         }
@@ -185,11 +185,13 @@ public class EventDataGenerator {
 
 
     private List<EventLocation> generateEventLocations() {
+        List<EventLocation> dataList = Arrays.asList(resources.getObjectFromJson("entities/eventLocations.json", EventLocation[].class));
+        int numEventLocations = ignoreNumberOfEventLocations ? dataList.size() : numberOfEventLocations;
 
         List<EventLocation> eventLocations = new ArrayList<>();
-        for(int i=0; i<numberOfEventLocations; i++) {
-            String jsonFileName = "eventLocations/eventLocation" + i % eventRotation + ".json";
-            EventLocation data = resources.getObjectFromJson(jsonFileName, EventLocation.class);
+        for(int i=0; i<numEventLocations; i++) {
+            int dataIndex = i % dataList.size();
+            EventLocation data = dataList.get(dataIndex);
             int randomNum = ThreadLocalRandom.current().nextInt(3, 6 + 1);
             List<Section> sections = generateSections(randomNum);
 
@@ -282,8 +284,8 @@ public class EventDataGenerator {
             Section section = Section.builder()
                 .name(label)
                 .description("Some Description")
-                .priceCategory("Low")
-                .price(9.99)
+                .priceCategory("Average")
+                .price(Math.random() * 50)
                 .seats(seats)
                 .capacity(seats.size())
                 .build();
@@ -341,23 +343,4 @@ public class EventDataGenerator {
         }
         return sum;
     }
-
-    private void checkResources() {
-        try {
-            resources.getImageEncoded("event_img" + eventRotation);
-        } catch (RuntimeException e) {
-            throw new RuntimeException("Number of Event Images has to be greater or equal to eventRotation", e);
-        }
-        try {
-            resources.getObjectFromJson("event" + eventRotation, Event.class);
-        } catch (RuntimeException e) {
-            throw new RuntimeException("Number of Events has to be greater or equal to eventRotation", e);
-        }
-        try {
-            resources.getObjectFromJson("event" + eventRotation, EventLocation.class);
-        } catch (RuntimeException e) {
-            throw new RuntimeException("Number of EventLocations has to be greater or equal to eventRotation", e);
-        }
-    }
-
 }

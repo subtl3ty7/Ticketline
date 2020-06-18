@@ -32,7 +32,7 @@ public class Seat implements Serializable {
     @Column(nullable = false, length = 100)
     private String seatColumn;
 
-    @Column
+    @Column(columnDefinition = "DECIMAL (10, 2)")
     private double price;
 
     public Seat() {}

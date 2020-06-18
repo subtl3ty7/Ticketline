@@ -68,4 +68,11 @@ public interface EventRepository extends JpaRepository<Event, Long> {
         "AND ((:endsAt IS NULL) OR (:endsAt IS NOT NULL AND e.end_datetime < :endsAt))  " +
         "AND ((:duration IS NULL) OR (:duration IS NOT NULL AND e.duration <= :duration))", nativeQuery = true)
     List<Event> findEventsByNameContainingIgnoreCaseAndTypeContainingAndCategoryContainingAndStartsAtIsGreaterThanEqualAndEndsAtIsLessThanEqualAndShowsDurationLessThanEqual(@Param("name") String name, @Param("type") Integer type, @Param("category") Integer category, @Param("startsAt") LocalDateTime startsAt, @Param("endsAt") LocalDateTime endsAt, @Param("duration") Duration duration);
+
+    /**
+     * Find x events where x is defined by pabgeable
+     * @param pageable
+     * @return x events
+     */
+    List<Event> findAllBy(Pageable pageable);
 }
