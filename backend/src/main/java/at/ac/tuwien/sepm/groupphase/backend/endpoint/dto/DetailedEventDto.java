@@ -26,7 +26,7 @@ public class DetailedEventDto {
     private List<SimpleShowDto> shows;
     private String type;
     private String category;
-    private List<Integer> prices;
+    private List<Double> prices;
     private int totalTicketsSold;
     private long duration;
 }

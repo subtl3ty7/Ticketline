@@ -40,7 +40,7 @@ public class Show implements Serializable {
     private int ticketsAvailable;
 
     @ToString.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private EventLocation eventLocation;
 
     @ToString.Exclude
@@ -66,9 +66,11 @@ public class Show implements Serializable {
     @Column
     public Duration duration;
 
-    @Column
-    private Integer price;
+    @NotNull
+    @Column(columnDefinition = "DECIMAL (10, 2)")
+    private Double price;
 
+    @NotNull
     @Column
     private String eventName;
 
@@ -76,8 +78,7 @@ public class Show implements Serializable {
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Image photo;
 
-    @NotNull
-    @Size(min=1, max=10000)
+    @Size(max=10000)
     @Column(nullable = false, length = 10000)
     private String description;
 

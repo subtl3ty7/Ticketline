@@ -19,12 +19,11 @@ import java.util.Objects;
 @Builder(toBuilder = true)
 @ToString
 @Transactional
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode
 public class Artist {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
     private Long id;
 
     @ManyToMany(mappedBy = "artists", fetch = FetchType.LAZY)
@@ -36,7 +35,7 @@ public class Artist {
     private String firstName;
 
     @NotNull
-    @Size(min=1, max=100)
-    @Column(nullable = false, length = 100, name = "last_name")
+    @Size(max=100)
+    @Column(length = 100, name = "last_name")
     private String lastName;
 }

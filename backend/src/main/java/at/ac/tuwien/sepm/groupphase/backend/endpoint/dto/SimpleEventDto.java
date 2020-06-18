@@ -20,7 +20,7 @@ public class SimpleEventDto {
     private LocalDateTime startsAt;
     private String name;
     private String description;
-    private Integer startPrice;
+    private Double startPrice;
     private LocalDateTime endsAt;
     private String photo;
     private int totalTicketsSold;

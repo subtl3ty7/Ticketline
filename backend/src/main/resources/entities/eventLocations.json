@@ -1,0 +1,198 @@
+[
+  {
+    "name": "Ya Wali",
+    "street": "Kirchenstraße 15",
+    "plz": "81675",
+    "city": "München",
+    "country": "Deutschland"
+  },
+  {
+    "name": "Hochdorfer Kronenbrauerei",
+    "street": "Rottweiler Straße 16-20",
+    "plz": "72202",
+    "city": "Nagold",
+    "country": "Deutschland"
+  },
+  {
+    "name": "Literaturhaus Freiburg",
+    "street": "Bertoldstraße 17",
+    "plz": "79098",
+    "city": "Freiburg im Breisgau",
+    "country": "Deutschland"
+  },
+  {
+    "name": "Oper Frankurt",
+    "street": "Willy-Brandt-Platz",
+    "plz": "60311",
+    "city": "Frankfurt/Main",
+    "country": "Deutschland"
+  },
+  {
+    "name": "Staatsoper im Schiller Theater",
+    "street": "Bismarckstraße 110",
+    "plz": "10625",
+    "city": "Berlin",
+    "country": "Deutschland"
+  },
+  {
+    "name": "Dortmund",
+    "street": "Hauptstr. 1",
+    "plz": "44135",
+    "city": "Dortmund",
+    "country": "Deutschland"
+  },
+  {
+    "name": "Festsaal Kreuzberg",
+    "street": "Skalitzer Strasse 130",
+    "plz": "10999",
+    "city": "Berlin",
+    "country": "Deutschland"
+  },
+  {
+    "name": "Wiener Stadthalle",
+    "street": "Roland-Rainer-Platz 1",
+    "plz": "1150",
+    "city": "Wien",
+    "country": "Österreich"
+  },
+  {
+    "name": "Ernst-Happel-Stadion",
+    "street": "Meiereistraße 7",
+    "plz": "1020",
+    "city": "Wien",
+    "country": "Österreich"
+  },
+  {
+    "name": "Wiener Konzerthaus",
+    "street": "Lothringerstraße 20",
+    "plz": "1030",
+    "city": "Wien",
+    "country": "Österreich"
+  },
+  {
+    "name": "Verena KÜche",
+    "street": "Absdorferstrasse 25",
+    "plz": "1010",
+    "city": "Wien",
+    "country": "Österreich"
+  },
+  {
+    "name": "Autokino",
+    "street": "Autokinostraße",
+    "plz": "2301",
+    "city": "Groß-Enzersdorf",
+    "country": "Österreich"
+  },
+  {
+    "name": "Navpark",
+    "street": "Navstrasse 24",
+    "plz": "1010",
+    "city": "Wien",
+    "country": "Österreich"
+  },
+  {
+    "name": "Microsoft-Center",
+    "street": "Silkgasse 99",
+    "plz": "1010",
+    "city": "Wien",
+    "country": "Österreich"
+  },
+  {
+    "name": "Tuskhalle",
+    "street": "Tuskstrasse 12",
+    "plz": "1010",
+    "city": "Wien",
+    "country": "Österreich"
+  },
+  {
+    "name": "Tuskhalle",
+    "street": "Tuskstrasse",
+    "plz": "1010",
+    "city": "Wien",
+    "country": "Österreich"
+  },
+  {
+    "name": "Hafen Hamburg",
+    "street": "Gafenstrasse 9",
+    "plz": "2424",
+    "city": "Hamburg",
+    "country": "Deutschland"
+  },
+  {
+    "name": "Hallplatz",
+    "street": "Hallstrasse 9",
+    "plz": "1010",
+    "city": "Wien",
+    "country": "Österreich"
+  },
+  {
+    "name": "Donauinsel",
+    "street": "Nammstrasse 9",
+    "plz": "1010",
+    "city": "Wien",
+    "country": "Österreich"
+  },
+  {
+    "name": "Sars-Stadion",
+    "street": "Uhmelstrasse 57",
+    "plz": "1010",
+    "city": "Wien",
+    "country": "Österreich"
+  },
+  {
+    "name": "Kreuzbahn",
+    "street": "Absstrasse 6",
+    "plz": "1010",
+    "city": "Wien",
+    "country": "Österreich"
+  },
+  {
+    "name": "Albertina",
+    "street": "Handelskai 39",
+    "plz": "1010",
+    "city": "Wien",
+    "country": "Österreich"
+  },
+  {
+    "name": "Messe Tulln",
+    "street": "Arbeiterstrasse 24",
+    "plz": "3420",
+    "city": "Tulln",
+    "country": "Österreich"
+  },
+  {
+    "name": "Flex",
+    "street": "Augartenbrücke 1",
+    "plz": "1010",
+    "city": "Wien",
+    "country": "Österreich"
+  },
+  {
+    "name": "Club U",
+    "street": "Ubahn Passage Karlsplatz Resselpark",
+    "plz": "1010",
+    "city": "Wien",
+    "country": "Österreich"
+  },
+  {
+    "name": "Votivkirche",
+    "street": "Rooseveltplatz",
+    "plz": "1090",
+    "city": "Wien",
+    "country": "Österreich"
+  },
+  {
+    "name": "ITER Fusionsreaktor",
+    "street": "Industriegasse 64",
+    "plz": "1010",
+    "city": "Wien",
+    "country": "Österreich"
+  },
+  {
+    "name": "Vierhangar",
+    "street": "Vierstrasse 10",
+    "plz": "8000",
+    "city": "Zürich",
+    "country": "Schweiz"
+  }
+]

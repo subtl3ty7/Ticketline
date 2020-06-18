@@ -1,7 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.basetest;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.*;
-import org.hibernate.mapping.Table;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.Duration;
@@ -61,7 +60,7 @@ public interface TestData {
     LocalDateTime END =
         LocalDateTime.of(2020, 11, 13, 18, 15, 0, 0);
     Duration DURATION = Duration.between(START, END);
-    List<Integer> PRICES = List.of(30, 40);
+    List<Double> PRICES = List.of(30.0, 40.0);
     List<Show> SHOWS = new ArrayList<>() {
         {
             add(Show.builder()
@@ -113,7 +112,7 @@ public interface TestData {
     };
 
     String ARTIST_BASE_URI = BASE_URI + "/artists";
-    String NEWS_BASE_URI = BASE_URI + "/news";
+    String NEWS_BASE_URI = BASE_URI + "/eventLocations";
 
     Event EVENT = Event.builder().id(ID).eventCode(USER_CODE).name(NAME).description(DESC).category(CAT).type(TYP)
         .startsAt(START).endsAt(END).prices(PRICES).totalTicketsSold(TOTAL).shows(SHOWS).build();

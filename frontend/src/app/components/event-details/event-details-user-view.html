@@ -72,8 +72,10 @@
             </div>
           </div>
 
-          <div class="description-title">Beschreibung</div>
-          <div class="description-text text-justify">{{event.description}}</div>
+          <div *ngIf="event.description && event.description.length > 0">
+            <div class="description-title">Beschreibung</div>
+            <div class="description-text text-justify">{{event.description}}</div>
+          </div>
 
         </div>
       </div>
