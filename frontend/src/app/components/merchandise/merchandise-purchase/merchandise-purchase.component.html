@@ -29,7 +29,7 @@
 
             <h3> Bitte Menge auswählen </h3>
             <div class="container-fluid choose-quantity">
-              <mat-select placeholder="Menge auswählen" class="form-control choose-quantity-form"  [(ngModel)]="quantity" (ngModelChange)="changePrice()" required>
+              <mat-select placeholder="Menge auswählen" class="form-control choose-quantity-form"  [(ngModel)]="quantity" (ngModelChange)="changePrice(); changePremiumPrice()" required>
                 <mat-option value="1">1</mat-option>
                 <mat-option value="2">2</mat-option>
                 <mat-option value="3">3</mat-option>

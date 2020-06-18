@@ -44,8 +44,15 @@ export class MerchandisePurchaseComponent implements OnInit {
 
   public changePrice() {
     console.log('Changing price');
-    console.log(this.quantity);
+    console.log('Quantity: ' + this.quantity);
     this.merchandiseProduct.price = this.merchandiseProduct.price * this.quantity;
+  }
+
+  public changePremiumPrice() {
+    console.log('Changing premium price');
+    console.log('Quantity: ' + this.quantity);
+    this.merchandiseProduct.premiumPrice = this.merchandiseProduct.premiumPrice * this.quantity;
+
   }
 
 
