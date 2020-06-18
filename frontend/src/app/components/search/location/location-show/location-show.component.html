@@ -28,7 +28,7 @@
                             {{s.startsAt | date}}, {{s.startsAt | date:'hh:mm'}}
                           </div>
                           <div class="row" style="font-size: 30px; font-weight: bold; padding-top: 25px; color: #1A1A1A">
-                            {{s.eventName}}
+                            <a class="prevent-overflow-inline" style="color: #1A1A1A" style="padding-top: 5px; height: 30px">{{s.eventName}}</a>
                           </div>
                           <div class="row" style="padding-top: 30px;">
                             <div class="show-description-font">
@@ -45,7 +45,7 @@
                                 <a style="font-size: 25px; font-weight: 500">Tickets ab</a><br>
                               </div>
                               <div class="row pl-1 justify-content-start" style="margin-top: 25px;">
-                                <a style="font-size: 33px; font-weight: bolder">€ {{s.price}},-</a>
+                                <a style="font-size: 33px; font-weight: bolder">{{s.price}}€</a>
                               </div>
                             </div>
                           </div>

@@ -17,13 +17,13 @@
       <div *ngFor="let a of searchShared.entities">
         <div class="row artist-row">
           <div class="artist-block">
-            <div class="row ">
-              <div class="col">
-                <div class="artist-name pl-5" style="margin-top: 45px;">
+            <div class="row">
+              <div class="col-9 col-sm-8">
+                <div class="artist-name pl-5 prevent-overflow-inline" style="margin-top: 45px;">
                   {{a.firstName}} {{a.lastName}}
                 </div>
               </div>
-              <div class="col pr-5">
+              <div class="col-3 col-sm-4 pr-5">
                 <button class="btn default artist-button align-middle" style="margin-top: 30px;" (click)="searchEvents(a)">
                   Zu den Events
                 </button>
