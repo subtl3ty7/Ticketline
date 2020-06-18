@@ -14,8 +14,8 @@ public class MerchandiseDto {
     private String merchandiseProductName;
     private int stockCount;
     private String photo;
-    private int price;
-    private int premiumPrice;
+    private Double price;
+    private Long premiumPrice;
     private boolean premium;
 
     @Override

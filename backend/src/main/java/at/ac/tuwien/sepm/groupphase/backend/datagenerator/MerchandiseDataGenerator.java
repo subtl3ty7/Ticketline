@@ -77,7 +77,7 @@ public class MerchandiseDataGenerator {
                 .photo(resources.getImageEncoded(imgName))
                 .stockCount((int)(Math.random() * 50))
                 .price(data.getPrice())
-                .premiumPrice(data.getPrice() * 2)
+                .premiumPrice(Math.round(data.getPrice() * 2))
                 .premium((i%2) == 0)
                 .build();
 
