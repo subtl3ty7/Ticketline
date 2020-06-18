@@ -121,8 +121,6 @@ public class EventDataGenerator {
         List<Event> dataList = Arrays.asList(resources.getObjectFromJson("entities/events.json", Event[].class));
 
         for(int i=0; i<numberOfEvents; i++) {
-            int typeIndex = i % EventTypeEnum.values().length;
-            int categoryIndex = i % EventCategoryEnum.values().length;
             int dataIndex = i % dataList.size();
             Event data = dataList.get(dataIndex);
             String imgName = data.getPhoto().getImage();
@@ -140,10 +138,10 @@ public class EventDataGenerator {
                 .name(data.getName())
                 .photo(resources.getImageEncoded(imgName))
                 .totalTicketsSold(0)
-                .shows(generateShows(eventLocation, types[typeIndex], categories[categoryIndex], "Event " + i, imgName))
+                .shows(generateShows(eventLocation, data.getType(), data.getCategory(), "Event " + i))
                 .artists(data.getArtists())
-                .type(types[typeIndex])
-                .category(categories[categoryIndex])
+                .type(data.getType())
+                .category(data.getCategory())
                 .duration(Duration.ofHours(eventDurationInHours))
                 .build();
             event = eventService.createNewEvent(event);
@@ -156,7 +154,7 @@ public class EventDataGenerator {
         return events;
     }
 
-    private List<Show> generateShows(EventLocation eventLocation, EventTypeEnum typeEnum, EventCategoryEnum categoryEnum, String eventName, String imgName) {
+    private List<Show> generateShows(EventLocation eventLocation, EventTypeEnum typeEnum, EventCategoryEnum categoryEnum, String eventName) {
         List<Show> shows = new ArrayList<>();
         for(int i = 0; i< numberOfShowsPerEvent; i++) {
             //List<EventLocation> location = new ArrayList<>();

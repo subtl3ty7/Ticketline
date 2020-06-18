@@ -8,6 +8,7 @@ import {CustomError} from '../../dtos/customError';
 })
 export class ErrorNotificationComponent implements OnInit, OnChanges {
   @Input() error;
+  @Input() showStatus: boolean = true;
   @Output() newError: EventEmitter<any> = new EventEmitter<any>();
   customError: CustomError;
 

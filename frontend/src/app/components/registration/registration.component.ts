@@ -20,7 +20,7 @@ export class RegistrationComponent implements OnInit {
   // After first submission attempt, form validation will start
   submitted: boolean = false;
   // CustomError flag
-  error: boolean = false;
+  error;
   errorMessage: string = '';
   maxDate: Date;
   private user: User;
@@ -68,10 +68,6 @@ export class RegistrationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  }
-
-  vanishError() {
-    this.error = false;
   }
 
   defineBackground() {

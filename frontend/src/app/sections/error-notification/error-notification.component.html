@@ -1,5 +1,5 @@
 <div *ngIf="customError" class="alert alert-warning alert-dismissible fade show" role="alert">
-  <strong>{{customError.status}} {{customError.error}}</strong>
+  <strong *ngIf="showStatus">{{customError.status}} {{customError.error}}</strong>
   <div *ngFor="let message of customError.messages">
     {{message}}
   </div>
