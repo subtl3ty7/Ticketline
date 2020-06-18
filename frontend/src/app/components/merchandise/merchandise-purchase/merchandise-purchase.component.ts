@@ -13,6 +13,7 @@ export class MerchandisePurchaseComponent implements OnInit {
 
   error;
   merchandiseProduct: Merchandise;
+  quantity: number;
 
 
   constructor(
@@ -41,6 +42,11 @@ export class MerchandisePurchaseComponent implements OnInit {
     );
   }
 
+  public changePrice() {
+    console.log('Changing price');
+    console.log(this.quantity);
+    this.merchandiseProduct.price = this.merchandiseProduct.price * this.quantity;
+  }
 
 
 

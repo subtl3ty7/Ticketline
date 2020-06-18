@@ -29,14 +29,19 @@
 
             <h3> Bitte Menge auswählen </h3>
             <div class="container-fluid choose-quantity">
-              <mat-select placeholder="Menge auswählen" class="form-control choose-quantity-form" required>
-                <mat-option value="'1'">1</mat-option>
-                <mat-option value="'2'">2</mat-option>
-                <mat-option value="'3'">3</mat-option>
-                <mat-option value="'4'">4</mat-option>
-                <mat-option value="'5'">5</mat-option>
+              <mat-select placeholder="Menge auswählen" class="form-control choose-quantity-form"  [(ngModel)]="quantity" (ngModelChange)="changePrice()" required>
+                <mat-option value="1">1</mat-option>
+                <mat-option value="2">2</mat-option>
+                <mat-option value="3">3</mat-option>
+                <mat-option value="4">4</mat-option>
+                <mat-option value="5">5</mat-option>
               </mat-select>
             </div>
+
+
+
+
+
             <div class="gap"> <br> </div>
 
             <h4> Bestellwert: {{merchandiseProduct.price}} €</h4>
