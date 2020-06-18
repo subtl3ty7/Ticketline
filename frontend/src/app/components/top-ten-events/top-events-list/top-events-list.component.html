@@ -6,9 +6,13 @@
         <img class="img-fluid top-three-image" src="{{events[i].photo}}">
         <div class="img-overlay"></div>
         <div class='img-footer'>
-          <div class="row">
-            <h2 class="top-three-rank">#{{i+1}}</h2>
-            <h3 class="top-three-name">{{events[i].name}}</h3>
+          <div class="row" style="height: 100%">
+            <div class="col-2">
+              <h2 class="top-three-rank">#{{i+1}}</h2>
+            </div>
+            <div class="col-10" style="padding: 5px 30px 0px 10px;">
+              <h3 class="top-three-name">{{events[i].name}}</h3>
+            </div>
           </div>
         </div>
       </div>
@@ -28,11 +32,10 @@
             <div class="row align-items-center">
               <div class="col-sm">
                 <div class="row" style="padding-top: 40px">
-                  <h1 class="bottom-rank">#{{i+1}}</h1>
-                  <h2 class="bottom-name">{{events[i].name}}</h2>
+                  <h1 class="bottom-rank col-2">#{{i+1}}</h1>
+                  <h2 class="bottom-name col prevent-overflow-inline" style="margin-left: -35px; padding-top: 2px">{{events[i].name}}</h2>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -49,7 +52,7 @@
 <div style="padding-top: 80px; padding-bottom: 50px">
   <div class="container">
     <div class="row justify-content-center">
-      <button class="btn default font-weight-bold" routerLink="/events">Mehr Events</button>
+      <button class="btn default font-weight-bold" routerLink="/search" (click)="searchEntity('', searchedEntity.EVENT)">Mehr Events</button>
     </div>
   </div>
 </div>

@@ -241,3 +241,10 @@ label {
 .zoom:focus {
   outline: transparent;
 }
+
+.page-title {
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

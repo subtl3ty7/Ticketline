@@ -2,12 +2,9 @@
 
 <app-error-notification *ngIf="error" [error]="error"></app-error-notification>
 
-<div *ngIf="events">
+<div *ngIf="events" class="background">
   <div class="row row-headline">
     <div class="rail-select col-2 ml-5">
-      <div class="select-side">
-        <i class="fa fa-chevron-down"></i>
-      </div>
       <select class="form-control" id="sel1">
         <option>
           All Events
@@ -20,8 +17,9 @@
         </option>
       </select>
     </div>
+  </div>
+  <div class="row mt-5">
     <h1 class="title-headline mx-auto">Top Zehn Veranstaltungen im {{currentMonth}}</h1>
-    <div class="col-2"></div>
   </div>
 
   <div class="container-fluid" style="padding-left: 0px; padding-right: 0px; padding-top: 50px;">

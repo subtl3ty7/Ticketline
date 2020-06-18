@@ -33,7 +33,7 @@ export class Background implements OnInit {
       document.body.style.backgroundImage = 'linear-gradient(148deg, #2771BB 0%, #FF91BE 100%)';
       document.body.style.backgroundRepeat = 'no-repeat';
       document.body.style.backgroundPosition = 'top';
-      document.body.style.backgroundSize = '98% 3150px';
+      document.body.style.backgroundSize = '100% 3400px';
     }
   }
 }
