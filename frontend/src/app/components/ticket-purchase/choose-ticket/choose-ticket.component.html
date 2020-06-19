@@ -12,14 +12,12 @@
       <!-- Ticket Info and/or Selection -->
       <div class="col-4">
         <!-- Section and Seat Title -->
-        <div class="gap"></div>
         <div class="choosing-title align-items-center row">Gewählte Sitzplätze</div>
         <!-- Section and Seat Info and/or Selection -->
             <div class="table-wrapper-scroll-y my-custom-scrollbar" style="padding: 10px">
               <table class="table table-responsive-lg table-hover mb-0">
               <tbody *ngFor="let seat of selectedSeats">
               <tr>
-                <th scope="row"></th>
                 <td>Sektor {{getSectionNameById(seat.sectionId)}}, Reihe {{seat.seatRow}}, Platz {{seat.seatColumn}}</td>
               </tr>
               </tbody>

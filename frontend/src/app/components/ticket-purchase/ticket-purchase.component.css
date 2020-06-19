@@ -18,18 +18,20 @@
 }
 
 .page-title {
-  font-size: 40px;
-  padding-left: 20px;
+  padding-top: 5px;
+  font-size: 22px;
   margin: 0px;
+  font-weight: bold;
 }
 
 .divider {
-  margin-left: 20px;
-  margin-right: 20px;
   height: 40px;
-  border-left-style: solid;
-  border-left-width: 1px;
-  border-left-color: #FFFFFF;
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-right-color: #FFFFFF;
+  border-left: 0;
+  border-top: 0;
+  border-bottom: 0;
 }
 
 .preenchimento-incompleto {
@@ -47,4 +49,3 @@
 ::ng-deep .mat-step-header .mat-step-icon-selected {
   background-color: #0e2e62!important
 }
-

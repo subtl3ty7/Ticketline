@@ -101,3 +101,7 @@ a {
   font-size: 18px;
   color: #202020;
 }
+
+.header-row {
+  padding-top: 18px;
+}
