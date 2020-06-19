@@ -30,22 +30,21 @@ ol.carousel-indicators {
   width: 130px;
   z-index: 112;
   transition: .2s;
+  height: 50px;
+  margin-top: 230px;
 }
 
-.carousel-button-left:hover,
-.carousel-button-right:hover {
-  opacity: 1;
-  transform: scale(1.5);
+.carousel-button-left {
+  padding-right: 25px;
+}
+
+.carousel-button-right {
+  padding-left: 25px;
 }
 
 .carousel-item {
   padding: 30px 50px;
 }
-
-.carousel {
-  padding-bottom: 20px;
-}
-
 
 .carousel-visual-button {
   width: 48px;
@@ -128,15 +127,15 @@ ol.carousel-indicators {
 
 .event-button:hover {
   background: black;
-}
+}gr
 
 .title-button {
-  background-color: #EEEEF6;
   color: black;
   padding-bottom: 20px;
   padding-top: 20px;
   padding-left: 20px;
   transition: all .2s ease-in-out;
+  outline: transparent;
 }
 
 .title-button:hover {
@@ -147,6 +146,7 @@ ol.carousel-indicators {
 .title-headline {
   transition: all .2s ease-in-out;
   margin: 0px;
+  outline: transparent;
 }
 
 .title-button:hover .title-headline {
@@ -181,4 +181,21 @@ ol.carousel-indicators {
 
 .extra-pad {
   padding-top: 10px
+}
+
+.card-title {
+  margin-bottom: 0px;
+}
+
+.card-title-font {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1; /* number of lines to show */
+  line-height: 40px; /* fallback */
+  height: 40px; /* fallback */
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 28px;
+  font-weight: bold;
+  color: white;
+  padding-bottom: 8px;
 }

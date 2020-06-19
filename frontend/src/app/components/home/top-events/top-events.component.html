@@ -12,44 +12,57 @@
   <div id="top-ten-events-carousel" class="my-slider carousel slide carousel-multi-item" data-ride="carousel">
 
     <!--Indicators-->
-    <ol class="carousel-indicators">
+    <!--<ol class="carousel-indicators">
       <li data-target="#top-ten-events-carousel" data-slide-to="0" class="active"></li>
       <li data-target="#top-ten-events-carousel" data-slide-to="1"></li>
       <li data-target="#top-ten-events-carousel" data-slide-to="2"></li>
-    </ol>
+    </ol>-->
 
     <!--Inner Carousel-->
     <div class="carousel-inner" role="listbox">
 
       <!--Carousel Items-->
       <div class="carousel-item"
-           *ngFor="let threeEvents of events"
+           *ngFor="let threeEvents of events; index as i"
            [class.active]="threeEvents === events[0]">
-        <div class="row">
+        <div class="row" style="min-height: 415px">
 
           <!--The three Events inside a Carousel Item-->
           <div class="zoom"
-               *ngFor="let event of threeEvents"
+               *ngFor="let event of threeEvents; index as j"
                [class.col-md-6]="event === threeEvents[0]"
                [class.col-md-3]="event !== threeEvents[0]"
                [class.clearfix]="event !== threeEvents[0]"
                [class.d-none]="event !== threeEvents[0]"
                [class.d-md-block]="event !== threeEvents[0]"
-               style="padding: 10px"
-               routerLink="/events/{{event.eventCode}}">
+               routerLink="/events/{{event.eventCode}}" style="
+            padding-bottom: 15px;
+            ">
             <div class="card">
               <img class="card-img-top img-fluid"
                    [class.image-crop-big]="event === threeEvents[0]"
                    [class.image-crop-small]="event !== threeEvents[0]"
                    src="{{event.photo}}">
-              <div class="card-body">
+              <div class="card-body" style="padding: 20px 25px 25px;min-height: 90px;">
                 <div class = "card-title row">
-                  <div class="col-sm extra-pad card-title-font prevent-overflow-inline">{{event.name}}</div>
-                  <button *ngIf="event === threeEvents[0]"
-                          class="btn default event-button col-sm"
-                          routerLinkActive="active" style="margin-right: 20px">
-                    <h3>Tickets ab €{{event.startPrice}},-</h3>
-                  </button>
+                  <div class="col-sm extra-pad card-title-font prevent-overflow-inline" style="margin-left: 0px">
+                    <div class="container" style="padding: 0px">
+                      <div class="row" style="padding: 0px; margin-top: -2px">
+                        <div class="col-1" style="padding-left: 10px; ">
+                          <a style="font-size: 32px;">#{{3*i + j +1}}</a>
+                        </div>
+                        <div class="col-10">
+                          <div class="card-title-font" style="margin-left: 15px; ">{{event.name}}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col text-right" *ngIf="event === threeEvents[0]">
+                    <button class="btn default event-button prevent-overflow-inline pull-right"
+                            routerLinkActive="active" style="height: 50px">
+                      <p style="font-size: 20px; margin-bottom: 0px;">Tickets ab {{event.startPrice}}€</p>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -83,4 +96,6 @@
 
   </div>
 </div>
+
+<app-spinner *ngIf="events === undefined"></app-spinner>
 

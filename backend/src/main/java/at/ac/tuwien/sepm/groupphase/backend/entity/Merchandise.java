@@ -44,12 +44,12 @@ public class Merchandise {
 
     @NotNull
     @Column(nullable = false, name = "price")
-    private int price;
+    private Double price;
 
 
     @NotNull
     @Column(nullable = false, name = "premium_price")
-    private int premiumPrice;
+    private Long premiumPrice;
 
     @NotNull
     @Column(nullable = false, name = "premium")

@@ -1,17 +1,21 @@
-<div class="center-block">
-  <div>
-    <div class="password-button-wrapper">
-      <ng-content></ng-content>
-    </div>
+<div class="container">
+  <div class="row" style="border-bottom: 2px solid #efefef; z-index: 0;">
+    <h1 class="page-title" style="white-space: nowrap; padding-top: 50px; padding-left: 50px; padding-bottom: 26px; margin-bottom: 0px">Rechnung</h1>
+  </div>
+  <div class="row" style="padding-left: 110px; padding-right: 110px">
+    <div class="container" style="padding-top: 20px">
+      <div class="password-button-wrapper">
+        <ng-content></ng-content>
+      </div>
 
-    <div class="info-wrapper">
-      <div class="info">
-        <div class="info-label"></div>
-        <div class="info-field">
-          Invoice type: {{invoice.invoice_type}}
+      <div class="info-wrapper">
+        <div class="info">
+          <div class="info-label"></div>
+          <div class="info-field">
+            Invoice type: {{invoice.invoice_type}}
+          </div>
         </div>
       </div>
-    </div>
 
     <div class="info-wrapper">
       <div class="info">
@@ -20,7 +24,6 @@
           Invoice number: {{invoice.invoiceNumber}}
         </div>
       </div>
-    </div>
 
     <div class="info-wrapper">
       <div class="info">
@@ -32,7 +35,6 @@
           Merchandise name: {{merchandise.merchandiseProductName}}
         </div>
       </div>
-    </div>
 
     <div class="info-wrapper" >
       <div class="info">
@@ -44,28 +46,27 @@
           Merchandise code: {{invoice.merchandise_code}}
         </div>
       </div>
-    </div>
 
-    <div class="info-wrapper">
-      <div class="info">
-        <div class="info-label"></div>
-        <div class="info-field">
-          Invoice generated at: {{invoice.generatedAt | date:'short'}}
+      <div class="info-wrapper">
+        <div class="info">
+          <div class="info-label"></div>
+          <div class="info-field">
+            Invoice generated at: {{invoice.generatedAt | date:'short'}}
+          </div>
         </div>
       </div>
-    </div>
 
-    <nav>
-      <div class="bottom-button-wrapper">
-        <div class="edit-button-wrapper">
-          <button id="userInfoForm_editButton"
-                  class="btn btn-outline-primary" style="white-space: nowrap; border-radius: 10px" (click)="printInvoice(invoice)">
-            PDF Herunterladen
-          </button>
+      <nav>
+        <div class="bottom-button-wrapper">
+          <div class="edit-button-wrapper">
+            <button id="userInfoForm_editButton"
+                    class="btn btn-outline-primary" style="white-space: nowrap; border-radius: 10px" (click)="printInvoice(invoice)">
+              PDF Herunterladen
+            </button>
+          </div>
         </div>
-
-      </div>
-    </nav>
+      </nav>
+    </div>
   </div>
 </div>
 

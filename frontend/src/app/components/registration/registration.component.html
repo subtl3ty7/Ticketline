@@ -1,10 +1,13 @@
 <app-guest-header></app-guest-header>
-<div *ngIf="error" class="alert alert-warning alert-dismissible fade show" role="alert">
+<!-- <div *ngIf="error" class="alert alert-warning alert-dismissible fade show" role="alert">
   <strong>Registration problems!</strong> {{ errorMessage }}
   <button type="button" (click)="vanishError()" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
+-->
+
+<app-error-notification *ngIf="error" [error]="error" [showStatus]="false"></app-error-notification>
 
 <div class="container">
   <div class="row">

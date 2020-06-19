@@ -15,16 +15,17 @@
 }
 
 .card-title-font {
-  display: -webkit-inline-flex;
+  font-size: 24px;
+  color: black;
+  font-weight: bold;
+  font-family: Segue UI, Roboto, "Helvetica Neue", sans-serif;
+  display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2; /* number of lines to show */
-  line-height: 40px; /* fallback */
-  height: 80px; /* fallback */
+  line-height: 30px; /* fallback */
+  height: 60px; /* fallback */
   text-overflow: ellipsis;
   overflow: hidden;
-  font-size: 30px;
-  font-weight: bold;
-  color: black;
 }
 
 
@@ -54,10 +55,6 @@
 
 .zoom:hover {
   transform: scale(1.05);
-}
-
-.row {
-  margin: 0px;
 }
 
 .fa-star {
@@ -93,4 +90,8 @@
 
 .infoAboutPremium {
   text-align: right;
+}
+
+.merch-row {
+  margin: 0px;
 }

@@ -9,3 +9,15 @@
   color: #1A1A1A;
   opacity: 1;
 }
+.nav-pill-font {
+  font-family: Segue UI, Roboto, "Helvetica Neue", sans-serif !important;
+  font-size: 20px;
+}
+SPAN.li {
+  display: list-item;
+  margin-left: 2em;
+}
+
+p {
+  margin-bottom: 40px;
+}

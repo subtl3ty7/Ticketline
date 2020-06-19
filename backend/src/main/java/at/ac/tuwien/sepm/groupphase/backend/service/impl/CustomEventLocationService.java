@@ -42,6 +42,7 @@ public class CustomEventLocationService implements EventLocationService {
         List<EventLocation> eventLocations = eventLocationRepository.findAll();
         for(EventLocation eventLocation: eventLocations) {
             Hibernate.initialize(eventLocation.getShows());
+            Hibernate.initialize(eventLocation.getSections());
         }
         return eventLocations;
     }
@@ -51,6 +52,10 @@ public class CustomEventLocationService implements EventLocationService {
         eventValidator.validate(eventLocation).throwIfViolated();
         eventLocation.setShows(new ArrayList<>());
         this.setSeatPrices(eventLocation);
+        for(Section section: eventLocation.getSections()) {
+            //round the price to 2 decimals
+            section.setPrice(Math.round(section.getPrice()*100.0)/100.0);
+        }
         return eventLocationRepository.save(eventLocation);
     }
 

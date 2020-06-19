@@ -53,9 +53,6 @@ public class TicketValidatorImpl implements TicketValidator {
         AbstractUser userFromDataBase = userRepository.findAbstractUserByUserCode(ticket.getUserCode());
         constraints.add("seat_notFree", showService.isSeatFree(ticket.getShow(), ticket.getSeat()));
         constraints.add("userCode_exists", userFromDataBase != null);
-        constraints.add("show_exists", showRepository.findShowById(ticket.getShow().getId()) != null);
-        constraints.add("seat_exists", seatRepository.findSeatById(ticket.getSeat().getId()) != null);
-        constraints.add("ticket_exists", ticketRepository.findTicketByTicketId(ticket.getTicketId()) == null);
         constraints.add("admin_purchase", !(userFromDataBase instanceof Administrator));
        // constraints.add("tickets_sold", (showRepository.findShowById(ticket.getShow().getId()).getTicketsAvailable()) == 0);
         return constraints;

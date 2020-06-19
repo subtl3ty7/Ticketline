@@ -20,7 +20,7 @@ export class RegistrationComponent implements OnInit {
   // After first submission attempt, form validation will start
   submitted: boolean = false;
   // CustomError flag
-  error: boolean = false;
+  error;
   errorMessage: string = '';
   maxDate: Date;
   private user: User;
@@ -59,12 +59,7 @@ export class RegistrationComponent implements OnInit {
         error1 => {
           console.log('Could not register due to:');
           console.log(error1);
-          this.error = true;
-          if (typeof error1.error === 'object') {
-            this.errorMessage = error1.error.error;
-          } else {
-            this.errorMessage = error1.error;
-          }
+          this.error = error1;
         }
       );
     } else {
@@ -73,10 +68,6 @@ export class RegistrationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  }
-
-  vanishError() {
-    this.error = false;
   }
 
   defineBackground() {

@@ -36,4 +36,10 @@ public interface EventLocationRepository extends JpaRepository<EventLocation, Lo
         "AND ((:event_location_description IS NULL) OR (:event_location_description IS NOT NULL AND LOWER(e.event_location_description) LIKE LOWER(CONCAT('%',:event_location_description,'%'))))", nativeQuery = true)
     List<EventLocation> findAllByNameAndCityAndStreetAndCountryAndPlzAndEventLocationDescription(@Param("name") String name, @Param("city") String city, @Param("street") String street, @Param("country") String country, @Param("plz") String plz, @Param("event_location_description") String description);
 
+    /**
+     * Find an EventLocation with the given name
+     * @param name the name of the eventLocation
+     * @return the eventLocation
+     */
+    List<EventLocation> findByName(String name);
 }

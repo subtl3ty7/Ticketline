@@ -1,8 +1,8 @@
 .center-block {
-  top: 500px;
-  left: 670px;
-  width: 853px;
-  height: 56px;
+  max-width: 750px;
+  margin: 0 125px;
+  padding-top: 10px;
+  padding-bottom: 40px;
 }
 
 .flex {
@@ -13,7 +13,6 @@
 .info-wrapper {
   display: flex;
   align-items: flex-end;
-  height: 70px;
   border-top: 1px solid #efefef;
   cursor: pointer;
   padding-bottom: 15px;

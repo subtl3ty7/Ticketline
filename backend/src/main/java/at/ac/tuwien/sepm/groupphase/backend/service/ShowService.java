@@ -17,4 +17,6 @@ public interface ShowService {
     Show findShowById(Long id, boolean initEventLocation);
 
     boolean isSeatFree(Show show, Seat seat);
+
+    public Seat findFreeSeat(Show show);
 }

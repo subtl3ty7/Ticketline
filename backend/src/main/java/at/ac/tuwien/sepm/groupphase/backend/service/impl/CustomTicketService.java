@@ -56,6 +56,7 @@ public class CustomTicketService implements TicketService {
         for ( Ticket ticketEntity: tickets
         ) {
             save(ticketEntity);
+
             ticketEntity.setPurchased(true);
 
             // updating premium points
@@ -68,6 +69,7 @@ public class CustomTicketService implements TicketService {
             savedTickets.add(savedTicket);
 
             LOGGER.debug("Purchased ticket " + savedTicket);
+
         }
         invoiceService.createTicketInvoice(savedTickets, "Kaufrechnung", savedTickets.get(0).getPurchaseDate());
         return savedTickets;
@@ -101,8 +103,8 @@ public class CustomTicketService implements TicketService {
             ticketEntity.setTicketCode(getNewTicketCode());
             LocalDateTime now = LocalDateTime.now();
             ticketEntity.setPurchaseDate(now);
-
             validator.validateBefore(ticketEntity).throwIfViolated();
+
 
             Seat seat = seatRepository.findSeatById(ticketEntity.getSeat().getId());
             ticketEntity.setSeat(seat);
@@ -113,18 +115,15 @@ public class CustomTicketService implements TicketService {
             Event event = eventRepository.findEventByEventCode(ticketEntity.getShow().getEventCode());
             ticketEntity.setEvent(event);
 
-            ticketEntity.setPrice(event.getPrices().get(0) + show.getPrice() + seat.getPrice());
+            ticketEntity.setPrice(show.getPrice() + seat.getPrice());
             validator.validateSave(ticketEntity).throwIfViolated();
             validator.validate(ticketEntity).throwIfViolated();
-
             show.setTicketsSold(show.getTicketsSold() + 1);
             show.setTicketsAvailable(show.getTicketsAvailable() - 1);
             event.setTotalTicketsSold(event.getTotalTicketsSold() + 1);
             show.getTakenSeats().add(seat);
             showRepository.save(show);
             eventRepository.save(event);
-
-            ticketEntity.setPrice(show.getPrice() + seat.getPrice());
 
         return ticketEntity;
     }

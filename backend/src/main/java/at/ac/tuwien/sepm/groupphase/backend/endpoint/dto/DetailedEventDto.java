@@ -19,13 +19,14 @@ public class DetailedEventDto {
     private LocalDateTime endsAt;
     private String name;
     private String description;
-    private int startPrice;
+    private double startPrice;
     private String photo;
     private List<ArtistDto> artists;
     @ToString.Exclude
     private List<SimpleShowDto> shows;
     private String type;
     private String category;
-    private List<Integer> prices;
+    private List<Double> prices;
     private int totalTicketsSold;
+    private long duration;
 }

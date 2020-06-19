@@ -237,3 +237,15 @@ label {
   text-overflow: ellipsis;
   max-width: 100%;
 }
+
+.zoom:focus {
+  outline: transparent;
+}
+
+.page-title {
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  height: 40px;
+}

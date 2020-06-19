@@ -15,5 +15,5 @@ export class DetailedEvent {
   public category: string;
   public prices: number[];
   public totalTicketsSold: number;
-
+  public duration: number;
 }

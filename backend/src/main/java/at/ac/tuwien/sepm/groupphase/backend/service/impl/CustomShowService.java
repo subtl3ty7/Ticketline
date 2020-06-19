@@ -25,6 +25,7 @@ public class CustomShowService implements ShowService {
         this.showRepository = showRepository;
     }
 
+    @Transactional
     @Override
     public List<Seat> getAllSeatsByShowId(Long id) {
         List<Seat> seats = new ArrayList<>();
@@ -50,8 +51,9 @@ public class CustomShowService implements ShowService {
     public Show findShowById(Long id, boolean initEventLocation) {
         Show show = showRepository.findShowById(id);
         if(initEventLocation) {
-            //Hibernate.initialize(show.getEventLocation().getShows());
-            Hibernate.initialize(show.getEventLocation().getSections());
+            for(Section section: show.getEventLocation().getSections()) {
+                Hibernate.initialize(section.getSeats());
+            }
         }
         Hibernate.initialize(show.getTakenSeats());
         return show;
@@ -65,5 +67,18 @@ public class CustomShowService implements ShowService {
         boolean doesContain = takenSeats.contains(seat);
 
         return !doesContain;
+    }
+
+    @Transactional
+    @Override
+    public Seat findFreeSeat(Show show) {
+        show = showRepository.findShowById(show.getId());
+        List<Seat> seats = getAllSeatsByShowId(show.getId());
+        for(Seat seat: seats) {
+            if(!show.getTakenSeats().contains(seat)) {
+                return seat;
+            }
+        }
+        return null;
     }
 }
