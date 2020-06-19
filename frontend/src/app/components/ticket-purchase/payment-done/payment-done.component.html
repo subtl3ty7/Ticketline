@@ -48,7 +48,6 @@
       </div>
       </div>
 
-      <!-- Download Button for reserved tickets -->
       <div *ngIf="tickets[0].reserved">
         <button class="download-button row align-items-center" routerLink="/my-profile/my-tickets">
           <div class="col button-font">
@@ -57,7 +56,7 @@
           </div>
         </button>
       </div>
-      <!-- Download Button for bought tickets -->
+
       <div *ngIf="!(tickets[0].reserved)">
         <button class="download-button row align-items-center" routerLink="/my-profile/my-invoices">
           <div class="col button-font">
