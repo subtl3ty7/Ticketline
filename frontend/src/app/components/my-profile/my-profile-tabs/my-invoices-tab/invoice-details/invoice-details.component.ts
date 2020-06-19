@@ -134,16 +134,6 @@ export class InvoiceDetailsComponent implements OnInit {
     doc.line(145, 95, 145, 95 + 10 * x);
     doc.line(180, 95, 180, 95 + 10 * x);
   }
-  public loadMerch(code: string): void {
-    this.merchandiseService.getMerchandiseProductByProductCode(code).subscribe(
-      (merch: Merchandise) => {
-        this.merchandise = merch;
-      },
-      (error) => {
-        this.error = error.error;
-      }
-    );
-  }
   ngOnInit(): void {
     this.loadUser();
   }

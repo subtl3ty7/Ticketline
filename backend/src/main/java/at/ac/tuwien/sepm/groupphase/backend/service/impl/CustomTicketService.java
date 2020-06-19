@@ -172,6 +172,7 @@ public class CustomTicketService implements TicketService {
         Ticket ticket = ticketRepository.findTicketByTicketCode(ticketCode);
         ticket.setPurchased(true);
         ticket.setReserved(false);
+        ticket.setPurchaseDate(LocalDateTime.now());
 
         // updating premium points
         AbstractUser user = userRepository.findAbstractUserByUserCode(ticket.getUserCode());

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {Globals} from '../global/globals';
 import {Router} from '@angular/router';
 import {Observable, throwError} from 'rxjs';

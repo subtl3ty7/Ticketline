@@ -59,6 +59,9 @@ export class MyInvoicesTabComponent implements OnInit {
     }
   }
   printInvoice(invoice: Invoice) {
+    if (invoice.invoice_category.startsWith('MERCH')) {
+      this.loadMerch(invoice.merchandise_code);
+    }
     const doc = new jsPDF('p', 'mm', 'a4');
     this.drawForm(doc, invoice);
     doc.autoPrint();
@@ -136,7 +139,6 @@ export class MyInvoicesTabComponent implements OnInit {
         doc.text('Stornierung Betrag                ' + sum.toFixed(2) + '€', 120, 125 + j * 10, null, null);
       }
     } else {
-      this.loadMerch(invoice.merchandise_code);
       doc.setFontType('bold');
       // tslint:disable-next-line:max-line-length
       doc.text('Merch Code                          Product name                                   Premium                   Price(€)', 20, 100, null, null, 'left');
