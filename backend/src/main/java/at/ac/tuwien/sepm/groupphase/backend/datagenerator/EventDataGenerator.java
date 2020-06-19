@@ -132,7 +132,7 @@ public class EventDataGenerator {
                 throw new RuntimeException("Can't find EventLocation with name '" + eventLocationName + "'");
             }
             EventLocation eventLocation = list.get(0);
-Museum
+
             Event event = Event.builder()
                 .description(data.getDescription())
                 .name(data.getName())
