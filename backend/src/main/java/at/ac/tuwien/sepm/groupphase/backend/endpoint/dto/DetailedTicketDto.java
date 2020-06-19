@@ -22,6 +22,7 @@ public class DetailedTicketDto {
     private String ticketCode;
     private boolean isPurchased;
     private boolean isReserved;
+    private boolean isCancelled;
     private LocalDateTime purchaseDate;
     private SeatDto seat;
     private String userCode;

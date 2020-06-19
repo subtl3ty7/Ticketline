@@ -3,6 +3,7 @@ export class SimpleTicket {
   public ticketCode: string;
   public purchased: boolean;
   public reserved: boolean;
+  public cancelled: boolean;
   public purchaseDate: string;
   public seatId: number;
   public price: number;
