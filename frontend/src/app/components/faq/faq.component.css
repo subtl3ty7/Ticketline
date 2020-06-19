@@ -17,3 +17,7 @@ SPAN.li {
   display: list-item;
   margin-left: 2em;
 }
+
+p {
+  margin-bottom: 40px;
+}
