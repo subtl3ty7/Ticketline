@@ -1,33 +1,31 @@
 <div *ngIf="!details">
-  <div class="container">
-    <div class="row" style="border-bottom: 2px solid #efefef; z-index: 0;">
-      <h1 class="page-title" style="white-space: nowrap; padding-top: 50px; padding-left: 50px; padding-bottom: 26px; margin-bottom: 0px">Meine Rechnungen</h1>
-    </div>
-    <div class="row" *ngIf="invoices" style="padding-left: 50px; padding-right: 50px">
-      <div class="table-wrapper-scroll-y my-custom-scrollbar" style="width: 100%">
-        <table class="table table-responsive-lg table-hover mb-0">
-          <tbody>
-          <tr *ngFor="let invoice1 of invoices">
-            <div class="container pt-3 pb-3" style="border-bottom: 1px solid #dee2e6">
-              <div class="row">
-                <div class="col" style="padding-top: 12px" *ngIf="invoice1.invoice_category.startsWith('Ticket')" >
-                  <a style="font-size: 18px">{{invoice1.invoice_category.slice(0,6)}} {{invoice1.invoice_type}}, {{ invoice1.tickets[0].eventName }} </a>
-                </div>
-                <div class="col" style="padding-top: 12px" *ngIf="invoice1.invoice_category.startsWith('Merch')">
-                  <a style="font-size: 18px">{{invoice1.invoice_category.slice(0,11)}} {{invoice1.invoice_type}}</a>
-                </div>
-                <div class="col-4">
-                  <button type="button" class="btn btn-outline-dark" style="white-space: nowrap; border-radius: 10px; margin-right: 10px;"  (click) = "showInvoiceDetails(invoice1)">
-                    Anzeigen </button>
-                  <button type="button" class="btn btn-outline-primary" style="white-space: nowrap; border-radius: 10px; padding-left: 30px; padding-right: 30px; width: 100px; text-align: center;" (click) = "printInvoice(invoice1)" >
-                    PDF
-                  </button>
-                </div>
-              </div>
-            </div>
-          </tr>
-          </tbody>
-        </table>
+<h1 class="col-5 page-title" style="white-space: nowrap; padding-top: 50px; padding-left: 50px">Meine Rechnungen</h1>
+
+<div class="center-block">
+  <div class="info-wrapper">
+    <div class="info">
+      <div class="info-label"></div>
+      <div class="info-field">
+        <div class="center-block" *ngIf="invoices">
+          <div class="table-wrapper-scroll-y my-custom-scrollbar">
+            <table class="table table-responsive-lg table-hover mb-0">
+              <tbody>
+              <tr *ngFor="let invoice1 of invoices">
+                <th scope="row"> </th>
+                <td *ngIf="invoice1.invoice_category.startsWith('TICKET')" > {{'Ticket ' + invoice1.invoice_type}}, {{ invoice1.tickets[0].eventName }} </td>
+                <td *ngIf="invoice1.invoice_category.startsWith('MERCH')"  > {{'Merchandise ' + invoice1.invoice_type}}, {{ invoice1.merchandise_code}} </td>
+                <button type="button" class="btn btn-outline-dark" style="white-space: nowrap; border-radius: 10px; margin-right: 10px;"  (click) = "showInvoiceDetails(invoice1)">
+                  Anzeigen </button>
+                <button type="button" class="btn btn-outline-primary" style="white-space: nowrap; border-radius: 10px; padding-right: 30px; text-align: center;" (click) = "printInvoice(invoice1)" >
+                  PDF </button>
+              </tr>
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </div>
       </div>
     </div>
     <div class="row justify-content-center" *ngIf= "invoices === undefined" style="padding-left: 50px; padding-right: 50px; padding-top: 20px">
@@ -36,6 +34,8 @@
   </div>
 </div>
 
-<app-invoice-details *ngIf="details" [invoice] = "selectedInvoice">
-  <button type="button" class="btn btn-outline-dark" style="white-space: nowrap; border-radius: 10px; text-align: center;" (click)="details=false;">Zurück</button>
-</app-invoice-details>
+<div *ngIf="details">
+  <app-invoice-details [invoice] = "selectedInvoice" [merchandise] = "merchandise" >
+    <button type="button" class="btn btn-outline-dark" style="white-space: nowrap; border-radius: 10px; text-align: center;" (click)="details=false;">Zurück</button>
+  </app-invoice-details>
+</div>

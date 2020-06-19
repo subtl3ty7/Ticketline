@@ -28,7 +28,7 @@ public class InvoiceMappingTest implements TestData {
         .userCode(USER_CODE)
         .payment_method(PAY)
         .generatedAt(GENERATE)
-        .invoice_number(NUM)
+        .invoiceNumber(NUM)
         .invoice_category(CAT_I)
         .build();
 
@@ -43,9 +43,8 @@ public class InvoiceMappingTest implements TestData {
             () -> assertEquals(USER_CODE, invoiceDto.getUserCode()),
             () -> assertEquals(PAY, invoiceDto.getPayment_method()),
             () -> assertEquals(GENERATE, invoiceDto.getGeneratedAt()),
-            () -> assertEquals(NUM, invoiceDto.getInvoice_number()),
-            () -> assertEquals(TYP_I, invoiceDto.getInvoice_type()),
-            () -> assertEquals(CAT_I, invoiceDto.getInvoice_category())
+            () -> assertEquals(NUM, invoiceDto.getInvoiceNumber()),
+            () -> assertEquals(TYP_I, invoiceDto.getInvoice_type())
         );
     }
 
@@ -62,9 +61,8 @@ public class InvoiceMappingTest implements TestData {
             () -> assertEquals(USER_CODE, invoiceDto.getUserCode()),
             () -> assertEquals(PAY, invoiceDto.getPayment_method()),
             () -> assertEquals(GENERATE, invoiceDto.getGeneratedAt()),
-            () -> assertEquals(NUM, invoiceDto.getInvoice_number()),
-            () -> assertEquals(TYP_I, invoiceDto.getInvoice_type()),
-            () -> assertEquals(CAT_I, invoiceDto.getInvoice_category())
+            () -> assertEquals(NUM, invoiceDto.getInvoiceNumber()),
+            () -> assertEquals(TYP_I, invoiceDto.getInvoice_type())
         );
     }
 
@@ -77,9 +75,8 @@ public class InvoiceMappingTest implements TestData {
             () -> assertEquals(USER_CODE, invoice1.getUserCode()),
             () -> assertEquals(PAY, invoice1.getPayment_method()),
             () -> assertEquals(GENERATE, invoice1.getGeneratedAt()),
-            () -> assertEquals(NUM, invoice1.getInvoice_number()),
-            () -> assertEquals(TYP_I, invoice1.getInvoice_type()),
-            () -> assertEquals(CAT_I, invoice1.getInvoice_category())
+            () -> assertEquals(NUM, invoice1.getInvoiceNumber()),
+            () -> assertEquals(TYP_I, invoice1.getInvoice_type())
         );
     }
 }

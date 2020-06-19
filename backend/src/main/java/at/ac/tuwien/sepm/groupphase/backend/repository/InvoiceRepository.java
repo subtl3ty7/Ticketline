@@ -12,6 +12,8 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
 
     Invoice findInvoiceById(Long id);
 
+    Invoice findInvoiceByInvoiceNumber(String invoice_number);
+
     List<Invoice> findInvoicesByUserCode(String userCode);
 
     Invoice findInvoiceByUserCodeAndGeneratedAt(String userCode, LocalDateTime generatedAt);

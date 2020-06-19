@@ -1,16 +1,19 @@
 package at.ac.tuwien.sepm.groupphase.backend.datagenerator;
 
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
+import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Merchandise;
 import at.ac.tuwien.sepm.groupphase.backend.repository.MerchandiseRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.MerchandiseService;
+import at.ac.tuwien.sepm.groupphase.backend.service.UserService;
 import at.ac.tuwien.sepm.groupphase.backend.util.Resources;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
@@ -25,20 +28,23 @@ import java.util.List;
 
 @Profile("generateData")
 @Component("MerchandiseDataGenerator")
+@DependsOn({"UserDataGenerator"})
 public class MerchandiseDataGenerator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final MerchandiseRepository merchandiseRepository;
     private final MerchandiseService merchandiseService;
+    private final UserService userService;
     private final EntityManagerFactory entityManagerFactory;
     private final Resources resources;
 
     private final static int NUMBER_OF_MERCHANDISE_PRODUCTS = 10;
 
     @Autowired
-    public MerchandiseDataGenerator(MerchandiseRepository merchandiseRepository, MerchandiseService merchandiseService, EntityManagerFactory entityManagerFactory, Resources resources) {
+    public MerchandiseDataGenerator(MerchandiseRepository merchandiseRepository, MerchandiseService merchandiseService, UserService userService, EntityManagerFactory entityManagerFactory, Resources resources) {
         this.merchandiseRepository = merchandiseRepository;
         this.merchandiseService = merchandiseService;
+        this.userService = userService;
         this.entityManagerFactory = entityManagerFactory;
         this.resources = resources;
     }
@@ -65,6 +71,8 @@ public class MerchandiseDataGenerator {
     private List<Merchandise> generateMerchandiseProducts() {
         List<Merchandise> dataList = Arrays.asList(resources.getObjectFromJson("entities/merchandise.json", Merchandise[].class));
         List<Merchandise> merchandiseProducts = new ArrayList<>();
+        List<AbstractUser> users = userService.loadAllUsers();
+        Customer customer0 = (Customer) users.get(0);
 
         for(int i = 0; i < NUMBER_OF_MERCHANDISE_PRODUCTS; i++) {
             int dataIndex = i % dataList.size();
@@ -83,6 +91,10 @@ public class MerchandiseDataGenerator {
 
             product = merchandiseService.createNewProduct(product);
             merchandiseProducts.add(product);
+
+            if((i % 2) == 0) {
+                merchandiseService.purchaseWithMoney(product, customer0.getUserCode());
+            }
         }
 
         return merchandiseProducts;
