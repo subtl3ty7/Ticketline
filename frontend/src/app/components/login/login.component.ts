@@ -5,6 +5,7 @@ import {AuthService} from '../../services/auth.service';
 import {AuthRequest} from '../../dtos/auth-request';
 import {DOCUMENT} from '@angular/common';
 import {Background} from '../../utils/background';
+import {CustomError} from '../../dtos/customError';
 
 
 @Component({
@@ -55,8 +56,6 @@ export class LoginComponent implements OnInit {
         document.body.style.backgroundImage = null;
       },
       error => {
-        console.log('Could not log in due to:');
-        console.log(error);
         this.error = error;
       }
     );
