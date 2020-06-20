@@ -1,0 +1,23 @@
+{
+  "timestamp": {
+    "nano": 956418800,
+    "year": 2020,
+    "monthValue": 6,
+    "dayOfMonth": 20,
+    "hour": 11,
+    "minute": 8,
+    "second": 33,
+    "dayOfWeek": "SATURDAY",
+    "dayOfYear": 172,
+    "month": "JUNE",
+    "chronology": {
+      "id": "ISO",
+      "calendarType": "iso8601"
+    }
+  },
+  "status": 500,
+  "error": "Internal Server Error",
+  "messages": [
+    "Something unexpected happened"
+  ]
+}
