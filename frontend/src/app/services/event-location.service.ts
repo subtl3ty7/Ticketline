@@ -49,4 +49,11 @@ export class EventLocationService {
       catchError(this.handleError)
     );
   }
+
+  getLocationById(locationId: number): Observable<EventLocation> {
+    console.log('Load location with id: ' + locationId);
+    return this.httpClient.get<EventLocation>(this.eventBaseUri + '/' + locationId).pipe(
+      catchError(this.handleError)
+    );
+  }
 }
