@@ -1,0 +1,82 @@
+[
+  {
+    "merchandiseProductName": "Macbook Pro 5 Apple Store Neueröffnung",
+    "photo": {
+      "id": null,
+      "image": "merch_img0.jpg"
+    },
+    "price": 598.49
+  },
+  {
+    "merchandiseProductName": "Kaffeetasse",
+    "photo": {
+      "id": null,
+      "image": "merch_img1.jpg"
+    },
+    "price": 4.99
+  },
+  {
+    "merchandiseProductName": "Amazon Kindle",
+    "photo": {
+      "id": null,
+      "image": "merch_img2.jpg"
+    },
+    "price": 49.99
+  },
+  {
+    "merchandiseProductName": "Plattenspieler",
+    "photo": {
+      "id": null,
+      "image": "merch_img3.jpg"
+    },
+    "price": 39.99
+  },
+  {
+    "merchandiseProductName": "Kaktuspflanze in weißem Topf",
+    "photo": {
+      "id": null,
+      "image": "merch_img4.jpg"
+    },
+    "price": 9.99
+  },
+  {
+    "merchandiseProductName": "Teekanne",
+    "photo": {
+      "id": null,
+      "image": "merch_img5.jpg"
+    },
+    "price": 24.99
+  },
+  {
+    "merchandiseProductName": "Microsoft Surface Pro",
+    "photo": {
+      "id": null,
+      "image": "merch_img6.jpg"
+    },
+    "price": 449.99
+  },
+  {
+    "merchandiseProductName": "Oldtimer Rot/Blau Automesse Wien Merch",
+    "photo": {
+      "id": null,
+      "image": "merch_img7.jpg"
+    },
+    "price": 1049.99
+  },
+  {
+    "merchandiseProductName": "Yashica Fx-3 SUPER Photokamera | Filmstudio-Messe",
+    "photo": {
+      "id": null,
+      "image": "merch_img8.jpg"
+    },
+    "price": 124.99
+  },
+  {
+    "merchandiseProductName": "Albertina Kunst-Set Merch Da Vinci Studio Ausstellung",
+    "photo": {
+      "id": null,
+      "image": "merch_img9.jpg"
+    },
+    "price": 69.39
+  }
+]

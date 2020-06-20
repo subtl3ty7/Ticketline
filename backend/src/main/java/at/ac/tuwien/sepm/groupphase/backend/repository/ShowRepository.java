@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -21,6 +22,8 @@ public interface ShowRepository extends JpaRepository<Show, Long> {
      */
     Show findShowById(Long id);
 
+    ArrayList<Show> findAll();
+
     /**
      * Find all shows which belong to a single event with event code.
      *
@@ -29,7 +32,7 @@ public interface ShowRepository extends JpaRepository<Show, Long> {
      */
     List<Show> findShowsByEventCode(String eventCode);
 
-    List<Show> findShowsByEventLocationOriginalId(Long eventLocationId);
+    List<Show> findShowsByEventLocationId(Long eventLocationId);
 
     @Query(value = "" +
         "SELECT * FROM SHOW s " +
@@ -41,4 +44,7 @@ public interface ShowRepository extends JpaRepository<Show, Long> {
         "AND ((:price IS NULL) OR (:price IS NOT NULL AND s.price <= :price))  " +
         "AND ((:duration IS NULL) OR (:duration IS NOT NULL AND s.duration <= :duration))", nativeQuery = true)
     List<Show> findShowsByEventNameContainingIgnoreCaseAndEventTypeOrEventTypeIsNullAndEventCategoryOrEventCategoryIsNullAndStartsAtIsGreaterThanEqualAndEndsAtIsLessThanEqualAndDurationLessThanEqualAndPriceLessThanEqualOrPriceIsNull(@Param("eventName") String eventName, @Param("type") Integer type, @Param("category") Integer category, @Param("startsAt") LocalDateTime startsAt, @Param("endsAt") LocalDateTime endsAt, @Param("duration") Duration duration, @Param("price") Integer price);
+
+    @Query(value = "SELECT ID FROM SHOW", nativeQuery = true)
+    List<Long> findAllShowIds();
 }

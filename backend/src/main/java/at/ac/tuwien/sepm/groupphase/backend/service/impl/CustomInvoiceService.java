@@ -1,13 +1,14 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractInvoice;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Invoice;
+import at.ac.tuwien.sepm.groupphase.backend.entity.InvoiceCategoryEnum;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Merchandise;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
-import at.ac.tuwien.sepm.groupphase.backend.entity.TicketInvoice;
+import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.InvoiceRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.TicketRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.InvoiceService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
-import at.ac.tuwien.sepm.groupphase.backend.util.validation.TicketValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,25 +32,60 @@ public class CustomInvoiceService implements InvoiceService {
     }
 
     @Override
-    public TicketInvoice createTicketInvoice(List<Ticket> tickets, String type, LocalDateTime generatedAt) {
-        if(type.equals("PURCHASE CANCELLATION")) {
+    public Invoice createTicketInvoice(List<Ticket> tickets, String type, LocalDateTime generatedAt) {
+        if(type.equals("Kauf Stornorechnung")) {
             invoiceRepository.delete(invoiceRepository.findInvoiceByUserCodeAndGeneratedAt(tickets.get(0).getUserCode(), tickets.get(0).getPurchaseDate()));
         }
-        TicketInvoice ticketInvoice = TicketInvoice.builder()
+
+        Invoice ticketInvoice = Invoice.builder()
             .invoice_type(type)
+            .invoice_category(InvoiceCategoryEnum.TICKET_INVOICE)
             .userCode(tickets.get(0).getUserCode())
-            .payment_method("Credit card")
+            .payment_method("Kreditkarte")
             .generatedAt(generatedAt)
-            .invoice_number(CodeGenerator.generateInvoiceNumber())
+            .invoiceNumber(getNewInvoiceNumber())
             .tickets(tickets)
             .build();
 
-        LOGGER.info("Invoice generated: " + ticketInvoice);
+        LOGGER.debug("Ticket invoice generated " + ticketInvoice);
         return invoiceRepository.save(ticketInvoice);
     }
 
     @Override
-    public List<AbstractInvoice> allInvoicesOfUser(String userCode) {
+    public Invoice createMerchandiseInvoice(Merchandise merchandise, String userCode, String pay) {
+
+        Invoice merchandiseInvoice = Invoice.builder()
+            .invoice_type("Kaufrechnung")
+            .invoice_category(InvoiceCategoryEnum.MERCHANDISE_INVOICE)
+            .userCode(userCode)
+            .payment_method(pay)
+            .generatedAt(LocalDateTime.now())
+            .invoiceNumber(getNewInvoiceNumber())
+            .merchandise_code(merchandise.getMerchandiseProductCode())
+            .build();
+
+        LOGGER.debug("Merchandise invoice generated " + merchandiseInvoice);
+        return invoiceRepository.save(merchandiseInvoice);
+    }
+
+    @Override
+    public List<Invoice> allInvoicesOfUser(String userCode) {
         return invoiceRepository.findInvoicesByUserCode(userCode);
+    }
+
+    private String getNewInvoiceNumber() {
+        final int maxAttempts = 1000;
+        String invoiceNumber = "";
+        int i;
+        for(i=0; i<maxAttempts; i++) {
+            invoiceNumber = CodeGenerator.generateInvoiceNumber();
+            if(invoiceRepository.findInvoiceByInvoiceNumber(invoiceNumber) == null) {
+                break;
+            }
+        }
+        if(i==1000) {
+            throw new ServiceException("Something went wrong while generating invoice number", null);
+        }
+        return invoiceNumber;
     }
 }

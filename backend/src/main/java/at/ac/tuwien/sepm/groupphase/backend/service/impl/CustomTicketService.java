@@ -5,6 +5,7 @@ import at.ac.tuwien.sepm.groupphase.backend.exception.ServiceException;
 import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.*;
 import at.ac.tuwien.sepm.groupphase.backend.service.InvoiceService;
+import at.ac.tuwien.sepm.groupphase.backend.service.ShowService;
 import at.ac.tuwien.sepm.groupphase.backend.service.TicketService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
 import at.ac.tuwien.sepm.groupphase.backend.util.validation.TicketValidator;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.xml.crypto.Data;
 import java.lang.invoke.MethodHandles;
@@ -32,10 +34,11 @@ public class CustomTicketService implements TicketService {
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
     private final InvoiceService invoiceService;
+    private final ShowService showService;
 
     @Autowired
     public CustomTicketService(TicketRepository ticketRepository, TicketValidator validator, SeatRepository seatRepository, ShowRepository showRepository,
-                               EventRepository eventRepository, UserRepository userRepository, InvoiceService invoiceService) {
+                               EventRepository eventRepository, UserRepository userRepository, InvoiceService invoiceService, ShowService showService) {
         this.ticketRepository = ticketRepository;
         this.validator = validator;
         this.seatRepository = seatRepository;
@@ -43,6 +46,7 @@ public class CustomTicketService implements TicketService {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
         this.invoiceService = invoiceService;
+        this.showService = showService;
     }
 
     @Override
@@ -52,20 +56,22 @@ public class CustomTicketService implements TicketService {
         for ( Ticket ticketEntity: tickets
         ) {
             save(ticketEntity);
+
             ticketEntity.setPurchased(true);
 
             // updating premium points
             AbstractUser user = userRepository.findAbstractUserByUserCode(ticketEntity.getUserCode());
             long currentPoints = ((Customer) user).getPoints();
-            ((Customer) user).setPoints(Long.sum(currentPoints, ticketEntity.getPrice()));
+            ((Customer) user).setPoints(Long.sum(currentPoints, ticketEntity.getPrice().intValue()));
             userRepository.save(user);
 
             Ticket savedTicket = ticketRepository.save(ticketEntity);
             savedTickets.add(savedTicket);
 
-            LOGGER.info("Purchased ticket " + savedTicket);
+            LOGGER.debug("Purchased ticket " + savedTicket);
+
         }
-        invoiceService.createTicketInvoice(tickets, "PURCHASE", tickets.get(0).getPurchaseDate());
+        invoiceService.createTicketInvoice(savedTickets, "Kaufrechnung", savedTickets.get(0).getPurchaseDate());
         return savedTickets;
     }
 
@@ -93,34 +99,32 @@ public class CustomTicketService implements TicketService {
 
     @Override
     public Ticket save(Ticket ticketEntity) throws ValidationException, DataAccessException {
-            LOGGER.info("Validating ticket " + ticketEntity);
+            LOGGER.debug("Validating ticket " + ticketEntity);
             ticketEntity.setTicketCode(getNewTicketCode());
             LocalDateTime now = LocalDateTime.now();
             ticketEntity.setPurchaseDate(now);
-
+            ticketEntity.setCancelled(false);
             validator.validateBefore(ticketEntity).throwIfViolated();
+
 
             Seat seat = seatRepository.findSeatById(ticketEntity.getSeat().getId());
             ticketEntity.setSeat(seat);
 
-            Show show = showRepository.findShowById(ticketEntity.getShow().getId());
+            Show show = showService.findShowById(ticketEntity.getShow().getId(), false);
             ticketEntity.setShow(show);
 
             Event event = eventRepository.findEventByEventCode(ticketEntity.getShow().getEventCode());
             ticketEntity.setEvent(event);
 
-            ticketEntity.setPrice(50);
+            ticketEntity.setPrice(show.getPrice() + seat.getPrice());
             validator.validateSave(ticketEntity).throwIfViolated();
             validator.validate(ticketEntity).throwIfViolated();
-
             show.setTicketsSold(show.getTicketsSold() + 1);
             show.setTicketsAvailable(show.getTicketsAvailable() - 1);
             event.setTotalTicketsSold(event.getTotalTicketsSold() + 1);
+            show.getTakenSeats().add(seat);
             showRepository.save(show);
             eventRepository.save(event);
-
-            seat.setFree(false);
-            seatRepository.save(seat);
 
         return ticketEntity;
     }
@@ -136,24 +140,28 @@ public class CustomTicketService implements TicketService {
             Ticket reservedTicket = ticketRepository.save(ticketEntity);
             reservedTickets.add(reservedTicket);
 
-            LOGGER.info("Reserved ticket " + reservedTicket);
+            LOGGER.debug("Reserved ticket " + reservedTicket);
         }
         return reservedTickets;
     }
 
     @Override
+    @Transactional
     public void cancelPurchasedTicket(String ticketCode) throws ValidationException, DataAccessException{
-        LOGGER.info("Validating ticket with ticketCode " + ticketCode);
+        LOGGER.debug("Validating ticket with ticketCode " + ticketCode);
         validator.validatePurchased(ticketCode).throwIfViolated();
 
         Ticket ticket1 = ticketRepository.findTicketByTicketCode(ticketCode);
         Seat seat = ticket1.getSeat();
-        seat.setFree(true);
-        seatRepository.save(seat);
+        Show show = showRepository.findShowById(ticket1.getShow().getId());
+        show.getTakenSeats().remove(seat);
+        showRepository.save(show);
 
-        invoiceService.createTicketInvoice(List.of(ticket1), "PURCHASE CANCELLATION", LocalDateTime.now());
-        ticketRepository.delete(ticket1);
-        // do the money return  and invoices stuff
+        //ticketRepository.delete(ticket1);
+        ticket1.setPurchased(false);
+        ticket1.setCancelled(true);
+        ticketRepository.save(ticket1);
+        invoiceService.createTicketInvoice(List.of(ticket1), "Kauf Stornorechnung", LocalDateTime.now());
 
         LOGGER.info("Canceled ticket with ticketCode " + ticketCode);
     }
@@ -167,22 +175,24 @@ public class CustomTicketService implements TicketService {
         Ticket ticket = ticketRepository.findTicketByTicketCode(ticketCode);
         ticket.setPurchased(true);
         ticket.setReserved(false);
+        ticket.setPurchaseDate(LocalDateTime.now());
 
         // updating premium points
         AbstractUser user = userRepository.findAbstractUserByUserCode(ticket.getUserCode());
         long currentPoints = ((Customer) user).getPoints();
-        ((Customer) user).setPoints(Long.sum(currentPoints, ticket.getPrice()));
+        ((Customer) user).setPoints(Long.sum(currentPoints, ticket.getPrice().intValue()));
         userRepository.save(user);
 
         ticketRepository.save(ticket);
 
         LOGGER.info("Purchased ticket " + ticket);
-        invoiceService.createTicketInvoice(List.of(ticket), "PURCHASE", ticket.getPurchaseDate());
+        invoiceService.createTicketInvoice(List.of(ticket), "Kaufrechnung", ticket.getPurchaseDate());
 
         return ticket;
     }
 
     @Override
+    @Transactional
     public void cancelReservedTicket(String ticketCode) {
         LOGGER.info("Validating reservation with ticketCode: " + ticketCode);
         validator.validateReserved(ticketCode).throwIfViolated();
@@ -190,11 +200,15 @@ public class CustomTicketService implements TicketService {
         Ticket chosenTicket = ticketRepository.findTicketByTicketCode(ticketCode);
 
         Seat seat = chosenTicket.getSeat();
-        seat.setFree(true);
-        seatRepository.save(seat);
+        Show show = showRepository.findShowById(chosenTicket.getShow().getId());
+        show.getTakenSeats().remove(seat);
+        showRepository.save(show);
 
-        invoiceService.createTicketInvoice(List.of(chosenTicket), "RESERVATION CANCELLATION", LocalDateTime.now());
-        ticketRepository.delete(chosenTicket);
+        chosenTicket.setReserved(false);
+        chosenTicket.setCancelled(true);
+        ticketRepository.save(chosenTicket);
+        invoiceService.createTicketInvoice(List.of(chosenTicket), "Reservation Stornorechnung", LocalDateTime.now());
+        //ticketRepository.delete(chosenTicket);
         LOGGER.info("Reservation with the ticket code" + ticketCode +  " cancelled!");
     }
 }

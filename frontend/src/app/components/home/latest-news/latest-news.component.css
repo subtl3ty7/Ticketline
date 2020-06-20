@@ -20,7 +20,7 @@
 
 .zoom:hover {
   padding: 0px;
-  transform: scale(1.09);
+  transform: scale(1.07);
 }
 
 .card-text-font {
@@ -39,9 +39,6 @@
 .card {
   margin: 10px;
   padding-bottom: 15px;
-  -webkit-box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.32);
-  -moz-box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.32);
-  box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.32);
 }
 
 .card-title-font {
@@ -59,4 +56,9 @@
 
 .gap {
   padding: 20px;
+}
+
+.title-button {
+  background-color: transparent;
+  outline: transparent;
 }

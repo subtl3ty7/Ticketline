@@ -172,6 +172,7 @@ p {
 
 .default:hover {
   background: #317d59;
+  color: #FBFBFB;
 }
 
 .divider {
@@ -235,4 +236,16 @@ label {
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
+}
+
+.zoom:focus {
+  outline: transparent;
+}
+
+.page-title {
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  height: 100%;
 }

@@ -37,7 +37,7 @@ public class TicketServiceTest implements TestData {
         .ticketId(ID)
         .ticketCode(USER_CODE)
         .purchaseDate(START)
-        .price(TOTAL)
+        .price(PRICE)
         .userCode(USER_CODE_TICKET)
         .build();
 
@@ -49,7 +49,7 @@ public class TicketServiceTest implements TestData {
             .ticketId(ID)
             .ticketCode(USER_CODE)
             .purchaseDate(START)
-            .price(TOTAL)
+            .price(PRICE)
             .userCode(USER_CODE_TICKET)
             .build();
     }

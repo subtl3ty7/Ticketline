@@ -24,7 +24,7 @@
   height:100%;
   width: 100%;
   position:absolute;
-  background: rgba(76,76,76,0);
+  background: transparent linear-gradient(148deg, #2771BB 0%, #FF91BE 100%) 0% 0% no-repeat padding-box;
   background: -moz-linear-gradient(top, rgba(76,76,76,0) 0%, rgba(40,40,40,0.3) 63%, rgba(30,30,30,0.8) 80%, rgba(25,25,25,0.95) 90%, rgba(19,19,19,1) 100%);
   background: -webkit-linear-gradient(top, rgba(76,76,76,0) 0%, rgba(40,40,40,0.3) 63%, rgba(30,30,30,0.8) 80%, rgba(25,25,25,0.95) 90%, rgba(19,19,19,1) 100%);
   background: -o-linear-gradient(top, rgba(76,76,76,0) 0%, rgba(40,40,40,0.3) 63%, rgba(30,30,30,0.8) 80%, rgba(25,25,25,0.95) 90%, rgba(19,19,19,1) 100%);
@@ -38,16 +38,25 @@
   border-radius: 0px;
 }
 .top-three-rank {
-  bottom: 0px;
 }
 .top-three-name {
-  padding: 5px 0px 0px 30px;
-  bottom: -20px;
+  margin-right: 0px;
+  padding: 5px 30px 0px 10px;
+  font-size: 30px;
+  font-weight: bold;
+  line-height: 30px;
+  max-height:3.8em;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; /* number of lines to show */
+  height: 100px; /* fallback */
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .img-footer {
   bottom: 0; left: 0;
-  padding: 0px 0px 30px 50px;
+  padding: 0px 20px 30px 20px;
   position: absolute;
 
   width: 100%;
@@ -67,6 +76,17 @@
   box-shadow: 40px 40px 0px 5px rgba(30,0,100,0.3);
 }
 */
+
+.bottom-zoom:hover {
+  transform: scale(1.05);
+}
+
+/* Gray */
+.default {
+  border-color: #FBFBFB;
+  color: #FBFBFB;
+  background-color: transparent;
+}
 
 .zoom:hover img {
   opacity: 1;
@@ -94,5 +114,4 @@
 }
 .bottom-name {
   padding: 5px 0px 0px 30px;
-  bottom: -20px;
 }

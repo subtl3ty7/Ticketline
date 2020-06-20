@@ -31,14 +31,14 @@ public class Section implements Serializable {
     private String description;
 
     @ToString.Exclude
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "SECTION_ID", referencedColumnName = "ID")
     private List<Seat> seats;
 
     @Column
     private String priceCategory;
 
-    @Column
+    @Column(columnDefinition = "DECIMAL (10, 2)")
     private double price;
 
     @Column

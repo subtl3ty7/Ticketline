@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.unittests.mapper;
 import at.ac.tuwien.sepm.groupphase.backend.basetest.TestData;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.ShowDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.ShowMapper;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Image;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,6 +30,8 @@ public class ShowMappingTest implements TestData {
         .eventCode(USER_CODE)
         .ticketsAvailable(TOTAL)
         .ticketsSold(TOTAL)
+        .description(DESC)
+        .photo(PHOTO)
         .build();
 
     @Autowired
@@ -43,7 +46,8 @@ public class ShowMappingTest implements TestData {
             () -> assertEquals(END, showDto.getEndsAt()),
             () -> assertEquals(USER_CODE, showDto.getEventCode()),
             () -> assertEquals(TOTAL, showDto.getTicketsAvailable()),
-            () -> assertEquals(TOTAL, showDto.getTicketsAvailable())
+            () -> assertEquals(TOTAL, showDto.getTicketsAvailable()),
+            () -> assertEquals(DESC, showDto.getDescription())
         );
     }
 
@@ -60,7 +64,8 @@ public class ShowMappingTest implements TestData {
             () -> assertEquals(END, showDto.getEndsAt()),
             () -> assertEquals(USER_CODE, showDto.getEventCode()),
             () -> assertEquals(TOTAL, showDto.getTicketsAvailable()),
-            () -> assertEquals(TOTAL, showDto.getTicketsAvailable())
+            () -> assertEquals(TOTAL, showDto.getTicketsAvailable()),
+            () -> assertEquals(DESC, showDto.getDescription())
         );
     }
 

@@ -8,21 +8,21 @@
       <!-- Page card containing everything -->
       <div class="card main-body">
         <div class="card-header row align-items-center" style="margin: 0px">
-          <h1 class="col-4 page-title">{{event.name}}</h1>
+          <h1 class="page-title header-row">{{event.name}}</h1>
         </div>
 
-        <div class="card-body">
+        <div class="card-body" style="padding-top: 50px">
           <div class="row">
             <div class="col">
               <img src="{{event.photo}}" class="img-fluid image-crop-big" alt="some Image">
             </div>
             <div class="col">
-              <div>
-                <h2 class="mb-0 headline">{{event.name}}</h2><br>
-              </div>
-
               <div id="eventInfo">
                 <p class ="sub-headline">{{event.startsAt | date}} - {{event.endsAt | date }}</p>
+              </div>
+
+              <div>
+                <p class="sub-headline">{{event.category}}, {{event.type}}</p>
               </div>
 
               <div id="performanceTitle">
@@ -31,12 +31,38 @@
 
               <div class="table-wrapper-scroll-y my-custom-scrollbar">
 
-                <table class="table table-responsive-lg table-hover  mb-0">
-                  <tbody *ngFor="let s of event.shows">
-                  <tr>
-                    <th scope="row"></th>
-                    <td>{{s.startsAt | date:'short'}} - {{s.endsAt | date:'short' }}, {{s.eventLocationCopy.name}}, {{s.eventLocationCopy.city}}, {{s.eventLocationCopy.country}}</td>
-                    <button type="button" class="btn btn-success btn-sm m-0" (click) = "openPurchase(s)">Tickets</button>
+                <table class="align-middle table table-striped table-responsive-lg table-hover  mb-0">
+                  <tbody>
+                  <tr *ngFor="let s of event.shows">
+                    <td>
+                      <div class="container">
+                        <div class="row">
+                            <div class="col-3" style="padding-right: 0px">
+                              <div class="container">
+                                <div class="row">
+                                  <a>{{s.startsAt | date:'EEE, MMM d'}}</a>
+                                </div>
+                                <div class="row">
+                                  <a>{{s.startsAt | date:'H:mm'}} - {{s.endsAt | date:'H:mm' }}</a>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-6">
+                              <div class="container">
+                                <div class="row">
+                                  <a>{{s.eventLocation.name}}</a>
+                                </div>
+                                <div class="row">
+                                  <a>{{s.eventLocation.city}}, {{s.eventLocation.country}}</a>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-3" style="padding-left: 0px;">
+                              <button type="button" class="btn default details-button btn m-0" (click) = "openPurchase(s)" style="font-size: 19px;">Tickets</button>
+                            </div>
+                        </div>
+                      </div>
+                    </td>
                   </tr>
                   </tbody>
                 </table>
@@ -46,8 +72,18 @@
             </div>
           </div>
 
-          <div class="description-title">Beschreibung</div>
-          <div class="description-text text-justify">{{event.description}}</div>
+          <div>
+            <p class="artists-title">KünstlerInnen</p>
+          </div>
+
+          <div *ngFor="let a of event.artists; index as i ">
+            <p class="description-text text-justify"><span *ngIf="a.firstName">{{a.firstName}}</span><span *ngIf="a.lastName"> {{a.lastName}}</span><span *ngIf="i !== (event.artists.length -1)">, </span></p>
+          </div>
+
+          <div *ngIf="event.description && event.description.length > 0">
+            <div class="description-title">Beschreibung</div>
+            <div class="description-text text-justify">{{event.description}}</div>
+          </div>
 
         </div>
       </div>

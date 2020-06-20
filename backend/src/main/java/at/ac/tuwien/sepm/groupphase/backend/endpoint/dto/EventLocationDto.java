@@ -20,6 +20,5 @@ public class EventLocationDto {
     private String city;
     private String country;
     private List<SectionDto> sections;
-    private List<SimpleShowDto> shows;
     private int capacity;
 }

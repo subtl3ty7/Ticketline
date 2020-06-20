@@ -5,7 +5,9 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.Administrator;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.util.Constraints;
+import at.ac.tuwien.sepm.groupphase.backend.util.validation.AccessoryValidator;
 import at.ac.tuwien.sepm.groupphase.backend.util.validation.UserValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -21,7 +23,11 @@ import java.util.regex.Pattern;
 @Component
 public class UserValidatorImpl implements UserValidator {
 
+    @Autowired
     private final UserRepository userRepository;
+
+    @Autowired
+    AccessoryValidator accessoryValidator;
 
     public UserValidatorImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -32,7 +38,7 @@ public class UserValidatorImpl implements UserValidator {
         Constraints constraints = new Constraints();
         constraints.add("user_NotNull", user != null);
         if(!constraints.isViolated()) {
-            constraints.add(AccesoryValidator.validateJavaxConstraints(user));
+            constraints.add(accessoryValidator.validateJavaxConstraints(user));
             constraints.add("userCode_unique", userRepository.findAbstractUserByUserCode(user.getUserCode()) == null);
             constraints.add("isLogged_false", !user.isLogged());
             constraints.add(validateRegistrationEmail(user.getEmail()));
@@ -42,7 +48,11 @@ public class UserValidatorImpl implements UserValidator {
                 constraints.add("points_zero", ((Customer) user).getPoints() == 0);
             }
             if (user.getBirthday() != null) {
-                constraints.add("birthday_16yo", ChronoUnit.YEARS.between(user.getBirthday(), LocalDateTime.now()) > 16);
+                constraints.add("birthday_16yo", ChronoUnit.YEARS.between(user.getBirthday(), LocalDateTime.now()) >= 16);
+
+            }
+            if(constraints.isViolated()) {
+                int debug=0;
             }
         }
         return constraints;
@@ -54,7 +64,7 @@ public class UserValidatorImpl implements UserValidator {
         constraints.add("email_notNull", email != null);
         if(!constraints.isViolated()) {
             constraints.add("email_valid", eMailPattern.matcher(email).matches());
-            constraints.add("email_unique", userRepository.findAbstractUserByEmail(email) == null);
+            constraints.add("email_unique", userRepository.findAbstractUserByEmail(email) == null && userRepository.findSoftDeletedAbstractUserByEmail(email) == null);
         }
         return constraints;
     }
@@ -89,7 +99,7 @@ public class UserValidatorImpl implements UserValidator {
     @Override
     public Constraints validateUpdate(Customer customer) {
         Constraints constraints = new Constraints();
-        constraints.add(AccesoryValidator.validateJavaxConstraints(customer));
+        constraints.add(accessoryValidator.validateJavaxConstraints(customer));
         AbstractUser userFromDataBase = userRepository.findAbstractUserByUserCode(customer.getUserCode());
         constraints.add("user_exists", userFromDataBase != null);
         constraints.add("user_isLogged", userFromDataBase != null && userFromDataBase.isLogged());

@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.unittests.repository;
 
 import at.ac.tuwien.sepm.groupphase.backend.basetest.TestData;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Image;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
 import at.ac.tuwien.sepm.groupphase.backend.repository.ShowRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,6 +31,8 @@ public class ShowRepositoryTest implements TestData {
         .ticketsSold(TOTAL)
         .eventCategory(CAT1)
         .eventType(TYP1)
+        .description(DESC)
+        .photo(PHOTO)
         .build();
 
     @BeforeEach
@@ -44,6 +47,8 @@ public class ShowRepositoryTest implements TestData {
             .ticketsSold(TOTAL)
             .eventCategory(CAT1)
             .eventType(TYP1)
+            .description(DESC)
+            .photo(PHOTO)
             .build();
     }
 

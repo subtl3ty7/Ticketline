@@ -18,6 +18,7 @@ export class ResetPasswordComponent implements OnInit {
   // CustomError flag
   error: boolean = false;
   errorMessage: string = '';
+  processing: boolean = false;
 
   constructor(private formBuilder: FormBuilder, private userService: UserService, private router: Router, private background: Background) {
     this.background.defineBackground();
@@ -32,10 +33,12 @@ export class ResetPasswordComponent implements OnInit {
   sendResetPasswordRequest() {
     console.log('Sending reset password request to: ' + this.formResetPassword.controls.email.value);
     this.submitted = true;
+    this.processing = true;
     if (this.formResetPassword.valid) {
       this.userService.resetPasswordRequest(this.formResetPassword.controls.email.value).subscribe(
         () => {
           console.log('Successfully sent request to email: ' + this.formResetPassword.controls.email.value);
+          this.processing = false;
          this.router.navigate(['/home']);
           document.body.style.backgroundImage = null;
         },

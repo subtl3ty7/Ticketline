@@ -1,7 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.basetest;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.*;
-import org.hibernate.mapping.Table;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.Duration;
@@ -51,26 +50,27 @@ public interface TestData {
     String EVENT_TOP10 = EVENT_BASE_URI + "/top10";
     String NAME = "event";
     String DESC = "description";
-    String CAT = "category";
-    String TYP = "type";
+    EventCategoryEnum CAT = EventCategoryEnum.ROCK;
+    EventTypeEnum TYP = EventTypeEnum.MUSIC;
     EventCategoryEnum CAT1 = EventCategoryEnum.HIPHOP;
     EventTypeEnum TYP1 = EventTypeEnum.MUSIC;
-    String PHOTO = "no photo";
+    Image PHOTO = new Image(null, "no photo");
     LocalDateTime START =
         LocalDateTime.of(2020, 11, 13, 12, 15, 0, 0);
     LocalDateTime END =
         LocalDateTime.of(2020, 11, 13, 18, 15, 0, 0);
     Duration DURATION = Duration.between(START, END);
-    List<Integer> PRICES = List.of(30, 40);
+    List<Double> PRICES = List.of(30.0, 40.0);
     List<Show> SHOWS = new ArrayList<>() {
         {
             add(Show.builder()
                 .id(ID).eventCode(USER_CODE).startsAt(START).endsAt(END).ticketsSold(TOTAL).ticketsAvailable(TOTAL)
-                .eventLocationOriginalId(LOCATIONID).eventCategory(CAT1).eventType(TYP1).build());
+                .eventCategory(CAT1).eventType(TYP1).description(DESC).photo(PHOTO).build());
         }
     };
     int TOTAL = 500;
 
+    Double PRICE = 50.0;
     String LOCATION_BASE_URI = BASE_URI + "/eventLocations/all";
     String STREET = "street";
     String COUNTRY = "country";
@@ -87,7 +87,7 @@ public interface TestData {
     String ROW = "1";
     List<Seat> SEATS = new ArrayList<>() {
         {
-            add(Seat.builder().id(ID).sectionId(ID).isFree(true).seatColumn(COLUMN).seatRow(ROW).build());
+            add(Seat.builder().id(ID).sectionId(ID).seatColumn(COLUMN).seatRow(ROW).build());
         }
     };
 
@@ -100,20 +100,21 @@ public interface TestData {
     String TICKETS_BASE_URI = BASE_URI + "/tickets";
 
     String TYP_I = "purchase";
+    InvoiceCategoryEnum CAT_I = InvoiceCategoryEnum.MERCHANDISE_INVOICE;
     String PAY = "card";
     LocalDateTime GENERATE = LocalDateTime.of(2020,6,1,10,0,0);
     String NUM = "000001";
     List<Ticket> TICKETS = new ArrayList<>(){
         {
             add(Ticket.builder().ticketId(ID).ticketCode(USER_CODE).isPurchased(false).isReserved(false)
-                .purchaseDate(START).price(TOTAL).userCode(USER_CODE).seat(SEATS.get(0)).show(SHOWS.get(0)).build());
+                .purchaseDate(START).price(PRICE).userCode(USER_CODE).seat(SEATS.get(0)).show(SHOWS.get(0)).build());
         }
     };
 
     String ARTIST_BASE_URI = BASE_URI + "/artists";
-    String NEWS_BASE_URI = BASE_URI + "/news";
+    String NEWS_BASE_URI = BASE_URI + "/eventLocations";
 
-    Event EVENT = Event.builder().id(ID).eventCode(USER_CODE).name(NAME).description(DESC).category(CAT).type(TYP).eventCategory(CAT1)
-        .eventType(TYP1).startsAt(START).endsAt(END).prices(PRICES).totalTicketsSold(TOTAL).shows(SHOWS).build();
+    Event EVENT = Event.builder().id(ID).eventCode(USER_CODE).name(NAME).description(DESC).category(CAT).type(TYP)
+        .startsAt(START).endsAt(END).prices(PRICES).totalTicketsSold(TOTAL).shows(SHOWS).build();
 
 }

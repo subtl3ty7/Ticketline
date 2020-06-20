@@ -20,6 +20,7 @@ import java.lang.invoke.MethodHandles;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class NewsDataGenerator {
     private final UserService userService;
     private final Resources resources;
 
-    private static final int NUMBER_OF_NEWS = 10;
+    private static final int NUMBER_OF_NEWS = 100;
 
     @Autowired
     public NewsDataGenerator(NewsService newsService, NewsRepository newsRepository, UserService userService, Resources resources) {
@@ -49,12 +50,12 @@ public class NewsDataGenerator {
         if(newsService.findLatest(null).size() > 0) {
             LOGGER.info("News Test Data already generated");
         } else {
-            LOGGER.info("Generating News Test Data");
+            LOGGER.info("Generating News Test Data...");
             LocalDateTime start = LocalDateTime.now();
             generateNews();
             LocalDateTime end = LocalDateTime.now();
             float runningTime = Duration.between(start, end).toMillis();
-            LOGGER.info("Generating News Test Data took " + runningTime/1000.0 + " seconds");
+            LOGGER.info("Generating News Test Data (" + NUMBER_OF_NEWS + " Entities) took " + runningTime/1000.0 + " seconds");
         }
     }
 
@@ -62,23 +63,25 @@ public class NewsDataGenerator {
         List<Customer> customers = getCustomers();
         int splitUp = customers.size()/NUMBER_OF_NEWS;
 
+        List<News> dataList = Arrays.asList(resources.getObjectFromJson("entities/news.json", News[].class));
 
         for(int i=0; i<NUMBER_OF_NEWS; i++) {
-
-            String imgName = "news_img" + i + ".jpg";
+            int dataIndex = i % dataList.size();
+            News data = dataList.get(dataIndex);
+            String imgName = data.getPhoto().getImage();
 
             News newsEntry = News.builder()
-                .author("J.K. Rowling")
+                .author(data.getAuthor())
                 .photo(resources.getImageEncoded(imgName))
                 .publishedAt(null)
                 .stopsBeingRelevantAt(LocalDateTime.now().plusWeeks(i))
-                .title("News " + i + ": " + resources.getText("news_title.txt"))
-                .summary(resources.getText("news_summary.txt"))
-                .text(resources.getText("news_text.txt"))
+                .title(data.getTitle())
+                .summary(data.getSummary())
+                .text(data.getText())
                 .seenBy(customers.subList(i*splitUp, (i+1)*splitUp))
                 .build();
             newsService.createNewNewsEntry(newsEntry);
-            newsEntry.setPublishedAt(LocalDateTime.now().minusWeeks(i));
+            newsEntry.setPublishedAt(LocalDateTime.now().minusDays(i).minusHours(i).minusMinutes(i));
             newsRepository.save(newsEntry);
         }
 

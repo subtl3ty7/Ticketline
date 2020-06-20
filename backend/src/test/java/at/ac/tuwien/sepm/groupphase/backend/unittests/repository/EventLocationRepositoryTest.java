@@ -2,7 +2,7 @@ package at.ac.tuwien.sepm.groupphase.backend.unittests.repository;
 
 import at.ac.tuwien.sepm.groupphase.backend.basetest.TestData;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
-import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocationOriginal;
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventLocationRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +23,7 @@ public class EventLocationRepositoryTest implements TestData {
     @Autowired
     EventLocationRepository eventLocationRepository;
 
-    private EventLocationOriginal eventLocation = EventLocationOriginal.builder()
+    private EventLocation eventLocation = EventLocation.builder()
         .id(ID)
         .name(FNAME)
         .eventLocationDescription(DESC)
@@ -38,7 +38,7 @@ public class EventLocationRepositoryTest implements TestData {
     @BeforeEach
     public void beforeEach() {
         eventLocationRepository.deleteAll();
-        eventLocation = EventLocationOriginal.builder()
+        eventLocation = EventLocation.builder()
             .id(ID)
             .name(FNAME)
             .eventLocationDescription(DESC)

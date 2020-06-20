@@ -12,25 +12,15 @@
   width: 10%;
   background-color: transparent;
   color: white;
-  font-size: 30px;
+  font-size: 23px;
 }
 
 select {
-  appearance: none;
-  -moz-appearance: none;
-  -webkit-appearance: none;
   background-color: transparent;
   color: white;
-  font-size: 30px;
+  font-size: 23px;
 }
 
-select option {
-  background-color: transparent;
-}
-
-.select-side {
-  position: absolute;
-  right: 30px;
-  top:15px;
-  background-color: transparent;
+.form-control {
+  padding-right: 10px;
 }

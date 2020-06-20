@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity(name = "invoice")
 @Setter
@@ -15,9 +16,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @SuperBuilder
 @ToString
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn (name = "INVOICE_CATEGORY", discriminatorType= DiscriminatorType.STRING)
-public abstract class AbstractInvoice implements Serializable {
+public class Invoice implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +37,21 @@ public abstract class AbstractInvoice implements Serializable {
     @NotNull
     @Size(min = 6, max = 6)
     @Column(nullable = false, name = "invoice_number", length = 6)
-    private String invoice_number;
+    private String invoiceNumber;
 
-    public AbstractInvoice () {}
+    @ToString.Exclude
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Ticket> tickets;
+
+    @NotNull
+    @Column(nullable = false,  name = "invoice_type")
+    private String invoice_type;
+
+    @NotNull
+    @Column(nullable = false,  name = "invoice_category")
+    private InvoiceCategoryEnum invoice_category;
+
+    private String merchandise_code;
+
+    public Invoice () {}
 }

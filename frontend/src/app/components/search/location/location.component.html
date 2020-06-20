@@ -17,13 +17,13 @@
       <div *ngFor="let l of searchShared.entities">
         <div class="row location-row">
           <div class="location-block">
-            <div class="row ">
-              <div class="col">
-                <div class="location-details pl-5" style="margin-top: 45px;">
+            <div class="row">
+              <div class="col-9 col-sm-8">
+                <div class="location-details pl-5 prevent-overflow-inline" style="margin-top: 45px; height: 80px">
                   {{l.name}}, {{l.plz}} {{l.city}}
                 </div>
               </div>
-              <div class="col pr-5">
+              <div class="col-3 col-sm-4 pr-5">
                 <button (click)="searchShows(l)" class="btn default location-button align-middle" style="margin-top: 25px;">
                   Aufführungen
                 </button>

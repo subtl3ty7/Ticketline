@@ -69,11 +69,14 @@
 .mat-column-endsAt{
   flex: 0 0 25%;
 }
+.mat-column-price{
+  flex: 0 0 10%;
+}
 .mat-column-eventLocation{
-  flex: 0 0 45%;
+  flex: 0 0 30%;
 }
 .mat-column-delete{
-  flex: 0 0 15%;
+  flex: 0 0 10%;
 }
 
 .table-header-wrapper {

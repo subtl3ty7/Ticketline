@@ -26,27 +26,36 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ActiveProfiles("test")
 public class TicketMappingTest implements TestData {
 
+    @Autowired
+    private TicketMapper ticketMapper;
+
     private final Ticket ticket = Ticket.builder()
         .ticketId(ID)
         .ticketCode(USER_CODE)
         .isPurchased(false)
         .isReserved(false)
         .purchaseDate(START)
-        .price(TOTAL)
+        .price(PRICE)
         .userCode(USER_CODE)
         .seat(SEATS.get(0))
         .show(SHOWS.get(0))
         .event(EVENT)
         .build();
 
-    private final DetailedTicketDto ticketDto = DetailedTicketDto.
-        DetailedTicketDtoBuilder.aDetailedTicketDto
-        (ID, USER_CODE, false, false, START, SEATS.get(0), USER_CODE, TOTAL, SHOWS.get(0), EVENT)
-        .build();
-
-
-    @Autowired
-    private TicketMapper ticketMapper;
+    private final DetailedTicketDto ticketDto = ticketMapper.ticketToDetailedTicketDto(
+        Ticket.builder()
+            .ticketId(ID)
+            .userCode(USER_CODE)
+            .isPurchased(false)
+            .isReserved(false)
+            .purchaseDate(START)
+            .seat(SEATS.get(0))
+            .userCode(USER_CODE)
+            .price(PRICE)
+            .show(SHOWS.get(0))
+            .event(EVENT)
+            .build()
+    );
 
     @Test
     public void shouldMapTicketToSimpleTicketDTO() {
@@ -57,7 +66,6 @@ public class TicketMappingTest implements TestData {
             () -> assertFalse( ticketDto.isPurchased()),
             () -> assertFalse( ticketDto.isReserved()),
             () -> assertEquals(START, ticketDto.getPurchaseDate()),
-            () -> assertEquals(TOTAL, ticketDto.getPrice()),
             () -> assertEquals(USER_CODE, ticketDto.getUserCode()),
             () -> assertEquals(SEATS.get(0).getId(), ticketDto.getSeatId()),
             () -> assertEquals(SHOWS.get(0).getId(), ticketDto.getShowId()),
@@ -78,7 +86,6 @@ public class TicketMappingTest implements TestData {
             () -> assertFalse( ticketDto.isPurchased()),
             () -> assertFalse( ticketDto.isReserved()),
             () -> assertEquals(START, ticketDto.getPurchaseDate()),
-            () -> assertEquals(TOTAL, ticketDto.getPrice()),
             () -> assertEquals(USER_CODE, ticketDto.getUserCode()),
             () -> assertEquals(SEATS.get(0).getId(), ticketDto.getSeatId()),
             () -> assertEquals(SHOWS.get(0).getId(), ticketDto.getShowId()),
@@ -95,7 +102,6 @@ public class TicketMappingTest implements TestData {
             () -> assertFalse( ticket1.isPurchased()),
             () -> assertFalse( ticket1.isReserved()),
             () -> assertEquals(START, ticket1.getPurchaseDate()),
-            () -> assertEquals(TOTAL, ticket1.getPrice()),
             () -> assertEquals(USER_CODE, ticket1.getUserCode()),
             () -> assertEquals(SEATS.get(0), ticket1.getSeat()),
             () -> assertEquals(SHOWS.get(0), ticket1.getShow()),

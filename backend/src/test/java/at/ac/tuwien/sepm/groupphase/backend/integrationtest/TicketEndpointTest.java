@@ -6,6 +6,7 @@ import at.ac.tuwien.sepm.groupphase.backend.datagenerator.EventDataGenerator;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.DetailedTicketDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleTicketDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.TicketMapper;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
 import at.ac.tuwien.sepm.groupphase.backend.repository.*;
 import at.ac.tuwien.sepm.groupphase.backend.security.JwtTokenizer;
 import at.ac.tuwien.sepm.groupphase.backend.service.ArtistService;
@@ -97,6 +98,7 @@ public class TicketEndpointTest implements TestData {
     private ArtistService artistService;
 
     private DetailedTicketDto detailedTicketDto;
+    private Ticket ticket;
 
     @Test
     @Order(1)
@@ -104,11 +106,36 @@ public class TicketEndpointTest implements TestData {
 
         userRepository.save(USER_TICKET);
         EventDataGenerator eventDataGenerator = new EventDataGenerator(sectionRepository, seatRepository,
-            showRepository, eventService, eventLocationService, entityManagerFactory, artistRepository, artistService, resources);
+            showRepository, eventService, eventLocationService, entityManagerFactory, artistRepository, artistService, resources, eventLocationRepository);
         eventDataGenerator.generate();
 
-        detailedTicketDto = DetailedTicketDto.DetailedTicketDtoBuilder.aDetailedTicketDto(
-            ID, USER_CODE, false, false, START, seatRepository.findSeatById(6L), USER_CODE_TICKET, TOTAL, showRepository.findShowById(6L), eventRepository.findEventById(1L)).build();
+        detailedTicketDto = ticketMapper.ticketToDetailedTicketDto(
+            Ticket.builder()
+                .ticketId(ID)
+                .userCode(USER_CODE)
+                .isPurchased(false)
+                .isReserved(false)
+                .purchaseDate(START)
+                .seat(seatRepository.findSeatById(6L))
+                .userCode(USER_CODE_TICKET)
+                .price(PRICE)
+                .show(showRepository.findShowById(6L))
+                .event(eventRepository.findEventById(1L))
+                .build()
+        );
+
+        ticket = Ticket.builder()
+            .ticketId(ID)
+            .ticketCode(USER_CODE)
+            .isPurchased(false)
+            .isReserved(false)
+            .purchaseDate(START)
+            .seat(seatRepository.findSeatById(6L))
+            .userCode(USER_CODE_TICKET)
+            .price(PRICE)
+            .show(showRepository.findShowById(6L))
+            .event(eventRepository.findEventById(1L))
+            .build();
 
         List<DetailedTicketDto> ticketDtos = new ArrayList<>();
         ticketDtos.add(detailedTicketDto);
@@ -118,7 +145,7 @@ public class TicketEndpointTest implements TestData {
             .contentType(MediaType.APPLICATION_JSON)
             .content(body)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_TICKET, USER_ROLES)))
-            .andDo(print())
+            //.andDo(print())
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
 
@@ -136,9 +163,20 @@ public class TicketEndpointTest implements TestData {
     @Test
     @Order(2)
     public void givenNothing_whenReserveTicket_then201AndTicketList_AndTicketReservedTrue() throws Exception{
-
-        detailedTicketDto = DetailedTicketDto.DetailedTicketDtoBuilder.aDetailedTicketDto(
-            2L, "code12", false, false, START, seatRepository.findSeatById(7L), USER_CODE_TICKET, TOTAL, showRepository.findShowById(7L), eventRepository.findEventById(1L)).build();
+        detailedTicketDto = ticketMapper.ticketToDetailedTicketDto(
+            Ticket.builder()
+                .ticketId(2L)
+                .userCode("code12")
+                .isPurchased(false)
+                .isReserved(false)
+                .purchaseDate(START)
+                .seat(seatRepository.findSeatById(7L))
+                .userCode(USER_CODE_TICKET)
+                .price(PRICE)
+                .show(showRepository.findShowById(7L))
+                .event(eventRepository.findEventById(1L))
+                .build()
+        );
 
         List<DetailedTicketDto> ticketDtos = new ArrayList<>();
         ticketDtos.add(detailedTicketDto);
@@ -148,7 +186,7 @@ public class TicketEndpointTest implements TestData {
             .contentType(MediaType.APPLICATION_JSON)
             .content(body)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_TICKET, USER_ROLES)))
-            .andDo(print())
+            //.andDo(print())
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
 
@@ -171,7 +209,7 @@ public class TicketEndpointTest implements TestData {
             ticketRepository.findTicketByTicketId(2L).getTicketCode())
             .contentType(MediaType.APPLICATION_JSON)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_TICKET, USER_ROLES)))
-            .andDo(print())
+            //.andDo(print())
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
 
@@ -196,7 +234,7 @@ public class TicketEndpointTest implements TestData {
         MvcResult mvcResult = this.mockMvc.perform(get(TICKETS_BASE_URI + "/" + USER_CODE_TICKET)
             .contentType(MediaType.APPLICATION_JSON)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_TICKET, USER_ROLES)))
-            .andDo(print())
+            //.andDo(print())
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
 
@@ -218,7 +256,7 @@ public class TicketEndpointTest implements TestData {
             ticketRepository.findTicketByTicketId(ID).getTicketCode())
             .contentType(MediaType.APPLICATION_JSON)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_TICKET, USER_ROLES)))
-            .andDo(print())
+            //.andDo(print())
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
 
