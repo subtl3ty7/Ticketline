@@ -14,13 +14,14 @@
 
               <!-- Tab Buttons to switch between tabs -->
               <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                <li class="nav-item align-self-center" style="padding-right: 8px; margin-right: 14px">
-                  <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">
+                <li class="nav-item align-self-center" style="margin-right: 15px">
+                  <a class="nav-link active" id="pills-all-tab" data-toggle="pill" href="#pills-all" role="tab" aria-controls="pills-all" aria-selected="true">
                     <div class="row justify-content-center nav-pill-font"><span>Alle</span></div>
                   </a>
                 </li>
-                <li class="nav-item" style="margin-right: 0px">
-                  <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">
+                <div *ngIf="authService.isLoggedIn()" class="tab-divider"></div>
+                <li *ngIf="authService.isLoggedIn()" class="nav-item" style="margin-left: 15px">
+                  <a class="nav-link" id="pills-read-tab" data-toggle="pill" href="#pills-read" role="tab" aria-controls="pills-read" aria-selected="false">
                     <div class="row justify-content-center nav-pill-font" ><span style="border-right: 0">Gelesen</span></div>
                   </a>
                 </li>
@@ -34,12 +35,12 @@
         <div class="card-body">
           <!-- Tab content -->
           <div class="tab-content" id="pills-tabContent">
-            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+            <div class="tab-pane fade show active" id="pills-all" role="tabpanel" aria-labelledby="pills-all-tab">
               <app-error-notification *ngIf="errorLatest" [error]="errorLatest"></app-error-notification>
               <app-news-list-inner [news]="latestNews"></app-news-list-inner>
               <app-spinner *ngIf="latestNews === undefined"></app-spinner>
             </div>
-            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+            <div class="tab-pane fade" id="pills-read" role="tabpanel" aria-labelledby="pills-read-tab">
               <app-error-notification *ngIf="errorSeen" [error]="errorSeen"></app-error-notification>
               <app-news-list-inner [news]="seenNews"></app-news-list-inner>
               <app-spinner *ngIf="latestNews === undefined"></app-spinner>
