@@ -39,7 +39,7 @@ public class EventLocationMappingTest implements TestData {
 
     @Test
     public void shouldMapEventLocationToEventLocationDto() {
-        EventLocationDto eventLocationDto = eventLocationMapper.EventLocationToEventLocationDto(eventLocation);
+        EventLocationDto eventLocationDto = eventLocationMapper.eventLocationToEventLocationDto(eventLocation);
         assertAll(
             () -> assertEquals(FNAME, eventLocationDto.getName()),
             () -> assertEquals(DESC, eventLocationDto.getEventLocationDescription()),
@@ -57,7 +57,7 @@ public class EventLocationMappingTest implements TestData {
         eventLocations.add(eventLocation);
         eventLocations.add(eventLocation);
 
-        List<EventLocationDto> eventLocationDtos = eventLocationMapper.EventLocationToEventLocationDto(eventLocations);
+        List<EventLocationDto> eventLocationDtos = eventLocationMapper.eventLocationToEventLocationDto(eventLocations);
         EventLocationDto eventLocationDto = eventLocationDtos.get(0);
         assertAll(
             () -> assertEquals(FNAME, eventLocationDto.getName()),

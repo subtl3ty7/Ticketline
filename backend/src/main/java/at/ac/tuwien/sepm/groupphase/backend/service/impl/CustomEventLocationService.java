@@ -37,14 +37,21 @@ public class CustomEventLocationService implements EventLocationService {
     }
 
     @Override
-    @Transactional
     public List<EventLocation> getAllEventLocations() {
         List<EventLocation> eventLocations = eventLocationRepository.findAll();
-        for(EventLocation eventLocation: eventLocations) {
-            Hibernate.initialize(eventLocation.getShows());
-            Hibernate.initialize(eventLocation.getSections());
-        }
         return eventLocations;
+    }
+
+    @Override
+    @Transactional
+    public EventLocation getEventLocationById(long id) {
+        EventLocation eventLocation = eventLocationRepository.getOne(id);
+        Hibernate.initialize(eventLocation.getShows());
+        Hibernate.initialize(eventLocation.getSections());
+        for (Section s: eventLocation.getSections()) {
+            Hibernate.initialize(s.getSeats());
+        }
+        return eventLocation;
     }
 
     @Override

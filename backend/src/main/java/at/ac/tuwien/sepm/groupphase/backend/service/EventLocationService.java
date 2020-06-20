@@ -10,6 +10,6 @@ public interface EventLocationService {
     List<Seat> getAllSeatsByEventLocationId(Long id);
     List<EventLocation> getAllEventLocations();
     EventLocation save(EventLocation eventLocation);
-
+    EventLocation getEventLocationById(long id);
     List<EventLocation> findAllFilteredEventLocations(EventLocation searchEventLocation);
 }

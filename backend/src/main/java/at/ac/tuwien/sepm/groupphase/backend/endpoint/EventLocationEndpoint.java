@@ -50,9 +50,26 @@ public class EventLocationEndpoint {
         @ApiResponse(code = 404, message = "No EventLocation is found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<List<SimpleEventDto>> requestAllEventLocations() {
+    public ResponseEntity<List<SimpleEventLocationDto>> requestAllSimpleEventLocations() {
         LOGGER.info("GET /api/v1/eventLocations/all");
-        List<EventLocationDto> result = eventLocationMapper.EventLocationToEventLocationDto(eventLocationService.getAllEventLocations());
+        List<SimpleEventLocationDto> result = eventLocationMapper.eventLocationToSimpleEventLocationDto(eventLocationService.getAllEventLocations());
+        return new ResponseEntity(result, HttpStatus.OK);
+    }
+
+    @Secured("ROLE_ADMIN")
+    @GetMapping(value = "/{id}")
+    @ApiOperation(
+        value = "EventLocation by Id",
+        notes = "Get eventlocation by id",
+        authorizations = {@Authorization(value = "apiKey")})
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "EventLocation is successfully retrieved"),
+        @ApiResponse(code = 404, message = "No EventLocation is found"),
+        @ApiResponse(code = 500, message = "Connection Refused"),
+    })
+    public ResponseEntity<List<SimpleEventDto>> requestEventLocationById(@PathVariable long id) {
+        LOGGER.info("GET /api/v1/eventLocations/all");
+        EventLocationDto result = eventLocationMapper.eventLocationToEventLocationDto(eventLocationService.getEventLocationById(id));
         return new ResponseEntity(result, HttpStatus.OK);
     }
 

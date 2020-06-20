@@ -121,16 +121,16 @@ public class NewsEndpoint {
         value = "Get all Simple News Entries",
         notes = "Get all Simple News Entries")
     @ApiResponse(code = 200, message = "Successfully retrieved News Entries")
-    public List<SimpleNewsDto> getAllSimpleNews() {
-        LOGGER.info("GET /api/v1/news/");
+    public List<SimpleNewsDto> getAllSimpleNews(@RequestParam int size) {
+        LOGGER.info("GET /api/v1/news/?size=" + size);
 
         return newsMapper.newsToSimpleNewsDto(
-            newsService.findAll()
+            newsService.findAll(size)
         );
     }
 
     @Secured("ROLE_ADMIN")
-    @GetMapping(value = "", params = {"newsCode", "title", "author", "startRange", "endRange"})
+    @GetMapping(value = "", params = {"newsCode", "title", "author", "startRange", "endRange", "size"})
     @ApiOperation(
         value = "Get simple news",
         notes = "Get simple news by params",
@@ -144,12 +144,13 @@ public class NewsEndpoint {
                                                                      @RequestParam String title,
                                                                      @RequestParam String author,
                                                                      @RequestParam String startRange,
-                                                                     @RequestParam String endRange
+                                                                     @RequestParam String endRange,
+                                                                     @RequestParam int size
     ) {
-        LOGGER.info("GET /api/v1/news?newsCode=" + newsCode + "&title=" + title + "&author=" + author +  "&startRange=" + startRange + "&endRange=" + endRange);
+        LOGGER.info("GET /api/v1/news?newsCode=" + newsCode + "&title=" + title + "&author=" + author +  "&startRange=" + startRange + "&endRange=" + endRange + "&size=" + size);
         LocalDateTime startRangeDate = LocalDate.parse(startRange, DateTimeFormatter.ofPattern("E MMM dd yyyy")).atStartOfDay();
         LocalDateTime endRangeDate = LocalDate.parse(endRange, DateTimeFormatter.ofPattern("E MMM dd yyyy")).atStartOfDay();
-        List<SimpleNewsDto> result = newsMapper.newsToSimpleNewsDto(newsService.findSimpleNewsByParam(newsCode, title, author, startRangeDate, endRangeDate));
+        List<SimpleNewsDto> result = newsMapper.newsToSimpleNewsDto(newsService.findSimpleNewsByParam(newsCode, title, author, startRangeDate, endRangeDate, size));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

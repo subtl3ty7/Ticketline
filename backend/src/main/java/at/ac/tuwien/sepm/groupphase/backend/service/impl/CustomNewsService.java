@@ -13,6 +13,9 @@ import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -114,19 +117,31 @@ public class CustomNewsService implements NewsService {
     }
 
     @Override
-    public List<News> findAll() {
-        return newsRepository.findAll();
+    public List<News> findAll(int size) {
+        int page = calculateNumberOfPage(size);
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        Page<News> news = newsRepository.findAll(pageRequest);
+        return news.toList();
     }
 
+    private int calculateNumberOfPage(int size) {
+        int result = 0;
+        if (size != 0) {
+            result = size / 10;
+        }
+        return result;
+    }
     @Override
     public List<News> findSimpleNewsByParam(String newsCode,
                                             String title,
                                             String author,
                                             LocalDateTime startRange,
-                                            LocalDateTime endRange) {
-
-        List<News> news =  newsRepository.findAllByNewsCodeContainingIgnoreCaseAndTitleContainingIgnoreCaseAndAuthorContainingIgnoreCaseAndPublishedAtBetween(newsCode, title, author, startRange, endRange);
-        return news;
+                                            LocalDateTime endRange,
+                                            int size) {
+        int page = calculateNumberOfPage(size);
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        Page<News> news =  newsRepository.findAllByNewsCodeContainingIgnoreCaseAndTitleContainingIgnoreCaseAndAuthorContainingIgnoreCaseAndPublishedAtBetween(newsCode, title, author, startRange, endRange, pageRequest);
+        return news.toList();
     }
 
     private void markAsSeen(Customer customer, News news) {
