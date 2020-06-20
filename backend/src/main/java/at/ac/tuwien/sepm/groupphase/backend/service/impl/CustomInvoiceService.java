@@ -88,4 +88,10 @@ public class CustomInvoiceService implements InvoiceService {
         }
         return invoiceNumber;
     }
+
+    @Override
+    public Invoice findInvoiceByTicket(Ticket ticket) {
+        Ticket repTicket = ticketRepository.findTicketByTicketCode(ticket.getTicketCode());
+        return invoiceRepository.findInvoiceByTicketsContaining(repTicket);
+    }
 }

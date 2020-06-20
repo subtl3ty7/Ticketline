@@ -1,8 +1,12 @@
 package at.ac.tuwien.sepm.groupphase.backend.endpoint;
 
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.DetailedTicketDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.InvoiceDto;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleTicketDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.InvoiceMapper;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.TicketMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Invoice;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
 import at.ac.tuwien.sepm.groupphase.backend.service.InvoiceService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -25,11 +29,13 @@ public class InvoiceEndpoint {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final InvoiceService invoiceService;
     private final InvoiceMapper invoiceMapper;
+    private final TicketMapper ticketMapper;
 
     @Autowired
-    public InvoiceEndpoint(InvoiceService invoiceService, InvoiceMapper invoiceMapper) {
+    public InvoiceEndpoint(InvoiceService invoiceService, InvoiceMapper invoiceMapper, TicketMapper ticketMapper) {
         this.invoiceService = invoiceService;
         this.invoiceMapper = invoiceMapper;
+        this.ticketMapper = ticketMapper;
     }
 
     @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
@@ -47,5 +53,19 @@ public class InvoiceEndpoint {
 
         List<Invoice> invoices = invoiceService.allInvoicesOfUser(userCode);
         return new ResponseEntity(invoiceMapper.invoiceListToInvoiceDtoList(invoices), HttpStatus.OK);
+    }
+
+    @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
+    @GetMapping(value = "/byTicket")
+    @ApiOperation(
+        value = "Get invoice by given ticket",
+        notes = "Get invoice by given ticket")
+    @ApiResponse(code = 200, message = "Invoice is successfully retrieved")
+    public ResponseEntity<InvoiceDto> getInvoiceByTicket(DetailedTicketDto searchTicketDto) {
+        LOGGER.info("GET /api/v1/invoices/byTicket" + searchTicketDto);
+
+
+        Invoice invoice = invoiceService.findInvoiceByTicket(ticketMapper.detailedTicketDtoToTicket(searchTicketDto));
+        return new ResponseEntity(invoiceMapper.invoiceToInvoiceDto(invoice), HttpStatus.OK);
     }
 }
