@@ -144,6 +144,14 @@ public class UserValidatorImpl implements UserValidator {
     }
 
     @Override
+    public Constraints validateUserIdentityWithGivenUserCode(String userCode) {
+        Constraints constraints = new Constraints();
+        AbstractUser user = userRepository.findAbstractUserByUserCode(userCode);
+        constraints.add("user_isSelf", this.validateUserIdentityWithGivenEmail(user.getEmail()));
+        return constraints;
+    }
+
+    @Override
     public boolean validateUserIdentityWithGivenEmail(String email) {
         String emailOfAuthenticatedUser = "";
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

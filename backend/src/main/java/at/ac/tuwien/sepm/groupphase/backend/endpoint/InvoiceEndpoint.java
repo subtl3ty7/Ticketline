@@ -11,6 +11,7 @@ import at.ac.tuwien.sepm.groupphase.backend.service.InvoiceService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.Authorization;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,12 +43,9 @@ public class InvoiceEndpoint {
     @GetMapping(value = "/{userCode}")
     @ApiOperation(
         value = "Get all invoices of one user",
-        notes = "Get all invoices of one user")
-    @ApiResponses({
-        @ApiResponse(code = 200, message = "Invoices are successfully retrieved"),
-        @ApiResponse(code = 404, message = "No invoice is found"),
-        @ApiResponse(code = 500, message = "Connection Refused"),
-    })
+        notes = "Get all invoices of one user",
+        authorizations = {@Authorization(value = "apiKey")})
+    @ApiResponse(code = 200, message = "Invoices are successfully retrieved")
     public ResponseEntity<InvoiceDto> getAllInvoicesOneUser(@PathVariable String userCode) {
         LOGGER.info("GET /api/v1/invoices/" + userCode);
 
@@ -59,11 +57,11 @@ public class InvoiceEndpoint {
     @GetMapping(value = "/byTicket")
     @ApiOperation(
         value = "Get invoice by given ticket",
-        notes = "Get invoice by given ticket")
+        notes = "Get invoice by given ticket",
+        authorizations = {@Authorization(value = "apiKey")})
     @ApiResponse(code = 200, message = "Invoice is successfully retrieved")
     public ResponseEntity<InvoiceDto> getInvoiceByTicket(DetailedTicketDto searchTicketDto) {
         LOGGER.info("GET /api/v1/invoices/byTicket" + searchTicketDto);
-
 
         Invoice invoice = invoiceService.findInvoiceByTicket(ticketMapper.detailedTicketDtoToTicket(searchTicketDto));
         return new ResponseEntity(invoiceMapper.invoiceToInvoiceDto(invoice), HttpStatus.OK);

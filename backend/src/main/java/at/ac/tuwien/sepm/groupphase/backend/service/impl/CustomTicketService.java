@@ -9,6 +9,7 @@ import at.ac.tuwien.sepm.groupphase.backend.service.ShowService;
 import at.ac.tuwien.sepm.groupphase.backend.service.TicketService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
 import at.ac.tuwien.sepm.groupphase.backend.util.validation.TicketValidator;
+import at.ac.tuwien.sepm.groupphase.backend.util.validation.UserValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +36,11 @@ public class CustomTicketService implements TicketService {
     private final UserRepository userRepository;
     private final InvoiceService invoiceService;
     private final ShowService showService;
+    private final UserValidator userValidator;
 
     @Autowired
     public CustomTicketService(TicketRepository ticketRepository, TicketValidator validator, SeatRepository seatRepository, ShowRepository showRepository,
-                               EventRepository eventRepository, UserRepository userRepository, InvoiceService invoiceService, ShowService showService) {
+                               EventRepository eventRepository, UserRepository userRepository, InvoiceService invoiceService, ShowService showService, UserValidator userValidator) {
         this.ticketRepository = ticketRepository;
         this.validator = validator;
         this.seatRepository = seatRepository;
@@ -47,6 +49,7 @@ public class CustomTicketService implements TicketService {
         this.userRepository = userRepository;
         this.invoiceService = invoiceService;
         this.showService = showService;
+        this.userValidator = userValidator;
     }
 
     @Override
@@ -93,6 +96,7 @@ public class CustomTicketService implements TicketService {
 
     @Override
     public List<Ticket> allTicketsOfUser(String userCode) throws ValidationException, DataAccessException{
+        userValidator.validateUserIdentityWithGivenUserCode(userCode).throwIfViolated();
         validator.validateAllTicketsOfUser(userCode).throwIfViolated();
         return ticketRepository.findTicketsByUserCode(userCode);
     }

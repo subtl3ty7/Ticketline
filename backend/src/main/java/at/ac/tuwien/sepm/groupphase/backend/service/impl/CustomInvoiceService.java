@@ -9,9 +9,11 @@ import at.ac.tuwien.sepm.groupphase.backend.repository.InvoiceRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.TicketRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.InvoiceService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
+import at.ac.tuwien.sepm.groupphase.backend.util.validation.UserValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
@@ -24,11 +26,13 @@ public class CustomInvoiceService implements InvoiceService {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final InvoiceRepository invoiceRepository;
     private final TicketRepository ticketRepository;
+    private final UserValidator userValidator;
 
     @Autowired
-    public CustomInvoiceService(InvoiceRepository invoiceRepository, TicketRepository ticketRepository) {
+    public CustomInvoiceService(InvoiceRepository invoiceRepository, TicketRepository ticketRepository, UserValidator userValidator) {
         this.invoiceRepository = invoiceRepository;
         this.ticketRepository = ticketRepository;
+        this.userValidator = userValidator;
     }
 
     @Override
@@ -70,6 +74,7 @@ public class CustomInvoiceService implements InvoiceService {
 
     @Override
     public List<Invoice> allInvoicesOfUser(String userCode) {
+        userValidator.validateUserIdentityWithGivenUserCode(userCode).throwIfViolated();
         return invoiceRepository.findInvoicesByUserCode(userCode);
     }
 
@@ -92,6 +97,7 @@ public class CustomInvoiceService implements InvoiceService {
     @Override
     public Invoice findInvoiceByTicket(Ticket ticket) {
         Ticket repTicket = ticketRepository.findTicketByTicketCode(ticket.getTicketCode());
+        userValidator.validateUserIdentityWithGivenUserCode(repTicket.getUserCode()).throwIfViolated();
         return invoiceRepository.findInvoiceByTicketsContaining(repTicket);
     }
 }
