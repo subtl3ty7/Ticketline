@@ -9,11 +9,11 @@ import at.ac.tuwien.sepm.groupphase.backend.repository.InvoiceRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.TicketRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.InvoiceService;
 import at.ac.tuwien.sepm.groupphase.backend.util.CodeGenerator;
+import at.ac.tuwien.sepm.groupphase.backend.util.validation.InvoiceValidator;
 import at.ac.tuwien.sepm.groupphase.backend.util.validation.UserValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
@@ -27,12 +27,14 @@ public class CustomInvoiceService implements InvoiceService {
     private final InvoiceRepository invoiceRepository;
     private final TicketRepository ticketRepository;
     private final UserValidator userValidator;
+    private final InvoiceValidator validator;
 
     @Autowired
-    public CustomInvoiceService(InvoiceRepository invoiceRepository, TicketRepository ticketRepository, UserValidator userValidator) {
+    public CustomInvoiceService(InvoiceRepository invoiceRepository, TicketRepository ticketRepository, UserValidator userValidator, InvoiceValidator validator) {
         this.invoiceRepository = invoiceRepository;
         this.ticketRepository = ticketRepository;
         this.userValidator = userValidator;
+        this.validator = validator;
     }
 
     @Override
@@ -96,8 +98,8 @@ public class CustomInvoiceService implements InvoiceService {
 
     @Override
     public Invoice findInvoiceByTicket(Ticket ticket) {
-        Ticket repTicket = ticketRepository.findTicketByTicketCode(ticket.getTicketCode());
-        userValidator.validateUserIdentityWithGivenUserCode(repTicket.getUserCode()).throwIfViolated();
-        return invoiceRepository.findInvoiceByTicketsContaining(repTicket);
+        validator.validateInvoiceByTicket(ticket).throwIfViolated();
+        Ticket ticketFromDatabase = ticketRepository.findTicketByTicketCode(ticket.getTicketCode());
+        return invoiceRepository.findInvoiceByTicketsContaining(ticketFromDatabase);
     }
 }
