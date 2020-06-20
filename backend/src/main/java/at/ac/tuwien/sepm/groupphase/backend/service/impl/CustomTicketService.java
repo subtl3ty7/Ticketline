@@ -103,6 +103,7 @@ public class CustomTicketService implements TicketService {
             ticketEntity.setTicketCode(getNewTicketCode());
             LocalDateTime now = LocalDateTime.now();
             ticketEntity.setPurchaseDate(now);
+            ticketEntity.setCancelled(false);
             validator.validateBefore(ticketEntity).throwIfViolated();
 
 
@@ -156,7 +157,10 @@ public class CustomTicketService implements TicketService {
         show.getTakenSeats().remove(seat);
         showRepository.save(show);
 
-        ticketRepository.delete(ticket1);
+        //ticketRepository.delete(ticket1);
+        ticket1.setPurchased(false);
+        ticket1.setCancelled(true);
+        ticketRepository.save(ticket1);
         invoiceService.createTicketInvoice(List.of(ticket1), "Kauf Stornorechnung", LocalDateTime.now());
 
         LOGGER.info("Canceled ticket with ticketCode " + ticketCode);
@@ -200,8 +204,11 @@ public class CustomTicketService implements TicketService {
         show.getTakenSeats().remove(seat);
         showRepository.save(show);
 
+        chosenTicket.setReserved(false);
+        chosenTicket.setCancelled(true);
+        ticketRepository.save(chosenTicket);
         invoiceService.createTicketInvoice(List.of(chosenTicket), "Reservation Stornorechnung", LocalDateTime.now());
-        ticketRepository.delete(chosenTicket);
+        //ticketRepository.delete(chosenTicket);
         LOGGER.info("Reservation with the ticket code" + ticketCode +  " cancelled!");
     }
 }
