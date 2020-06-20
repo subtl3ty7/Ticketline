@@ -20,29 +20,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @ActiveProfiles("test")
 public class ResetPasswordRepositoryTest implements TestData {
 
-    private ResetPassword resetPassword = new ResetPassword(DEFAULT_USER, USER_CODE, START);
-
     @Autowired
     private ResetPasswordRepository resetPasswordRepository;
 
-    @BeforeEach
-    public void beforeEach() {
-        resetPasswordRepository.deleteAll();
-        resetPassword = new ResetPassword(DEFAULT_USER, USER_CODE, START);
-    }
-
-    @Test
-    public void givenNothing_whenSaveResetPassword_thenFindListWithOneElementAndFindRPByEmail() {
-        resetPasswordRepository.save(resetPassword);
-
-        assertAll(
-            () -> assertEquals(1, resetPasswordRepository.findAll().size()),
-            () -> assertNotNull(resetPasswordRepository.findByEmail(DEFAULT_USER))
-        );
-    }
-
     @Test
     public void givenNothing_whenSaveResetPassword_thenFindListWithOneElementAndFindRPByCode() {
+        ResetPassword resetPassword = new ResetPassword(DEFAULT_USER, USER_CODE, START);
+
         resetPasswordRepository.save(resetPassword);
 
         assertAll(

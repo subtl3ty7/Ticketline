@@ -22,23 +22,9 @@ public class ShowRepositoryTest implements TestData {
     @Autowired
     ShowRepository showRepository;
 
-    private Show show = Show.builder()
-        .id(ID)
-        .startsAt(START)
-        .endsAt(END)
-        .eventCode(USER_CODE)
-        .ticketsAvailable(TOTAL)
-        .ticketsSold(TOTAL)
-        .eventCategory(CAT1)
-        .eventType(TYP1)
-        .description(DESC)
-        .photo(PHOTO)
-        .build();
-
-    @BeforeEach
-    public void beforeEach() {
-        showRepository.deleteAll();
-        show = Show.builder()
+    @Test
+    public void givenNothing_whenSaveShow_thenFindListWithOneElementAndFindShowById() {
+        Show show = Show.builder()
             .id(ID)
             .startsAt(START)
             .endsAt(END)
@@ -49,28 +35,16 @@ public class ShowRepositoryTest implements TestData {
             .eventType(TYP1)
             .description(DESC)
             .photo(PHOTO)
+            .price(PRICE)
+            .eventName(NAME)
+            .duration(DURATION)
             .build();
-    }
 
-    @Test
-    public void givenNothing_whenSaveShow_thenFindListWithOneElementAndFindShowById() {
         showRepository.save(show);
 
         assertAll(
             () -> assertEquals(1, showRepository.findAll().size()),
             () -> assertNotNull(showRepository.findById(show.getId()))
-        );
-    }
-
-    @Test
-    public void givenNothing_whenSave2Shows_thenFindListWith2ElementsAndFindShowsByEventCode() {
-        showRepository.save(show);
-        show.setId(2L);
-        showRepository.save(show);
-
-        assertAll(
-            () -> assertEquals(2, showRepository.findAll().size()),
-            () -> assertEquals(2, showRepository.findShowsByEventCode(show.getEventCode()).size())
         );
     }
 }

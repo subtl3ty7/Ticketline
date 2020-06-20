@@ -77,7 +77,7 @@ public class UserEndpointTest implements TestData {
         .withUpdatedAt(UPD)
         .withIsBlocked(false)
         .withIsLogged(false)
-        .withPoints(POINTS)
+        .withPoints(POINTS_ZERO)
         .build();
 
     @BeforeEach
@@ -95,7 +95,7 @@ public class UserEndpointTest implements TestData {
             .withUpdatedAt(UPD)
             .withIsBlocked(false)
             .withIsLogged(false)
-            .withPoints(POINTS)
+            .withPoints(POINTS_ZERO)
             .build();
     }
 
@@ -167,7 +167,7 @@ public class UserEndpointTest implements TestData {
             () -> assertEquals(BIRTHDAY, userDto.getBirthday()),
             () -> assertFalse(userDto.isBlocked()),
             () -> assertFalse(userDto.isLogged()),
-            () -> assertEquals(POINTS, userDto.getPoints())
+            () -> assertEquals(POINTS_ZERO, userDto.getPoints())
         );
     }
 
@@ -192,7 +192,7 @@ public class UserEndpointTest implements TestData {
             () -> assertEquals(BIRTHDAY, userDto.getBirthday()),
             () -> assertFalse(userDto.isBlocked()),
             () -> assertFalse(userDto.isLogged()),
-            () -> assertEquals(POINTS, userDto.getPoints())
+            () -> assertEquals(POINTS_ZERO, userDto.getPoints())
         );
     }
 
@@ -220,7 +220,7 @@ public class UserEndpointTest implements TestData {
             () -> assertEquals(BIRTHDAY, userDto1.getBirthday()),
             () -> assertFalse(userDto1.isBlocked()),
             () -> assertFalse(userDto1.isLogged()),
-            () -> assertEquals(POINTS, userDto1.getPoints())
+            () -> assertEquals(POINTS_ZERO, userDto1.getPoints())
         );
     }
 
@@ -379,8 +379,7 @@ public class UserEndpointTest implements TestData {
         userRepository.save(abstractUser);
         userAttemptsRepository.save(UserAttempts.UserAttemptsBuilder.aAttempts().withId(ID).withEmail(abstractUser.getEmail()).withAttempts(5).build());
 
-
-        MvcResult mvcResult = this.mockMvc.perform(delete(USER_BASE_URI + "/delete/" + abstractUser.getUserCode())
+        MvcResult mvcResult = this.mockMvc.perform(delete(USER_BASE_URI + "/" + abstractUser.getUserCode())
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
             .andDo(print())
             .andReturn();

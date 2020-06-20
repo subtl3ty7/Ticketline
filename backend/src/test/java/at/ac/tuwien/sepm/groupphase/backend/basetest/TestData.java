@@ -44,7 +44,8 @@ public interface TestData {
     LocalDateTime BIRTHDAY = LocalDateTime.of(1998, 5,15,12,0);
     LocalDateTime CRE = LocalDateTime.now();
     LocalDateTime UPD = LocalDateTime.now();
-    Long POINTS = 0L;
+    Long POINTS = 10L;
+    Long POINTS_ZERO = 0L;
 
     String EVENT_BASE_URI = BASE_URI + "/events";
     String EVENT_TOP10 = EVENT_BASE_URI + "/top10";
@@ -61,17 +62,19 @@ public interface TestData {
         LocalDateTime.of(2020, 11, 13, 18, 15, 0, 0);
     Duration DURATION = Duration.between(START, END);
     List<Double> PRICES = List.of(30.0, 40.0);
+
     List<Show> SHOWS = new ArrayList<>() {
         {
             add(Show.builder()
                 .id(ID).eventCode(USER_CODE).startsAt(START).endsAt(END).ticketsSold(TOTAL).ticketsAvailable(TOTAL)
-                .eventCategory(CAT1).eventType(TYP1).description(DESC).photo(PHOTO).build());
+                .eventCategory(CAT1).eventType(TYP1).duration(DURATION).eventName(NAME).price(PRICE).description(DESC).photo(PHOTO).build());
         }
     };
     int TOTAL = 500;
 
     Double PRICE = 50.0;
-    String LOCATION_BASE_URI = BASE_URI + "/eventLocations/all";
+    Long PREM_PRICE = 1L;
+    String LOCATION_BASE_URI = BASE_URI + "/eventLocations";
     String STREET = "street";
     String COUNTRY = "country";
     String CITY = "city";
@@ -112,9 +115,10 @@ public interface TestData {
     };
 
     String ARTIST_BASE_URI = BASE_URI + "/artists";
-    String NEWS_BASE_URI = BASE_URI + "/eventLocations";
+    String NEWS_BASE_URI = BASE_URI + "/news";
+    String MERCHANDISE_BASE_URI = BASE_URI + "/merchandise";
 
     Event EVENT = Event.builder().id(ID).eventCode(USER_CODE).name(NAME).description(DESC).category(CAT).type(TYP)
-        .startsAt(START).endsAt(END).prices(PRICES).totalTicketsSold(TOTAL).shows(SHOWS).build();
+        .startsAt(START).endsAt(END).duration(DURATION).prices(PRICES).totalTicketsSold(TOTAL).shows(SHOWS).photo(PHOTO).build();
 
 }

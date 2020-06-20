@@ -16,58 +16,25 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @ActiveProfiles("test")
-public class ArtistRepositoryTest implements TestData {
-
-    private Artist artist = Artist.builder()
-        .id(ID)
-        .firstName(FNAME)
-        .lastName(LNAME)
-        .build();
+public class
+ArtistRepositoryTest implements TestData {
 
     @Autowired
     private ArtistRepository artistRepository;
 
-    @BeforeEach
-    public void beforeEach() {
-        artistRepository.deleteAll();
-        artist = Artist.builder()
+    @Test
+    public void givenNothing_whenSaveArtist_thenFindListWithOneElementAndFindArtistById() {
+        Artist artist = Artist.builder()
             .id(ID)
             .firstName(FNAME)
             .lastName(LNAME)
             .build();
-    }
 
-    @Test
-    public void givenNothing_whenSaveArtist_thenFindListWithOneElementAndFindArtistById() {
         artistRepository.save(artist);
 
         assertAll(
             () -> assertEquals(1, artistRepository.findAll().size()),
             () -> assertNotNull(artistRepository.findArtistById(artist.getId()))
-        );
-    }
-
-    @Test
-    public void givenNothing_whenSave2Artists_thenFindListWith2ElementsAndFindArtistOrderedByLName() {
-        artist.setId(2L);
-        artistRepository.save(artist);
-        artist.setId(3L);
-        artist.setLastName("NewLastName");
-        artistRepository.save(artist);
-
-        assertAll(
-            () -> assertEquals(2, artistRepository.findAll().size()),
-            () -> assertEquals("NewLastName", artistRepository.findAllByOrderByLastNameAscFirstNameAsc().get(0).getLastName())
-        );
-    }
-
-    @Test
-    public void givenNothing_whenSave1Artists_thenFindListWithOneElementAndFindArtistByNameIgnoreCase() {
-        artistRepository.save(artist);
-
-        assertAll(
-            () -> assertEquals(1, artistRepository.findAll().size()),
-            () -> assertEquals(1, artistRepository.findArtistsByFirstNameContainingIgnoreCaseAndLastNameContainingIgnoreCase("NAME", "LASTname").size())
         );
     }
 }
