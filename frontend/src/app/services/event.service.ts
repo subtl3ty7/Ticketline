@@ -60,7 +60,7 @@ export class EventService {
     );
   }
 
-  getSimpleEventsByParameters(event: SimpleEvent): Observable<SimpleEvent[]> {
+  getSimpleEventsByParameters(event: SimpleEvent, size: number): Observable<SimpleEvent[]> {
     if (!event.startsAt) {
       event.startsAt = new Date(2000, 1, 1);
     }
@@ -71,7 +71,8 @@ export class EventService {
       .set('eventCode', event.eventCode)
       .set('name', event.name)
       .set('startRange', event.startsAt.toDateString())
-      .set('endRange', event.endsAt.toDateString());
+      .set('endRange', event.endsAt.toDateString())
+      .set('size', size.toString());
     return this.httpClient.get<SimpleEvent[]>(this.eventBaseUri + '/', {params});
   }
 
