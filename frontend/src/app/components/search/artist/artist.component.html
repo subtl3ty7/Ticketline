@@ -32,6 +32,24 @@
           </div>
         </div>
       </div>
+      <div class="row"> <!-- *ngIf="previousPage || nextPage" -->
+        <nav class="search-navigation">
+          <ul class="pagination">
+            <li class="page-item" style="margin-right: auto"> <!-- *ngIf="previousPage" -->
+              <a class="page-link" (click)="loadPreviousPage()">
+                <span aria-hidden="true">&laquo; Zurück</span>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+            <li class="page-item" style="margin-left: auto"> <!-- *ngIf="nextPage" -->
+              <a class="page-link" (click)="loadNextPage()">
+                <span aria-hidden="true">Weiter &raquo;</span>
+                <span class="sr-only">Next</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
     <p *ngIf="searchShared.entities.length == 0" style="font-size: 20px; padding-top: 40px; text-align: center">Es konnten keine KünstlerInnen mit diesen Kriterien gefunden werden.</p>
   </div>

@@ -14,6 +14,11 @@ import {Background} from '../../../utils/background';
 })
 export class LocationComponent implements OnInit {
 
+  private pageSize = 10;
+  private currentPageIndex = 0;
+  private previousPage;
+  private currentPage;
+  private nextPage;
   name: string = '';
 
   constructor(public authService: AuthService,

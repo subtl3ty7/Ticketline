@@ -11,6 +11,11 @@ import {Background} from '../../../../utils/background';
 })
 export class ArtistEventComponent implements OnInit {
 
+  private pageSize = 10;
+  private currentPageIndex = 0;
+  private previousPage;
+  private currentPage;
+  private nextPage;
   public artistId: string;
   public artistName: string;
   public events: SimpleEvent[];

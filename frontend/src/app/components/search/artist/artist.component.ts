@@ -16,6 +16,11 @@ import {Background} from '../../../utils/background';
 })
 export class ArtistComponent implements OnInit {
 
+  private pageSize = 10;
+  private currentPageIndex = 0;
+  private previousPage;
+  private currentPage;
+  private nextPage;
   firstName: string = '';
   lastName: string = '';
   artists: Artist[];

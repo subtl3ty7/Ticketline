@@ -15,6 +15,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class LocationShowComponent implements OnInit {
 
+  private pageSize = 10;
+  private currentPageIndex = 0;
+  private previousPage;
+  private currentPage;
+  private nextPage;
   public eventLocationId: number;
   public eventLocationCity: string;
   public eventLocationName: string;
