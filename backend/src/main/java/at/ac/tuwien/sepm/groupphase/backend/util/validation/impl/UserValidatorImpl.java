@@ -79,7 +79,7 @@ public class UserValidatorImpl implements UserValidator {
     @Override
     public Constraints validateUserCode(String userCode) {
         Constraints constraints = new Constraints();
-        constraints.add("userCode_unique", userRepository.findAbstractUserByUserCode(userCode) == null);
+        constraints.add("userCode_unique", userRepository.findAbstractUserByUserCode(userCode) == null && userRepository.findSoftDeletedAbstractUserByUserCode(userCode) == null);
         return constraints;
     }
 

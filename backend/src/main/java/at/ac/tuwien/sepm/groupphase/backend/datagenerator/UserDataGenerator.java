@@ -24,7 +24,7 @@ import java.util.List;
 @Profile("generateData")
 public class UserDataGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    private static final int NUMBER_OF_GENERIC_CUSTOMERS = 30;
+    private static final int NUMBER_OF_GENERIC_CUSTOMERS = 35;
     private static final int NUMBER_OF_ADMINISTRATORS = 2;
     private static final String GENERIC_CUSTOMER_EMAIL = "@customer.com";
     private static final String ADMIN_EMAIL = "@admin.com";

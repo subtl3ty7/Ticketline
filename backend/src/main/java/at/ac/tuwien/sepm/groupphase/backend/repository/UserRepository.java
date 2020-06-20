@@ -33,6 +33,9 @@ public interface UserRepository extends JpaRepository<AbstractUser, Long> {
     @Query(value = "SELECT * FROM USER u WHERE u.EMAIL = :email AND u.IS_DELETED = TRUE", nativeQuery = true)
     AbstractUser findSoftDeletedAbstractUserByEmail(@Param("email") String email);
 
+    @Query(value = "SELECT * FROM USER u WHERE u.EMAIL = :userCode AND u.IS_DELETED = TRUE", nativeQuery = true)
+    AbstractUser findSoftDeletedAbstractUserByUserCode(@Param("userCode") String userCode);
+
     List<AbstractUser> findAllByUserCodeContainingIgnoreCaseAndFirstNameContainingIgnoreCaseAndLastNameContainingIgnoreCaseAndEmailContainingIgnoreCase(String u, String f, String l, String e);
 
 }
