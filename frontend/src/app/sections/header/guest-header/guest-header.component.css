@@ -240,6 +240,19 @@ result:hover {
   .navbar-custom {
     padding-top: 40px;
   }
+
+  img {
+    max-width: 4%;
+    height: auto;
+    margin-left: 1.5%;
+  }
+
+  .navbar-brand {
+    margin-left: 0px;
+  }
+
+
+
 }
 
 
