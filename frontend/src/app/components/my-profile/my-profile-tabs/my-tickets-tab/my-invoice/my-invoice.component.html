@@ -46,10 +46,18 @@
 
         <div class="bottom-button-wrapper">
           <div class="edit-button-wrapper">
-            <nav>
-            <button id="userInfoForm_editButton"
-                    class="btn btn-outline-primary" style="white-space: nowrap; border-radius: 10px" routerLink="my-invoices">
-              PDF Anzeigen
+            <button *ngIf="ticket.purchased"
+                    (click)="goToInvoice()"
+                    id="userInfoForm_editButton"
+                    class="btn btn-outline-primary"
+                    style="white-space: nowrap; border-radius: 10px">
+              Zur Rechnung
+            </button>
+            <button *ngIf="ticket.reserved"
+                    (click)="purchaseTicket(ticket.ticketCode, ticket)"
+                    type="button" class="btn btn-outline-primary"
+                    style="white-space: nowrap; border-radius: 10px; width: 100px;; margin-right: 10px;">
+              Kaufen
             </button>
             </nav>
           </div>

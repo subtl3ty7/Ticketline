@@ -2,6 +2,7 @@ package at.ac.tuwien.sepm.groupphase.backend.repository;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.Artist;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventCategoryEnum;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
 import org.hibernate.annotations.LazyCollection;
 import org.springframework.data.domain.Page;
@@ -40,7 +41,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
      */
     List<Event> findAllByStartsAtAfterAndCategoryOrderByTotalTicketsSoldDesc(LocalDateTime time, String category);
 
-    List<Event> findTop10ByStartsAtAfterAndCategoryOrderByTotalTicketsSoldDesc(LocalDateTime time, String category);
+    List<Event> findTop10ByStartsAtAfterAndCategoryOrderByTotalTicketsSoldDesc(LocalDateTime time, EventCategoryEnum category);
 
     /**
      * Find an event by event code.
