@@ -12,7 +12,7 @@ public interface ArtistService {
      * @param firstName the artist's last name
      * @return a list of artist entities
      */
-    List<Artist> findArtistsByFirstAndLastName(String firstName, String lastName);
+    List<Artist> findArtistsByFirstAndLastName(String firstName, String lastName, int size);
 
     /**
      * Find all artists in the database
