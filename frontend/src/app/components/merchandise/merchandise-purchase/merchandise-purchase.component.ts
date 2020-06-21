@@ -3,6 +3,8 @@ import {Merchandise} from '../../../dtos/merchandise';
 import {MerchandiseService} from '../../../services/merchandise.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Background} from '../../../utils/background';
+import {UserService} from '../../../services/user.service';
+import {User} from '../../../dtos/user';
 
 @Component({
   selector: 'app-merchandise-purchase',
@@ -14,13 +16,17 @@ export class MerchandisePurchaseComponent implements OnInit {
   error;
   merchandiseProduct: Merchandise;
   quantity: number;
+  private finalPrice: number;
+  private finalPremiumPrice: number;
 
+  user = User;
 
   constructor(
     private merchandiseService: MerchandiseService,
     private router: Router,
     private route: ActivatedRoute,
-    private background: Background) {
+    private background: Background,
+    private userService: UserService) {
     this.background.defineBackground();
   }
 
@@ -43,17 +49,22 @@ export class MerchandisePurchaseComponent implements OnInit {
   }
 
   public changePrice() {
+    console.log(this.merchandiseProduct.price);
     console.log('Changing price');
-    console.log('Quantity: ' + this.quantity);
     this.merchandiseProduct.price = this.merchandiseProduct.price * this.quantity;
   }
 
   public changePremiumPrice() {
     console.log('Changing premium price');
-    console.log('Quantity: ' + this.quantity);
     this.merchandiseProduct.premiumPrice = this.merchandiseProduct.premiumPrice * this.quantity;
-
   }
+
+
+  /*public completePurchase() {
+      this.merchandiseService.purchase(this.merchandiseProduct, null).subscribe(
+
+      );
+  }*/
 
 
 

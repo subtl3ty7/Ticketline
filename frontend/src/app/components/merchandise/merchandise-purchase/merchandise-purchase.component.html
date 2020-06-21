@@ -39,15 +39,11 @@
             </div>
 
 
-
-
-
             <div class="gap"> <br> </div>
 
             <h4> Bestellwert: {{merchandiseProduct.price}} €</h4>
             <div *ngIf="merchandiseProduct.premium">
-              <h4> Rabatt für Premium: {{merchandiseProduct.price - merchandiseProduct.premiumPrice}} €</h4>
-              <h3> Gesamtsumme: {{merchandiseProduct.premiumPrice}} €</h3>
+              <h3> Premium-Bestellwert: {{merchandiseProduct.premiumPrice}} </h3>
             </div>
 
             <div class="payment-method-title">
