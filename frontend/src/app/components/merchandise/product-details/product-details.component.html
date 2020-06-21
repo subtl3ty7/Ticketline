@@ -52,7 +52,7 @@
                 <p class="h3" *ngIf="merchandiseProduct.stockCount > 0">
                   <br>
                   <button type="button" class="btn btn-success btn-sm m-0" (click)="openPurchase(merchandiseProduct)">Kaufen mit Geld</button>
-                  <button type="button" class="btn btn-success btn-sm m-0"  data-toggle="modal" data-target="#purchase-modal" *ngIf="merchandiseProduct.premium" (click)="purchaseWithPremium(merchandiseProduct)">Kaufen mit Prämien</button>
+                  <button type="button" class="btn btn-success btn-sm m-0"  data-toggle="modal" data-target="#purchase-modal" *ngIf="merchandiseProduct.premium && (user.points>merchandiseProduct.premiumPrice)" (click)="purchaseWithPremium(merchandiseProduct)">Kaufen mit Prämien</button>
                 </p>
 
                 <p class="h3" *ngIf="merchandiseProduct.stockCount == 0">
