@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Merchandise} from '../../../dtos/merchandise';
 import {MerchandiseService} from '../../../services/merchandise.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Background} from '../../../utils/background';
 import {UserService} from '../../../services/user.service';
 import {User} from '../../../dtos/user';
+
+import {AuthService} from '../../../services/auth.service';
 
 @Component({
   selector: 'app-merchandise-purchase',
@@ -19,20 +21,25 @@ export class MerchandisePurchaseComponent implements OnInit {
   private finalPrice: number;
   private finalPremiumPrice: number;
 
-  user = User;
+  @Input() user: User;
 
   constructor(
     private merchandiseService: MerchandiseService,
     private router: Router,
     private route: ActivatedRoute,
     private background: Background,
-    private userService: UserService) {
+    private userService: UserService,
+    private authService: AuthService) {
     this.background.defineBackground();
   }
 
 
   ngOnInit(): void {
     this.loadMerchandiseProduct();
+
+    if (this.authService.isLoggedIn()) {
+      this.loadUserByUserCode();
+    }
   }
 
 
@@ -41,6 +48,17 @@ export class MerchandisePurchaseComponent implements OnInit {
     this.merchandiseService.getMerchandiseProductByProductCode(merchandiseProductCode).subscribe(
       (merchandiseProduct: Merchandise) => {
         this.merchandiseProduct = merchandiseProduct;
+      },
+      (error) => {
+        this.error = error;
+      }
+    );
+  }
+
+  public loadUserByUserCode(): void {
+    this.userService.getCurrentUser().subscribe(
+      (user: User) => {
+        this.user = user;
       },
       (error) => {
         this.error = error;
@@ -60,11 +78,11 @@ export class MerchandisePurchaseComponent implements OnInit {
   }
 
 
-  /*public completePurchase() {
-      this.merchandiseService.purchase(this.merchandiseProduct, null).subscribe(
-
-      );
-  }*/
+  public completePurchaseWithMoney() {
+    console.log(this.user.userCode);
+    this.merchandiseService.purchaseWithMoney(this.merchandiseProduct, this.user.userCode).subscribe(
+    );
+  }
 
 
 

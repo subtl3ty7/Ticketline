@@ -43,7 +43,7 @@ export class MerchandiseService {
     return this.httpClient.get<Merchandise>(this.merchandiseBaseUri + '/' + merchandiseProductCode);
   }
 
-  public purchase(merchandise: Merchandise, userCode: String): Observable<Merchandise> {
+  public purchaseWithMoney(merchandise: Merchandise, userCode: String): Observable<Merchandise> {
     console.log('Purchasing merchandise product(s)');
     return this.httpClient.post<Merchandise>(this.merchandiseBaseUri + '/purchasingWithMoney' + userCode, merchandise);
   }
