@@ -46,16 +46,25 @@
       <nav>
         <div class="bottom-button-wrapper">
           <div class="edit-button-wrapper">
-            <button id="userInfoForm_editButton"
-                    class="btn btn-outline-primary" style="white-space: nowrap; border-radius: 10px">
-              PDF Herunterladen
+            <button *ngIf="ticket.purchased"
+                    (click)="goToInvoice()"
+                    id="userInfoForm_editButton"
+                    class="btn btn-outline-primary"
+                    style="white-space: nowrap; border-radius: 10px">
+              Zur Rechnung
+            </button>
+            <button *ngIf="ticket.reserved"
+                    (click)="purchaseTicket(ticket.ticketCode, ticket)"
+                    type="button" class="btn btn-outline-primary"
+                    style="white-space: nowrap; border-radius: 10px; width: 100px;; margin-right: 10px;">
+              Kaufen
             </button>
           </div>
 
-            <button id="userInfoForm_deleteButton" type="button"
-                    class="btn btn-outline-danger" style="white-space: nowrap; border-radius: 10px" (click)="cancelTicket(ticket.ticketCode)">
-              Stornieren
-            </button>
+          <button id="userInfoForm_deleteButton" type="button"
+                  class="btn btn-outline-danger" style="white-space: nowrap; border-radius: 10px" (click)="cancelTicket(ticket.ticketCode)">
+            Stornieren
+          </button>
         </div>
       </nav>
     </div>

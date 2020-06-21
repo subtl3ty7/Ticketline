@@ -54,7 +54,7 @@ public class InvoiceEndpoint {
     }
 
     @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
-    @GetMapping(value = "/byTicket")
+    @GetMapping(value = "")
     @ApiOperation(
         value = "Get invoice by given ticket",
         notes = "Get invoice by given ticket",
