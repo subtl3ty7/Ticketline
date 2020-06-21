@@ -6,6 +6,9 @@ import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
 import at.ac.tuwien.sepm.groupphase.backend.entity.News;
 import at.ac.tuwien.sepm.groupphase.backend.util.Constraints;
 
+/**
+ *  Implements all validation methods for validating all requests in news service before they are sent to the database.
+ */
 public interface NewsValidator {
     Constraints validateNewsCode(String newsCode);
 
