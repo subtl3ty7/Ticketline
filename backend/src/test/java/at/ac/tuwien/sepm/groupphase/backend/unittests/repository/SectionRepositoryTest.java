@@ -21,7 +21,7 @@ public class SectionRepositoryTest implements TestData {
     private SectionRepository sectionRepository;
 
     @Test
-    public void givenNothing_whenSaveSection_thenFindListWithOneElementAndFindSectionById() {
+    public void givenNothing_whenSaveSection_thenFindListWithOneElement() {
         Section section = Section.builder()
             .id(ID)
             .name(FNAME)
@@ -31,9 +31,6 @@ public class SectionRepositoryTest implements TestData {
 
         sectionRepository.save(section);
 
-        assertAll(
-            () -> assertEquals(1, sectionRepository.findAll().size()),
-            () -> assertNotNull(sectionRepository.findSectionById(section.getId()))
-        );
+        assertEquals(1, sectionRepository.findAll().size());
     }
 }

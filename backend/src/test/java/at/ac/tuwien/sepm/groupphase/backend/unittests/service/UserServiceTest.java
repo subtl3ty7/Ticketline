@@ -44,7 +44,7 @@ public class UserServiceTest implements TestData {
         .withUpdatedAt(UPD)
         .withIsBlocked(false)
         .withIsLogged(false)
-        .withPoints(POINTS)
+        .withPoints(POINTS_ZERO)
         .build();
 
     private AbstractUser admin = Administrator.AdministratorBuilder.aAdministrator()
@@ -75,7 +75,7 @@ public class UserServiceTest implements TestData {
             .withUpdatedAt(UPD)
             .withIsBlocked(false)
             .withIsLogged(false)
-            .withPoints(POINTS)
+            .withPoints(POINTS_ZERO)
             .build();
 
         admin = Administrator.AdministratorBuilder.aAdministrator()
