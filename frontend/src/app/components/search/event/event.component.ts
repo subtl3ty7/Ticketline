@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, DoCheck, OnInit} from '@angular/core';
 import {Artist} from '../../../dtos/artist';
 import {AuthService} from '../../../services/auth.service';
 import {ArtistService} from '../../../services/artist.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {SearchShared} from '../search-shared';
 import {number} from '@amcharts/amcharts4/core';
 import {Background} from '../../../utils/background';
@@ -17,7 +17,7 @@ import {Observable} from 'rxjs';
   templateUrl: './event.component.html',
   styleUrls: ['./event.component.css']
 })
-export class EventComponent implements OnInit {
+export class EventComponent implements OnInit, DoCheck {
 
   private events: any[];
   private pageSize = 10;
@@ -35,7 +35,8 @@ export class EventComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private eventService: EventService,
               private searchShared: SearchShared,
-              private background: Background) {
+              private background: Background,
+              private router: Router) {
     background.defineBackground();
   }
 
@@ -46,6 +47,13 @@ export class EventComponent implements OnInit {
     this.previousPage = [];
     this.advancedSearching = sessionStorage.getItem('isAdvancedSearchActive') === String(true);
     this.loadAllEvents();
+  }
+
+  ngDoCheck(): void {
+    if (sessionStorage.getItem('searchTerm') !== this.name) {
+      console.log(sessionStorage.getItem('searchTerm'));
+      window.location.reload();
+    }
   }
 
   private loadAllEvents() {
