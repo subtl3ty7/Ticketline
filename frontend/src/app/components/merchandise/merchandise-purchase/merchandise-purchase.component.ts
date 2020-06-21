@@ -84,6 +84,10 @@ export class MerchandisePurchaseComponent implements OnInit {
     );
   }
 
+  public purchaseWithMoney() {
+    this.merchandiseService.purchaseWithMoney(this.merchandiseProduct, this.user.userCode).subscribe();
+  }
+
 
 
 }

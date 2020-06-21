@@ -26,25 +26,9 @@
 
 
           <div class="col">
-
-            <h3> Bitte Menge auswählen </h3>
-            <div class="container-fluid choose-quantity">
-              <mat-select placeholder="Menge auswählen" class="form-control choose-quantity-form"  [(ngModel)]="quantity" (ngModelChange)="changePrice(); changePremiumPrice()" required>
-                <mat-option value="1">1</mat-option>
-                <mat-option value="2">2</mat-option>
-                <mat-option value="3">3</mat-option>
-                <mat-option value="4">4</mat-option>
-                <mat-option value="5">5</mat-option>
-              </mat-select>
-            </div>
-
-
             <div class="gap"> <br> </div>
 
-            <h4> Bestellwert: {{merchandiseProduct.price}} €</h4>
-            <div *ngIf="merchandiseProduct.premium">
-              <h3> Premium-Bestellwert: {{merchandiseProduct.premiumPrice}} </h3>
-            </div>
+            <h4> Preis: {{merchandiseProduct.price}} €</h4>
 
             <div class="payment-method-title">
             Zahlungsmethode
@@ -59,7 +43,7 @@
 
 
             <div class="row button-row">
-            <button class="buy-button row ml-auto align-items-center align-self-end" data-toggle="modal" data-target="#purchase-modal"><div class="col button-font">Bezahlen</div></button>
+            <button class="buy-button row ml-auto align-items-center align-self-end" data-toggle="modal" data-target="#purchase-modal" (click)="purchaseWithMoney(merchandiseProduct)"><div class="col button-font">Bezahlen</div></button>
             </div>
 
           <!-- Modal (Pop up when clicking purchase) -->
