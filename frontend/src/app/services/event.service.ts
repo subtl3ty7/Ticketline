@@ -43,11 +43,10 @@ export class EventService {
   }
 
 
-
-  getDetailedEventsByName(name: string): Observable<DetailedEvent[]> {
+  getSimpleEventsByName(name: string, pageSize: number): Observable<SimpleEvent[]> {
     console.log('Load events by event name');
-    console.log('url: ' + this.eventBaseUri + '?name=' + name);
-    return this.httpClient.get<DetailedEvent[]>(this.eventBaseUri + '?name=' + name).pipe(
+    console.log('url: ' + this.eventBaseUri + '?name=' + name + '&size=' + pageSize);
+    return this.httpClient.get<SimpleEvent[]>(this.eventBaseUri + '?name=' + name + '&size=' + pageSize).pipe(
       catchError(this.handleError)
     );
   }
@@ -90,7 +89,7 @@ export class EventService {
   }
 
 
-  getSimpleEventsBy(name: string, type: string, category: string, startsAt: string, endsAt: string, duration: string): Observable<SimpleEvent[]> {
+  getSimpleEventsBy(name: string, type: string, category: string, startsAt: string, endsAt: string, duration: string, pageSize: number): Observable<SimpleEvent[]> {
     console.log('Load events advanced');
     if (startsAt !== '') {
       startsAt += 'T00:00';
@@ -102,7 +101,7 @@ export class EventService {
       duration = 'PT' + duration + 'H';
     }
     console.log('url: ' + this.eventBaseUri + '?eventName=' + name + '&type=' + type + '&category=' + category + '&startsAt=' + startsAt + '&endsAt=' + endsAt + '&showDuration=' + duration);
-    return this.httpClient.get<SimpleEvent[]>(this.eventBaseUri + '?' + 'eventName=' + name + '&type=' + type + '&category=' + category + '&startsAt=' + startsAt + '&endsAt=' + endsAt + '&showDuration=' + duration).pipe(
+    return this.httpClient.get<SimpleEvent[]>(this.eventBaseUri + '?' + 'eventName=' + name + '&type=' + type + '&category=' + category + '&startsAt=' + startsAt + '&endsAt=' + endsAt + '&showDuration=' + duration + '&size=' + pageSize).pipe(
       catchError(this.handleError)
     );
   }

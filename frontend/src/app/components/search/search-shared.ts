@@ -79,7 +79,7 @@ export class SearchShared {
     );
   }
 
-  getEventsBy(name: string, type: string, category: string, startsAt: string, endsAt: string, duration: string) {
+  /*getEventsBy(name: string, type: string, category: string, startsAt: string, endsAt: string, duration: string) {
     this.eventService.getSimpleEventsBy(name, type, category, startsAt, endsAt, duration).subscribe(
       (events: SimpleEvent[]) => {
         this.entities = events;
@@ -102,7 +102,7 @@ export class SearchShared {
         this.error = error;
       }
     );
-  }
+  }*/
 
   getShowsBy(name: never, type: string, category: string, showStartsAt: string, showEndsAt: string, duration: string, startPrice: string) {
     this.showService.getDetailedShowsBy(name, type, category, showStartsAt, showEndsAt, duration, startPrice).subscribe(
