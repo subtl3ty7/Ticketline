@@ -22,6 +22,7 @@ import javax.xml.crypto.Data;
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -98,7 +99,17 @@ public class CustomTicketService implements TicketService {
     public List<Ticket> allTicketsOfUser(String userCode) throws ValidationException, DataAccessException{
         userValidator.validateUserIdentityWithGivenUserCode(userCode).throwIfViolated();
         validator.validateAllTicketsOfUser(userCode).throwIfViolated();
-        return ticketRepository.findTicketsByUserCode(userCode);
+
+        List<Ticket> allTickets= ticketRepository.findTicketsByUserCode(userCode);
+        List<Ticket> filteredTickets = new LinkedList<>();
+
+        for (Ticket ticket: allTickets
+             ) {
+            if(!ticket.isCancelled()){
+                filteredTickets.add(ticket);
+            }
+        }
+        return filteredTickets;
     }
 
     @Override

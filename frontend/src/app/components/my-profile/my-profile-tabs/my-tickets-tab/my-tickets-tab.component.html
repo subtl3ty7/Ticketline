@@ -17,7 +17,30 @@
                     <button type="button" class="btn btn-outline-dark" style="white-space: nowrap; border-radius: 10px"  (click)="showInvoice(ticket1)">
                       Anzeigen
                     </button>
+                    <button type="button" class="btn btn-outline-primary" style="white-space: nowrap; border-radius: 10px; width: 100px" *ngIf="ticket1?.reserved" (click)="purchaseTicket(ticket1.ticketCode, ticket1)" data-toggle="modal" data-target="#cancel-modal">
+                      Kaufen </button>
                   </div>
+
+                  <!-- Modal (Pop up when clicking cancel) -->
+                  <div class="modal fade" id="purchase-modal" role="dialog" aria-labelledby="purchase-modal-label" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="purchase-modal-label">
+                            Bist du sicher, dass du diese reservierte Buchung kaufen möchtest? </h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn-secondary btn" data-dismiss="modal">Nein</button>
+                          <button type="button" class="btn-primary btn" data-dismiss="modal" > Ja
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </tr>
