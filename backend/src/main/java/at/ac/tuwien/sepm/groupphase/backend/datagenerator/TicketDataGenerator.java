@@ -127,7 +127,11 @@ public class TicketDataGenerator {
     }
 
     private void randomPurchaseReserve(List<Ticket> tickets, boolean bool){
+        if(bool) {
             ticketService.buyTickets(tickets);
+        } else {
+            ticketService.reserveTickets(tickets);
+        }
     }
 
 }

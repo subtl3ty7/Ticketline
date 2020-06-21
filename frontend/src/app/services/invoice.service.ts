@@ -32,4 +32,9 @@ export class InvoiceService {
       catchError(this.handleError)
     );
   }
+
+  getInvoiceByTicketCode(ticketCode: string): Observable<Invoice> {
+    console.log('Load invoice by ticketCode ' + ticketCode);
+    return  this.httpClient.get<Invoice>(this.invoiceBaseUri + '?ticketCode=' + ticketCode);
+  }
 }
