@@ -258,7 +258,7 @@ public class TicketEndpointTest implements TestData {
 
     @Test
     @Order(5)
-    public void givenTicket_whenGetTicketsByUserCode_then200AndTicketListWith3Elements() throws Exception{
+    public void givenTickets_whenGetTicketsByUserCode_then200AndTicketListWith3Elements() throws Exception{
 
         MvcResult mvcResult = this.mockMvc.perform(get(TICKETS_BASE_URI + "/" + USER_CODE_TICKET)
             .contentType(MediaType.APPLICATION_JSON)

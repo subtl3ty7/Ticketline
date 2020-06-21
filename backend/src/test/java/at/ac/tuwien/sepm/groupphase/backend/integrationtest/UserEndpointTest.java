@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.integrationtest;
 import at.ac.tuwien.sepm.groupphase.backend.basetest.TestData;
 import at.ac.tuwien.sepm.groupphase.backend.config.EncoderConfig;
 import at.ac.tuwien.sepm.groupphase.backend.config.properties.SecurityProperties;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.ChangePasswordDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.UserMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
@@ -402,6 +403,29 @@ public class UserEndpointTest implements TestData {
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         assertFalse(userRepository.findAbstractUserByEmail(abstractUser.getEmail()).isLogged());
+    }
+
+    @Test
+    public void givenUser_whenGetByParams_then200AndListWithOneElement() throws Exception {
+        userRepository.save(abstractUser);
+
+        MvcResult mvcResult = this.mockMvc.perform(get(USER_BASE_URI)
+            .param("userCode", abstractUser.getUserCode())
+            .param("firstName", abstractUser.getFirstName())
+            .param("lastName", abstractUser.getLastName())
+            .param("email", abstractUser.getEmail())
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
+            .andDo(print())
+            .andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType());
+
+        List<UserDto> userDtos = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
+            UserDto[].class));
+
+        assertEquals(1, userDtos.size());
     }
 
 }

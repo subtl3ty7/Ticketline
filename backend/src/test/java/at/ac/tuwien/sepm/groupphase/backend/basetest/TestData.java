@@ -114,6 +114,8 @@ public interface TestData {
         }
     };
 
+    String SHOW_BASE_URI = BASE_URI + "/shows";
+    String INVOICE_BASE_URI = BASE_URI + "/invoices";
     String ARTIST_BASE_URI = BASE_URI + "/artists";
     String NEWS_BASE_URI = BASE_URI + "/news";
     String MERCHANDISE_BASE_URI = BASE_URI + "/merchandise";
