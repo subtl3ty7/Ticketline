@@ -11,5 +11,5 @@ public interface EventLocationService {
     List<EventLocation> getAllEventLocations();
     EventLocation save(EventLocation eventLocation);
     EventLocation getEventLocationById(long id);
-    List<EventLocation> findAllFilteredEventLocations(EventLocation searchEventLocation);
+    List<EventLocation> findAllFilteredEventLocations(EventLocation searchEventLocation, int size);
 }

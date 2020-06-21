@@ -76,7 +76,7 @@ public class EventLocationEndpoint {
 
 
     @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
-    @GetMapping(value = "")
+    @GetMapping(value = "", params = "size")
     @ApiOperation(
         value = "All Event Locations with given Name",
         notes = "Get all Event Locations with the given Name",
@@ -86,10 +86,11 @@ public class EventLocationEndpoint {
         @ApiResponse(code = 404, message = "No EventLocation is found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<List<SimpleEventLocationDto>> findAllFilteredEventLocations(EventLocationDto searchEventLocationDto) {
-        LOGGER.info("GET /api/v1/eventLocations?locationName=" + searchEventLocationDto.getName() + "&description=" + searchEventLocationDto.getEventLocationDescription() + "&street=" + searchEventLocationDto.getStreet() + "&city=" + searchEventLocationDto.getCity() + "&country=" + searchEventLocationDto.getCountry() + "&plz=" + searchEventLocationDto.getPlz());
+    public ResponseEntity<List<SimpleEventLocationDto>> findAllFilteredEventLocations(EventLocationDto searchEventLocationDto, int size) {
+        LOGGER.info("GET /api/v1/eventLocations?locationName=" + searchEventLocationDto.getName() + "&description=" + searchEventLocationDto.getEventLocationDescription() + "&street=" + searchEventLocationDto.getStreet() + "&city=" + searchEventLocationDto.getCity() + "&country=" + searchEventLocationDto.getCountry() + "&plz=" + searchEventLocationDto.getPlz()
+        + "&size=" + size);
         EventLocation searchEventLocation = eventLocationMapper.eventLocationDtoToEventLocation(searchEventLocationDto);
-        List<SimpleEventLocationDto> result = eventLocationMapper.eventLocationToSimpleEventLocationDto(eventLocationService.findAllFilteredEventLocations(searchEventLocation));
+        List<SimpleEventLocationDto> result = eventLocationMapper.eventLocationToSimpleEventLocationDto(eventLocationService.findAllFilteredEventLocations(searchEventLocation, size));
         return new ResponseEntity(result, HttpStatus.OK);
     }
 

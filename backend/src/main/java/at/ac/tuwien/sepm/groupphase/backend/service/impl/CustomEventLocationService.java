@@ -1,5 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
+import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Seat;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Section;
@@ -8,6 +9,8 @@ import at.ac.tuwien.sepm.groupphase.backend.service.EventLocationService;
 import at.ac.tuwien.sepm.groupphase.backend.util.validation.EventValidator;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -69,15 +72,19 @@ public class CustomEventLocationService implements EventLocationService {
 
     @Override
     @Transactional
-    public List<EventLocation> findAllFilteredEventLocations(EventLocation searchEventLocation) {
-        List<EventLocation> eventLocations = eventLocationRepository.findAllByNameAndCityAndStreetAndCountryAndPlzAndEventLocationDescription(
+    public List<EventLocation> findAllFilteredEventLocations(EventLocation searchEventLocation, int size) {
+        int page = calculateNumberOfPage(size);
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        Page<EventLocation> eventLocationsPage = eventLocationRepository.findAllByNameAndCityAndStreetAndCountryAndPlzAndEventLocationDescription(
             searchEventLocation.getName(),
             searchEventLocation.getCity(),
             searchEventLocation.getStreet(),
             searchEventLocation.getCountry(),
             searchEventLocation.getPlz(),
-            searchEventLocation.getEventLocationDescription()
+            searchEventLocation.getEventLocationDescription(),
+            pageRequest
         );
+        List<EventLocation> eventLocations = eventLocationsPage.toList();
         for(EventLocation eventLocation: eventLocations) {
             Hibernate.initialize(eventLocation.getShows());
         }
@@ -90,5 +97,13 @@ public class CustomEventLocationService implements EventLocationService {
                 seat.setPrice(section.getPrice());
             }
         }
+    }
+
+    private int calculateNumberOfPage(int size) {
+        int result = 0;
+        if (size != 0) {
+            result = size / 10;
+        }
+        return result;
     }
 }
