@@ -35,7 +35,7 @@ export class MyTicketsTabComponent implements OnInit {
   public lastName: string;
   invoice = false;
   public selectedTicket: SimpleTicket;
-  public currentUser: User = new User();
+  public currentUser: User;
   /*@ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;*/
 
@@ -48,12 +48,11 @@ export class MyTicketsTabComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadUser();
-    this.loadTickets();
   }
   private loadUser() {
     this.userService.getCurrentUser().subscribe(
       (user: User) => {
-        Object.assign(this.currentUser, user);
+        this.currentUser = user;
         this.loadTickets();
       },
       (error) => {
