@@ -48,7 +48,7 @@ export class MerchandiseService {
     return this.httpClient.post<Merchandise>(this.merchandiseBaseUri + '/purchasingWithMoney/' + userCode, merchandise);
   }
   public purchaseWithPremium(merchandise: Merchandise, userCode: String): Observable<Merchandise> {
-    console.log('Purchasing merchandise product(s)');
+    console.log('Purchasing merchandise product ' + merchandise.merchandiseProductCode + ' with premium points');
     return this.httpClient.post<Merchandise>(this.merchandiseBaseUri + '/purchasingWithPremiumPoints/' + userCode, merchandise);
   }
 
