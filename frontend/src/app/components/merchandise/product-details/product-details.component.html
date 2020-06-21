@@ -9,7 +9,7 @@
     <div class="card main-body">
 
       <div class="card-header row align-items-center" style="margin: 0px">
-        <h1 class="col-4 page-title">{{merchandiseProduct.merchandiseProductName}}</h1>
+        <h1 class="page-title">{{merchandiseProduct.merchandiseProductName}}</h1>
       </div>
 
 
@@ -51,7 +51,8 @@
                 <br>
                 <p class="h3" *ngIf="merchandiseProduct.stockCount > 0">
                   <br>
-                  <button type="button" class="btn btn-success btn-sm m-0">Jetzt kaufen</button>
+                  <button type="button" class="btn btn-success btn-sm m-0" (click)="openPurchase(merchandiseProduct)">Kaufen mit Geld</button>
+                  <button type="button" class="btn btn-success btn-sm m-0"  data-toggle="modal" data-target="#purchase-modal" *ngIf="merchandiseProduct.premium && (user.points>merchandiseProduct.premiumPrice)" (click)="purchaseWithPremium(merchandiseProduct)">Kaufen mit Prämien</button>
                 </p>
 
                 <p class="h3" *ngIf="merchandiseProduct.stockCount == 0">
@@ -60,6 +61,48 @@
 
 
               </div>
+
+              <!-- Modal (Pop up when clicking purchase) -->
+             <div class="modal fade" id="purchase-modal" role="dialog" aria-labelledby="purchase-modal-label" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="purchase-modal-label">
+                        Willst du dieses Produkt kaufen?</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn-secondary btn" data-dismiss="modal">Abbrechen</button>
+                      <button type="button" class="btn-primary btn" data-dismiss="modal" data-toggle="modal" data-target="#sucess-modal" >Ja</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Modal (Pop up when clicking ja in purchase) -->
+              <div class="modal fade" id="sucess-modal" role="dialog" aria-labelledby="purchase-modal-label" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="sucess-modal-label">
+                        Merchandise wurde erfolgreich gekauft. Dein neuer Prämienpunktenstand: {{user.points - merchandiseProduct.premiumPrice}} </h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-footer">
+                      <nav>
+                      <button type="button" class="btn-primary btn" data-dismiss="modal" routerLink="/merchandise">OK</button>
+                      </nav>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
             </div>
             </div>
             </div>

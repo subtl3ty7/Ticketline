@@ -2,6 +2,7 @@ package at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper;
 
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.DetailedTicketDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleTicketDto;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Image;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Ticket;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
-@Mapper
+@Mapper(imports = Image.class, uses = {ShowMapper.class, EventMapper.class})
 public interface TicketMapper {
 
     @Named(value = "ticketToSimpleTicketDto")
@@ -24,19 +25,23 @@ public interface TicketMapper {
     SimpleTicketDto ticketToSimpleTicketDto(Ticket ticket);
 
     @Named(value = "ticketDtoToTicket")
-    Ticket detailedTicketDtoToTicket(DetailedTicketDto detailedTicketDto);
+    @Mapping(target = "show", qualifiedByName = { "ShowMapper", "simpleShowDtoToShow" })
+    @Mapping(target = "event", qualifiedByName = { "EventMapper", "simpleEventDtoToEvent" })
+    Ticket detailedTicketDtoToTicket(DetailedTicketDto ticket);
 
     @IterableMapping(qualifiedByName = "ticketDtoToTicket")
-    List<Ticket> detailedTicketDtoListToTicketList(List<DetailedTicketDto> detailedTicketDto);
+    List<Ticket> detailedTicketDtoListToTicketList(List<DetailedTicketDto> tickets);
 
     @IterableMapping(qualifiedByName = "ticketToSimpleTicketDto")
     List<SimpleTicketDto> ticketListToSimpleTicketDtoList(List<Ticket> ticket);
 
     @Named(value= "ticketToDetailedTicketDto")
+    @Mapping(target = "show", qualifiedByName = { "ShowMapper", "showToSimpleShowDto" })
+    @Mapping(target = "event", qualifiedByName = { "EventMapper", "eventToSimpleEventDto" })
     DetailedTicketDto ticketToDetailedTicketDto(Ticket ticket);
 
     @IterableMapping(qualifiedByName = "ticketToDetailedTicketDto")
-    List<DetailedTicketDto> ticketListToDetailedTicketDtoList(List<Ticket> ticket);
+    List<DetailedTicketDto> ticketListToDetailedTicketDtoList(List<Ticket> tickets);
 
     @Named("setShowId")
     default long setShowId(Ticket ticket){

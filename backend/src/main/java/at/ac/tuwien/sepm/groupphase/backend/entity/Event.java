@@ -35,20 +35,9 @@ public class Event implements Serializable {
     @Column(nullable = false, length = 100)
     private String name;
 
-    @NotNull
-    @Size(min=1, max=10000)
-    @Column(nullable = false, length = 10000)
+    @Size(max=10000)
+    @Column(length = 10000)
     private String description;
-
-    @NotNull
-    @Size(min=1, max=100)
-    @Column(nullable = false)
-    private String category;
-
-    @NotNull
-    @Size(min=1, max=100)
-    @Column(nullable = false)
-    private String type;
 
     @NotNull
     @Column(nullable = false, name = "start_datetime")
@@ -59,36 +48,34 @@ public class Event implements Serializable {
     private LocalDateTime endsAt;
 
     @ToString.Exclude
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "event_code", referencedColumnName = "event_code")
-    @Fetch(FetchMode.SELECT) //only way to fetch more than two collections with type eager ...
     private List<Show> shows;
 
     @ToString.Exclude
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SELECT) //only way to fetch more than two collections with type eager ...
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private List<Artist> artists;
 
     @Column
     private int totalTicketsSold;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SELECT) //only way to fetch more than two collections with type eager ...
-    private List<Integer> prices;
+    @Fetch(FetchMode.SELECT)
+    @Column(columnDefinition = "DECIMAL (10, 2)")
+    private List<Double> prices;
 
     @ToString.Exclude
     @NotNull
-    @Lob
-    @Column(nullable = false, name = "photo")
-    private String photo;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Image photo;
 
     @NotNull
     @Column
-    private EventTypeEnum eventType;
+    private EventTypeEnum type;
 
     @NotNull
     @Column
-    private EventCategoryEnum eventCategory;
+    private EventCategoryEnum category;
 
     @NotNull
     @Column

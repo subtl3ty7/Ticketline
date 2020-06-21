@@ -1,0 +1,23 @@
+[
+  {
+    "firstName": "Richard",
+    "lastName": "Binder",
+    "email": "Richard.Bnd@protonmail.com",
+    "birthday": "1996-05-29T00:00:00",
+    "password": "Password"
+  },
+  {
+    "firstName": "Ege",
+    "lastName": "Demirsoy",
+    "email": "egedemirsoy@gmail.com",
+    "birthday": "1999-01-01T00:00:00",
+    "password": "Password"
+  },
+  {
+    "firstName": "WWW",
+    "lastName": "WWW",
+    "email": "WWW@WWW.com",
+    "birthday": "1991-01-01T00:00:00",
+    "password": "Password"
+  }
+]

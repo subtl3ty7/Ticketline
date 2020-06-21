@@ -22,7 +22,7 @@
 
 .choosing-title {
   font-family: Segue UI, Roboto, "Helvetica Neue", sans-serif !important;
-  font-size: 27px;
+  font-size: 25px;
   font-weight: bold;
   padding-right: 40px;
   color: #212529;
@@ -61,7 +61,7 @@
   color: white;
   background-color: #2771BB;
   height: 75px;
-  width: 400px;
+  width: 350px;
   transition: .2s;
   padding: 0px;
   text-align: center;
@@ -73,7 +73,7 @@
   color: white;
   background-color: #A1A1A1;
   height: 75px;
-  width: 400px;
+  width: 350px;
   transition: .2s;
   padding: 0px;
   margin: 0px;
@@ -107,7 +107,7 @@
 }
 
 .price-title {
-  font-size: 45px;
+  font-size: 30px;
   font-weight: bold;
   color: #212529;
   margin-bottom: 30px;

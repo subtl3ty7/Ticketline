@@ -15,6 +15,8 @@ public interface MerchandiseService {
     List<Merchandise> findAllMerchandisePremiumProducts();
 
     Merchandise findMerchandiseByMerchandiseProductCode(String merchandiseProductCode);
-    
-    Merchandise purchaseWithPremiumPoints(Merchandise merchandises, String userCode);
+
+    Merchandise purchaseWithPremiumPoints(Merchandise merchandise, String userCode);
+
+    Merchandise purchaseWithMoney(Merchandise merchandise, String userCode);
 }

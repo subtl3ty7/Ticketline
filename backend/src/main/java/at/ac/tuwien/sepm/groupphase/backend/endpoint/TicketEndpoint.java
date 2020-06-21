@@ -36,9 +36,9 @@ public class TicketEndpoint {
     @ApiOperation(
         value = "Purchasing a ticket",
         notes = "Purchasing a ticket",
-         authorizations = {@Authorization(value = "apiKey")})
+        authorizations = {@Authorization(value = "apiKey")})
     @ApiResponse(code = 201, message = "Ticket is successfully purchased")
-    public List<SimpleTicketDto> buyTicket(@RequestBody List<DetailedTicketDto> detailedTicketDto) {
+    public List<SimpleTicketDto> purchaseTickets(@RequestBody List<DetailedTicketDto> detailedTicketDto) {
         LOGGER.info("POST " + detailedTicketDto);
         List<Ticket> tickets = ticketService.buyTickets(ticketMapper.detailedTicketDtoListToTicketList(detailedTicketDto));
         return ticketMapper.ticketListToSimpleTicketDtoList(tickets);
@@ -48,7 +48,8 @@ public class TicketEndpoint {
     @GetMapping(value = "/{userCode}")
     @ApiOperation(
         value = "Get all tickets of one user",
-        notes = "Get all tickets of one user")
+        notes = "Get all tickets of one user",
+        authorizations = {@Authorization(value = "apiKey")})
     @ApiResponses({
         @ApiResponse(code = 200, message = "Tickets are successfully retrieved"),
         @ApiResponse(code = 404, message = "No Ticket is found"),

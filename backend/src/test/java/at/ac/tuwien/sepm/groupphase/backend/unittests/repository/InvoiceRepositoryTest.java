@@ -1,8 +1,7 @@
 package at.ac.tuwien.sepm.groupphase.backend.unittests.repository;
 
 import at.ac.tuwien.sepm.groupphase.backend.basetest.TestData;
-import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractInvoice;
-import at.ac.tuwien.sepm.groupphase.backend.entity.TicketInvoice;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Invoice;
 import at.ac.tuwien.sepm.groupphase.backend.repository.InvoiceRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,25 +21,29 @@ public class InvoiceRepositoryTest implements TestData {
     @Autowired
     private InvoiceRepository invoiceRepository;
 
-    private AbstractInvoice invoice = TicketInvoice.builder()
+    private Invoice invoice = Invoice.builder()
         .id(ID)
         .invoice_type(TYP_I)
         .userCode(USER_CODE)
         .payment_method(PAY)
         .generatedAt(GENERATE)
-        .invoice_number(NUM)
+        .invoiceNumber(NUM)
+        .invoice_category(CAT_I)
+        .merchandise_code(USER_CODE)
         .build();
 
     @BeforeEach
     public void beforeEach() {
         invoiceRepository.deleteAll();
-        invoice = TicketInvoice.builder()
+        invoice = Invoice.builder()
             .id(ID)
             .invoice_type(TYP_I)
             .userCode(USER_CODE)
             .payment_method(PAY)
             .generatedAt(GENERATE)
-            .invoice_number(NUM)
+            .invoiceNumber(NUM)
+            .invoice_category(CAT_I)
+            .merchandise_code(USER_CODE)
             .build();
     }
 

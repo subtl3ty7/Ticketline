@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.unittests.mapper;
 import at.ac.tuwien.sepm.groupphase.backend.basetest.TestData;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.ShowDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.ShowMapper;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Image;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,0 +1,75 @@
+<div class="container">
+  <div class="row" style="border-bottom: 2px solid #efefef; z-index: 0;">
+    <h1 class="page-title" style="white-space: nowrap; padding-top: 50px; padding-left: 50px; padding-bottom: 26px; margin-bottom: 0px">Rechnung</h1>
+  </div>
+  <div class="row" style="padding-left: 100px; padding-right: 100px">
+    <div class="container" style="padding-top: 20px">
+      <div class="password-button-wrapper">
+        <ng-content></ng-content>
+      </div>
+
+      <div class="info-wrapper">
+        <div class="info">
+          <div class="info-label"></div>
+          <div class="info-field">
+            Invoice type: {{invoice.invoice_type}}
+          </div>
+        </div>
+      </div>
+
+    <div class="info-wrapper">
+      <div class="info">
+        <div class="info-label"></div>
+        <div class="info-field">
+          Invoice number: {{invoice.invoiceNumber}}
+        </div>
+      </div>
+    </div>
+
+    <div class="info-wrapper">
+      <div class="info">
+        <div class="info-label"></div>
+        <div class="info-field" *ngIf="invoice.invoice_category.startsWith('TICKET')" >
+          Event name: {{invoice.tickets[0].eventName}}
+        </div>
+        <div class="info-field" *ngIf="invoice.invoice_category.startsWith('MERCH') && merchandise">
+          Merchandise name: {{merchandise.merchandiseProductName}}
+        </div>
+      </div>
+    </div>
+
+    <div class="info-wrapper" >
+      <div class="info">
+        <div class="info-label"></div>
+        <div class="info-field" *ngIf="invoice.invoice_category.startsWith('TICKET')" >
+          Number of tickets: {{invoice.tickets.length}}
+        </div>
+        <div class="info-field" *ngIf="invoice.invoice_category.startsWith('MERCH') && merchandise">
+          Merchandise code: {{invoice.merchandise_code}}
+        </div>
+      </div>
+    </div>
+
+      <div class="info-wrapper">
+        <div class="info">
+          <div class="info-label"></div>
+          <div class="info-field">
+            Invoice generated at: {{invoice.generatedAt | date:'short'}}
+          </div>
+        </div>
+      </div>
+
+      <nav>
+        <div class="bottom-button-wrapper">
+          <div class="edit-button-wrapper">
+            <button id="userInfoForm_editButton"
+                    class="btn btn-outline-primary" style="white-space: nowrap; border-radius: 10px" (click)="printInvoice(invoice)">
+              PDF Herunterladen
+            </button>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div>
+</div>
+

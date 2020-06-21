@@ -29,6 +29,11 @@ export class EventsTabComponent implements OnInit {
   error;
   private events: Array<SimpleEvent>;
   private searchEvent;
+  private pageSize = 10;
+  private currentPageIndex = 0;
+  private previousPage;
+  private currentPage;
+  private nextPage;
   constructor(private eventService: EventService,
               public  router: Router,
               private route: ActivatedRoute) { }
@@ -43,9 +48,81 @@ export class EventsTabComponent implements OnInit {
   }
 
   private loadAllEvents() {
-    this.eventService.getAllEvents().subscribe(
-      (event: SimpleEvent[]) => {
-        this.events = event;
+    this.currentPageIndex = 0;
+    this.previousPage = [];
+    this.paginator.pageIndex = 0;
+    this.eventService.getAllEvents(0).subscribe(
+      (firstPageEvents: SimpleEvent[]) => {
+        this.events = firstPageEvents.slice(0, 10);
+        this.currentPage = firstPageEvents.slice(0, 10);
+        this.eventService.getAllEvents(this.pageSize).subscribe(
+          (secondPageEvents: SimpleEvent[]) => {
+            this.nextPage = secondPageEvents;
+            secondPageEvents.forEach(value => {
+              this.events.push(value);
+            });
+            this.initTable();
+          },
+          (error) => {
+            this.error = error.error;
+          }
+        );
+      },
+      (error) => {
+        this.error = error.error;
+      }
+    );
+  }
+
+  private pageEvent(event) {
+    console.log(event.pageIndex);
+    if (this.currentPageIndex === 1 && event.pageIndex === 0) {
+      this.loadAllEvents();
+      return;
+    }
+    if (this.currentPageIndex === 0 && event.pageIndex === 1) {
+      this.currentPageIndex++;
+      this.paginator.pageIndex = 1;
+      this.loadNextPage();
+      return;
+    }
+    if (event.pageIndex > 1) {
+        this.currentPageIndex++;
+        this.paginator.pageIndex = 1;
+        this.loadNextPage();
+    } else if (event.pageIndex < 1) {
+      this.currentPageIndex--;
+      this.paginator.pageIndex = 1;
+      this.loadPreviousPage();
+    }
+  }
+
+  private loadNextPage() {
+    this.eventService.getAllEvents(this.pageSize * (this.currentPageIndex + 1)).subscribe(
+      (events: SimpleEvent[]) => {
+        this.deleteFromEvents(this.previousPage);
+        this.previousPage = this.currentPage;
+        this.currentPage = this.nextPage;
+        this.nextPage = events;
+        this.events = this.events.concat(events);
+        console.log(this.events);
+        this.initTable();
+        },
+      (error) => {
+        this.error = error.error;
+      }
+    );
+  }
+  private loadPreviousPage() {
+    this.eventService.getAllEvents(this.pageSize * (this.currentPageIndex - 1)).subscribe(
+      (events: SimpleEvent[]) => {
+        this.deleteFromEvents(this.nextPage);
+        this.nextPage = this.currentPage;
+        this.currentPage = this.previousPage;
+        this.previousPage = events;
+        this.events = events.concat(this.events);
+        console.log(this.events);
+
         this.initTable();
       },
       (error) => {
@@ -53,6 +130,15 @@ export class EventsTabComponent implements OnInit {
       }
     );
   }
+  private deleteFromEvents(events: SimpleEvent[]) {
+    if (events.length !== 0) {
+      events.forEach(value => {
+        const index = this.events.indexOf(value, 0);
+        this.events.splice(index, 1);
+      });
+    }
+  }
+
   private loadAllEventsByParameters() {
     console.log(this.searchEvent);
     this.eventService.getSimpleEventsByParameters(this.searchEvent).subscribe(
@@ -73,6 +159,7 @@ export class EventsTabComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
     }
   }
+
 
   addStart(type: string, event: MatDatepickerInputEvent<Date>) {
     this.searchEvent.startsAt = event.value;

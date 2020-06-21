@@ -35,10 +35,8 @@ public class Merchandise {
 
     @ToString.Exclude
     @NotNull
-    @Lob
-    @Column(nullable = false, name = "photo")
-    private String photo;
-
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Image photo;
 
     @NotNull
     @Column(nullable = false, name = "stock_count")
@@ -46,12 +44,12 @@ public class Merchandise {
 
     @NotNull
     @Column(nullable = false, name = "price")
-    private int price;
+    private Double price;
 
 
     @NotNull
     @Column(nullable = false, name = "premium_price")
-    private int premiumPrice;
+    private Long premiumPrice;
 
     @NotNull
     @Column(nullable = false, name = "premium")

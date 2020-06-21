@@ -1,7 +1,9 @@
 .center-block {
-  width: 480px;
+  max-width: 750px;
   margin: 0 125px;
   padding-top: 10px;
+  padding-bottom: 40px;
+  border-top: 1px solid black;
 }
 
 .edit-button-wrapper {
@@ -10,7 +12,7 @@
 
 .password-button-wrapper {
   padding-bottom: 15px;
-  padding-left: 70%;
+  padding-left: 80%;
 }
 
 .delete-button-wrapper {
@@ -47,6 +49,4 @@
     padding-left: 5%;
   }
 }
-
-
 

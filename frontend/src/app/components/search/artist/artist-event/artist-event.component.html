@@ -7,7 +7,7 @@
         <div class="card-header" >
           <div class="container" style="margin: 0; max-width: 1320px">
             <div class="row header-row">
-                <h1 class="mb-0 ml-3 page-title">Veranstaltungen mit <i>{{artistName}}</i></h1>
+                <h1 class="mb-0 ml-3 page-title" style="padding-left: 20px">Veranstaltungen mit <i>{{artistName}}</i></h1>
             </div>
           </div>
         </div>
@@ -28,7 +28,7 @@
                             {{e.startsAt | date}} - {{e.endsAt | date}}
                           </div>
                           <div class="row" style="font-size: 30px; font-weight: bold; padding-top: 25px; color: #1A1A1A">
-                            {{e.name}}
+                            <a class="prevent-overflow-inline" routerLink="/events/{{e.eventCode}}" style="color: #1A1A1A" style="padding-top: 5px; height: 30px">{{e.name}}</a>
                           </div>
                           <div class="row" style="font-size: 20px; padding-top: 30px;">
                             <div class="event-description-font">

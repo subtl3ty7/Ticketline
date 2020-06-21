@@ -1,11 +1,13 @@
 package at.ac.tuwien.sepm.groupphase.backend.security;
 
 import at.ac.tuwien.sepm.groupphase.backend.config.properties.SecurityProperties;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.exceptionhandler.GlobalExceptionHandler;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -25,6 +27,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final SecurityProperties securityProperties;
+    @Autowired
+    GlobalExceptionHandler globalExceptionHandler = new GlobalExceptionHandler();
 
     public JwtAuthorizationFilter(AuthenticationManager authenticationManager, SecurityProperties securityProperties) {
         super(authenticationManager);
@@ -39,8 +43,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             SecurityContextHolder.getContext().setAuthentication(authToken);
         } catch (IllegalArgumentException | JwtException e) {
             LOGGER.debug("Invalid authorization attempt: {}", e.getMessage());
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().write("Invalid authorization header or token");
+            //set the response object
+            this.globalExceptionHandler.handleAuthorization(e, response);
             return;
         }
         chain.doFilter(request, response);

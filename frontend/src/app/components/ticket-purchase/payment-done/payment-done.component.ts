@@ -4,7 +4,6 @@ import {Show} from '../../../dtos/show';
 import {DetailedEvent} from '../../../dtos/detailed-event';
 import {DatePipe} from '@angular/common';
 import {DetailedTicket} from '../../../dtos/detailed-ticket';
-import {Section} from '../../../dtos/section';
 
 @Component({
   selector: 'app-payment-done',
@@ -28,7 +27,7 @@ export class PaymentDoneComponent implements OnInit {
 
   getSectionNameById(sectionId) {
     let name;
-    this.show.eventLocationCopy.sections.forEach((next) => {
+    this.show.eventLocation.sections.forEach((next) => {
       if (next.id === sectionId) {
         name = next.name;
       }

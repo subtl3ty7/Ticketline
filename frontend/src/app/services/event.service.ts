@@ -33,9 +33,13 @@ export class EventService {
     console.log('Load top 10 events.');
     return this.httpClient.get<SimpleEvent[]>(this.eventBaseUri + '/top10');
   }
-  getAllEvents(): Observable<SimpleEvent[]> {
-    console.log('Load all events.');
-    return this.httpClient.get<SimpleEvent[]>(this.eventBaseUri + '/all');
+  getTop10EventsByCategory(category: string): Observable<SimpleEvent[]> {
+    console.log('Load top 10 events.');
+    return this.httpClient.get<SimpleEvent[]>(this.eventBaseUri + '/top10/' + category);
+  }
+  getAllEvents(size: number): Observable<SimpleEvent[]> {
+    console.log('Load with size ' + size);
+    return this.httpClient.get<SimpleEvent[]>(this.eventBaseUri + '/all' + '?size=' + size);
   }
   getDetailedEventByUserCode(eventCode: string): Observable<DetailedEvent> {
     console.log('Load event by EventCode');
@@ -89,6 +93,7 @@ export class EventService {
   }
 
 
+  // tslint:disable-next-line:max-line-length
   getSimpleEventsBy(name: string, type: string, category: string, startsAt: string, endsAt: string, duration: string): Observable<SimpleEvent[]> {
     console.log('Load events advanced');
     if (startsAt !== '') {

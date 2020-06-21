@@ -6,20 +6,18 @@
     <div class="page-subtitle">Tickets auswählen</div>
     <div class="row">
       <!-- Seat Plan -->
-      <div class="col-7">
-        <app-seating-plan [sections]="eventLocation.sections" [selectedSeats]="selectedSeats"></app-seating-plan>
+      <div class="col-8">
+        <app-seating-plan [show]="show" [sections]="eventLocation.sections" [selectedSeats]="selectedSeats"></app-seating-plan>-
       </div>
       <!-- Ticket Info and/or Selection -->
-      <div class="col">
+      <div class="col-4">
         <!-- Section and Seat Title -->
-        <div class="gap"></div>
         <div class="choosing-title align-items-center row">Gewählte Sitzplätze</div>
         <!-- Section and Seat Info and/or Selection -->
             <div class="table-wrapper-scroll-y my-custom-scrollbar" style="padding: 10px">
               <table class="table table-responsive-lg table-hover mb-0">
               <tbody *ngFor="let seat of selectedSeats">
               <tr>
-                <th scope="row"></th>
                 <td>Sektor {{getSectionNameById(seat.sectionId)}}, Reihe {{seat.seatRow}}, Platz {{seat.seatColumn}}</td>
               </tr>
               </tbody>
@@ -31,7 +29,7 @@
           <div class="gap">{{this.price}} EUR</div>
         </div>
         <!-- Purchase/Reserve Buttons -->
-        <button (click)="nextStep()" class="buy-button row align-items-center btn"><div class="col button-font">Jetzt kaufen</div></button>
+        <button (click)="nextStep()" class="buy-button row align-items-center btn"><a class="button-font">Jetzt kaufen</a></button>
         <button class="reserve-button row align-items-center btn" data-toggle="modal" data-target="#exampleModal"><div class="col button-font">Reservieren</div></button>
 
 

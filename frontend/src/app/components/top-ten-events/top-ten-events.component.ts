@@ -2,6 +2,8 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {SimpleEvent} from '../../dtos/simple-event';
 import {EventService} from '../../services/event.service';
+import {Background} from '../../utils/background';
+import {EventCategories} from '../../dtos/event-categories';
 
 @Component({
   selector: 'app-top-ten-events',
@@ -9,22 +11,28 @@ import {EventService} from '../../services/event.service';
   styleUrls: ['./top-ten-events.component.css']
 })
 export class TopTenEventsComponent implements OnInit {
+  eventCategories: EventCategories[];
+  chosenCategory: string;
   error;
   currentMonth: string;
   events: SimpleEvent[];
+  hasTicketsSold: boolean = false;
 
 
-  constructor(private eventService: EventService) {
+  constructor(private eventService: EventService, private background: Background) {
+    this.background.defineTopTenBackground();
   }
 
 
   async ngOnInit() {
     this.currentMonth = this.getCurrentMonth();
+    this.chosenCategory = 'All';
     this.getTop10Events();
-    this.defineBackground();
+    this.getEventCategories();
+    this.background.defineTopTenBackground();
   }
 
-  getCurrentMonth(): string {
+  private getCurrentMonth(): string {
     const months: string[] = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember' ];
     const now = new Date();
     return months[now.getMonth()];
@@ -35,9 +43,21 @@ export class TopTenEventsComponent implements OnInit {
    * Tries to load the top 10 events from database
    */
   public getTop10Events() {
+    this.events = null;
+    if (this.chosenCategory === 'All') {
+      console.log('All');
+      this.getTop10All();
+    } else {
+      console.log(this.chosenCategory);
+      this.getTop10ByCategory(this.chosenCategory);
+    }
+  }
+
+  private getTop10All() {
     this.eventService.getTop10Events().subscribe(
       (events: SimpleEvent[]) => {
         this.events = events;
+        this.hasTicketsSold = this.events[0].totalTicketsSold > 0;
       },
       error => {
         this.events = null;
@@ -46,22 +66,24 @@ export class TopTenEventsComponent implements OnInit {
     );
   }
 
-  private defineBackground() {
-    // define background as gradient from blue to purple
-    document.body.style.background = 'rgba(43,121,184,1)';
-    document.body.style.background = '-moz-linear-gradient(left, rgba(43,121,184,1) 0%, rgba(201,100,161,1) 100%)';
-    document.body.style.background = '-webkit-gradient(left top, right top, color-stop(0%, rgba(43,121,184,1)), color-stop(100%, rgba(201,100,161,1)))';
-    document.body.style.background = '-webkit-linear-gradient(left, rgba(43,121,184,1) 0%, rgba(201,100,161,1) 100%)';
-    document.body.style.background = '-o-linear-gradient(left, rgba(43,121,184,1) 0%, rgba(201,100,161,1) 100%)';
-    document.body.style.background = '-ms-linear-gradient(left, rgba(43,121,184,1) 0%, rgba(201,100,161,1) 100%)';
-    document.body.style.background = 'linear-gradient(to right, rgba(43,121,184,1) 0%, rgba(201,100,161,1) 100%)';
-    document.body.style.filter = 'progid:DXImageTransform.Microsoft.gradient( startColorstr=\'#2b79b8\', endColorstr=\'#c964a1\', GradientType=1 )';
-    document.body.style.backgroundPosition = 'center';
-    document.body.style.backgroundRepeat = 'repeat';
-    document.body.style.backgroundSize = 'cover';
+  private getTop10ByCategory(category: string) {
+    this.eventService.getTop10EventsByCategory(category).subscribe(
+      (events: SimpleEvent[]) => {
+        this.events = events;
+        this.hasTicketsSold = this.events[0].totalTicketsSold > 0;
+      },
+      error => {
+        this.events = null;
+        this.error = error.error;
+      }
+    );
   }
 
-  private delay(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
+  private getEventCategories() {
+    this.eventService.getAllEventCategories().subscribe((next) => {
+      this.eventCategories = next;
+    }, (error) => {
+      this.error = error.error;
+    });
   }
 }

@@ -15,10 +15,12 @@ import java.util.List;
 public class InvoiceDto {
 
     private Long id;
-    private List<Ticket> tickets;
+    private List<SimpleTicketDto> tickets;
     private String userCode;
     private LocalDateTime generatedAt;
     private String payment_method;
     private String invoice_type;
-    private String invoice_number;
+    private String invoice_category;
+    private String invoiceNumber;
+    private String merchandise_code;
 }
