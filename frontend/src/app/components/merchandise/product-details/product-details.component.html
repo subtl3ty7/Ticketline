@@ -75,11 +75,32 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn-secondary btn" data-dismiss="modal">Abbrechen</button>
-                      <button type="button" class="btn-primary btn" data-dismiss="modal">Ja</button>
+                      <button type="button" class="btn-primary btn" data-dismiss="modal" data-toggle="modal" data-target="#sucess-modal" >Ja</button>
                     </div>
                   </div>
                 </div>
               </div>
+
+              <!-- Modal (Pop up when clicking ja in purchase) -->
+              <div class="modal fade" id="sucess-modal" role="dialog" aria-labelledby="purchase-modal-label" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="sucess-modal-label">
+                        Merchandise wurde erfolgreich gekauft. Dein neuer Prämienpunktenstand: {{user.points - merchandiseProduct.premiumPrice}} </h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-footer">
+                      <nav>
+                      <button type="button" class="btn-primary btn" data-dismiss="modal" routerLink="/merchandise">OK</button>
+                      </nav>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
 
 
             </div>
