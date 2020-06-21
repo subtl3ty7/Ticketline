@@ -1,0 +1,98 @@
+<app-header></app-header>
+<app-error-notification *ngIf="error" [error]="error"></app-error-notification>
+
+
+<div *ngIf="merchandiseProduct" class="container-fluid" style="padding-left: 5%; padding-right: 5%;">
+  <div class="row">
+    <div class="mx-auto" style="max-width: 1320px; width: 100%;">
+      <div class="card main-body">
+
+
+        <div class="card-header row align-items-center" style="margin: 0px">
+          <h1 class="col-4 page-title">{{merchandiseProduct.merchandiseProductName}} kaufen</h1>
+        </div>
+
+
+        <div class="card-body">
+
+          <div class="row">
+
+          <div class="col">
+
+            <img src="{{merchandiseProduct.photo}}" class="img-fluid image-crop-big">
+
+
+          </div>
+
+
+          <div class="col">
+            <div class="gap"> <br> </div>
+
+            <h4> Preis: {{merchandiseProduct.price}} €</h4>
+
+            <div class="payment-method-title">
+            Zahlungsmethode
+            </div>
+
+            <div class="container-fluid payment-method">
+            <mat-select placeholder="Wähle Bezahlungsmethode" class="form-control payment-method-form" required>
+              <mat-option value="'creditcard'">Kredit-/Debitkarte</mat-option>
+              <mat-option value="'paypal'">Paypal</mat-option>
+            </mat-select>
+            </div>
+
+
+            <div class="row button-row">
+            <button class="buy-button row ml-auto align-items-center align-self-end" data-toggle="modal" data-target="#purchase-modal" (click)="purchaseWithMoney()"><div class="col button-font">Bezahlen</div></button>
+            </div>
+
+          <!-- Modal (Pop up when clicking purchase) -->
+          <div class="modal fade" id="purchase-modal" role="dialog" aria-labelledby="purchase-modal-label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="purchase-modal-label">
+                    Willst du dieses Produkt kaufen?</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn-secondary btn" data-dismiss="modal">Abbrechen</button>
+                  <button type="button" class="btn-primary btn" data-dismiss="modal" data-toggle="modal" data-target="#sucess-modal">Ja</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+            <!-- Modal (Pop up when clicking ja in purchase) -->
+            <div class="modal fade" id="sucess-modal" role="dialog" aria-labelledby="purchase-modal-label" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="sucess-modal-label">
+                      Merchandise wurde erfolgreich gekauft. </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-footer">
+                    <nav>
+                    <button type="button" class="btn-primary btn" data-dismiss="modal" routerLink="/merchandise">OK</button>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+        </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

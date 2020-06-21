@@ -4,6 +4,7 @@ import {Globals} from '../global/globals';
 import {Router} from '@angular/router';
 import {Observable, throwError} from 'rxjs';
 import {Merchandise} from '../dtos/merchandise';
+import {User} from '../dtos/user';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,16 @@ export class MerchandiseService {
     console.log('Load merchandise product with the code ' + merchandiseProductCode);
     return this.httpClient.get<Merchandise>(this.merchandiseBaseUri + '/' + merchandiseProductCode);
   }
+
+  public purchaseWithMoney(merchandise: Merchandise, userCode: String): Observable<Merchandise> {
+    console.log('Purchasing merchandise product(s)');
+    return this.httpClient.post<Merchandise>(this.merchandiseBaseUri + '/purchasingWithMoney/' + userCode, merchandise);
+  }
+  public purchaseWithPremium(merchandise: Merchandise, userCode: String): Observable<Merchandise> {
+    console.log('Purchasing merchandise product ' + merchandise.merchandiseProductCode + ' with premium points');
+    return this.httpClient.post<Merchandise>(this.merchandiseBaseUri + '/purchasingWithPremiumPoints/' + userCode, merchandise);
+  }
+
 
 
 }
