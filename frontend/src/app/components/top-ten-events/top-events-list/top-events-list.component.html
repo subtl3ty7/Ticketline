@@ -1,5 +1,5 @@
 <div class="row" style="margin-left: 30px; margin-right: 30px">
-  <div *ngFor="let i of [0,1,2]"
+  <div *ngFor="let i of topThreeIndices"
        class="col-4">
     <div class="top-three-element zoom" routerLink="/events/{{events[i].eventCode}}">
       <div class="card img-container">
@@ -21,7 +21,7 @@
 </div>
 
 <div style="padding-top: 50px;">
-  <div *ngFor="let i of [3,4,5,6,7,8,9]"
+  <div *ngFor="let i of topTenIndices"
        class="zoom bottom-zoom"
        style="margin:80px 60px 0px 60px"
        routerLink="/events/{{events[i].eventCode}}">

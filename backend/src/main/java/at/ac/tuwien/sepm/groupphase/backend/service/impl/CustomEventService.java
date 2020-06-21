@@ -55,7 +55,7 @@ public class CustomEventService implements EventService {
 
     @Override
     public List<Event> findTop10EventsOfMonthByCategory(String category) {
-        List<Event> top10 = eventRepository.findTop10ByStartsAtAfterAndCategoryOrderByTotalTicketsSoldDesc(LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),1,0,0), category);
+        List<Event> top10 = eventRepository.findTop10ByStartsAtAfterAndCategoryOrderByTotalTicketsSoldDesc(LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),1,0,0), EventCategoryEnum.valueOf(category));
         return top10;
     }
 
