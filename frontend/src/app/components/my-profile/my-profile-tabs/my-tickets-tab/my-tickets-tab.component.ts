@@ -43,10 +43,12 @@ export class MyTicketsTabComponent implements OnInit {
               private route: ActivatedRoute,
               private showService: ShowService,
               private eventService: EventService,
-              private userService: UserService) { }
+              private userService: UserService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.loadUser();
+    this.loadTickets();
   }
   private loadUser() {
     this.userService.getCurrentUser().subscribe(
@@ -78,8 +80,13 @@ export class MyTicketsTabComponent implements OnInit {
     const ticketsToReserve: Array<SimpleTicket> = new Array<SimpleTicket>();
     ticketsToReserve.push(ticket);
     this.ticketService.purchaseReservedTickets(ticketCode, ticketsToReserve).subscribe(
-      o => {  window.location.reload();}
+      o => {
+        this.loadTickets();
+        window.location.reload(); }
     );
+  }
+  public navToInvoice() {
+    this.router.navigate(['/my-invoices']);
   }
  /* public getShowByShowId(showId: number) {
    return this.showService.getShowByShowId(showId).subscribe(
