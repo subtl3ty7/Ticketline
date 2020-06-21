@@ -134,7 +134,7 @@ public class TicketEndpointTest implements TestData {
             .contentType(MediaType.APPLICATION_JSON)
             .content(body)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_TICKET, USER_ROLES)))
-            .andDo(print())
+            //.andDo(print())
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
 
@@ -175,7 +175,7 @@ public class TicketEndpointTest implements TestData {
             .contentType(MediaType.APPLICATION_JSON)
             .content(body)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_TICKET, USER_ROLES)))
-            .andDo(print())
+            //.andDo(print())
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
 
@@ -198,7 +198,7 @@ public class TicketEndpointTest implements TestData {
             ticketRepository.findTicketByTicketId(2L).getTicketCode())
             .contentType(MediaType.APPLICATION_JSON)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_TICKET, USER_ROLES)))
-            .andDo(print())
+            //.andDo(print())
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
 
@@ -238,7 +238,7 @@ public class TicketEndpointTest implements TestData {
             ticketRepository.findTicketByTicketId(3L).getTicketCode())
             .contentType(MediaType.APPLICATION_JSON)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_TICKET, USER_ROLES)))
-            .andDo(print())
+            //.andDo(print())
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
 
@@ -263,7 +263,7 @@ public class TicketEndpointTest implements TestData {
         MvcResult mvcResult = this.mockMvc.perform(get(TICKETS_BASE_URI + "/" + USER_CODE_TICKET)
             .contentType(MediaType.APPLICATION_JSON)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_TICKET, USER_ROLES)))
-            .andDo(print())
+            //.andDo(print())
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
 
@@ -285,7 +285,7 @@ public class TicketEndpointTest implements TestData {
             ticketRepository.findTicketByTicketId(ID).getTicketCode())
             .contentType(MediaType.APPLICATION_JSON)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_TICKET, USER_ROLES)))
-            .andDo(print())
+            //.andDo(print())
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
 
