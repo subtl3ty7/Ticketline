@@ -114,6 +114,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { SeatingPlanComponent } from './components/ticket-purchase/choose-ticket/seating-plan/seating-plan.component';
 import { MyInvoicesTabComponent } from './components/my-profile/my-profile-tabs/my-invoices-tab/my-invoices-tab.component';
 import { InvoiceDetailsComponent } from './components/my-profile/my-profile-tabs/my-invoices-tab/invoice-details/invoice-details.component';
+import { MerchandisePurchaseComponent } from './components/merchandise/merchandise-purchase/merchandise-purchase.component';
 
 @NgModule({
   declarations: [
@@ -210,7 +211,8 @@ import { InvoiceDetailsComponent } from './components/my-profile/my-profile-tabs
     CreateArtistsComponent,
     SeatingPlanComponent,
     MyInvoicesTabComponent,
-    InvoiceDetailsComponent
+    InvoiceDetailsComponent,
+    MerchandisePurchaseComponent
   ],
   imports: [
     BrowserModule,

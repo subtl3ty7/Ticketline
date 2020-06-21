@@ -1,0 +1,44 @@
+
+.payment-method-title {
+  font-family: Segue UI, Roboto, "Helvetica Neue", sans-serif !important;
+  font-size: 40px;
+  font-weight: bold;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  color: #212529;
+}
+
+.buy-button {
+  color: white;
+  background-color: #2771BB;
+  height: 75px;
+  width: 400px;
+  transition: .2s;
+  padding: 0px;
+  text-align: center;
+  margin: 0px 0px 20px;
+  border-width: 1px;
+}
+
+
+.buy-button:hover {
+  background-color: #1f5993;
+}
+
+.button-font {
+  font-size: 25px;
+  color: white;
+}
+
+.payment-method-form {
+  width: 97%;
+  font-size: 30px;
+}
+
+.payment-method {
+  margin-left: 50px;
+}
+
+.button-row {
+  margin-top: 50px;
+}
