@@ -6,11 +6,11 @@
     <div class="mx-auto" style="max-width: 1320px; width: 100%;">
       <div class="card main-body">
         <div class="card-header d-flex align-items-center"  *ngIf="event">
-          <h3 class="page-title">Tickets für {{event.name}}</h3>
-          <div class="divider"></div>
-          <h3 class="page-title">{{show.eventLocation.name}}, {{show.eventLocation.city}}</h3>
-          <div class="divider"></div>
-          <h3 class="page-title">{{formatDate(show.startsAt)}}</h3>
+          <div class="row p-0" style="max-width: 100%">
+            <h3 class="page-title divider" style="padding-left: 51px; min-width: 0%; max-width: 35%; padding-right: 20px; margin-right: 20px">Tickets für {{event.name}}</h3>
+            <h3 class="page-title divider" style="min-width: 0%; max-width: 30%; padding-right: 20px; margin-right: 20px">{{show.eventLocation.name}}, {{show.eventLocation.city}}</h3>
+            <h3 class="page-title" style="min-width: 0%; max-width: 30%">{{formatDate(show.startsAt)}}</h3>
+          </div>
         </div>
         <div class="card-body">
 

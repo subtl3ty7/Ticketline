@@ -1,11 +1,11 @@
 <app-error-notification *ngIf="error" [error]="error"></app-error-notification>
 <div *ngIf="wrapper.state !== state.DELETING && !error">
   <div class="container">
-    <div class="row" style="border-bottom: 2px solid #efefef; z-index: 0; white-space: nowrap; padding: 50px 80px 16px 50px;margin-bottom: 0px">
-      <div class="col-5">
-        <h1 class="page-title" style="margin-bottom: 0px">Meine Info</h1>
+    <div class="row" style="border-bottom: 2px solid #efefef; z-index: 0; white-space: nowrap; padding: 50px 50px 16px 50px;margin-bottom: 0px">
+      <div class="col-5 pl-0">
+        <h1 class="mb-0 pt-0 page-title">Meine Info</h1>
       </div>
-      <div class="col text-right">
+      <div class="col pr-0 text-right">
         <button id="userInfoForm_editButton"
                 class="btn btn-outline-dark" style="white-space: nowrap; border-radius: 10px; padding-right: 8px"
                 (click)="openEditMode()" *ngIf="wrapper.state === state.READY"><i class="fas fa-user-edit"></i></button>
@@ -14,7 +14,7 @@
                 (click)="openEditMode()" *ngIf="wrapper.state !== state.READY" disabled><i class="fas fa-user-edit"></i></button>
       </div>
     </div>
-    <div class="row" style="padding-left: 110px; padding-right: 110px">
+    <div class="row" style="padding-left: 100px; padding-right: 100px">
       <div class="container" *ngIf="wrapper.state === state.READY">
         <div class="row mb-4">
           <app-profile-info [currentUser]="wrapper.model" style="width: 100%">

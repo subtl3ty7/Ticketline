@@ -6,6 +6,7 @@ export class DetailedTicket {
   public ticketCode: string;
   public purchased: boolean;
   public reserved: boolean;
+  public cancelled: boolean;
   public purchaseDate: string;
   public seat: Seat;
   public price: number;

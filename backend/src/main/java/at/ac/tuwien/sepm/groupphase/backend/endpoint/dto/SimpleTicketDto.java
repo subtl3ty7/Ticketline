@@ -12,6 +12,7 @@ public class SimpleTicketDto {
     private String ticketCode;
     private boolean isPurchased;
     private boolean isReserved;
+    private boolean isCancelled;
     private LocalDateTime purchaseDate;
     private Long seatId;
     private String userCode;
@@ -25,6 +26,7 @@ public class SimpleTicketDto {
         private String ticketCode;
         private boolean isPurchased;
         private boolean isReserved;
+        private boolean isCancelled;
         private LocalDateTime purchaseDate;
         private Long seatId;
         private String userCode;
@@ -33,13 +35,14 @@ public class SimpleTicketDto {
         private String eventName;
         private LocalDateTime showTime;
 
-        public SimpleTicketDtoBuilder(Long ticketId, String ticketCode, boolean isPurchased, boolean isReserved,
+        public SimpleTicketDtoBuilder(Long ticketId, String ticketCode, boolean isPurchased, boolean isReserved, boolean isCancelled,
                                       LocalDateTime purchaseDate, Long seatId, String userCode, Integer price, Long showId,
                                       String eventName, LocalDateTime showTime) {
             this.ticketId = ticketId;
             this.ticketCode = ticketCode;
             this.isPurchased = isPurchased;
             this.isReserved = isReserved;
+            this.isCancelled = isCancelled;
             this.purchaseDate = purchaseDate;
             this.seatId = seatId;
             this.userCode = userCode;
@@ -50,9 +53,9 @@ public class SimpleTicketDto {
         }
 
         public static SimpleTicketDto.SimpleTicketDtoBuilder aSimpleTicketDto(Long ticketId, String ticketCode, boolean isPurchased,
-                                                                              boolean isReserved, LocalDateTime purchaseDate, Long seatId, String userCode,
+                                                                              boolean isReserved, boolean isCancelled, LocalDateTime purchaseDate, Long seatId, String userCode,
                                                                               Integer price, Long showId, String eventName, LocalDateTime showTime) {
-            return new SimpleTicketDto.SimpleTicketDtoBuilder(ticketId, ticketCode, isPurchased, isReserved, purchaseDate, seatId, userCode, price, showId, eventName, showTime);
+            return new SimpleTicketDto.SimpleTicketDtoBuilder(ticketId, ticketCode, isPurchased, isReserved, isCancelled, purchaseDate, seatId, userCode, price, showId, eventName, showTime);
         }
 
         public SimpleTicketDto build() {
@@ -61,6 +64,7 @@ public class SimpleTicketDto {
             simpleTicketDto.setTicketCode(ticketCode);
             simpleTicketDto.setPurchased(isPurchased);
             simpleTicketDto.setReserved(isReserved);
+            simpleTicketDto.setCancelled(isCancelled);
             simpleTicketDto.setPurchaseDate(purchaseDate);
             simpleTicketDto.setSeatId(seatId);
             simpleTicketDto.setUserCode(userCode);

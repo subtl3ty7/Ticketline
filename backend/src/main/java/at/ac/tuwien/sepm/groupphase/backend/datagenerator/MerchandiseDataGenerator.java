@@ -92,7 +92,7 @@ public class MerchandiseDataGenerator {
             product = merchandiseService.createNewProduct(product);
             merchandiseProducts.add(product);
 
-            if((i % 2) == 0) {
+            if((i % 2) == 0 && product.getStockCount() > 0) {
                 merchandiseService.purchaseWithMoney(product, customer0.getUserCode());
             }
         }

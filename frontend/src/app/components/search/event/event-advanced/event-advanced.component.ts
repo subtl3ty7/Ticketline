@@ -29,6 +29,7 @@ export class EventAdvancedComponent implements OnInit {
   showStartsAt: string = '';
   showEndsAt: string = '';
 
+  // tslint:disable-next-line:max-line-length
   constructor(private formBuilder: FormBuilder, public authService: AuthService, public router: Router, private artistService: ArtistService, private activatedRoute: ActivatedRoute, private searchShared: SearchShared, private background: Background) {
     this.advancedEventSearchForm = new FormGroup({
       name: new FormControl(),
