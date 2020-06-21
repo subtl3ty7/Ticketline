@@ -13,7 +13,7 @@ public interface SectionRepository extends JpaRepository<Section, Long> {
      * Find a section by its id.
      *
      * @param id
-     * @return a secction with corresponding id.
+     * @return a section with corresponding id.
      */
     Section findSectionById(Long id);
 }
