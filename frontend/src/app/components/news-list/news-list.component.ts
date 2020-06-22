@@ -21,9 +21,10 @@ export class NewsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.defineBackground();
-    this.getSeen();
     this.getLatest();
+    if (this.authService.isLoggedIn()) {
+      this.getSeen();
+    }
   }
 
   /**
@@ -47,28 +48,24 @@ export class NewsListComponent implements OnInit {
     this.newsService.getLatest(null).subscribe(
       (news) => {
         this.latestNews = this.constructBlocksOfTwo(news);
-        console.log(this.seenNews);
-        console.log('TEST');
       },
       (error) => {
-        this.errorLatest = error.error;
-        console.log(this.errorLatest);
+        this.errorLatest = error;
       }
     );
   }
 
   constructBlocksOfTwo(news: News[]): News[][] {
     const blocks: News[][] = [];
-    // split news into blocks of three
+    // split news into blocks of 2
     const size = Math.floor(news.length / 2);
-    console.log(size);
     for (let i = 0; i < size; i++) {
       blocks.push([
         news[2 * i],
         news[2 * i + 1]
       ]);
     }
-    // last block might contain less than 3 elements, so construct it separately
+    // last block might contain less than 2 elements, so construct it separately
     const lastBlock = [];
     const remainder = news.length % 2;
     for (let i = 0; i < remainder; i++) {
@@ -78,14 +75,5 @@ export class NewsListComponent implements OnInit {
       blocks.push(lastBlock);
     }
     return blocks;
-  }
-
-
-  defineBackground() {
-    document.body.style.background = '#0c0d0f';
-    document.body.style.backgroundImage = 'url("assets/images/bg.png")';
-    document.body.style.backgroundRepeat = 'no-repeat';
-    document.body.style.backgroundPosition = 'top';
-    document.body.style.backgroundSize = '100%';
   }
 }
