@@ -56,7 +56,7 @@ public class NewsServiceTest implements TestData {
     @Test
     public void givenNews_whenGetAll_thenListWith1NewsElementWithProperties() {
 
-        List<News> news = newsService.findAll();
+        List<News> news = newsService.findAll(10);
         assertEquals(1, news.size());
         News news1 = news.get(0);
         assertAll(
@@ -72,7 +72,7 @@ public class NewsServiceTest implements TestData {
     @Test
     public void givenNews_whenGetAllWithLimit_thenListWith1NewsElement() {
 
-        List<News> news = newsService.findLatest(10);
+        List<News> news = newsService.findLatest(10, 10);
         assertEquals(1, news.size());
     }
 
@@ -80,7 +80,7 @@ public class NewsServiceTest implements TestData {
     @Test
     public void givenNews_whenGetByWrongParams_thenListWith0NewsElements() {
 
-        List<News> news = newsService.findSimpleNewsByParam(USER_CODE, TEST_NEWS_TITLE, FNAME, TEST_NEWS_PUBLISHED_AT, TEST_NEWS_PUBLISHED_AT);
+        List<News> news = newsService.findSimpleNewsByParam(USER_CODE, TEST_NEWS_TITLE, FNAME, TEST_NEWS_PUBLISHED_AT, TEST_NEWS_PUBLISHED_AT, 10);
         assertEquals(0, news.size());
     }
 
