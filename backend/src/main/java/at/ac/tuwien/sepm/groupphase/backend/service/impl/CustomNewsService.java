@@ -58,31 +58,31 @@ public class CustomNewsService implements NewsService {
     }
 
     @Override
-    public List<News> findSeenNews(Authentication auth, Integer limit) {
+    public List<News> findSeenNews(Integer page, Integer size, Authentication auth) {
         AbstractUser user = userService.getAuthenticatedUser(auth);
         validator.validateUser(user).throwIfViolated();
         Customer customer = (Customer) user;
-        List<News> news = newsRepository.findAllBySeenByContainsOrderByPublishedAtDesc(customer);
-        if(limit == null || news.size() <= limit) {
-            //return all
-            return news;
-        } else {
-            //return sublist
-            return news.subList(0, limit);
+        if(page==null) {
+            page = 0;
         }
+        if(size==null) {
+            size = Integer.MAX_VALUE;
+        }
+        List<News> news = newsRepository.findAllBySeenByContainsOrderByPublishedAtDesc(customer, PageRequest.of(page, size));
+        return news;
     }
 
 
     @Override
-    public List<News> findLatest(Integer limit) {
-        List<News> news = newsRepository.findAllByOrderByPublishedAtDesc();
-        if(limit == null || news.size() <= limit) {
-            //return all
-            return news;
-        } else {
-            //return sublist
-            return news.subList(0, limit);
+    public List<News> findLatest(Integer page, Integer size) {
+        if(page==null) {
+            page = 0;
         }
+        if(size==null) {
+            size = Integer.MAX_VALUE;
+        }
+        List<News> news = newsRepository.findAllByOrderByPublishedAtDesc(PageRequest.of(page, size));
+        return news;
     }
 
     @Override

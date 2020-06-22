@@ -10,9 +10,9 @@ public interface NewsService {
 
     List<News> findLatestUnseen(Authentication auth, Integer limit);
 
-    List<News> findSeenNews(Authentication auth, Integer limit);
+    List<News> findSeenNews(Integer page, Integer size, Authentication auth);
 
-    List<News> findLatest(Integer limit);
+    List<News> findLatest(Integer page, Integer size);
 
     News createNewNewsEntry(News news);
 
