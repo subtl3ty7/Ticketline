@@ -21,13 +21,13 @@ public interface EventService {
 
     void deletebyEventCode(String eventCode);
 
-    List<Event> findEventsByArtistId(Long artistId);
+    List<Event> findEventsByArtistId(Long artistId, int size);
 
-    List<Event> findEventsByName(String name);
+    List<Event> findEventsByName(String name, int size);
 
-    List<Event> findEventsAdvanced(String name, Integer type, Integer category, LocalDateTime startsAt, LocalDateTime endsAt, Duration showDuration);
+    List<Event> findEventsAdvanced(String name, Integer type, Integer category, LocalDateTime startsAt, LocalDateTime endsAt, Duration showDuration, int size);
 
-    List<Event> findSimpleEventsByParam(String eventCode, String name, LocalDateTime startRange, LocalDateTime endRange);
+    List<Event> findSimpleEventsByParam(String eventCode, String name, LocalDateTime startRange, LocalDateTime endRange, int size);
 
     List<Event> findNumberOfEvents(int number);
 }

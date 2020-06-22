@@ -14,4 +14,5 @@ public interface InvoiceService {
     Invoice createMerchandiseInvoice(Merchandise merchandise, String userCode, String pay);
     List<Invoice> allInvoicesOfUser(String userCode);
 
+    Invoice findInvoiceByTicket(Ticket ticket);
 }

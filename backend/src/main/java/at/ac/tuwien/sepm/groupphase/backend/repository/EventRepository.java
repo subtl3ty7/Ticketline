@@ -2,6 +2,7 @@ package at.ac.tuwien.sepm.groupphase.backend.repository;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.Artist;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventCategoryEnum;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
 import org.hibernate.annotations.LazyCollection;
 import org.springframework.data.domain.Page;
@@ -40,7 +41,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
      */
     List<Event> findAllByStartsAtAfterAndCategoryOrderByTotalTicketsSoldDesc(LocalDateTime time, String category);
 
-    List<Event> findTop10ByStartsAtAfterAndCategoryOrderByTotalTicketsSoldDesc(LocalDateTime time, String category);
+    List<Event> findTop10ByStartsAtAfterAndCategoryOrderByTotalTicketsSoldDesc(LocalDateTime time, EventCategoryEnum category);
 
     /**
      * Find an event by event code.
@@ -50,14 +51,14 @@ public interface EventRepository extends JpaRepository<Event, Long> {
      */
     Event findEventByEventCode(String eventCode);
 
-    List<Event> findEventsByArtistsContaining(Artist artist);
+    Page<Event> findEventsByArtistsContaining(Artist artist, Pageable pageable);
 
 
     Event findEventById(Long id);
 
-    List<Event> findEventsByNameContainingIgnoreCase(String name);
+    Page<Event> findEventsByNameContainingIgnoreCase(String name, Pageable pageable);
 
-    List<Event> findAllByEventCodeContainingIgnoreCaseAndNameContainingIgnoreCaseAndStartsAtBetween(String eventCode, String name, LocalDateTime startsAt, LocalDateTime endsAt);
+    Page<Event> findAllByEventCodeContainingIgnoreCaseAndNameContainingIgnoreCaseAndStartsAtBetween(String eventCode, String name, LocalDateTime startsAt, LocalDateTime endsAt, Pageable pageable);
 
     @Query(value = "" +
         "SELECT * FROM EVENT e " +
@@ -67,7 +68,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
         "AND ((:startsAt IS NULL) OR (:startsAt IS NOT NULL AND e.start_datetime > :startsAt))  " +
         "AND ((:endsAt IS NULL) OR (:endsAt IS NOT NULL AND e.end_datetime < :endsAt))  " +
         "AND ((:duration IS NULL) OR (:duration IS NOT NULL AND e.duration <= :duration))", nativeQuery = true)
-    List<Event> findEventsByNameContainingIgnoreCaseAndTypeContainingAndCategoryContainingAndStartsAtIsGreaterThanEqualAndEndsAtIsLessThanEqualAndShowsDurationLessThanEqual(@Param("name") String name, @Param("type") Integer type, @Param("category") Integer category, @Param("startsAt") LocalDateTime startsAt, @Param("endsAt") LocalDateTime endsAt, @Param("duration") Duration duration);
+    Page<Event> findEventsByNameContainingIgnoreCaseAndTypeContainingAndCategoryContainingAndStartsAtIsGreaterThanEqualAndEndsAtIsLessThanEqualAndShowsDurationLessThanEqual(@Param("name") String name, @Param("type") Integer type, @Param("category") Integer category, @Param("startsAt") LocalDateTime startsAt, @Param("endsAt") LocalDateTime endsAt, @Param("duration") Duration duration, Pageable pageable);
 
     /**
      * Find x events where x is defined by pabgeable

@@ -29,6 +29,7 @@ export class CreateShowsComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   show = new Show();
   eventLocations: EventLocation[];
+  selectedSimpleEventLocation: EventLocation;
   error;
   startTime: string;
   endTime: string;
@@ -63,20 +64,26 @@ export class CreateShowsComponent implements OnInit {
   }
 
   createShow() {
-    if (this.show && this.show.startsAt  && this.show.endsAt && this.show.eventLocation && this.startTime && this.endTime) {
-      const show = new Show();
-      show.startsAt = this.show.startsAt;
-      const startHourAndMinute = this.startTime.split(':');
-      show.startsAt.setHours(+startHourAndMinute[0], +startHourAndMinute[1], 0, 0);
-      show.endsAt = this.show.endsAt;
-      const endHourAndMinute = this.endTime.split(':');
-      show.endsAt.setHours(+endHourAndMinute[0], +endHourAndMinute[1], 0, 0);
-      show.eventLocation = this.show.eventLocation;
-      show.ticketsAvailable = show.eventLocation.capacity;
-      show.price = this.show.price;
-      this.data.push(show);
-      this.show = new Show();
-      this.initTable();
+    if (this.show && this.show.startsAt  && this.show.endsAt && this.selectedSimpleEventLocation && this.startTime && this.endTime) {
+      this.eventLocationService.getLocationById(this.selectedSimpleEventLocation.id).subscribe(
+        (next) => {
+          const show = new Show();
+          show.startsAt = this.show.startsAt;
+          const startHourAndMinute = this.startTime.split(':');
+          show.startsAt.setHours(+startHourAndMinute[0], +startHourAndMinute[1], 0, 0);
+          show.endsAt = this.show.endsAt;
+          const endHourAndMinute = this.endTime.split(':');
+          show.endsAt.setHours(+endHourAndMinute[0], +endHourAndMinute[1], 0, 0);
+          show.eventLocation = next;
+          show.ticketsAvailable = show.eventLocation.capacity;
+          show.price = this.show.price;
+          this.data.push(show);
+          this.show = new Show();
+          this.initTable();
+        }, (error) => {
+          this.error = error.error;
+        }
+        );
     }
   }
 

@@ -55,7 +55,7 @@ public class CustomEventService implements EventService {
 
     @Override
     public List<Event> findTop10EventsOfMonthByCategory(String category) {
-        List<Event> top10 = eventRepository.findTop10ByStartsAtAfterAndCategoryOrderByTotalTicketsSoldDesc(LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),1,0,0), category);
+        List<Event> top10 = eventRepository.findTop10ByStartsAtAfterAndCategoryOrderByTotalTicketsSoldDesc(LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),1,0,0), EventCategoryEnum.valueOf(category));
         return top10;
     }
 
@@ -86,7 +86,6 @@ public class CustomEventService implements EventService {
         List<Double> prices = new ArrayList<>();
         prices.add(Double.MAX_VALUE);
         event.setPrices(prices);
-        validator.validate(event).throwIfViolated();
 
         //replace artists with artists from repository
         List<Artist> newArtistList = new ArrayList<>();
@@ -119,6 +118,10 @@ public class CustomEventService implements EventService {
             //round price to two decimals
             show.setPrice(Math.round(show.getPrice()*100.0)/100.0);
 
+            //set category and type for event
+            show.setEventCategory(event.getCategory());
+            show.setEventType(event.getType());
+
             //set earliest startsAt of all shows and latest endsAt of all shows for the event
             LocalDateTime startsAt = show.getStartsAt().isBefore(event.getStartsAt()) ? show.getStartsAt() : event.getStartsAt();
             LocalDateTime endsAt = show.getEndsAt().isAfter(event.getEndsAt()) ? show.getEndsAt() : event.getEndsAt();
@@ -130,6 +133,7 @@ public class CustomEventService implements EventService {
         }
         event.setDuration(Duration.between(event.getStartsAt(), event.getEndsAt()));
 
+        validator.validate(event).throwIfViolated();
         Event event1 = eventRepository.save(event);
 
         return event1;
@@ -171,28 +175,38 @@ public class CustomEventService implements EventService {
     }
 
     @Override
-    public List<Event> findEventsByArtistId(Long artistId) {
+    public List<Event> findEventsByArtistId(Long artistId, int size) {
         validator.validateExists(artistId).throwIfViolated();
         Artist artist = artistRepository.findArtistById(artistId);
-        return eventRepository.findEventsByArtistsContaining(artist);
+        int page = calculateNumberOfPage(size);
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        Page<Event> eventsPage = eventRepository.findEventsByArtistsContaining(artist, pageRequest);
+        return eventsPage.toList();
 
     }
 
     @Override
-    public List<Event> findEventsByName(String name) {
-        List<Event> events = eventRepository.findEventsByNameContainingIgnoreCase(name);
-        return events;
+    public List<Event> findEventsByName(String name, int size) {
+        int page = calculateNumberOfPage(size);
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        Page<Event> eventsPage = eventRepository.findEventsByNameContainingIgnoreCase(name, pageRequest);
+        return eventsPage.toList();
     }
 
     @Override
-    public List<Event> findEventsAdvanced(String name, Integer type, Integer category, LocalDateTime startsAt, LocalDateTime endsAt, Duration showDuration) {
-        return eventRepository.findEventsByNameContainingIgnoreCaseAndTypeContainingAndCategoryContainingAndStartsAtIsGreaterThanEqualAndEndsAtIsLessThanEqualAndShowsDurationLessThanEqual(name, type, category, startsAt, endsAt, showDuration);
+    public List<Event> findEventsAdvanced(String name, Integer type, Integer category, LocalDateTime startsAt, LocalDateTime endsAt, Duration showDuration, int size) {
+        int page = calculateNumberOfPage(size);
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        Page<Event> eventsPage = eventRepository.findEventsByNameContainingIgnoreCaseAndTypeContainingAndCategoryContainingAndStartsAtIsGreaterThanEqualAndEndsAtIsLessThanEqualAndShowsDurationLessThanEqual(name, type, category, startsAt, endsAt, showDuration, pageRequest);
+        return eventsPage.toList();
     }
 
     @Override
-    public List<Event> findSimpleEventsByParam(String eventCode, String name, LocalDateTime startRange, LocalDateTime endRange) {
-        List<Event> events =  eventRepository.findAllByEventCodeContainingIgnoreCaseAndNameContainingIgnoreCaseAndStartsAtBetween(eventCode, name, startRange, endRange);
-        return events;
+    public List<Event> findSimpleEventsByParam(String eventCode, String name, LocalDateTime startRange, LocalDateTime endRange, int size) {
+        int page = calculateNumberOfPage(size);
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        Page<Event> eventsPage =  eventRepository.findAllByEventCodeContainingIgnoreCaseAndNameContainingIgnoreCaseAndStartsAtBetween(eventCode, name, startRange, endRange, pageRequest);
+        return eventsPage.toList();
     }
 
     private Double getMinPrice(Show show) {

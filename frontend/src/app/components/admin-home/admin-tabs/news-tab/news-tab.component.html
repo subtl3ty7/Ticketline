@@ -34,8 +34,8 @@
 
   </div>
   <div>
-    <button mat-raised-button (click)="loadAllNewsByParameters()" style="margin-right:10px"> Suchen</button>
-    <button mat-raised-button (click)="loadAllNews()" style="margin-right: 40%">Alle News</button>
+    <button mat-raised-button (click)="searching=true;loadAllNewsByParameters()" style="margin-right:10px"> Suchen</button>
+    <button mat-raised-button (click)="searching=false;loadAllNews()" style="margin-right: 40%">Alle News</button>
   </div>
 
   <button mat-raised-button color = "basic" style="margin-left: 80%;margin-bottom: 1%" (click)="createNewNews()">News Erstellen</button>
@@ -87,6 +87,9 @@
       <mat-row *matRowDef="let row;
              columns: displayedColumns;"></mat-row>
     </mat-table>
-    <mat-paginator showFirstLastButtons [pageSizeOptions]="[10, 25, 50]"></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[10, 25, 50]"
+                   [pageSize] = "pageSize"
+                   [hidePageSize]="true"
+                   (page) = "pageEvent($event)"></mat-paginator>
   </div>
 </div>

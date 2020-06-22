@@ -11,8 +11,13 @@ import {Background} from '../../utils/background';
   styleUrls: ['./news-list.component.css']
 })
 export class NewsListComponent implements OnInit {
+  newsPerPage: number;
   errorLatest;
   errorSeen;
+  latestNewsPage: number;
+  seenNewsPage: number;
+  isLatestNext: boolean;
+  isSeenNext: boolean;
   latestNews: News[][];
   seenNews: News[][];
 
@@ -21,18 +26,32 @@ export class NewsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.defineBackground();
-    this.getSeen();
+    this.newsPerPage = 10;
+    this.latestNewsPage = 0;
+    this.seenNewsPage = 0;
     this.getLatest();
+    if (this.authService.isLoggedIn()) {
+      this.getSeen();
+    }
   }
 
   /**
    * Tries to load 6 of the latest news that the user has not seen yet
    */
   public getSeen() {
-    this.newsService.getSeen(null).subscribe(
+    this.newsService.getSeen(this.seenNewsPage, this.newsPerPage).subscribe(
       (news) => {
+        this.seenNews = null;
         this.seenNews = this.constructBlocksOfTwo(news);
+      },
+      (error) => {
+        this.errorSeen = error.error;
+      }
+    );
+    this.isSeenNext = false;
+    this.newsService.getSeen(this.seenNewsPage + 1, this.newsPerPage).subscribe(
+      (news) => {
+        this.isSeenNext = news.length > 0;
       },
       (error) => {
         this.errorSeen = error.error;
@@ -41,34 +60,60 @@ export class NewsListComponent implements OnInit {
   }
 
   /**
-   * Tries to load 6 of the latest news that the user has not seen yet
+   * Tries to load 10 of the latest news that the user has not seen yet
    */
   public getLatest() {
-    this.newsService.getLatest(null).subscribe(
+    this.newsService.getLatest(this.latestNewsPage, this.newsPerPage).subscribe(
       (news) => {
+        this.latestNews = null;
         this.latestNews = this.constructBlocksOfTwo(news);
-        console.log(this.seenNews);
-        console.log('TEST');
       },
       (error) => {
-        this.errorLatest = error.error;
-        console.log(this.errorLatest);
+        this.errorLatest = error;
+      }
+    );
+    this.isLatestNext = false;
+    this.newsService.getLatest(this.latestNewsPage + 1, this.newsPerPage).subscribe(
+      (news) => {
+        this.isLatestNext = news.length > 0;
+      },
+      (error) => {
+        this.errorLatest = error;
       }
     );
   }
 
+  public loadNextLatestPage() {
+    this.latestNewsPage = this.latestNewsPage + 1;
+    this.getLatest();
+  }
+
+  public loadPreviousLatestPage() {
+    this.latestNewsPage = this.latestNewsPage - 1;
+    this.getLatest();
+  }
+
+  public loadNextSeenPage() {
+    this.seenNewsPage = this.seenNewsPage + 1;
+    this.getSeen();
+  }
+
+  public loadPreviousSeenPage() {
+    this.seenNewsPage = this.seenNewsPage - 1;
+    this.getSeen();
+  }
+
   constructBlocksOfTwo(news: News[]): News[][] {
     const blocks: News[][] = [];
-    // split news into blocks of three
+    // split news into blocks of 2
     const size = Math.floor(news.length / 2);
-    console.log(size);
     for (let i = 0; i < size; i++) {
       blocks.push([
         news[2 * i],
         news[2 * i + 1]
       ]);
     }
-    // last block might contain less than 3 elements, so construct it separately
+    // last block might contain less than 2 elements, so construct it separately
     const lastBlock = [];
     const remainder = news.length % 2;
     for (let i = 0; i < remainder; i++) {
@@ -78,14 +123,5 @@ export class NewsListComponent implements OnInit {
       blocks.push(lastBlock);
     }
     return blocks;
-  }
-
-
-  defineBackground() {
-    document.body.style.background = '#0c0d0f';
-    document.body.style.backgroundImage = 'url("assets/images/bg.png")';
-    document.body.style.backgroundRepeat = 'no-repeat';
-    document.body.style.backgroundPosition = 'top';
-    document.body.style.backgroundSize = '100%';
   }
 }

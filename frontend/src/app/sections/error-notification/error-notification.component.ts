@@ -15,12 +15,10 @@ export class ErrorNotificationComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.error);
     this.getError();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.error);
     this.getError();
   }
 
@@ -32,7 +30,12 @@ export class ErrorNotificationComponent implements OnInit, OnChanges {
 
   getError() {
     this.customError = new CustomError();
-    const error = this.error.error;
+    let error;
+    if (typeof this.error.error === 'string') {
+      error = JSON.parse(this.error.error);
+    } else {
+      error = this.error.error;
+    }
     console.log(error);
     if (error && error.status && (error.error || (error.messages && error.messages[0]))) {
       this.customError.status = error.status;

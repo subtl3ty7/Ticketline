@@ -24,11 +24,11 @@ import java.util.List;
 @Profile("generateData")
 public class UserDataGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    private static final int NUMBER_OF_GENERIC_CUSTOMERS = 30;
+    private static final int NUMBER_OF_GENERIC_CUSTOMERS = 1000;
     private static final int NUMBER_OF_ADMINISTRATORS = 2;
     private static final String GENERIC_CUSTOMER_EMAIL = "@customer.com";
     private static final String ADMIN_EMAIL = "@admin.com";
-    private static final String USER_PASSWORD = "Password";
+    private static final String USER_PASSWORD = "Password0";
 
     private final UserService userService;
     private final UserAttemptsRepository userAttemptsRepository;
@@ -72,6 +72,9 @@ public class UserDataGenerator {
     private void generateGenericCustomers() {
         List<String> firstnames = Arrays.asList(resources.getObjectFromJson("entities/firstnames.json", String[].class));
         List<String> lastnames = Arrays.asList(resources.getObjectFromJson("entities/lastnames.json", String[].class));
+
+        String encodedPassword = passwordEncoder.encode(USER_PASSWORD);
+
         for (int i = 0; i < NUMBER_OF_GENERIC_CUSTOMERS; i++) {
             int firstnameIndex = i % firstnames.size();
             int lastnameIndex = i % lastnames.size();
@@ -83,7 +86,7 @@ public class UserDataGenerator {
                 .withFirstName(firstnames.get(firstnameIndex))
                 .withLastName(lastnames.get(lastnameIndex))
                 .withEmail( "e" + i + GENERIC_CUSTOMER_EMAIL)
-                .withPassword(passwordEncoder.encode(USER_PASSWORD + i))
+                .withPassword(encodedPassword)
                 .withBirthday(birthdate)
                 .withIsLogged(false)
                 .withCreatedAt(createdAt)
@@ -122,6 +125,9 @@ public class UserDataGenerator {
     private void generateAdministrators() {
         List<String> firstnames = Arrays.asList(resources.getObjectFromJson("entities/firstnames.json", String[].class));
         List<String> lastnames = Arrays.asList(resources.getObjectFromJson("entities/lastnames.json", String[].class));
+
+        String encodedPassword = passwordEncoder.encode(USER_PASSWORD);
+
         for (int i = 0; i < NUMBER_OF_ADMINISTRATORS; i++) {
             int firstnameIndex = i % firstnames.size();
             int lastnameIndex = i % lastnames.size();
@@ -133,7 +139,7 @@ public class UserDataGenerator {
                 .withFirstName(firstnames.get(firstnameIndex))
                 .withLastName(lastnames.get(lastnameIndex))
                 .withEmail( "e" + i + ADMIN_EMAIL)
-                .withPassword(passwordEncoder.encode(USER_PASSWORD + i))
+                .withPassword(encodedPassword)
                 .withBirthday(birthdate)
                 .withIsLogged(false)
                 .withCreatedAt(createdAt)

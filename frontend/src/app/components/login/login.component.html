@@ -1,5 +1,4 @@
 <app-guest-header></app-guest-header>
-<app-error-notification *ngIf="error" [error]="error"></app-error-notification>
 
 <div class="container">
   <div class="row">
@@ -33,6 +32,7 @@
               <a href="/reset-password" class="float-right">Passwort vergessen?</a>
             </div>
             <button type="button" (click)="loginUser()" class="btn default">Einloggen</button>
+            <app-error-notification *ngIf="error" [error]="error" [showStatus]="false"></app-error-notification>
 
           </form>
 

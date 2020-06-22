@@ -37,3 +37,14 @@
 a {
   color: #FBFBFB;
 }
+
+.search-navigation {
+  width: 100%;
+  margin-top: 25px;
+}
+
+.page-link{
+  font-size: 17px;
+  width: auto;
+  color: rgb(33, 37, 41);
+}

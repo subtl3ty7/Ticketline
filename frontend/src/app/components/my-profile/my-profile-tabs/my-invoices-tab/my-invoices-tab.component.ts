@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Invoice} from '../../../../dtos/invoice';
 import {UserService} from '../../../../services/user.service';
 import {InvoiceService} from '../../../../services/invoice.service';
@@ -14,6 +14,7 @@ import {MerchandiseService} from '../../../../services/merchandise.service';
   styleUrls: ['./my-invoices-tab.component.css']
 })
 export class MyInvoicesTabComponent implements OnInit {
+  @Input() invoiceId: number;
   public invoices: Array<Invoice>;
   private merchandise: Merchandise;
   public currentUser: User = new User();
@@ -30,6 +31,7 @@ export class MyInvoicesTabComponent implements OnInit {
   ngOnInit(): void {
     this.loadUser();
   }
+
   private loadUser() {
     this.userService.getCurrentUser().subscribe(
       (user: User) => {
@@ -41,16 +43,33 @@ export class MyInvoicesTabComponent implements OnInit {
       }
     );
   }
+
   public loadInvoices(): void {
     this.invoiceService.getInvoicesByUserCode(this.currentUser.userCode).subscribe(
       (invoices: Invoice[]) => {
         this.invoices = invoices;
+        this.loadUrlInvoice();
       },
         (error) => {
         this.error = error.error;
         }
     );
   }
+
+  private loadUrlInvoice() {
+    if (this.invoiceId) {
+      console.log('Invoice-Id: ' + this.invoiceId);
+      for (const inv of this.invoices.entries()) {
+        console.log(inv[1].id);
+        if (inv[1].id === this.invoiceId) {
+          console.log('test');
+          this.showInvoiceDetails(inv[1]);
+        }
+      }
+      console.log(this.selectedInvoice);
+    }
+  }
+
   public showInvoiceDetails(invoice: Invoice) {
     this.details = true;
     this.selectedInvoice = invoice;
@@ -58,6 +77,7 @@ export class MyInvoicesTabComponent implements OnInit {
       this.loadMerch(invoice.merchandise_code);
     }
   }
+
   printInvoice(invoice: Invoice) {
     if (invoice.invoice_category.startsWith('MERCH')) {
       this.loadMerch(invoice.merchandise_code);
@@ -67,6 +87,7 @@ export class MyInvoicesTabComponent implements OnInit {
     doc.autoPrint();
     window.open(doc.output('bloburl'), '_blank');
   }
+
   private drawForm (doc: jsPDF, invoice: Invoice) {
     doc.setFont('Times');
     doc.setFontType('bold');

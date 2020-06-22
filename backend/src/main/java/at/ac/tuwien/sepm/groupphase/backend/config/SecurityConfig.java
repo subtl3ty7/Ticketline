@@ -51,6 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         whiteList.add("/api/v1/users/customers");
         whiteList.add("/api/v1/reset-password/*");
         whiteList.add("/api/v1/events/top10");
+        whiteList.add("/api/v1/events/top10/{category}");
         whiteList.add("/api/v1/events/{eventCode}");
         whiteList.add("/api/v1/events/all");
         whiteList.add("/api/v1/events/eventTypes");
@@ -84,8 +85,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .addFilter(new JwtAuthorizationFilter(authenticationManager(), securityProperties))
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and()
-        .anonymous().disable();
+            .and()
+            .anonymous().disable();
     }
 
     @Override

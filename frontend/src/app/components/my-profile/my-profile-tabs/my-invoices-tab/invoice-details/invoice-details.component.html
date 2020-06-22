@@ -32,7 +32,7 @@
         <div class="info-field" *ngIf="invoice.invoice_category.startsWith('TICKET')" >
           Event name: {{invoice.tickets[0].eventName}}
         </div>
-        <div class="info-field" *ngIf="invoice.invoice_category.startsWith('MERCH')" >
+        <div class="info-field" *ngIf="invoice.invoice_category.startsWith('MERCH') && merchandise">
           Merchandise name: {{merchandise.merchandiseProductName}}
         </div>
       </div>
@@ -44,7 +44,7 @@
         <div class="info-field" *ngIf="invoice.invoice_category.startsWith('TICKET')" >
           Number of tickets: {{invoice.tickets.length}}
         </div>
-        <div class="info-field" *ngIf="invoice.invoice_category.startsWith('MERCH')">
+        <div class="info-field" *ngIf="invoice.invoice_category.startsWith('MERCH') && merchandise">
           Merchandise code: {{invoice.merchandise_code}}
         </div>
       </div>

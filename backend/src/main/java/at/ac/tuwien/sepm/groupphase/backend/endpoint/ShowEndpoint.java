@@ -44,7 +44,7 @@ public class ShowEndpoint {
     }
 
     @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
-    @GetMapping(value = "", params = "eventLocationId")
+    @GetMapping(value = "", params = {"eventLocationId", "size"})
     @ApiOperation(
         value = "Get Shows by event location name"
     )
@@ -53,15 +53,17 @@ public class ShowEndpoint {
         @ApiResponse(code = 404, message = "No Show is found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<List<SimplerShowDto>> findShowsByEventLocationId(@RequestParam Long eventLocationId) {
-        LOGGER.info("GET /api/v1/shows?eventLocationId=" + eventLocationId);
-        List<Show> showList = showService.getShowsByEventLocationId(eventLocationId);
+    public ResponseEntity<List<SimplerShowDto>> findShowsByEventLocationId(@RequestParam Long eventLocationId,
+                                                                            @RequestParam int size
+    ) {
+        LOGGER.info("GET /api/v1/shows?eventLocationId=" + eventLocationId + "&size=" + size);
+        List<Show> showList = showService.getShowsByEventLocationId(eventLocationId, size);
         List<SimplerShowDto> shows = showMapper.showToSimplerShowDto(showList);
         return new ResponseEntity<>(shows, HttpStatus.OK);
     }
 
     @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
-    @GetMapping(value = "", params = {"eventName", "type", "category", "startsAt", "endsAt", "duration", "price"})
+    @GetMapping(value = "", params = {"eventName", "type", "category", "startsAt", "endsAt", "duration", "price", "size"})
     @ApiOperation(
         value = "Get all events by name",
         notes = "Get all events by with details",
@@ -71,15 +73,17 @@ public class ShowEndpoint {
         @ApiResponse(code = 404, message = "No Event is found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<List<ShowDto>> findShowsAdvanced(@Valid @RequestParam String eventName,
+    public ResponseEntity<List<SimpleShowDto>> findShowsAdvanced(@Valid @RequestParam String eventName,
                                                                    @Valid @RequestParam String type,
                                                                    @Valid @RequestParam String category,
                                                                    @Valid @RequestParam String startsAt,
                                                                    @Valid @RequestParam String endsAt,
                                                                    @Valid @RequestParam String duration,
-                                                                   @Valid @RequestParam String price
+                                                                   @Valid @RequestParam String price,
+                                                                    @Valid @RequestParam int size
     ) {
-        LOGGER.info("GET /api/v1/shows?eventName=" + eventName + "&type=" + type + "&category=" + category + "&startsAt=" + startsAt + "&endsAt=" + endsAt + "&duration=" + duration + "&price=" + price);
+        LOGGER.info("GET /api/v1/shows?eventName=" + eventName + "&type=" + type + "&category=" + category + "&startsAt=" + startsAt + "&endsAt=" + endsAt + "&duration=" + duration + "&price=" + price
+            + "&size=" + size);
         LocalDateTime startsAtParsed = null;
         if (!startsAt.isEmpty()) {
             startsAtParsed = LocalDateTime.parse(startsAt);
@@ -110,7 +114,7 @@ public class ShowEndpoint {
             priceInteger = Integer.parseInt(price);
         }
 
-        List<ShowDto> shows = showMapper.showToShowDto(showService.findShowsAdvanced(eventName, eventTypeEnumOrdinal, eventCategoryEnumOrdinal, startsAtParsed, endsAtParsed, durationParsed, priceInteger));
+        List<SimpleShowDto> shows = showMapper.showToSimpleShowDto(showService.findShowsAdvanced(eventName, eventTypeEnumOrdinal, eventCategoryEnumOrdinal, startsAtParsed, endsAtParsed, durationParsed, priceInteger, size));
 
         return new ResponseEntity<>(shows, HttpStatus.OK);
     }

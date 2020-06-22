@@ -42,7 +42,7 @@ export class LatestNewsComponent implements OnInit {
    * Tries to load 6 of the latest news that the user has not seen yet
    */
   public getLatest() {
-    this.newsService.getLatest(6).subscribe(
+    this.newsService.getLatest(0, 6).subscribe(
       (news) => {
         this.constructBlocksOfThree(news);
       },

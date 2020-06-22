@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @Getter
 @Setter
@@ -72,6 +73,7 @@ public class SimpleTicketDto {
             simpleTicketDto.setShowId(showId);
             simpleTicketDto.setEventName(eventName);
             simpleTicketDto.setShowTime(showTime);
+            new ArrayList<>();
             return simpleTicketDto;
         }
     }
