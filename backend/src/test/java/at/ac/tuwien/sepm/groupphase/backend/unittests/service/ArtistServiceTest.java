@@ -58,7 +58,7 @@ public class ArtistServiceTest implements TestData {
     @Test
     @Order(3)
     public void givenArtist_whenFindByFirstAndLastName_thenListWith1ElementAndArtistWithProperties() {
-        List<Artist> artists = artistService.findArtistsByFirstAndLastName(FNAME, LNAME, 10);
+        List<Artist> artists = artistService.findArtistsByFirstAndLastName(FNAME, LNAME, 0);
         Artist artist1 = artists.get(0);
         assertAll(
             () -> assertEquals(FNAME, artist1.getFirstName()),
