@@ -73,7 +73,7 @@ public class ShowEndpoint {
         @ApiResponse(code = 404, message = "No Event is found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<List<ShowDto>> findShowsAdvanced(@Valid @RequestParam String eventName,
+    public ResponseEntity<List<SimpleShowDto>> findShowsAdvanced(@Valid @RequestParam String eventName,
                                                                    @Valid @RequestParam String type,
                                                                    @Valid @RequestParam String category,
                                                                    @Valid @RequestParam String startsAt,
@@ -114,7 +114,7 @@ public class ShowEndpoint {
             priceInteger = Integer.parseInt(price);
         }
 
-        List<ShowDto> shows = showMapper.showToShowDto(showService.findShowsAdvanced(eventName, eventTypeEnumOrdinal, eventCategoryEnumOrdinal, startsAtParsed, endsAtParsed, durationParsed, priceInteger, size));
+        List<SimpleShowDto> shows = showMapper.showToSimpleShowDto(showService.findShowsAdvanced(eventName, eventTypeEnumOrdinal, eventCategoryEnumOrdinal, startsAtParsed, endsAtParsed, durationParsed, priceInteger, size));
 
         return new ResponseEntity<>(shows, HttpStatus.OK);
     }

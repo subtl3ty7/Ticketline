@@ -51,10 +51,10 @@ export class EventService {
     );
   }
 
-  getSimpleEventsByArtistId(artistId: number) {
+  getSimpleEventsByArtistId(artistId: number, pageSize: number) {
     console.log('Load events by artist id');
     console.log('url: ' + this.eventBaseUri + '?artistId=' + artistId);
-    return this.httpClient.get<SimpleEvent[]>(this.eventBaseUri + '?artistId=' + artistId).pipe(
+    return this.httpClient.get<SimpleEvent[]>(this.eventBaseUri + '?artistId=' + artistId + '&size=' + pageSize).pipe(
       catchError(this.handleError)
     );
   }

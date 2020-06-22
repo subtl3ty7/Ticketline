@@ -35,17 +35,17 @@ export class EventLocationService {
     );
   }
 
-  getLocationsByName(locationName: string): Observable<EventLocation[]> {
+  getLocationsByName(locationName: string, pageSize: number): Observable<EventLocation[]> {
     console.log('Load all locations with name: ' + locationName);
-    return this.httpClient.get<EventLocation[]>(this.eventBaseUri + '?name=' + locationName).pipe(
+    return this.httpClient.get<EventLocation[]>(this.eventBaseUri + '?name=' + locationName + '&size=' + pageSize).pipe(
       catchError(this.handleError)
     );
   }
 
-  getLocationsAdvanced(name: string, street: string, city: string, country: string, plz: string) {
+  getLocationsAdvanced(name: string, street: string, city: string, country: string, plz: string, pageSize: number) {
     console.log('Load all locations with advanced parameters');
-    console.log(this.eventBaseUri + '?name=' + name + '&description=' + '&street=' + street + '&city=' + city + '&country=' + country + '&plz=' + plz);
-    return this.httpClient.get<EventLocation[]>(this.eventBaseUri + '?name=' + name + '&description=' + '&street=' + street + '&city=' + city + '&country=' + country + '&plz=' + plz).pipe(
+    console.log(this.eventBaseUri + '?name=' + name + '&description=' + '&street=' + street + '&city=' + city + '&country=' + country + '&plz=' + plz + '&size=' + pageSize);
+    return this.httpClient.get<EventLocation[]>(this.eventBaseUri + '?name=' + name + '&description=' + '&street=' + street + '&city=' + city + '&country=' + country + '&plz=' + plz + '&size=' + pageSize).pipe(
       catchError(this.handleError)
     );
   }

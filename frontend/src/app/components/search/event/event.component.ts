@@ -25,7 +25,7 @@ export class EventComponent implements OnInit, DoCheck {
   private previousPage;
   private currentPage;
   private nextPage;
-  private advancedSearching;
+  private advancedSearching: boolean;
   name: string = '';
   artistId: string;
   error;
@@ -45,6 +45,7 @@ export class EventComponent implements OnInit, DoCheck {
     this.name = sessionStorage.getItem('searchTerm');
     this.currentPageIndex = 0;
     this.previousPage = [];
+    this.nextPage = [];
     this.advancedSearching = sessionStorage.getItem('isAdvancedSearchActive') === String(true);
     this.loadAllEvents();
   }
@@ -95,7 +96,7 @@ export class EventComponent implements OnInit, DoCheck {
     const endsAt = sessionStorage.getItem('eventEndsAt');
     const duration = sessionStorage.getItem('eventDuration');
     console.log('event name: ' + this.name + ', event type: ' + type + ' event category: ' + category + 'starts at: ' + startsAt + ', event ends at: ' + endsAt + ', event duration: ' + duration);
-    this.eventService.getSimpleEventsBy(this.name, type, category, startsAt, endsAt, duration, this.pageSize).subscribe(
+    this.eventService.getSimpleEventsBy(this.name, type, category, startsAt, endsAt, duration, 0).subscribe(
       (firstPageEvents: SimpleEvent[]) => {
         this.events = firstPageEvents.slice(0, this.pageSize);
         this.currentPage = firstPageEvents.slice(0, this.pageSize);
@@ -133,14 +134,7 @@ export class EventComponent implements OnInit, DoCheck {
           this.currentPage = this.nextPage;
           this.nextPage = events;
           this.events = this.events.concat(events);
-          console.log('previousPage: ');
-          console.log(this.previousPage);
-          console.log('currentPage: ');
-          console.log(this.currentPage);
-          console.log('nextPage:');
-          console.log(this.nextPage);
-          console.log('events');
-          console.log(this.events);
+          this.printPageStatus();
           },
         (error) => {
           this.error = error.error;
@@ -154,80 +148,63 @@ export class EventComponent implements OnInit, DoCheck {
           this.currentPage = this.nextPage;
           this.nextPage = events;
           this.events = this.events.concat(events);
-          console.log('previousPage: ');
-          console.log(this.previousPage);
-          console.log('currentPage: ');
-          console.log(this.currentPage);
-          console.log('nextPage:');
-          console.log(this.nextPage);
-          console.log('events');
-          console.log(this.events);
+          this.printPageStatus();
         },
         (error) => {
           this.error = error.error;
         }
       );
     }
-    this.scrollToTop();
+    this.searchShared.scrollToTop();
   }
 
   private loadPreviousPage() {
     this.currentPageIndex -= 1;
-    if (this.advancedSearching) {
-      const type = sessionStorage.getItem('eventType');
-      const category = sessionStorage.getItem('eventCategory');
-      const startsAt = sessionStorage.getItem('eventStartsAt');
-      const endsAt = sessionStorage.getItem('eventEndsAt');
-      const duration = sessionStorage.getItem('eventDuration');
-      console.log('event name: ' + this.name + ', event type: ' + type + ' event category: ' + category + 'starts at: ' + startsAt + ', event ends at: ' + endsAt + ', event duration: ' + duration);
-      this.eventService.getSimpleEventsBy(this.name, type, category, startsAt, endsAt, duration, this.pageSize * (this.currentPageIndex - 1)).subscribe(
-        (events: SimpleEvent[]) => {
-          this.deleteFromEvents(this.nextPage);
-          this.nextPage = this.currentPage;
-          this.currentPage = this.previousPage;
-          this.previousPage = events;
-          this.events = events.concat(this.events);
-          console.log('previousPage: ');
-          console.log(this.previousPage);
-          console.log('currentPage: ');
-          console.log(this.currentPage);
-          console.log('nextPage:');
-          console.log(this.nextPage);
-          console.log('events');
-          console.log(this.events);
-          },
-        (error) => {
-          this.error = error.error;
-        }
-      );
+    if (this.currentPageIndex === 0) {
+      this.deleteFromEvents(this.nextPage);
+      this.nextPage = this.currentPage;
+      this.currentPage = this.previousPage;
+      this.previousPage = [];
+      this.printPageStatus();
     } else {
-      this.eventService.getSimpleEventsByName(this.name, this.pageSize * (this.currentPageIndex - 1)).subscribe(
-        (events: SimpleEvent[]) => {
-          this.deleteFromEvents(this.nextPage);
-          this.nextPage = this.currentPage;
-          this.currentPage = this.previousPage;
-          this.previousPage = events;
-          this.events = events.concat(this.events);
-          console.log('previousPage: ');
-          console.log(this.previousPage);
-          console.log('currentPage: ');
-          console.log(this.currentPage);
-          console.log('nextPage:');
-          console.log(this.nextPage);
-          console.log('events');
-          console.log(this.events);
+      if (this.advancedSearching) {
+        const type = sessionStorage.getItem('eventType');
+        const category = sessionStorage.getItem('eventCategory');
+        const startsAt = sessionStorage.getItem('eventStartsAt');
+        const endsAt = sessionStorage.getItem('eventEndsAt');
+        const duration = sessionStorage.getItem('eventDuration');
+        console.log('event name: ' + this.name + ', event type: ' + type + ' event category: ' + category + 'starts at: ' + startsAt + ', event ends at: ' + endsAt + ', event duration: ' + duration);
+        this.eventService.getSimpleEventsBy(this.name, type, category, startsAt, endsAt, duration, this.pageSize * (this.currentPageIndex - 1)).subscribe(
+          (events: SimpleEvent[]) => {
+            this.deleteFromEvents(this.nextPage);
+            this.nextPage = this.currentPage;
+            this.currentPage = this.previousPage;
+            this.previousPage = events;
+            this.events = events.concat(this.events);
+            this.printPageStatus();
           },
-        (error) => {
-          this.error = error.error;
-        }
-      );
+          (error) => {
+            this.error = error.error;
+          }
+        );
+      } else {
+        this.eventService.getSimpleEventsByName(this.name, this.pageSize * (this.currentPageIndex - 1)).subscribe(
+          (events: SimpleEvent[]) => {
+            this.deleteFromEvents(this.nextPage);
+            this.nextPage = this.currentPage;
+            this.currentPage = this.previousPage;
+            this.previousPage = events;
+            this.events = events.concat(this.events);
+            this.printPageStatus();
+          },
+          (error) => {
+            this.error = error.error;
+          }
+        );
+      }
     }
-    this.scrollToTop();
-  }
 
-  private scrollToTop() {
-    window.focus();
-    window.scrollTo(0, 0);
+    this.searchShared.scrollToTop();
   }
 
   private deleteFromEvents(events: SimpleEvent[]) {
@@ -239,5 +216,16 @@ export class EventComponent implements OnInit, DoCheck {
         });
       }
     }
+  }
+
+  printPageStatus() {
+    console.log('previousPage: ');
+    console.log(this.previousPage);
+    console.log('currentPage: ');
+    console.log(this.currentPage);
+    console.log('nextPage:');
+    console.log(this.nextPage);
+    console.log('events');
+    console.log(this.events);
   }
 }

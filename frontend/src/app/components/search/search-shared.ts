@@ -39,7 +39,7 @@ export class SearchShared {
 
   public getArtistsByFirstAndLastName(firstName: string, lastName: string) {
     console.log('loading all artists with first name containing "' + firstName + '" and last name containing "' + lastName + '"');
-    this.artistService.getArtistsByFirstAndLastName(firstName, lastName).subscribe(
+    this.artistService.getArtistsByFirstAndLastName(firstName, lastName, 0).subscribe(
       (artists: Artist[]) => {
         this.entities = artists;
         this.error = null;
@@ -53,7 +53,7 @@ export class SearchShared {
 
   public getLocationByName(locationTerm: string) {
     console.log('loading all locations with name containing "' + locationTerm + '"');
-    this.eventLocationService.getLocationsByName(locationTerm).subscribe(
+    this.eventLocationService.getLocationsByName(locationTerm, 0).subscribe(
       (eventLocations: EventLocation[]) => {
         this.entities = eventLocations;
         this.error = null;
@@ -67,7 +67,7 @@ export class SearchShared {
 
   getLocationsAdvanced(name: string, street: string, city: string, country: string, plz: string) {
     console.log('loading all locations with name containing "' + name + '", street containing "' + street + '", city containing "' + city + '", country containing "' + country + '" and plz containing "' + plz + '"');
-    this.eventLocationService.getLocationsAdvanced(name, street, city, country, plz).subscribe(
+    this.eventLocationService.getLocationsAdvanced(name, street, city, country, plz, 0).subscribe(
       (eventLocations: EventLocation[]) => {
         this.entities = eventLocations;
         this.error = null;
@@ -102,10 +102,10 @@ export class SearchShared {
         this.error = error;
       }
     );
-  }*/
+  }
 
   getShowsBy(name: never, type: string, category: string, showStartsAt: string, showEndsAt: string, duration: string, startPrice: string) {
-    this.showService.getDetailedShowsBy(name, type, category, showStartsAt, showEndsAt, duration, startPrice).subscribe(
+    return this.showService.getDetailedShowsBy(name, type, category, showStartsAt, showEndsAt, duration, startPrice).subscribe(
       (shows: Show[]) => {
         this.entities = shows;
         this.error = null;
@@ -114,5 +114,10 @@ export class SearchShared {
         this.error = error;
       }
     );
+  }*/
+
+  public scrollToTop() {
+    window.focus();
+    window.scrollTo(0, 0);
   }
 }

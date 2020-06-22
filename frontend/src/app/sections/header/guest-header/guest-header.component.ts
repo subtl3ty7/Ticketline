@@ -42,7 +42,7 @@ export class GuestHeaderComponent implements OnInit {
         const firstName = term[0];
         const lastName = term[1];
         console.log('first name: ' + firstName + ', last name: ' + lastName);
-        this.searchShared.getArtistsByFirstAndLastName(firstName, lastName);
+        // this.searchShared.getArtistsByFirstAndLastName(firstName, lastName);
         break;
       case SearchEntity.EVENT:
         this.searchShared.searchEntity = 'Event';

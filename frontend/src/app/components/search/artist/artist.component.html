@@ -11,15 +11,15 @@
   </div>
 </div>
 <div class="card-body">
-  <app-error-notification *ngIf="searchShared.error" [error]="searchShared.error"></app-error-notification>
-  <div *ngIf="!searchShared.error && searchShared.entities">
-    <div *ngIf="searchShared.entities.length > 0">
-      <div *ngFor="let a of searchShared.entities">
+  <app-error-notification *ngIf="error" [error]="error"></app-error-notification>
+  <div *ngIf="!error && artists">
+    <div *ngIf="artists.length > 0">
+      <div *ngFor="let a of currentPage">
         <div class="row artist-row">
           <div class="artist-block">
             <div class="row">
               <div class="col-9 col-sm-8">
-                <div class="artist-name pl-5 prevent-overflow-inline" style="margin-top: 45px;">
+                <div class="artist-name pl-5 prevent-overflow-inline" style="margin-top: 45px; height: 40px">
                   {{a.firstName}} {{a.lastName}}
                 </div>
               </div>
@@ -32,16 +32,16 @@
           </div>
         </div>
       </div>
-      <div class="row"> <!-- *ngIf="previousPage || nextPage" -->
+      <div class="row" *ngIf="previousPage || nextPage">
         <nav class="search-navigation">
           <ul class="pagination">
-            <li class="page-item" style="margin-right: auto"> <!-- *ngIf="previousPage" -->
+            <li class="page-item" *ngIf="previousPage && currentPageIndex > 0" style="margin-right: auto">
               <a class="page-link" (click)="loadPreviousPage()">
                 <span aria-hidden="true">&laquo; Zurück</span>
                 <span class="sr-only">Previous</span>
               </a>
             </li>
-            <li class="page-item" style="margin-left: auto"> <!-- *ngIf="nextPage" -->
+            <li class="page-item" *ngIf="nextPage.length !== 0" style="margin-left: auto">
               <a class="page-link" (click)="loadNextPage()">
                 <span aria-hidden="true">Weiter &raquo;</span>
                 <span class="sr-only">Next</span>
@@ -51,8 +51,8 @@
         </nav>
       </div>
     </div>
-    <p *ngIf="searchShared.entities.length == 0" style="font-size: 20px; padding-top: 40px; text-align: center">Es konnten keine KünstlerInnen mit diesen Kriterien gefunden werden.</p>
+    <p *ngIf="artists.length == 0" style="font-size: 20px; padding-top: 40px; text-align: center">Es konnten keine KünstlerInnen mit diesen Kriterien gefunden werden.</p>
   </div>
-  <app-spinner *ngIf="searchShared.entities === undefined">
+  <app-spinner *ngIf="artists === undefined">
   </app-spinner>
 </div>

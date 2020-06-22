@@ -6,6 +6,8 @@ import {ArtistService} from '../../../services/artist.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SearchShared} from '../search-shared';
 import {SimpleEvent} from '../../../dtos/simple-event';
+import {Show} from '../../../dtos/show';
+import {ShowService} from '../../../services/show.service';
 
 @Component({
   selector: 'app-show',
@@ -29,13 +31,15 @@ export class ShowComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private searchShared: SearchShared,
               private router: Router,
-              private eventService: EventService
+              private showService: ShowService
               ) {
     background.defineBackground();
   }
 
   ngOnInit(): void {
     console.log('show search');
+    this.previousPage = [];
+    this.nextPage = [];
     this.name = sessionStorage.getItem('searchTerm');
     if (sessionStorage.getItem('isAdvancedSearchActive') === String(true)) {
       const type = sessionStorage.getItem('eventType');
@@ -45,7 +49,26 @@ export class ShowComponent implements OnInit {
       const showStartsAt = sessionStorage.getItem('eventShowStartsAt');
       const showEndsAt = sessionStorage.getItem('eventShowEndsAt');
       console.log('show name: ' + this.name + ', show type: ' + type + ' show category: ' + category + 'starts at: ' + showStartsAt + ', event ends at: ' + showEndsAt + ', event duration: ' + duration + ', event start price: ' + startPrice);
-      this.searchShared.getShowsBy(name, type, category, showStartsAt, showEndsAt, duration, startPrice);
+      this.showService.getDetailedShowsBy(name, type, category, showStartsAt, showEndsAt, duration, startPrice, 0).subscribe(
+        (firstPageShows: Show[]) => {
+          this.shows = firstPageShows.slice(0, this.pageSize);
+          this.currentPage = firstPageShows.slice(0, this.pageSize);
+          this.showService.getDetailedShowsBy(name, type, category, showStartsAt, showEndsAt, duration, startPrice, this.pageSize).subscribe(
+            (secondPageShows: Show[]) => {
+              this.nextPage = secondPageShows.slice(0, this.pageSize);
+              secondPageShows.forEach(value => {
+                this.shows.push(value);
+              });
+            },
+            (error) => {
+              this.error = error.error;
+            }
+          );
+        },
+        (error) => {
+          this.error = error.error;
+        }
+      );
     }
   }
 
@@ -56,181 +79,84 @@ export class ShowComponent implements OnInit {
     }
   }
 
-  /*private loadAllEvents() {
-    this.loadAllEventsWithAdvancedFilters();
-  }
-
-  private loadAllEventsByName() {
-    console.log('event name: ' + this.name);
-    return this.eventService.getSimpleEventsByName(this.name, 0).subscribe(
-      (firstPageEvents: SimpleEvent[]) => {
-        this.shows = firstPageEvents.slice(0, this.pageSize);
-        this.currentPage = firstPageEvents.slice(0, this.pageSize);
-        this.eventService.getSimpleEventsByName(this.name, this.pageSize).subscribe(
-          (secondPageEvents: SimpleEvent[]) => {
-            this.nextPage = secondPageEvents.slice(0, this.pageSize);
-            secondPageEvents.forEach(value => {
-              this.shows.push(value);
-            });
-          },
-          (error) => {
-            this.error = error.error;
-          }
-        );
-      },
-      (error) => {
-        this.error = error.error;
-      }
-    );
-  }
-
-  private loadAllEventsWithAdvancedFilters() {
-    const type = sessionStorage.getItem('eventType');
-    const category = sessionStorage.getItem('eventCategory');
-    const startsAt = sessionStorage.getItem('eventStartsAt');
-    const endsAt = sessionStorage.getItem('eventEndsAt');
-    const duration = sessionStorage.getItem('eventDuration');
-    console.log('event name: ' + this.name + ', event type: ' + type + ' event category: ' + category + 'starts at: ' + startsAt + ', event ends at: ' + endsAt + ', event duration: ' + duration);
-    this.eventService.getSimpleEventsBy(this.name, type, category, startsAt, endsAt, duration, this.pageSize).subscribe(
-      (firstPageEvents: SimpleEvent[]) => {
-        this.shows = firstPageEvents.slice(0, this.pageSize);
-        this.currentPage = firstPageEvents.slice(0, this.pageSize);
-        this.eventService.getSimpleEventsBy(this.name, type, category, startsAt, endsAt, duration, this.pageSize).subscribe(
-          (secondPageEvents: SimpleEvent[]) => {
-            this.nextPage = secondPageEvents.slice(0, this.pageSize);
-            secondPageEvents.forEach(value => {
-              this.events.push(value);
-            });
-          },
-          (error) => {
-            this.error = error.error;
-          }
-        );
-      },
-      (error) => {
-        this.error = error.error;
-      }
-    );
-  }
-
   private loadNextPage() {
     this.currentPageIndex += 1;
-      const type = sessionStorage.getItem('eventType');
-      const category = sessionStorage.getItem('eventCategory');
-      const startsAt = sessionStorage.getItem('eventStartsAt');
-      const endsAt = sessionStorage.getItem('eventEndsAt');
-      const duration = sessionStorage.getItem('eventDuration');
-      console.log('event name: ' + this.name + ', event type: ' + type + ' event category: ' + category + 'starts at: ' + startsAt + ', event ends at: ' + endsAt + ', event duration: ' + duration);
-      this.eventService.getSimpleEventsBy(this.name, type, category, startsAt, endsAt, duration, this.pageSize * (this.currentPageIndex + 1)).subscribe(
-        (events: SimpleEvent[]) => {
-          this.deleteFromEvents(this.previousPage);
-          this.previousPage = this.currentPage;
-          this.currentPage = this.nextPage;
-          this.nextPage = events;
-          this.events = this.events.concat(events);
-          console.log('previousPage: ');
-          console.log(this.previousPage);
-          console.log('currentPage: ');
-          console.log(this.currentPage);
-          console.log('nextPage:');
-          console.log(this.nextPage);
-          console.log('events');
-          console.log(this.events);
-        },
-        (error) => {
-          this.error = error.error;
-        }
-      );
-      this.eventService.getSimpleEventsByName(this.name, this.pageSize * (this.currentPageIndex + 1)).subscribe(
-        (events: SimpleEvent[]) => {
-          this.deleteFromEvents(this.previousPage);
-          this.previousPage = this.currentPage;
-          this.currentPage = this.nextPage;
-          this.nextPage = events;
-          this.events = this.events.concat(events);
-          console.log('previousPage: ');
-          console.log(this.previousPage);
-          console.log('currentPage: ');
-          console.log(this.currentPage);
-          console.log('nextPage:');
-          console.log(this.nextPage);
-          console.log('events');
-          console.log(this.events);
-        },
-        (error) => {
-          this.error = error.error;
-        }
-      );
-    this.scrollToTop();
+    const type = sessionStorage.getItem('eventType');
+    const category = sessionStorage.getItem('eventCategory');
+    const duration = sessionStorage.getItem('eventDuration');
+    const startPrice = sessionStorage.getItem('eventStartPrice');
+    const showStartsAt = sessionStorage.getItem('eventShowStartsAt');
+    const showEndsAt = sessionStorage.getItem('eventShowEndsAt');
+    console.log('show name: ' + this.name + ', show type: ' + type + ' show category: ' + category + 'starts at: ' + showStartsAt + ', event ends at: ' + showEndsAt + ', event duration: ' + duration + ', event start price: ' + startPrice);
+    this.showService.getDetailedShowsBy(name, type, category, showStartsAt, showEndsAt, duration, startPrice, this.pageSize * (this.currentPageIndex + 1)).subscribe(
+      (shows: Show[]) => {
+        this.deleteFromEvents(this.previousPage);
+        this.previousPage = this.currentPage;
+        this.currentPage = this.nextPage;
+        this.nextPage = shows;
+        this.shows = this.shows.concat(shows);
+        this.printPageStatus();
+      },
+      (error) => {
+        this.error = error.error;
+      }
+    );
+    this.searchShared.scrollToTop();
   }
 
   private loadPreviousPage() {
     this.currentPageIndex -= 1;
-    if (this.advancedSearching) {
+    if (this.currentPageIndex === 0) {
+      this.deleteFromEvents(this.nextPage);
+      this.nextPage = this.currentPage;
+      this.currentPage = this.previousPage;
+      this.previousPage = [];
+      this.printPageStatus();
+    } else {
       const type = sessionStorage.getItem('eventType');
       const category = sessionStorage.getItem('eventCategory');
-      const startsAt = sessionStorage.getItem('eventStartsAt');
-      const endsAt = sessionStorage.getItem('eventEndsAt');
       const duration = sessionStorage.getItem('eventDuration');
-      console.log('event name: ' + this.name + ', event type: ' + type + ' event category: ' + category + 'starts at: ' + startsAt + ', event ends at: ' + endsAt + ', event duration: ' + duration);
-      this.eventService.getSimpleEventsBy(this.name, type, category, startsAt, endsAt, duration, this.pageSize * (this.currentPageIndex - 1)).subscribe(
-        (events: SimpleEvent[]) => {
+      const startPrice = sessionStorage.getItem('eventStartPrice');
+      const showStartsAt = sessionStorage.getItem('eventShowStartsAt');
+      const showEndsAt = sessionStorage.getItem('eventShowEndsAt');
+      console.log('show name: ' + this.name + ', show type: ' + type + ' show category: ' + category + 'starts at: ' + showStartsAt + ', event ends at: ' + showEndsAt + ', event duration: ' + duration + ', event start price: ' + startPrice);
+      this.showService.getDetailedShowsBy(name, type, category, showStartsAt, showEndsAt, duration, startPrice, this.pageSize * (this.currentPageIndex - 1)).subscribe(
+        (shows: Show[]) => {
           this.deleteFromEvents(this.nextPage);
           this.nextPage = this.currentPage;
           this.currentPage = this.previousPage;
-          this.previousPage = events;
-          this.events = events.concat(this.events);
-          console.log('previousPage: ');
-          console.log(this.previousPage);
-          console.log('currentPage: ');
-          console.log(this.currentPage);
-          console.log('nextPage:');
-          console.log(this.nextPage);
-          console.log('events');
-          console.log(this.events);
-        },
-        (error) => {
-          this.error = error.error;
-        }
-      );
-    } else {
-      this.eventService.getSimpleEventsByName(this.name, this.pageSize * (this.currentPageIndex - 1)).subscribe(
-        (events: SimpleEvent[]) => {
-          this.deleteFromEvents(this.nextPage);
-          this.nextPage = this.currentPage;
-          this.currentPage = this.previousPage;
-          this.previousPage = events;
-          this.events = events.concat(this.events);
-          console.log('previousPage: ');
-          console.log(this.previousPage);
-          console.log('currentPage: ');
-          console.log(this.currentPage);
-          console.log('nextPage:');
-          console.log(this.nextPage);
-          console.log('events');
-          console.log(this.events);
+          this.previousPage = shows;
+          this.shows = shows.concat(this.shows);
+          this.printPageStatus();
         },
         (error) => {
           this.error = error.error;
         }
       );
     }
-    this.scrollToTop();
-  }
 
-  private scrollToTop() {
-    window.focus();
-    window.scrollTo(0, 0);
+    this.searchShared.scrollToTop();
   }
 
   private deleteFromEvents(events: SimpleEvent[]) {
     if (events !== undefined) {
       if (events.length !== 0) {
         events.forEach(value => {
-          const index = this.events.indexOf(value, 0);
-          this.events.splice(index, 1);
+          const index = this.shows.indexOf(value, 0);
+          this.shows.splice(index, 1);
         });
       }
     }
-  }*/
+  }
+
+  printPageStatus() {
+    console.log('previousPage: ');
+    console.log(this.previousPage);
+    console.log('currentPage: ');
+    console.log(this.currentPage);
+    console.log('nextPage:');
+    console.log(this.nextPage);
+    console.log('shows');
+    console.log(this.shows);
+  }
 }

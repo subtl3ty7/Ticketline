@@ -1,9 +1,6 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
-import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Seat;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Section;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
+import at.ac.tuwien.sepm.groupphase.backend.entity.*;
 import at.ac.tuwien.sepm.groupphase.backend.repository.ShowRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.ShowService;
 import org.hibernate.Hibernate;
@@ -39,20 +36,31 @@ public class CustomShowService implements ShowService {
         return seats;
     }
 
+    @Transactional
     @Override
     public List<Show> getShowsByEventLocationId(Long eventLocationId, int size) {
         int page = calculateNumberOfPage(size);
         PageRequest pageRequest = PageRequest.of(page, 10);
         Page<Show> showsPage = showRepository.findShowsByEventLocationId(eventLocationId, pageRequest);
-        return showsPage.toList();
+        List<Show> showsList = showsPage.toList();
+        for(Show show: showsList) {
+            Hibernate.initialize(show.getEventLocation());
+        }
+        return showsList;
     }
 
+    @Transactional
     @Override
     public List<Show> findShowsAdvanced(String name, Integer type, Integer category, LocalDateTime startsAt, LocalDateTime endsAt, Duration showDuration, Integer price, int size) {
         int page = calculateNumberOfPage(size);
         PageRequest pageRequest = PageRequest.of(page, 10);
         Page<Show> showsPage = showRepository.findShowsByEventNameContainingIgnoreCaseAndEventTypeOrEventTypeIsNullAndEventCategoryOrEventCategoryIsNullAndStartsAtIsGreaterThanEqualAndEndsAtIsLessThanEqualAndDurationLessThanEqualAndPriceLessThanEqualOrPriceIsNull(name, type, category, startsAt, endsAt, showDuration, price, pageRequest);
-        return showsPage.toList();
+        List<Show> showsList = showsPage.toList();
+        for(Show show: showsList) {
+            Hibernate.initialize(show.getEventLocation());
+
+        }
+        return showsList;
     }
 
     @Override

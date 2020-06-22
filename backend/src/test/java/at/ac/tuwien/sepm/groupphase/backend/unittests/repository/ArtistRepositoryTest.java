@@ -61,7 +61,7 @@ public class ArtistRepositoryTest implements TestData {
         );
     }
 
-    @Test
+    /*@Test
     public void givenNothing_whenSave1Artists_thenFindListWithOneElementAndFindArtistByNameIgnoreCase() {
         artistRepository.save(artist);
 
@@ -69,5 +69,5 @@ public class ArtistRepositoryTest implements TestData {
             () -> assertEquals(1, artistRepository.findAll().size()),
             () -> assertEquals(1, artistRepository.findArtistsByFirstNameContainingIgnoreCaseAndLastNameContainingIgnoreCase("NAME", "LASTname").size())
         );
-    }
+    }*/
 }
