@@ -18,7 +18,7 @@ public interface NewsService {
 
     News findByNewsCode(String eventCode, Authentication auth);
 
-    List<News> findAll();
+    List<News> findAll(int size);
 
-    List<News> findSimpleNewsByParam(String newsCode, String title, String author, LocalDateTime startRangeDate, LocalDateTime endRangeDate);
+    List<News> findSimpleNewsByParam(String newsCode, String title, String author, LocalDateTime startRangeDate, LocalDateTime endRangeDate, int size);
 }

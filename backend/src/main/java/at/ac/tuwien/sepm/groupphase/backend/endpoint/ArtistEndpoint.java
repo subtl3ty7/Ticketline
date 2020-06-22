@@ -32,7 +32,7 @@ public class ArtistEndpoint {
     }
 
     @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
-    @GetMapping(value = "", params = {"firstName", "lastName"})
+    @GetMapping(value = "", params = {"firstName", "lastName", "size"})
     @ApiOperation(
         value = "Get artists by first and last name"
     )
@@ -41,9 +41,9 @@ public class ArtistEndpoint {
         @ApiResponse(code = 404, message = "No Artist is found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<List<ArtistDto>> findArtistsByFirstAndLastname(@RequestParam String firstName, @RequestParam String lastName) {
+    public ResponseEntity<List<ArtistDto>> findArtistsByFirstAndLastname(@RequestParam String firstName, @RequestParam String lastName, @RequestParam int size) {
         LOGGER.info("GET /api/v1/artist with firstname '"+ firstName + "' and lastname '" + lastName + "'");
-        List<ArtistDto> result = artistMapper.artistsToArtistDtos(artistService.findArtistsByFirstAndLastName(firstName, lastName));
+        List<ArtistDto> result = artistMapper.artistsToArtistDtos(artistService.findArtistsByFirstAndLastName(firstName, lastName, size));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

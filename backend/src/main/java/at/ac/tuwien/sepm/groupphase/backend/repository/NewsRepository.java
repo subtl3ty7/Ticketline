@@ -1,8 +1,9 @@
 package at.ac.tuwien.sepm.groupphase.backend.repository;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
 import at.ac.tuwien.sepm.groupphase.backend.entity.News;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -26,6 +27,8 @@ public interface NewsRepository extends JpaRepository<News, Long> {
      */
     List<News> findAllBySeenByContainsOrderByPublishedAtDesc(Customer customer);
 
+    Page<News> findAll(Pageable pageable);
+
     /**
      * Find latest News entries
      * @return A list of News
@@ -40,9 +43,10 @@ public interface NewsRepository extends JpaRepository<News, Long> {
      */
     News findByNewsCode(String newsCode);
 
-    List<News> findAllByNewsCodeContainingIgnoreCaseAndTitleContainingIgnoreCaseAndAuthorContainingIgnoreCaseAndPublishedAtBetween(String newsCode,
+    Page<News> findAllByNewsCodeContainingIgnoreCaseAndTitleContainingIgnoreCaseAndAuthorContainingIgnoreCaseAndPublishedAtBetween(String newsCode,
                                                                                                                                    String title,
                                                                                                                                    String author,
                                                                                                                                    LocalDateTime startRangeDate,
-                                                                                                                                   LocalDateTime endRangeDate);
+                                                                                                                                   LocalDateTime endRangeDate,
+                                                                                                                                   Pageable pageable);
 }

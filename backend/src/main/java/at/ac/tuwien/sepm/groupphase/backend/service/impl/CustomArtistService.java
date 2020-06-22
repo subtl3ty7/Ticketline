@@ -1,11 +1,14 @@
 package at.ac.tuwien.sepm.groupphase.backend.service.impl;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.Artist;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
 import at.ac.tuwien.sepm.groupphase.backend.repository.ArtistRepository;
 import at.ac.tuwien.sepm.groupphase.backend.service.ArtistService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManagerFactory;
@@ -26,9 +29,20 @@ public class CustomArtistService implements ArtistService {
     }
 
     @Override
-    public List<Artist> findArtistsByFirstAndLastName(String firstName, String lastName) {
+    public List<Artist> findArtistsByFirstAndLastName(String firstName, String lastName, int size) {
         LOGGER.debug("Find artists by first/last name");
-        return artistRepository.findArtistsByFirstNameContainingIgnoreCaseAndLastNameContainingIgnoreCase(firstName, lastName);
+        int page = calculateNumberOfPage(size);
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        Page<Artist> artistsPage = artistRepository.findArtistsByFirstNameContainingIgnoreCaseAndLastNameContainingIgnoreCase(firstName, lastName, pageRequest);
+        return artistsPage.toList();
+    }
+
+    private int calculateNumberOfPage(int size) {
+        int result = 0;
+        if (size != 0) {
+            result = size / 10;
+        }
+        return result;
     }
 
     @Override

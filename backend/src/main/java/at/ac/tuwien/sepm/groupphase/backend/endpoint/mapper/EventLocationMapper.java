@@ -12,10 +12,10 @@ import java.util.List;
 @Mapper
 public interface EventLocationMapper {
     @Named(value = "EventLocationToEventLocationDto")
-    EventLocationDto EventLocationToEventLocationDto(EventLocation eventLocation);
+    EventLocationDto eventLocationToEventLocationDto(EventLocation eventLocation);
 
     @IterableMapping(qualifiedByName = "EventLocationToEventLocationDto")
-    List<EventLocationDto> EventLocationToEventLocationDto(List<EventLocation> eventLocations);
+    List<EventLocationDto> eventLocationToEventLocationDto(List<EventLocation> eventLocations);
 
     @Named(value = "eventLocationDtoToEventLocation")
     EventLocation eventLocationDtoToEventLocation(EventLocationDto eventLocation);

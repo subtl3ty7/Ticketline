@@ -84,3 +84,10 @@
 .flex {
   display: flex;
 }
+
+::ng-deep .mat-paginator-range-label {
+  color: rgba(0, 0, 0, 0) !important;
+}
+::ng-deep .mat-icon-button {
+  color: rgba(0, 0, 0, 0.26) !important;
+}

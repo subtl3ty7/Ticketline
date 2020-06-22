@@ -49,17 +49,19 @@ export class NewsService {
     return this.httpClient.get<News>(this.newsBaseUri + '/' + newsCode);
   }
 
-  getAllSimpleNews() {
-    return this.httpClient.get<SimpleNews[]>(this.newsBaseUri + '/all');
+  getAllSimpleNews(size: number) {
+    console.log('Load with size ' + size);
+    return this.httpClient.get<SimpleNews[]>(this.newsBaseUri + '/all' + '?size=' + size);
   }
 
-  getSimpleNewsByParameters(searchNews: SearchNews) {
+  getSimpleNewsByParameters(searchNews: SearchNews, size: number) {
     const params = new HttpParams()
       .set('newsCode', searchNews.newsCode)
       .set('title', searchNews.title)
       .set('author', searchNews.author)
       .set('startRange', searchNews.publishedAtStartRange.toDateString())
-      .set('endRange', searchNews.publishedAtEndRange.toDateString());
+      .set('endRange', searchNews.publishedAtEndRange.toDateString())
+      .set('size', size.toString());
     return this.httpClient.get<SimpleNews[]>(this.newsBaseUri + '/', {params});
 }
 

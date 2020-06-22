@@ -30,13 +30,14 @@ export class ArtistService {
     console.error(errorMessage);
     return throwError(errorMessage);
   }
-  getArtistsByFirstAndLastName(firstName: string, lastName: string): Observable<Artist[]> {
+  getArtistsByFirstAndLastName(firstName: string, lastName: string, size: number): Observable<Artist[]> {
     console.log('Load artists by first and last name.');
     let params = new HttpParams();
     firstName = firstName === undefined ? '' : firstName;
     lastName = lastName === undefined ? '' : lastName;
     params = params.set('firstName', firstName);
     params = params.set('lastName', lastName);
+    params = params.set('size', size.toString());
     const searchForm = '?' + params.toString();
 
     console.log('Navigating to backend with URI: ' + this.artistBaseUri + searchForm);
