@@ -32,7 +32,7 @@ export class CreateNewsComponent implements OnInit {
           this.router.navigate(['administration', 'news']);
         },
         (error) => {
-          this.error = error.error;
+          this.error = error;
         }
       );
     }
