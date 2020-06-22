@@ -85,7 +85,6 @@ public interface TestData {
                 .id(ID).name(FNAME).eventLocationId(ID).description(DESC).capacity(TOTAL).seats(SEATS).build());
         }
     };
-    Long LOCATIONID = 1L;
     String COLUMN = "A";
     String ROW = "1";
     List<Seat> SEATS = new ArrayList<>() {
@@ -107,12 +106,6 @@ public interface TestData {
     String PAY = "card";
     LocalDateTime GENERATE = LocalDateTime.of(2020,6,1,10,0,0);
     String NUM = "000001";
-    List<Ticket> TICKETS = new ArrayList<>(){
-        {
-            add(Ticket.builder().ticketId(ID).ticketCode(USER_CODE).isPurchased(false).isReserved(false)
-                .purchaseDate(START).price(PRICE).userCode(USER_CODE).seat(SEATS.get(0)).show(SHOWS.get(0)).build());
-        }
-    };
 
     String SHOW_BASE_URI = BASE_URI + "/shows";
     String INVOICE_BASE_URI = BASE_URI + "/invoices";
