@@ -92,7 +92,6 @@ export class EventService {
     return this.httpClient.get<EventTypes[]>(this.eventBaseUri + '/eventTypes');
   }
 
-
   getSimpleEventsBy(name: string, type: string, category: string, startsAt: string, endsAt: string, duration: string, pageSize: number): Observable<SimpleEvent[]> {
     console.log('Load events advanced');
     if (startsAt !== '') {

@@ -30,6 +30,8 @@ export class ArtistEventComponent implements OnInit {
   ngOnInit(): void {
     this.artistId = sessionStorage.getItem('artistId');
     this.artistName = sessionStorage.getItem('artistName');
+    this.previousPage = [];
+    this.nextPage = [];
     this.eventService.getSimpleEventsByArtistId(parseInt(this.artistId, 10), 0).subscribe(
       (firstPageEvents: SimpleEvent[]) => {
         this.events = firstPageEvents.slice(0, this.pageSize);

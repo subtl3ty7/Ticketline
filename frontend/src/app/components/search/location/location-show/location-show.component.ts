@@ -90,20 +90,28 @@ export class LocationShowComponent implements OnInit {
 
   private loadPreviousPage() {
     this.currentPageIndex -= 1;
-    this.showService.getShowsByEventLocationId(this.eventLocationId, this.pageSize * (this.currentPageIndex - 1)).subscribe(
-      (shows: Show[]) => {
-        this.deleteFromShows(this.nextPage);
-        this.nextPage = this.currentPage;
-        this.currentPage = this.previousPage;
-        this.previousPage = shows;
-        this.shows = shows.concat(this.shows);
-        this.printPageStatus();
-      },
-      (error) => {
-        this.error = error.error;
-      }
-    );
-    this.searchShared.scrollToTop();
+    if (this.currentPageIndex === 0) {
+      this.deleteFromShows(this.nextPage);
+      this.nextPage = this.currentPage;
+      this.currentPage = this.previousPage;
+      this.previousPage = [];
+      this.printPageStatus();
+    } else {
+      this.showService.getShowsByEventLocationId(this.eventLocationId, this.pageSize * (this.currentPageIndex - 1)).subscribe(
+        (shows: Show[]) => {
+          this.deleteFromShows(this.nextPage);
+          this.nextPage = this.currentPage;
+          this.currentPage = this.previousPage;
+          this.previousPage = shows;
+          this.shows = shows.concat(this.shows);
+          this.printPageStatus();
+        },
+        (error) => {
+          this.error = error.error;
+        }
+      );
+      this.searchShared.scrollToTop();
+    }
   }
 
   openPurchase(show: Show) {

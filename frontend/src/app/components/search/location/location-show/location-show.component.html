@@ -63,13 +63,13 @@
               <div class="row" *ngIf="previousPage || nextPage">
                 <nav class="search-navigation">
                   <ul class="pagination">
-                    <li class="page-item" *ngIf="previousPage.length !== 0 && currentPageIndex > 0" style="margin-right: auto"> <!-- *ngIf="previousPage" -->
+                    <li class="page-item" *ngIf="previousPage.length !== 0 && currentPageIndex > 0" style="margin-right: auto">
                       <a class="page-link" (click)="loadPreviousPage()">
                         <span aria-hidden="true">&laquo; Zurück</span>
                         <span class="sr-only">Previous</span>
                       </a>
                     </li>
-                    <li class="page-item" *ngIf="nextPage.length !== 0" style="margin-left: auto"> <!-- *ngIf="nextPage" -->
+                    <li class="page-item" *ngIf="nextPage.length !== 0" style="margin-left: auto">
                       <a class="page-link" (click)="loadNextPage()">
                         <span aria-hidden="true">Weiter &raquo;</span>
                         <span class="sr-only">Next</span>
