@@ -43,10 +43,17 @@ export class ArtistComponent implements OnInit, DoCheck {
     this.previousPage = [];
     this.nextPage = [];
     this.searchTerm = sessionStorage.getItem('searchTerm');
-    this.searchTermArr = this.searchTerm.split(' ', 2);
-    this.firstName = this.searchTerm[0];
-    this.lastName = this.searchTerm[1];
+    if (this.searchTerm.includes(' ')) {
+      this.searchTermArr = this.searchTerm.split(' ', 2);
+      this.firstName = this.searchTerm[0];
+      this.lastName = this.searchTerm[1];
+    } else {
+      this.firstName = this.searchTerm;
+      this.lastName = '';
+    }
     console.log('first name: ' + this.firstName + ', last name: ' + this.lastName);
+    console.log('searchTerm: ' + this.searchTerm);
+    console.log('arr: ' + this.searchTermArr);
     this.artistService.getArtistsByFirstAndLastName(this.firstName, this.lastName, 0).subscribe(
       (firstPageArtists: Artist[]) => {
         this.artists = firstPageArtists.slice(0, this.pageSize);
