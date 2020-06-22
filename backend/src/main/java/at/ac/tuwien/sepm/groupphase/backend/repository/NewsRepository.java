@@ -25,7 +25,7 @@ public interface NewsRepository extends JpaRepository<News, Long> {
      * @param customer the customer
      * @return A list of News
      */
-    List<News> findAllBySeenByContainsOrderByPublishedAtDesc(Customer customer);
+    List<News> findAllBySeenByContainsOrderByPublishedAtDesc(Customer customer, Pageable pageable);
 
     Page<News> findAll(Pageable pageable);
 
@@ -33,7 +33,7 @@ public interface NewsRepository extends JpaRepository<News, Long> {
      * Find latest News entries
      * @return A list of News
      */
-    List<News> findAllByOrderByPublishedAtDesc();
+    List<News> findAllByOrderByPublishedAtDesc(Pageable pageable);
 
     /**
      * Find a News entry by newsCode.

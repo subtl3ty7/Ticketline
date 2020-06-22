@@ -77,3 +77,13 @@ label {
 .tab-divider {
   border-right: 2px white solid;
 }
+
+.search-navigation {
+  width: 100%;
+  margin-top: 25px;
+}
+
+.page-link{
+  font-size: 17px;
+  width: auto;
+}

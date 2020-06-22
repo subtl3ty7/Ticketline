@@ -92,11 +92,11 @@ public class NewsEndpoint {
         notes = "Get all News Entries that this customer has already seen",
         authorizations = {@Authorization(value = "apiKey")})
     @ApiResponse(code = 200, message = "Successfully retrieved News Entries")
-    public List<NewsDto> getSeen(Integer limit, Authentication auth ) {
-        LOGGER.info("GET /api/v1/news/seen?limit=" + limit);
+    public List<NewsDto> getSeen(Integer page, Integer size, Authentication auth ) {
+        LOGGER.info("GET /api/v1/news/seen?page=" + page + "&size=" + size);
 
         return newsMapper.newsToNewsDto(
-            newsService.findSeenNews(auth, limit)
+            newsService.findSeenNews(page, size, auth)
         );
     }
 
@@ -107,11 +107,11 @@ public class NewsEndpoint {
         value = "Get the latest News Entries",
         notes = "Get the latest News Entries")
     @ApiResponse(code = 200, message = "Successfully retrieved News Entries")
-    public List<NewsDto> getLatest(Integer limit) {
-        LOGGER.info("GET /api/v1/news/latest?limit=" + limit);
+    public List<NewsDto> getLatest(Integer page, Integer size) {
+        LOGGER.info("GET /api/v1/news/latest?page=" + page + "&size=" + size);
 
         return newsMapper.newsToNewsDto(
-            newsService.findLatest(limit)
+            newsService.findLatest(page, size)
         );
     }
     @Secured("ROLE_ADMIN")

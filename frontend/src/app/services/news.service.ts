@@ -26,21 +26,29 @@ export class NewsService {
     return this.httpClient.get<News[]>(URL);
   }
 
-  getSeen(limit: number): Observable<News[]> {
+  getSeen(page: number, size: number): Observable<News[]> {
     console.log('Load latest news that the customer has not seen yet.');
-    let URL = this.newsBaseUri + '/seen?limit=' + limit;
-    if (!limit) {
-      URL = this.newsBaseUri + '/seen';
+    if (!page) {
+      page = 0;
     }
+    if (!size) {
+      size = 0;
+    }
+    const URL = this.newsBaseUri + '/seen?page=' + page + '&size=' + size;
+    console.log(URL);
     return this.httpClient.get<News[]>(URL);
   }
 
-  getLatest(limit: number): Observable<News[]> {
+  getLatest(page: number, size: number): Observable<News[]> {
     console.log('Load latest news.');
-    let URL = this.newsBaseUri + '/latest?limit=' + limit;
-    if (!limit) {
-      URL = this.newsBaseUri + '/latest';
+    if (!page) {
+      page = 0;
     }
+    if (!size) {
+      size = 0;
+    }
+    const URL = this.newsBaseUri + '/latest?page=' + page + '&size=' + size;
+    console.log(URL);
     return this.httpClient.get<News[]>(URL);
   }
 

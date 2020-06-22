@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.parameters.P;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -74,7 +75,7 @@ public class NewsRepositoryTest implements TestData {
 
         assertAll(
             () -> assertEquals(2, newsRepository.findAll().size()),
-            () -> assertEquals(TEST_NEWS_PUBLISHED_AT, newsRepository.findAllByOrderByPublishedAtDesc().get(0).getPublishedAt())
+            () -> assertEquals(TEST_NEWS_PUBLISHED_AT, newsRepository.findAllByOrderByPublishedAtDesc(PageRequest.of(0, 1)).get(0).getPublishedAt())
         );
     }
 
