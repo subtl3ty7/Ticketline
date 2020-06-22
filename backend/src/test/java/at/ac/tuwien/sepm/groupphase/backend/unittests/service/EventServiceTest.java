@@ -73,13 +73,13 @@ public class EventServiceTest implements TestData {
     public void whenFindEventsByNonExistingArtistId_thenValidationException() {
 
         assertThrows(ValidationException.class,
-            () ->   eventService.findEventsByArtistId(-1L));
+            () ->   eventService.findEventsByArtistId(-1L, 10));
     }
 
     @Test
     public void whenFindEventsByNameContainingLatterA_thenNonEmptyList() {
 
-        List<Event> events = eventService.findEventsByName("a");
+        List<Event> events = eventService.findEventsByName("a", 10);
         Event event = events.get(0);
         assertNotNull(event.getName());
     }
