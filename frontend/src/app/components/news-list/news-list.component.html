@@ -37,12 +37,12 @@
           <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-all" role="tabpanel" aria-labelledby="pills-all-tab">
               <app-error-notification *ngIf="errorLatest" [error]="errorLatest"></app-error-notification>
-              <app-news-list-inner [news]="latestNews"></app-news-list-inner>
+              <app-news-list-inner *ngIf="latestNews" [news]="latestNews"></app-news-list-inner>
               <app-spinner *ngIf="latestNews === undefined"></app-spinner>
             </div>
             <div class="tab-pane fade" id="pills-read" role="tabpanel" aria-labelledby="pills-read-tab">
               <app-error-notification *ngIf="errorSeen" [error]="errorSeen"></app-error-notification>
-              <app-news-list-inner [news]="seenNews"></app-news-list-inner>
+              <app-news-list-inner *ngIf="seenNews" [news]="seenNews"></app-news-list-inner>
               <app-spinner *ngIf="latestNews === undefined"></app-spinner>
             </div>
           </div>
