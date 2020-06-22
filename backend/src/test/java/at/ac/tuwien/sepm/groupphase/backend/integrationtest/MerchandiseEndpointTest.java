@@ -97,7 +97,7 @@ public class MerchandiseEndpointTest implements TestData {
 
     @Order(1)
     @Test
-    public void givenNothing_whenBuyMerchandiseWithPoints_then201AndMerchandiseSavedWithProperties() throws Exception{
+    public void givenMerchandise_whenBuyWithPoints_then201AndMerchandiseSavedWithProperties() throws Exception{
         userRepository.save(abstractUser);
         merchandiseRepository.save(merchandise);
         MerchandiseDto merchandiseDto = merchandiseMapper.merchandiseToMerchandiseDto(merchandise);
@@ -129,7 +129,7 @@ public class MerchandiseEndpointTest implements TestData {
 
     @Order(2)
     @Test
-    public void givenNothing_whenBuyMerchandiseWithMoney_then201AndMerchandiseSavedWithProperties() throws Exception{
+    public void givenMerchandise_whenBuyWithMoney_then201AndMerchandiseSavedWithProperties() throws Exception{
         MerchandiseDto merchandiseDto = merchandiseMapper.merchandiseToMerchandiseDto(merchandise);
         String body = objectMapper.writeValueAsString(merchandiseDto);
 
