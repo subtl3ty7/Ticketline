@@ -11,26 +11,26 @@ public interface NewsService {
     /**
      * Find the latest unseen news
      *
-     * @param auth
-     * @param limit
-     * @return
+     * @param auth - stores user authentication data (for example - email)
+     * @param limit - how many news should be displayed
+     * @return a list of the latest unseen news
      */
     List<News> findLatestUnseen(Authentication auth, Integer limit);
 
     /**
      * Find all seen news
      *
-     * @param auth
-     * @param limit
-     * @return
+     * @param auth - stores user authentication data (for example - email)
+     * @param limit - how many news should be displayed
+     * @return a list of all the seen news
      */
     List<News> findSeenNews(Authentication auth, Integer limit);
 
     /**
      * Find the latest news
      *
-     * @param limit
-     * @return
+     * @param limit - how many news should be displayed
+     * @return a list of the latest news
      */
     List<News> findLatest(Integer limit);
 
@@ -45,9 +45,9 @@ public interface NewsService {
     /**
      * Find news by news code
      *
-     * @param eventCode
-     * @param auth
-     * @return
+     * @param eventCode - code of the news
+     * @param auth - stores user authentication data (for example - email)
+     * @return - a news entry that maches the given code
      */
     News findByNewsCode(String eventCode, Authentication auth);
 
