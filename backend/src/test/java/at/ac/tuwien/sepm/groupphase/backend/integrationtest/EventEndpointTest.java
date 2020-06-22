@@ -8,9 +8,8 @@ import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleMessageDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EventMapper;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.UserMapper;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Image;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
+import at.ac.tuwien.sepm.groupphase.backend.entity.*;
+import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.EventRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.security.JwtTokenizer;
@@ -72,7 +71,6 @@ public class EventEndpointTest implements TestData {
         .duration(DURATION)
         .prices(PRICES)
         .totalTicketsSold(TOTAL)
-        .shows(SHOWS)
         .photo(PHOTO)
         .build();
 
@@ -91,20 +89,8 @@ public class EventEndpointTest implements TestData {
             .duration(DURATION)
             .prices(PRICES)
             .totalTicketsSold(TOTAL)
-            .shows(SHOWS)
             .photo(PHOTO)
             .build();
-    }
-
-    @Test
-    public void givenUserLoggedIn_whenGetTop10_then404() throws Exception {
-        MvcResult mvcResult = this.mockMvc.perform(get(EVENT_TOP10)
-            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
-            .andDo(print())
-            .andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-
-        assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
     }
 
     @Test
@@ -121,6 +107,28 @@ public class EventEndpointTest implements TestData {
         MockHttpServletResponse response = mvcResult.getResponse();
 
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.value(), response.getStatus());
+    }
+
+    @Test
+    public void givenEvent_whenGetAll_then200andListWith1Element() throws Exception {
+        eventRepository.save(event);
+
+        MvcResult mvcResult = this.mockMvc.perform(get(EVENT_BASE_URI + "/all")
+            .param("size", "1")
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
+            .andDo(print())
+            .andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        assertAll(
+            () -> assertEquals(HttpStatus.OK.value(), response.getStatus()),
+            () -> assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType())
+        );
+
+        List<SimpleEventDto> simpleEventDtos = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
+            SimpleEventDto[].class));
+
+        assertEquals(1, simpleEventDtos.size());
     }
 
     @Test
@@ -167,11 +175,80 @@ public class EventEndpointTest implements TestData {
     }
 
     @Test
+    public void givenEvent_whenGetAllCategories_then200andListWith1Element() throws Exception {
+        eventRepository.save(event);
+
+        MvcResult mvcResult = this.mockMvc.perform(get(EVENT_BASE_URI + "/eventCategories")
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
+            .andDo(print())
+            .andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        assertAll(
+            () -> assertEquals(HttpStatus.OK.value(), response.getStatus()),
+            () -> assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType())
+        );
+
+        List<EventCategoryEnum> eventCategoryEnums = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
+            EventCategoryEnum[].class));
+
+        assertEquals(11, eventCategoryEnums.size());
+    }
+
+    @Test
+    public void givenEvent_whenGetAllTypes_then200andListWith1Element() throws Exception {
+        eventRepository.save(event);
+
+        MvcResult mvcResult = this.mockMvc.perform(get(EVENT_BASE_URI + "/eventTypes")
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
+            .andDo(print())
+            .andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        assertAll(
+            () -> assertEquals(HttpStatus.OK.value(), response.getStatus()),
+            () -> assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType())
+        );
+
+        List<EventTypeEnum> eventTypeEnums = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
+            EventTypeEnum[].class));
+
+        assertEquals(4, eventTypeEnums.size());
+    }
+
+    @Test
     public void givenEvent_whenGetEventByCode_then200AndEventWithProperties() throws Exception {
         eventRepository.save(event);
 
+        MvcResult mvcResult = this.mockMvc.perform(get(EVENT_BASE_URI + "/" + event.getEventCode())
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
+            .andDo(print())
+            .andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        assertAll(
+            () -> assertEquals(HttpStatus.OK.value(), response.getStatus()),
+            () -> assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType())
+        );
+
+        DetailedEventDto detailedEventDto = objectMapper.readValue(response.getContentAsString(), DetailedEventDto.class);
+        assertAll(
+            () -> assertEquals(USER_CODE, detailedEventDto.getEventCode()),
+            () -> assertEquals(NAME, detailedEventDto.getName()),
+            () -> assertEquals(DESC, detailedEventDto.getDescription()),
+            () -> assertEquals(START, detailedEventDto.getStartsAt()),
+            () -> assertEquals(END, detailedEventDto.getEndsAt()),
+            () -> assertEquals(PRICES.get(0), detailedEventDto.getStartPrice()),
+            () -> assertEquals(TOTAL, detailedEventDto.getTotalTicketsSold())
+        );
+    }
+
+    @Test
+    public void givenEvent_whenGetEventByName_then200AndEventWithProperties() throws Exception {
+        eventRepository.save(event);
+
         MvcResult mvcResult = this.mockMvc.perform(get(EVENT_BASE_URI)
-            .param("name", NAME)
+            .param("name", event.getName())
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
             .andDo(print())
             .andReturn();
@@ -199,8 +276,7 @@ public class EventEndpointTest implements TestData {
     public void givenEvent_whenDeleteEventByCode_then204AndEmptyList() throws Exception {
         eventRepository.save(event);
 
-        MvcResult mvcResult = this.mockMvc.perform(delete(EVENT_BASE_URI + "/"
-            + eventRepository.findAll().get(0).getEventCode())
+        MvcResult mvcResult = this.mockMvc.perform(delete(EVENT_BASE_URI + "/" + event.getEventCode())
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
             .andDo(print())
             .andReturn();
@@ -210,7 +286,24 @@ public class EventEndpointTest implements TestData {
             () -> assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatus()),
             () -> assertEquals(0, eventRepository.findAll().size())
         );
+    }
 
+    @Test
+    public void givenEvent_whenFindEventsByParams_then500() throws Exception {
+        eventRepository.save(event);
+
+        MvcResult mvcResult = this.mockMvc.perform(get(EVENT_BASE_URI)
+            .param("eventCode", event.getEventCode())
+            .param("name", event.getName())
+            .param("startRange", START.toString())
+            .param("endRange", END.toString())
+            .contentType(MediaType.APPLICATION_JSON)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
+            .andDo(print())
+            .andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.value(), response.getStatus());
     }
 
 }

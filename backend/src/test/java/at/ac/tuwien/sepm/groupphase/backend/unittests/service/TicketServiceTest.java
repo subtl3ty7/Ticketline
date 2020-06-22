@@ -2,6 +2,7 @@ package at.ac.tuwien.sepm.groupphase.backend.unittests.service;
 
 import at.ac.tuwien.sepm.groupphase.backend.basetest.TestData;
 import at.ac.tuwien.sepm.groupphase.backend.entity.*;
+import at.ac.tuwien.sepm.groupphase.backend.exception.ValidationException;
 import at.ac.tuwien.sepm.groupphase.backend.repository.SeatRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.ShowRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.TicketRepository;
@@ -67,5 +68,33 @@ public class TicketServiceTest implements TestData {
 
         assertEquals(2, ticketService.allTicketsOfUser(USER_TICKET.getUserCode()).size());
 
+    }
+
+    @Test
+    public void whenBuyTicketWithoutSeatAndShow_thenValidationException() {
+
+        assertThrows(ValidationException.class,
+            () ->   ticketService.save(ticket));
+    }
+
+    @Test
+    public void whenBuyReservedTicketWithNonExistingCode_thenValidationException() {
+
+        assertThrows(ValidationException.class,
+            () ->   ticketService.purchaseReservedTicket("wrong"));
+    }
+
+    @Test
+    public void whenCancelReservedTicketWithNonExistingCode_thenValidationException() {
+
+        assertThrows(ValidationException.class,
+            () ->   ticketService.cancelReservedTicket("wrong"));
+    }
+
+    @Test
+    public void whenCancelPurchasedTicketWithNonExistingCode_thenValidationException() {
+
+        assertThrows(ValidationException.class,
+            () ->   ticketService.cancelPurchasedTicket("wrong"));
     }
 }

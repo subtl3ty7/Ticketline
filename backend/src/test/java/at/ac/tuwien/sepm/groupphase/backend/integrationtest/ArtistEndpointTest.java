@@ -72,7 +72,7 @@ public class ArtistEndpointTest implements TestData {
     }
 
     @Test
-    public void givenNothing_whenFindByNonExistingName_then200AndEmptyList() throws Exception{
+    public void givenArtist_whenFindByNonExistingName_then200AndEmptyList() throws Exception{
         artistRepository.save(artist);
 
         MvcResult mvcResult = this.mockMvc.perform(get(ARTIST_BASE_URI)
