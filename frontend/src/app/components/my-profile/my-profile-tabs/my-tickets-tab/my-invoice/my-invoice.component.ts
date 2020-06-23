@@ -3,6 +3,7 @@ import {SimpleTicket} from '../../../../../dtos/simple-ticket';
 import {TicketService} from '../../../../../services/ticket.service';
 import {InvoiceService} from '../../../../../services/invoice.service';
 import {Router} from '@angular/router';
+import {CommonModule} from '@angular/common';
 
 @Component({
   selector: 'app-my-invoice',
