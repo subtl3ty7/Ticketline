@@ -18,7 +18,7 @@ public interface NewsService {
     List<News> findLatestUnseen(Authentication auth, Integer limit);
 
     /**
-     * Find all seen news
+     * Find all news articles that had been seen by the user
      *
      * @param auth - stores user authentication data (for example - email)
      * @param limit - how many news should be displayed
@@ -69,3 +69,5 @@ public interface NewsService {
      */
     List<News> findSimpleNewsByParam(String newsCode, String title, String author, LocalDateTime startRangeDate, LocalDateTime endRangeDate);
 }
+
+
