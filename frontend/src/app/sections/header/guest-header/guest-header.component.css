@@ -259,4 +259,6 @@ result:hover {
 
 }
 
-
+img {
+  cursor: pointer;
+}
