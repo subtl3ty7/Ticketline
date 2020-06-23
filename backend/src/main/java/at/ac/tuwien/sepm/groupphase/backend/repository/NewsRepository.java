@@ -38,7 +38,7 @@ public interface NewsRepository extends JpaRepository<News, Long> {
     /**
      * Find a News entry by newsCode.
      *
-     * @param newsCode
+     * @param newsCode - news code to look for
      * @return a single News entry which has the corresponding event code
      */
     News findByNewsCode(String newsCode);

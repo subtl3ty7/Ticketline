@@ -9,16 +9,44 @@ import java.util.List;
 
 public interface EventService {
 
+    /**
+     * Find top 10 events of the month.
+     *
+     * @return a list of events that are in top 10 events.
+     */
     List<Event> findTop10EventsOfMonth();
 
+    /**
+     * Find top 10 events of the month in the given category.
+     *
+     * @param category - a category to filter the events.
+     * @return a list of events that are top 10 events in the given category.
+     */
     List<Event> findTop10EventsOfMonthByCategory(String category);
 
     List<Event> findAllEvents(int size);
 
+    /**
+     * Create a new event
+     *
+     * @param event - event object that needs to be created
+     * @return a single, newly-created event
+     */
     Event createNewEvent(Event event);
 
+    /**
+     * Find event by its eventCode
+     *
+     * @param eventCode - code of the event to look for
+     * @return a single event that matches the given eventCode
+     */
     Event findByEventCode(String eventCode);
 
+    /**
+     * Find and delete event with the given eventCode
+     *
+     * @param eventCode - code of the event to look for and to delete
+     */
     void deletebyEventCode(String eventCode);
 
     List<Event> findEventsByArtistId(Long artistId, int size);

@@ -10,8 +10,26 @@ import java.util.List;
 @Repository
 public interface ResetPasswordRepository extends JpaRepository<ResetPassword, Long> {
 
-   ResetPassword findByEmail(String email);
-   ResetPassword findByResetPasswordCode(String resetPasswordCode);
-   List<ResetPassword> findAllByCreatedAtBefore(LocalDateTime localDateTime);
+    /**
+     *
+     *
+     * @param email - email to look for
+     * @return
+     */
+    ResetPassword findByEmail(String email);
+
+    /**
+     *
+     * @param resetPasswordCode - reset password code to look for
+     * @return
+     */
+    ResetPassword findByResetPasswordCode(String resetPasswordCode);
+
+    /**
+     *
+     * @param localDateTime - local date time to look for
+     * @return
+     */
+    List<ResetPassword> findAllByCreatedAtBefore(LocalDateTime localDateTime);
 
 }
