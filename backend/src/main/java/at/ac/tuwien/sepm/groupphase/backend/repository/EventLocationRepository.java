@@ -17,7 +17,7 @@ public interface EventLocationRepository extends JpaRepository<EventLocation, Lo
     /**
      * Find an event location by id.
      *
-     * @param id
+     * @param id - id of the event location to look for
      * @return a single event location with id
      */
     EventLocation findEventLocationById(Long id);
@@ -29,16 +29,16 @@ public interface EventLocationRepository extends JpaRepository<EventLocation, Lo
 
 
     /**
-     * Find all the event locations that match the given criteria
+     * Find x of all the event locations that match the given criteria, where x is defined by pageable
      *
-     * @param name
-     * @param city
-     * @param street
-     * @param country
-     * @param plz
-     * @param description
-     * @param pageable
-     * @return
+     * @param name - name to look for
+     * @param city - city to look for
+     * @param street - street to look for
+     * @param country - country to look for
+     * @param plz - plz to look for
+     * @param description - description to look for
+     * @param pageable - stores information about which page user wants to retrieve
+     * @return event locations that match the given criteria
      */
     @Query(value = "" +
         "SELECT * FROM EVENT_LOCATION e " +
