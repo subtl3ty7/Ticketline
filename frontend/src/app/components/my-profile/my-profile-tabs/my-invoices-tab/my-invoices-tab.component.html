@@ -17,11 +17,8 @@
                   <a style="font-size: 18px">{{'Merchandise ' + invoice1.invoice_type}}, {{ invoice1.merchandise_code}}</a>
                 </div>
                 <div class="col-4">
-                  <button type="button" class="btn btn-outline-dark" style="white-space: nowrap; border-radius: 10px; margin-right: 10px;"  (click) = "showInvoiceDetails(invoice1)">
+                  <button type="button" class="btn btn-outline-dark" style="white-space: nowrap; border-radius: 10px;"  (click) = "showInvoiceDetails(invoice1)">
                     Anzeigen </button>
-                  <button type="button" class="btn btn-outline-primary" style="white-space: nowrap; border-radius: 10px; padding-left: 30px; padding-right: 30px; width: 100px; text-align: center;" (click) = "printInvoice(invoice1)" >
-                    PDF
-                  </button>
                 </div>
               </div>
             </div>
