@@ -215,6 +215,7 @@ li {
     margin-top: 5px;
   }
 
+
 }
 
 /*Bigger screens*/
@@ -250,5 +251,19 @@ li {
 
   .navbar-custom {
     padding-top: 40px;
+  }
+
+  .ml-lg-5, .mx-lg-5 {
+    margin-left: 0;
+  }
+
+  img {
+    max-width: 4%;
+    height: auto;
+    margin-left: 1.5%;
+  }
+
+  .navbar-brand {
+    margin-left: 0px;
   }
 }
