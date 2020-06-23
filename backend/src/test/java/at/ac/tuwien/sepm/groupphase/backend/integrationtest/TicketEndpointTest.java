@@ -130,7 +130,7 @@ public class TicketEndpointTest implements TestData {
         ticketDtos.add(detailedTicketDto);
         String body = objectMapper.writeValueAsString(ticketDtos);
 
-        MvcResult mvcResult = this.mockMvc.perform(post(TICKETS_BASE_URI + "/purchase")
+        MvcResult mvcResult = this.mockMvc.perform(post(TICKETS_BASE_URI + "/purchasing")
             .contentType(MediaType.APPLICATION_JSON)
             .content(body)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_TICKET, USER_ROLES)))
@@ -171,7 +171,7 @@ public class TicketEndpointTest implements TestData {
         ticketDtos.add(detailedTicketDto);
         String body = objectMapper.writeValueAsString(ticketDtos);
 
-        MvcResult mvcResult = this.mockMvc.perform(post(TICKETS_BASE_URI + "/reserve")
+        MvcResult mvcResult = this.mockMvc.perform(post(TICKETS_BASE_URI + "/reserving")
             .contentType(MediaType.APPLICATION_JSON)
             .content(body)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_TICKET, USER_ROLES)))
@@ -194,7 +194,7 @@ public class TicketEndpointTest implements TestData {
     @Order(3)
     public void givenReservedTicket_whenCancel_then204AndTicketNotCancelled() throws Exception {
 
-        MvcResult mvcResult = this.mockMvc.perform(delete(TICKETS_BASE_URI + "/cancelReserved/" +
+        MvcResult mvcResult = this.mockMvc.perform(delete(TICKETS_BASE_URI + "/cancelingR/" +
             ticketRepository.findTicketByTicketId(2L).getTicketCode())
             .contentType(MediaType.APPLICATION_JSON)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_TICKET, USER_ROLES)))
@@ -229,12 +229,12 @@ public class TicketEndpointTest implements TestData {
         List<DetailedTicketDto> ticketDtos = new ArrayList<>();
         ticketDtos.add(detailedTicketDto);
         String body = objectMapper.writeValueAsString(ticketDtos);
-        this.mockMvc.perform(post(TICKETS_BASE_URI + "/reserve")
+        this.mockMvc.perform(post(TICKETS_BASE_URI + "/reserving")
             .contentType(MediaType.APPLICATION_JSON)
             .content(body)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_TICKET, USER_ROLES)));
 
-        MvcResult mvcResult = this.mockMvc.perform(post(TICKETS_BASE_URI + "/purchaseReserved/" +
+        MvcResult mvcResult = this.mockMvc.perform(post(TICKETS_BASE_URI + "/purchasingR/" +
             ticketRepository.findTicketByTicketId(3L).getTicketCode())
             .contentType(MediaType.APPLICATION_JSON)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_TICKET, USER_ROLES)))
@@ -281,7 +281,7 @@ public class TicketEndpointTest implements TestData {
     @Order(6)
     public void givenPurchasedTicket_whenCancelPurchase_then204AndTicketCancelled() throws Exception{
 
-        MvcResult mvcResult = this.mockMvc.perform(delete(TICKETS_BASE_URI + "/cancelPurchased/" +
+        MvcResult mvcResult = this.mockMvc.perform(delete(TICKETS_BASE_URI + "/cancelingP/" +
             ticketRepository.findTicketByTicketId(ID).getTicketCode())
             .contentType(MediaType.APPLICATION_JSON)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_TICKET, USER_ROLES)))
