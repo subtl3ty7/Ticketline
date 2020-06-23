@@ -23,13 +23,13 @@ export class TicketService {
   public purchase(tickets: DetailedTicket[]): Observable<SimpleTicket[]> {
     console.log('saving user in the database');
     sessionStorage.removeItem('show');
-    return this.httpClient.post<SimpleTicket[]>(this.ticketBaseUri + '/purchase', tickets);
+    return this.httpClient.post<SimpleTicket[]>(this.ticketBaseUri + '/purchasing', tickets);
   }
 
   public reserve(tickets: DetailedTicket[]): Observable<DetailedTicket[]> {
     console.log('saving user in the database');
     sessionStorage.removeItem('show');
-    return this.httpClient.post<DetailedTicket[]>(this.ticketBaseUri + '/reserve', tickets);
+    return this.httpClient.post<DetailedTicket[]>(this.ticketBaseUri + '/reserving', tickets);
   }
 
   private handleError(err: HttpErrorResponse) {
@@ -50,19 +50,19 @@ export class TicketService {
   }
   cancelReservedTicket(ticketCode: String) {
     console.log('Cancel ticket with ticketCode ' + ticketCode);
-    return this.httpClient.delete(this.ticketBaseUri + '/cancelReserved/' + ticketCode).pipe(
+    return this.httpClient.delete(this.ticketBaseUri + '/cancelingR/' + ticketCode).pipe(
       catchError(this.handleError)
     );
   }
   cancelPurchasedTicket(ticketCode: String) {
     console.log('Cancel ticket with ticketCode ' + ticketCode);
-    return this.httpClient.delete(this.ticketBaseUri + '/cancelPurchased/' + ticketCode).pipe(
+    return this.httpClient.delete(this.ticketBaseUri + '/cancelingP/' + ticketCode).pipe(
       catchError(this.handleError)
     );
   }
   public purchaseReservedTickets(ticketCode: String, tickets: Array<SimpleTicket>): Observable<Object> {
     console.log('Purchase reserved tickets');
-    return this.httpClient.post(this.ticketBaseUri + '/purchaseReserved/' + ticketCode, tickets).pipe(
+    return this.httpClient.post(this.ticketBaseUri + '/purchasingR/' + ticketCode, tickets).pipe(
       catchError(this.handleError)
     );
   }
