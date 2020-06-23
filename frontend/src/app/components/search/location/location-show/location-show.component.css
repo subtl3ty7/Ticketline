@@ -118,3 +118,8 @@ a:hover {
   font-size: 17px;
   width: auto;
 }
+
+.underline:hover {
+  text-decoration: underline #1A1A1A;
+  cursor: pointer;
+}

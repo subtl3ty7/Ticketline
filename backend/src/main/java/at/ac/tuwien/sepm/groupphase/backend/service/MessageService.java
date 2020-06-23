@@ -9,7 +9,7 @@ public interface MessageService {
     /**
      * Find all message entries ordered by published at date (descending).
      *
-     * @return ordered list of al message entries
+     * @return ordered list of all message entries
      */
     List<Message> findAll();
 

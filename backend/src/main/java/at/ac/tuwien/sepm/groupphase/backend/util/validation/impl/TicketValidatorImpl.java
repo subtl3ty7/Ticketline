@@ -63,7 +63,6 @@ public class TicketValidatorImpl implements TicketValidator {
         Constraints constraints = new Constraints();
         AbstractUser userFromDataBase = userRepository.findAbstractUserByUserCode(userCode);
         constraints.add("userCode_exists", userFromDataBase != null);
-        constraints.add("no_tickets", !ticketRepository.findTicketsByUserCode(userCode).isEmpty());
         return constraints;
     }
 
