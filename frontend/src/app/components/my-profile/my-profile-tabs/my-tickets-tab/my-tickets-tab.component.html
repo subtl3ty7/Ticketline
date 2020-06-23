@@ -3,6 +3,7 @@
     <div class="row" style="border-bottom: 2px solid #efefef; z-index: 0;">
       <h1 class="page-title" style="white-space: nowrap; padding-top: 50px; padding-left: 50px; padding-bottom: 26px; margin-bottom: 0px">Meine Buchungen</h1>
     </div>
+    <p *ngIf="tickets.length === 0" style="font-size: 20px; padding-top: 40px; text-align: center">Es konnten keine Buchungen gefunden werden.</p>
     <div class="row" *ngIf="tickets" style="padding-left: 50px; padding-right: 50px">
       <div class="table-wrapper-scroll-y my-custom-scrollbar" style="width: 100%">
         <table class="table table-responsive-lg table-hover mb-0">

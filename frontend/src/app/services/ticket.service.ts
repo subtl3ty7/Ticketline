@@ -23,7 +23,7 @@ export class TicketService {
   public purchase(tickets: DetailedTicket[]): Observable<SimpleTicket[]> {
     console.log('saving user in the database');
     sessionStorage.removeItem('show');
-    return this.httpClient.post<SimpleTicket[]>(this.ticketBaseUri + '/purchase', tickets);
+    return this.httpClient.post<SimpleTicket[]>(this.ticketBaseUri + '/purchasing', tickets);
   }
 
   public reserve(tickets: DetailedTicket[]): Observable<DetailedTicket[]> {
