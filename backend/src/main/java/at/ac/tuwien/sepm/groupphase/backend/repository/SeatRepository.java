@@ -30,6 +30,12 @@ public interface SeatRepository extends JpaRepository<Seat, Long> {
      */
     ArrayList<Seat> findAll();
 
+    /**
+     * Find free seat by show id
+     *
+     * @param showId - id of the show where to look for a free seat
+     * @return a single, free Seat that is free for the given show
+     */
     @Query(value = "" +
         "SELECT * FROM " +
         "SEAT s " +
