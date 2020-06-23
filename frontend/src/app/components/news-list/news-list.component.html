@@ -57,7 +57,7 @@
                 </ul>
               </nav>
               <!-- Loading Spinner -->
-              <app-spinner *ngIf="latestNews === undefined"></app-spinner>
+              <app-spinner *ngIf="latestNews === undefined && !errorLatest"></app-spinner>
             </div>
 
             <!-- Seen News -->
@@ -82,7 +82,7 @@
                 </ul>
               </nav>
               <!-- Loading Spinner -->
-              <app-spinner *ngIf="latestNews === undefined"></app-spinner>
+              <app-spinner *ngIf="latestNews === undefined && !errorSeen"></app-spinner>
             </div>
 
           </div>
