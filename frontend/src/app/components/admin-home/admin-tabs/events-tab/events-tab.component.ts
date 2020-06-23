@@ -34,11 +34,13 @@ export class EventsTabComponent implements OnInit {
   private previousPage;
   private currentPage;
   private nextPage;
+  private searching: boolean;
   constructor(private eventService: EventService,
               public  router: Router,
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.searching = false;
     this.loadAllEvents();
     this.searchEvent = new SimpleEvent();
     this.searchEvent.eventCode = '';
@@ -75,9 +77,12 @@ export class EventsTabComponent implements OnInit {
   }
 
   private pageEvent(event) {
-    console.log(event.pageIndex);
     if (this.currentPageIndex === 1 && event.pageIndex === 0) {
+      if(this.searching){
+        this.loadAllEventsByParameters();
+      } else {
       this.loadAllEvents();
+      }
       return;
     }
     if (this.currentPageIndex === 0 && event.pageIndex === 1) {
@@ -98,7 +103,23 @@ export class EventsTabComponent implements OnInit {
   }
 
   private loadNextPage() {
-    this.eventService.getAllEvents(this.pageSize * (this.currentPageIndex + 1)).subscribe(
+    if (this.searching) {
+      this.eventService.getSimpleEventsByParameters(this.searchEvent, this.pageSize * (this.currentPageIndex + 1)).subscribe (
+        (events: SimpleEvent[]) => {
+          this.deleteFromEvents(this.previousPage);
+          this.previousPage = this.currentPage;
+          this.currentPage = this.nextPage;
+          this.nextPage = events;
+          this.events = this.events.concat(events);
+          console.log(this.events);
+          this.initTable();
+        },
+        (error) => {
+          this.error = error.error;
+        }
+      );
+    } else {
+     this.eventService.getAllEvents(this.pageSize * (this.currentPageIndex + 1)).subscribe(
       (events: SimpleEvent[]) => {
         this.deleteFromEvents(this.previousPage);
         this.previousPage = this.currentPage;
@@ -112,23 +133,43 @@ export class EventsTabComponent implements OnInit {
         this.error = error.error;
       }
     );
+    }
   }
   private loadPreviousPage() {
-    this.eventService.getAllEvents(this.pageSize * (this.currentPageIndex - 1)).subscribe(
-      (events: SimpleEvent[]) => {
-        this.deleteFromEvents(this.nextPage);
-        this.nextPage = this.currentPage;
-        this.currentPage = this.previousPage;
-        this.previousPage = events;
-        this.events = events.concat(this.events);
-        console.log(this.events);
+    if (this.searching) {
+      this.eventService.getSimpleEventsByParameters(this.searchEvent, this.pageSize * (this.currentPageIndex - 1)).subscribe(
+        (events: SimpleEvent[]) => {
+          this.deleteFromEvents(this.nextPage);
+          this.nextPage = this.currentPage;
+          this.currentPage = this.previousPage;
+          this.previousPage = events;
+          this.events = events.concat(this.events);
+          console.log(this.events);
 
-        this.initTable();
-      },
-      (error) => {
-        this.error = error.error;
-      }
-    );
+          this.initTable();
+        },
+        (error) => {
+          this.error = error.error;
+        }
+      );
+    } else {
+      this.eventService.getAllEvents(this.pageSize * (this.currentPageIndex - 1)).subscribe(
+        (events: SimpleEvent[]) => {
+          this.deleteFromEvents(this.nextPage);
+          this.nextPage = this.currentPage;
+          this.currentPage = this.previousPage;
+          this.previousPage = events;
+          this.events = events.concat(this.events);
+          console.log(this.events);
+
+          this.initTable();
+        },
+        (error) => {
+          this.error = error.error;
+        }
+      );
+    }
+
   }
   private deleteFromEvents(events: SimpleEvent[]) {
     if (events.length !== 0) {
@@ -140,11 +181,26 @@ export class EventsTabComponent implements OnInit {
   }
 
   private loadAllEventsByParameters() {
-    console.log(this.searchEvent);
-    this.eventService.getSimpleEventsByParameters(this.searchEvent).subscribe(
-      (events: SimpleEvent[]) => {
-        this.events = events;
-        this.initTable();
+
+    this.currentPageIndex = 0;
+    this.previousPage = [];
+    this.paginator.pageIndex = 0;
+    this.eventService.getSimpleEventsByParameters(this.searchEvent, 0).subscribe(
+      (firstPageEvents: SimpleEvent[]) => {
+        this.events = firstPageEvents.slice(0, 10);
+        this.currentPage = firstPageEvents.slice(0, 10);
+        this.eventService.getSimpleEventsByParameters(this.searchEvent, this.pageSize).subscribe(
+          (secondPageEvents: SimpleEvent[]) => {
+            this.nextPage = secondPageEvents;
+            secondPageEvents.forEach(value => {
+              this.events.push(value);
+            });
+            this.initTable();
+          },
+          (error) => {
+            this.error = error.error;
+          }
+        );
       },
       (error) => {
         this.error = error.error;

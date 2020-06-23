@@ -13,9 +13,9 @@
         </div>
         <div class="card-body">
           <app-error-notification *ngIf="error" [error]="error"></app-error-notification>
-          <div *ngIf="!error && shows">
-            <div *ngIf="shows.length > 0">
-              <div *ngFor="let s of shows" style="margin-top: -5px;">
+          <div *ngIf="!error && currentPage">
+            <div *ngIf="currentPage.length > 0">
+              <div *ngFor="let s of currentPage" style="margin-top: -5px;">
                 <div class="row" style="margin-top: 20px; height: 220px; box-shadow: 0px 3px 6px #00000029;">
                   <div class="show-block" style="width: 100%;">
                     <div class="row show-row">
@@ -28,7 +28,7 @@
                             {{s.startsAt | date}}, {{s.startsAt | date:'hh:mm'}}
                           </div>
                           <div class="row" style="font-size: 30px; font-weight: bold; padding-top: 25px; color: #1A1A1A">
-                            <a class="prevent-overflow-inline" style="color: #1A1A1A" style="padding-top: 5px; height: 30px">{{s.eventName}}</a>
+                            <a class="prevent-overflow-inline underline" (click) = "openPurchase(s)" style="color: #1A1A1A; padding-top: 5px; height: 30px">{{s.eventName}}</a>
                           </div>
                           <div class="row" style="padding-top: 30px;">
                             <div class="show-description-font">
@@ -60,8 +60,26 @@
                   </div>
                 </div>
               </div>
+              <div class="row" *ngIf="previousPage || nextPage">
+                <nav class="search-navigation">
+                  <ul class="pagination">
+                    <li class="page-item" *ngIf="previousPage.length !== 0 && currentPageIndex > 0" style="margin-right: auto">
+                      <a class="page-link" (click)="loadPreviousPage()">
+                        <span aria-hidden="true">&laquo; Zurück</span>
+                        <span class="sr-only">Previous</span>
+                      </a>
+                    </li>
+                    <li class="page-item" *ngIf="nextPage.length !== 0" style="margin-left: auto">
+                      <a class="page-link" (click)="loadNextPage()">
+                        <span aria-hidden="true">Weiter &raquo;</span>
+                        <span class="sr-only">Next</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
             </div>
-            <p *ngIf="shows.length == 0" style="font-size: 20px; padding-top: 40px; text-align: center">Es konnten keine Aufführungen mit diesen Kriterien gefunden werden.</p>
+            <p *ngIf="currentPage.length == 0" style="font-size: 20px; padding-top: 40px; text-align: center">Es konnten keine Aufführungen mit diesen Kriterien gefunden werden.</p>
           </div>
           <app-spinner *ngIf="!error && shows === undefined">
           </app-spinner>

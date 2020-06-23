@@ -61,3 +61,11 @@
 .table-wrapper-scroll-y {
   display: block;
 }
+
+.text-one {
+  text-align: left;
+  letter-spacing: 0px;
+  color: #858585;
+  opacity: 1;
+  font-style: italic;
+}

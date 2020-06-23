@@ -80,7 +80,7 @@ body, h1, h2, h3, h4, h5, h6, p, a {
   font-family: Segue UI, Roboto, "Helvetica Neue", sans-serif !important;
 }
 body {
-  background: #DEDEDE no-repeat center;
+  background: no-repeat center;
   background-size: cover;
 }
 
@@ -248,4 +248,8 @@ label {
   text-overflow: ellipsis;
   white-space: nowrap;
   height: 100%;
+}
+
+.page-link:hover {
+  cursor: pointer;
 }

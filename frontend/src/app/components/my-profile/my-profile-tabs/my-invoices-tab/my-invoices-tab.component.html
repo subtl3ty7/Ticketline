@@ -3,6 +3,7 @@
     <div class="row" style="border-bottom: 2px solid #efefef; z-index: 0;">
       <h1 class="page-title" style="white-space: nowrap; padding-top: 50px; padding-left: 50px; padding-bottom: 26px; margin-bottom: 0px">Meine Rechnungen</h1>
     </div>
+    <p *ngIf="invoices.length === 0" style="font-size: 20px; padding-top: 40px; text-align: center">Es konnten keine Rechnungen gefunden werden.</p>
     <div class="row" *ngIf="invoices" style="padding-left: 50px; padding-right: 50px">
       <div class="table-wrapper-scroll-y my-custom-scrollbar" style="width: 100%">
         <table class="table table-responsive-lg table-hover mb-0">
@@ -17,11 +18,8 @@
                   <a style="font-size: 18px">{{'Merchandise ' + invoice1.invoice_type}}, {{ invoice1.merchandise_code}}</a>
                 </div>
                 <div class="col-4">
-                  <button type="button" class="btn btn-outline-dark" style="white-space: nowrap; border-radius: 10px; margin-right: 10px;"  (click) = "showInvoiceDetails(invoice1)">
+                  <button type="button" class="btn btn-outline-dark" style="white-space: nowrap; border-radius: 10px;"  (click) = "showInvoiceDetails(invoice1)">
                     Anzeigen </button>
-                  <button type="button" class="btn btn-outline-primary" style="white-space: nowrap; border-radius: 10px; padding-left: 30px; padding-right: 30px; width: 100px; text-align: center;" (click) = "printInvoice(invoice1)" >
-                    PDF
-                  </button>
                 </div>
               </div>
             </div>

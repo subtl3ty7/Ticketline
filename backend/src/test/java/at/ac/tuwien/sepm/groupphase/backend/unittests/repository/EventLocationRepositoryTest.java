@@ -23,22 +23,9 @@ public class EventLocationRepositoryTest implements TestData {
     @Autowired
     EventLocationRepository eventLocationRepository;
 
-    private EventLocation eventLocation = EventLocation.builder()
-        .id(ID)
-        .name(FNAME)
-        .eventLocationDescription(DESC)
-        .capacity(TOTAL)
-        .street(STREET)
-        .city(CITY)
-        .country(COUNTRY)
-        .plz(PLZ)
-        .sections(SECTIONS)
-        .build();
-
-    @BeforeEach
-    public void beforeEach() {
-        eventLocationRepository.deleteAll();
-        eventLocation = EventLocation.builder()
+    @Test
+    public void givenNothing_whenSaveEvent_thenFindListWithOneElementAndFindEventByIdAndCode() {
+        EventLocation eventLocation = EventLocation.builder()
             .id(ID)
             .name(FNAME)
             .eventLocationDescription(DESC)
@@ -47,26 +34,14 @@ public class EventLocationRepositoryTest implements TestData {
             .city(CITY)
             .country(COUNTRY)
             .plz(PLZ)
+            .sections(SECTIONS)
             .build();
-    }
 
-    @Test
-    public void givenNothing_whenSaveEvent_thenFindListWithOneElementAndFindEventByIdAndCode() {
         eventLocationRepository.save(eventLocation);
 
         assertAll(
             () -> assertEquals(1, eventLocationRepository.findAll().size()),
             () -> assertNotNull(eventLocationRepository.findById(eventLocation.getId()))
-        );
-    }
-
-    @Test
-    public void givenNothing_whenSaveEvent_thenFindListByShowIdIsNull() {
-        eventLocationRepository.save(eventLocation);
-
-        assertAll(
-            () -> assertEquals(1, eventLocationRepository.findAll().size()),
-            () -> assertEquals(1, eventLocationRepository.findAll().size())
         );
     }
 }

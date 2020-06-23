@@ -1,6 +1,8 @@
 package at.ac.tuwien.sepm.groupphase.backend.repository;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,17 +17,29 @@ public interface EventLocationRepository extends JpaRepository<EventLocation, Lo
     /**
      * Find an event location by id.
      *
-     * @param id
+     * @param id - id of the event location to look for
      * @return a single event location with id
      */
     EventLocation findEventLocationById(Long id);
 
     /**
-     * @return a list of event locations with no shows.
+     * @return a list of event locations.
      */
     List<EventLocation> findAll();
 
 
+    /**
+     * Find x of all the event locations that match the given criteria, where x is defined by pageable
+     *
+     * @param name - name to look for
+     * @param city - city to look for
+     * @param street - street to look for
+     * @param country - country to look for
+     * @param plz - plz to look for
+     * @param description - description to look for
+     * @param pageable - stores information about which page user wants to retrieve
+     * @return event locations that match the given criteria
+     */
     @Query(value = "" +
         "SELECT * FROM EVENT_LOCATION e " +
         "WHERE ((:name IS NULL) OR (:name IS NOT NULL AND LOWER(e.name) LIKE LOWER(CONCAT('%',:name,'%')))) " +
@@ -34,7 +48,7 @@ public interface EventLocationRepository extends JpaRepository<EventLocation, Lo
         "AND ((:country IS NULL) OR (:country IS NOT NULL AND LOWER(e.country) LIKE LOWER(CONCAT('%',:country,'%'))))  " +
         "AND ((:plz IS NULL) OR (:plz IS NOT NULL AND e.plz LIKE %:plz%))  " +
         "AND ((:event_location_description IS NULL) OR (:event_location_description IS NOT NULL AND LOWER(e.event_location_description) LIKE LOWER(CONCAT('%',:event_location_description,'%'))))", nativeQuery = true)
-    List<EventLocation> findAllByNameAndCityAndStreetAndCountryAndPlzAndEventLocationDescription(@Param("name") String name, @Param("city") String city, @Param("street") String street, @Param("country") String country, @Param("plz") String plz, @Param("event_location_description") String description);
+    Page<EventLocation> findAllByNameAndCityAndStreetAndCountryAndPlzAndEventLocationDescription(@Param("name") String name, @Param("city") String city, @Param("street") String street, @Param("country") String country, @Param("plz") String plz, @Param("event_location_description") String description, Pageable pageable);
 
     /**
      * Find an EventLocation with the given name

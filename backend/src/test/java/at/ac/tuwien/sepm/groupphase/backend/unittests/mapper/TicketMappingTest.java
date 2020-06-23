@@ -42,21 +42,6 @@ public class TicketMappingTest implements TestData {
         .event(EVENT)
         .build();
 
-    private final DetailedTicketDto ticketDto = ticketMapper.ticketToDetailedTicketDto(
-        Ticket.builder()
-            .ticketId(ID)
-            .userCode(USER_CODE)
-            .isPurchased(false)
-            .isReserved(false)
-            .purchaseDate(START)
-            .seat(SEATS.get(0))
-            .userCode(USER_CODE)
-            .price(PRICE)
-            .show(SHOWS.get(0))
-            .event(EVENT)
-            .build()
-    );
-
     @Test
     public void shouldMapTicketToSimpleTicketDTO() {
         SimpleTicketDto ticketDto = ticketMapper.ticketToSimpleTicketDto(ticket);
@@ -94,8 +79,23 @@ public class TicketMappingTest implements TestData {
     }
 
     @Test
-    public void shouldMapTicketDTOToTicket() {
-        Ticket ticket1 = ticketMapper.detailedTicketDtoToTicket(ticketDto);
+    public void shouldMapTicketToDetailedTicketDTO() {
+        DetailedTicketDto detailedTicketDto = ticketMapper.ticketToDetailedTicketDto(ticket);
+        assertAll(
+            () -> assertEquals(ID, detailedTicketDto.getTicketId()),
+            () -> assertEquals(USER_CODE, detailedTicketDto.getTicketCode()),
+            () -> assertFalse( detailedTicketDto.isPurchased()),
+            () -> assertFalse( detailedTicketDto.isReserved()),
+            () -> assertEquals(START, detailedTicketDto.getPurchaseDate()),
+            () -> assertEquals(USER_CODE, detailedTicketDto.getUserCode()),
+            () -> assertEquals(PRICE, detailedTicketDto.getPrice())
+        );
+    }
+
+    @Test
+    public void shouldMapDetailedTicketDTOToTicket() {
+        DetailedTicketDto detailedTicketDto = ticketMapper.ticketToDetailedTicketDto(ticket);
+        Ticket ticket1 = ticketMapper.detailedTicketDtoToTicket(detailedTicketDto);
         assertAll(
             () -> assertEquals(ID, ticket1.getTicketId()),
             () -> assertEquals(USER_CODE, ticket1.getTicketCode()),
@@ -103,9 +103,7 @@ public class TicketMappingTest implements TestData {
             () -> assertFalse( ticket1.isReserved()),
             () -> assertEquals(START, ticket1.getPurchaseDate()),
             () -> assertEquals(USER_CODE, ticket1.getUserCode()),
-            () -> assertEquals(SEATS.get(0), ticket1.getSeat()),
-            () -> assertEquals(SHOWS.get(0), ticket1.getShow()),
-            () -> assertEquals(EVENT, ticket1.getEvent())
+            () -> assertEquals(PRICE, ticket1.getPrice())
         );
     }
 }

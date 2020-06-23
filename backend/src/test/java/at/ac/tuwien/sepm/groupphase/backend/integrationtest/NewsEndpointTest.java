@@ -4,6 +4,7 @@ import at.ac.tuwien.sepm.groupphase.backend.basetest.TestData;
 import at.ac.tuwien.sepm.groupphase.backend.config.properties.SecurityProperties;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.NewsDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleEventDto;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleNewsDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleTicketDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.NewsMapper;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.UserMapper;
@@ -59,13 +60,25 @@ public class NewsEndpointTest implements TestData {
     private NewsMapper newsMapper;
 
     @Autowired
-    private UserMapper userMapper;
-
-    @Autowired
     private JwtTokenizer jwtTokenizer;
 
     @Autowired
     private SecurityProperties securityProperties;
+
+    private AbstractUser abstractUser = Customer.CustomerBuilder.aCustomer()
+        .withId(ID)
+        .withUserCode("code12")
+        .withFirstName(FNAME)
+        .withLastName(LNAME)
+        .withEmail("1" + DEFAULT_USER)
+        .withPassword(PASS)
+        .withBirthday(BIRTHDAY)
+        .withCreatedAt(CRE)
+        .withUpdatedAt(UPD)
+        .withIsBlocked(false)
+        .withIsLogged(true)
+        .withPoints(POINTS)
+        .build();
 
     private News news = News.builder()
         .id(ID)
@@ -77,27 +90,13 @@ public class NewsEndpointTest implements TestData {
         .text(TEST_NEWS_TEXT)
         .author(FNAME)
         .photo(PHOTO)
+        .seenBy(List.of((Customer)abstractUser))
         .build();
-
-    private AbstractUser abstractUser = Customer.CustomerBuilder.aCustomer()
-        .withId(ID)
-        .withUserCode(USER_CODE)
-        .withFirstName(FNAME)
-        .withLastName(LNAME)
-        .withEmail(DEFAULT_USER)
-        .withPassword(PASS)
-        .withBirthday(BIRTHDAY)
-        .withCreatedAt(CRE)
-        .withUpdatedAt(UPD)
-        .withIsBlocked(false)
-        .withIsLogged(true)
-        .withPoints(POINTS)
-        .build();
-
 
     @Order(1)
     @Test
     public void givenNothing_whenPublishNewsAsCustomer_then500() throws Exception{
+        newsRepository.deleteAll();
         NewsDto newsDto = newsMapper.newsToNewsDto(news);
         String body = objectMapper.writeValueAsString(newsDto);
 
@@ -114,12 +113,65 @@ public class NewsEndpointTest implements TestData {
 
     @Order(2)
     @Test
-    public void givenNews_whenGetByNewsCode_then200AndNewsWithAllProperties() throws Exception{
+    public void givenNothing_whenPublishNewsAsAdmin_then201() throws Exception{
         userRepository.save(abstractUser);
-        newsRepository.save(news);
+        NewsDto newsDto = newsMapper.newsToNewsDto(news);
+        String body = objectMapper.writeValueAsString(newsDto);
 
-        MvcResult mvcResult = this.mockMvc.perform(get(NEWS_BASE_URI + "/" + USER_CODE)
+        MvcResult mvcResult = this.mockMvc.perform(post(NEWS_BASE_URI)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(body)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
+            .andDo(print())
+            .andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        assertAll(
+            () -> assertEquals(HttpStatus.CREATED.value(), response.getStatus()),
+            () -> assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType())
+        );
+    }
+
+    @Order(3)
+    @Test
+    public void givenNews_whenGetAllAsCustomer_then500() throws Exception{
+
+        MvcResult mvcResult = this.mockMvc.perform(get(NEWS_BASE_URI + "/all")
+            .param("size", "0")
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
+            .andDo(print())
+            .andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.value(), response.getStatus());
+    }
+
+    @Order(4)
+    @Test
+    public void givenNews_whenGetByParamAsCustomer_then500() throws Exception{
+
+        MvcResult mvcResult = this.mockMvc.perform(get(NEWS_BASE_URI)
+            .param("newsCode", news.getNewsCode())
+            .param("title", news.getTitle())
+            .param("author", news.getAuthor())
+            .param("startRange", news.getPublishedAt().toString())
+            .param("endRange", news.getPublishedAt().toString())
+            .param("size", "0")
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
+            .andDo(print())
+            .andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.value(), response.getStatus());
+    }
+
+    @Order(5)
+    @Test
+    public void givenNews_whenGetAllAsAdmin_then200AndListWith1Element() throws Exception{
+
+        MvcResult mvcResult = this.mockMvc.perform(get(NEWS_BASE_URI + "/all")
+            .param("size", "0")
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
             .andDo(print())
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
@@ -128,19 +180,52 @@ public class NewsEndpointTest implements TestData {
             () -> assertEquals(HttpStatus.OK.value(), response.getStatus()),
             () -> assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType())
         );
-        NewsDto newsDto = objectMapper.readValue(response.getContentAsString(), NewsDto.class);
-        assertAll(
-            () -> assertEquals(USER_CODE, newsDto.getNewsCode()),
-            () -> assertEquals(TEST_NEWS_TITLE, newsDto.getTitle()),
-            () -> assertEquals(TEST_NEWS_PUBLISHED_AT, newsDto.getPublishedAt()),
-            () -> assertEquals(TEST_NEWS_PUBLISHED_AT, newsDto.getStopsBeingRelevantAt()),
-            () -> assertEquals(TEST_NEWS_SUMMARY, newsDto.getSummary()),
-            () -> assertEquals(TEST_NEWS_TEXT, newsDto.getText()),
-            () -> assertEquals(FNAME, newsDto.getAuthor())
-        );
+        List<SimpleNewsDto> simpleNewsDtos = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
+            SimpleNewsDto[].class));
+        assertEquals(1, simpleNewsDtos.size());
     }
 
-    @Order(3)
+    @Order(6)
+    @Test
+    public void givenNews_whenGetUnseen_then200AndListWith1Element() throws Exception{
+
+        MvcResult mvcResult = this.mockMvc.perform(get(NEWS_BASE_URI + "/unseen")
+            .param("limit", "1")
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken("1" + DEFAULT_USER, USER_ROLES)))
+            .andDo(print())
+            .andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        assertAll(
+            () -> assertEquals(HttpStatus.OK.value(), response.getStatus()),
+            () -> assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType())
+        );
+        List<SimpleNewsDto> simpleNewsDtos = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
+            SimpleNewsDto[].class));
+        assertEquals(1, simpleNewsDtos.size());
+    }
+
+    @Order(7)
+    @Test
+    public void givenNews_whenGetSeen_then200AndListWith0Element() throws Exception{
+
+        MvcResult mvcResult = this.mockMvc.perform(get(NEWS_BASE_URI + "/seen")
+            .param("limit", "1")
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken("1" + DEFAULT_USER, USER_ROLES)))
+            .andDo(print())
+            .andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        assertAll(
+            () -> assertEquals(HttpStatus.OK.value(), response.getStatus()),
+            () -> assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType())
+        );
+        List<SimpleNewsDto> simpleNewsDtos = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
+            SimpleNewsDto[].class));
+        assertEquals(0, simpleNewsDtos.size());
+    }
+
+    @Order(8)
     @Test
     public void givenNews_whenGetLatestNews_then200AndNewsListWith1Element() throws Exception{
 

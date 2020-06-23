@@ -26,21 +26,29 @@ export class NewsService {
     return this.httpClient.get<News[]>(URL);
   }
 
-  getSeen(limit: number): Observable<News[]> {
+  getSeen(page: number, size: number): Observable<News[]> {
     console.log('Load latest news that the customer has not seen yet.');
-    let URL = this.newsBaseUri + '/seen?limit=' + limit;
-    if (!limit) {
-      URL = this.newsBaseUri + '/seen';
+    if (!page) {
+      page = 0;
     }
+    if (!size) {
+      size = 0;
+    }
+    const URL = this.newsBaseUri + '/seen?page=' + page + '&size=' + size;
+    console.log(URL);
     return this.httpClient.get<News[]>(URL);
   }
 
-  getLatest(limit: number): Observable<News[]> {
+  getLatest(page: number, size: number): Observable<News[]> {
     console.log('Load latest news.');
-    let URL = this.newsBaseUri + '/latest?limit=' + limit;
-    if (!limit) {
-      URL = this.newsBaseUri + '/latest';
+    if (!page) {
+      page = 0;
     }
+    if (!size) {
+      size = 0;
+    }
+    const URL = this.newsBaseUri + '/latest?page=' + page + '&size=' + size;
+    console.log(URL);
     return this.httpClient.get<News[]>(URL);
   }
 
@@ -49,17 +57,19 @@ export class NewsService {
     return this.httpClient.get<News>(this.newsBaseUri + '/' + newsCode);
   }
 
-  getAllSimpleNews() {
-    return this.httpClient.get<SimpleNews[]>(this.newsBaseUri + '/all');
+  getAllSimpleNews(size: number) {
+    console.log('Load with size ' + size);
+    return this.httpClient.get<SimpleNews[]>(this.newsBaseUri + '/all' + '?size=' + size);
   }
 
-  getSimpleNewsByParameters(searchNews: SearchNews) {
+  getSimpleNewsByParameters(searchNews: SearchNews, size: number) {
     const params = new HttpParams()
       .set('newsCode', searchNews.newsCode)
       .set('title', searchNews.title)
       .set('author', searchNews.author)
       .set('startRange', searchNews.publishedAtStartRange.toDateString())
-      .set('endRange', searchNews.publishedAtEndRange.toDateString());
+      .set('endRange', searchNews.publishedAtEndRange.toDateString())
+      .set('size', size.toString());
     return this.httpClient.get<SimpleNews[]>(this.newsBaseUri + '/', {params});
 }
 

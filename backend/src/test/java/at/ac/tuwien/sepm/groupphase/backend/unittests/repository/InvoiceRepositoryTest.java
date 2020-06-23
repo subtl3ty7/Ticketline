@@ -21,21 +21,9 @@ public class InvoiceRepositoryTest implements TestData {
     @Autowired
     private InvoiceRepository invoiceRepository;
 
-    private Invoice invoice = Invoice.builder()
-        .id(ID)
-        .invoice_type(TYP_I)
-        .userCode(USER_CODE)
-        .payment_method(PAY)
-        .generatedAt(GENERATE)
-        .invoiceNumber(NUM)
-        .invoice_category(CAT_I)
-        .merchandise_code(USER_CODE)
-        .build();
-
-    @BeforeEach
-    public void beforeEach() {
-        invoiceRepository.deleteAll();
-        invoice = Invoice.builder()
+    @Test
+    public void givenNothing_whenSaveInvoice_thenFindListWithOneElementAndFindInvoiceById() {
+        Invoice invoice = Invoice.builder()
             .id(ID)
             .invoice_type(TYP_I)
             .userCode(USER_CODE)
@@ -45,28 +33,12 @@ public class InvoiceRepositoryTest implements TestData {
             .invoice_category(CAT_I)
             .merchandise_code(USER_CODE)
             .build();
-    }
 
-    @Test
-    public void givenNothing_whenSaveInvoice_thenFindListWithOneElementAndFindInvoiceById() {
         invoiceRepository.save(invoice);
 
         assertAll(
             () -> assertEquals(1, invoiceRepository.findAll().size()),
             () -> assertNotNull(invoiceRepository.findInvoiceById(invoiceRepository.findAll().get(0).getId()))
-        );
-    }
-
-    @Test
-    public void givenNothing_whenSave2Invoices_thenFindListWith2ElementAndFindInvoicesByUserCode() {
-        invoice.setId(2L);
-        invoiceRepository.save(invoice);
-        invoice.setId(3L);
-        invoiceRepository.save(invoice);
-
-        assertAll(
-            () -> assertEquals(2, invoiceRepository.findAll().size()),
-            () -> assertEquals(2, invoiceRepository.findInvoicesByUserCode(invoice.getUserCode()).size())
         );
     }
 }

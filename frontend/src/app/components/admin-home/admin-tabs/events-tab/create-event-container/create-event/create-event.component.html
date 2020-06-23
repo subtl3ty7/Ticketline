@@ -15,7 +15,7 @@
     <app-admin-side-menu></app-admin-side-menu>
   </div>
   <div class="center-block">
-    <app-error-notification *ngIf = "error" [error]="error"></app-error-notification>
+    <app-error-notification *ngIf="error" [error]="error" [showStatus]="false"></app-error-notification>
     <div>
       <app-create-event-form [event]="wrapper.model">
         <div fxLayout="row" class="buttons-wrapper">

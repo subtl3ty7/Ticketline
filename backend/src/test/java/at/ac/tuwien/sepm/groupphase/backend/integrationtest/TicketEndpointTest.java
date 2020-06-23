@@ -97,8 +97,10 @@ public class TicketEndpointTest implements TestData {
     @Autowired
     private ArtistService artistService;
 
+    @Autowired
+    private InvoiceRepository invoiceRepository;
+
     private DetailedTicketDto detailedTicketDto;
-    private Ticket ticket;
 
     @Test
     @Order(1)
@@ -124,24 +126,11 @@ public class TicketEndpointTest implements TestData {
                 .build()
         );
 
-        ticket = Ticket.builder()
-            .ticketId(ID)
-            .ticketCode(USER_CODE)
-            .isPurchased(false)
-            .isReserved(false)
-            .purchaseDate(START)
-            .seat(seatRepository.findSeatById(6L))
-            .userCode(USER_CODE_TICKET)
-            .price(PRICE)
-            .show(showRepository.findShowById(6L))
-            .event(eventRepository.findEventById(1L))
-            .build();
-
         List<DetailedTicketDto> ticketDtos = new ArrayList<>();
         ticketDtos.add(detailedTicketDto);
         String body = objectMapper.writeValueAsString(ticketDtos);
 
-        MvcResult mvcResult = this.mockMvc.perform(post(TICKETS_BASE_URI + "/purchase")
+        MvcResult mvcResult = this.mockMvc.perform(post(TICKETS_BASE_URI + "/purchasing")
             .contentType(MediaType.APPLICATION_JSON)
             .content(body)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_TICKET, USER_ROLES)))
@@ -182,7 +171,7 @@ public class TicketEndpointTest implements TestData {
         ticketDtos.add(detailedTicketDto);
         String body = objectMapper.writeValueAsString(ticketDtos);
 
-        MvcResult mvcResult = this.mockMvc.perform(post(TICKETS_BASE_URI + "/reserve")
+        MvcResult mvcResult = this.mockMvc.perform(post(TICKETS_BASE_URI + "/reserving")
             .contentType(MediaType.APPLICATION_JSON)
             .content(body)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_TICKET, USER_ROLES)))
@@ -201,12 +190,52 @@ public class TicketEndpointTest implements TestData {
         assertTrue(ticketDtos1.get(0).isReserved());
     }
 
+    @Test
     @Order(3)
+    public void givenReservedTicket_whenCancel_then204AndTicketNotCancelled() throws Exception {
+
+        MvcResult mvcResult = this.mockMvc.perform(delete(TICKETS_BASE_URI + "/cancelingR/" +
+            ticketRepository.findTicketByTicketId(2L).getTicketCode())
+            .contentType(MediaType.APPLICATION_JSON)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_TICKET, USER_ROLES)))
+            //.andDo(print())
+            .andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        assertAll(
+            () -> assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatus()),
+            () -> assertTrue(ticketRepository.findTicketByTicketId(2L).isCancelled()),
+            () -> assertFalse(ticketRepository.findTicketByTicketId(2L).isReserved())
+        );
+    }
+
+    @Order(4)
     @Test
     public void givenReservedTicket_whenPurchase_then201AndTicketListWithPurchasedTickets() throws Exception{
+        detailedTicketDto = ticketMapper.ticketToDetailedTicketDto(
+            Ticket.builder()
+                .ticketId(3L)
+                .userCode("code13")
+                .isPurchased(false)
+                .isReserved(false)
+                .purchaseDate(START)
+                .seat(seatRepository.findSeatById(7L))
+                .userCode(USER_CODE_TICKET)
+                .price(PRICE)
+                .show(showRepository.findShowById(7L))
+                .event(eventRepository.findEventById(1L))
+                .build()
+        );
+        List<DetailedTicketDto> ticketDtos = new ArrayList<>();
+        ticketDtos.add(detailedTicketDto);
+        String body = objectMapper.writeValueAsString(ticketDtos);
+        this.mockMvc.perform(post(TICKETS_BASE_URI + "/reserving")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(body)
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_TICKET, USER_ROLES)));
 
-        MvcResult mvcResult = this.mockMvc.perform(post(TICKETS_BASE_URI + "/purchaseReserved/" +
-            ticketRepository.findTicketByTicketId(2L).getTicketCode())
+        MvcResult mvcResult = this.mockMvc.perform(post(TICKETS_BASE_URI + "/purchasingR/" +
+            ticketRepository.findTicketByTicketId(3L).getTicketCode())
             .contentType(MediaType.APPLICATION_JSON)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_TICKET, USER_ROLES)))
             //.andDo(print())
@@ -228,8 +257,8 @@ public class TicketEndpointTest implements TestData {
     }
 
     @Test
-    @Order(4)
-    public void givenTicket_whenGetTicketsByUserCode_then200AndTicketListWith2Elements() throws Exception{
+    @Order(5)
+    public void givenTickets_whenGetTicketsByUserCode_then200AndTicketListWith2Elements() throws Exception{
 
         MvcResult mvcResult = this.mockMvc.perform(get(TICKETS_BASE_URI + "/" + USER_CODE_TICKET)
             .contentType(MediaType.APPLICATION_JSON)
@@ -249,10 +278,10 @@ public class TicketEndpointTest implements TestData {
     }
 
     @Test
-    @Order(5)
-    public void givenPurchasedTicket_whenCancelPurchase_then204AndTicketListWith1Element() throws Exception{
+    @Order(6)
+    public void givenPurchasedTicket_whenCancelPurchase_then204AndTicketCancelled() throws Exception{
 
-        MvcResult mvcResult = this.mockMvc.perform(delete(TICKETS_BASE_URI + "/cancelPurchased/" +
+        MvcResult mvcResult = this.mockMvc.perform(delete(TICKETS_BASE_URI + "/cancelingP/" +
             ticketRepository.findTicketByTicketId(ID).getTicketCode())
             .contentType(MediaType.APPLICATION_JSON)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_TICKET, USER_ROLES)))
@@ -262,17 +291,12 @@ public class TicketEndpointTest implements TestData {
 
         assertAll(
             () -> assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatus()),
-            () -> assertEquals(1, ticketRepository.findAll().size())
+            () -> assertTrue(ticketRepository.findTicketByTicketId(ID).isCancelled()),
+            () -> assertFalse(ticketRepository.findTicketByTicketId(ID).isPurchased())
         );
 
+        invoiceRepository.deleteAll();
         ticketRepository.deleteAll();
-        /*seatRepository.deleteAll();
-        showRepository.deleteAll();
-        sectionRepository.deleteAll();
-        eventLocationRepository.deleteAll();
-        eventRepository.deleteAll();
-        artistRepository.deleteAll();
-        userRepository.deleteAll();*/
     }
 
 }

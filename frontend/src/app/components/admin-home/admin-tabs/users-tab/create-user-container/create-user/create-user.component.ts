@@ -36,7 +36,7 @@ export class CreateUserComponent implements OnInit {
         this.router.navigate(['administration']);
       },
       (error) => {
-        this.error = error.error;
+        this.error = error;
     }
     );
   }

@@ -78,8 +78,8 @@ public class EventLocationEndpointTest implements TestData {
     }
 
     @Test
-    public void givenAdminLoggedIn_whenGetAll_then200andEmptyList() throws Exception {
-        MvcResult mvcResult = this.mockMvc.perform(get(LOCATION_BASE_URI)
+    public void givenNothing_whenGetAllAsAdmin_then200andEmptyList() throws Exception {
+        MvcResult mvcResult = this.mockMvc.perform(get(LOCATION_BASE_URI + "/all")
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
             .andDo(print())
             .andReturn();
@@ -98,7 +98,7 @@ public class EventLocationEndpointTest implements TestData {
 
     @Test
     public void givenUserLoggedIn_whenGetAll_then500() throws Exception {
-        MvcResult mvcResult = this.mockMvc.perform(get(LOCATION_BASE_URI)
+        MvcResult mvcResult = this.mockMvc.perform(get(LOCATION_BASE_URI + "/all")
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
             .andDo(print())
             .andReturn();
@@ -111,7 +111,7 @@ public class EventLocationEndpointTest implements TestData {
     public void givenLocation_whenGetAll_thenListWithSizeOneAndLocationWithAllProperties() throws Exception {
         eventLocationRepository.save(eventLocation);
 
-        MvcResult mvcResult = this.mockMvc.perform(get(LOCATION_BASE_URI)
+        MvcResult mvcResult = this.mockMvc.perform(get(LOCATION_BASE_URI + "/all")
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
             .andDo(print())
             .andReturn();
@@ -127,7 +127,6 @@ public class EventLocationEndpointTest implements TestData {
         assertEquals(1, eventLocationDtos.size());
         EventLocationDto eventLocationDto = eventLocationDtos.get(0);
         assertAll(
-            () -> assertEquals(ID, eventLocationDto.getId()),
             () -> assertEquals(FNAME, eventLocationDto.getName()),
             () -> assertEquals(DESC, eventLocationDto.getEventLocationDescription()),
             () -> assertEquals(STREET, eventLocationDto.getStreet()),
@@ -136,5 +135,27 @@ public class EventLocationEndpointTest implements TestData {
             () -> assertEquals(PLZ, eventLocationDto.getPlz()),
             () -> assertEquals(TOTAL, eventLocationDto.getCapacity())
         );
+    }
+
+    @Test
+    public void givenLocation_whenGetByParam_then200andListWithOneElement() throws Exception {
+        eventLocationRepository.save(eventLocation);
+
+        MvcResult mvcResult = this.mockMvc.perform(get(LOCATION_BASE_URI)
+            .param("name", eventLocation.getName()).param("size", "0")
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
+            .andDo(print())
+            .andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        assertAll(
+            () -> assertEquals(HttpStatus.OK.value(), response.getStatus()),
+            () -> assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType())
+        );
+
+        List<EventLocationDto> eventLocationDtos = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
+            EventLocationDto[].class));
+
+        assertEquals(1, eventLocationDtos.size());
     }
 }

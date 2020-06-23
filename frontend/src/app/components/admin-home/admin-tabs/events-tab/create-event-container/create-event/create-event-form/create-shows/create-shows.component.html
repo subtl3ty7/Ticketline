@@ -62,7 +62,7 @@
     </div>
     <mat-form-field style="width: 200px">
       <mat-label>Eventsort wählen</mat-label>
-      <mat-select [(value)]="show.eventLocation">
+      <mat-select [(value)]="selectedSimpleEventLocation">
         <mat-option *ngFor="let eventLocation of eventLocations" [value]="eventLocation">
           {{eventLocation.name}}
         </mat-option>

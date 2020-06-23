@@ -41,6 +41,7 @@ public class EventMappingTest implements TestData {
         .prices(PRICES)
         .totalTicketsSold(TOTAL)
         .shows(SHOWS)
+        .photo(PHOTO)
         .build();
 
     @Autowired
@@ -88,7 +89,7 @@ public class EventMappingTest implements TestData {
             () -> assertEquals(START, detailedEventDto.getStartsAt()),
             () -> assertEquals(END, detailedEventDto.getEndsAt()),
             () -> assertEquals(PRICES, detailedEventDto.getPrices()),
-            () -> assertEquals(java.util.Optional.ofNullable(PRICES.get(0)), detailedEventDto.getStartPrice()),
+            () -> assertEquals(PRICES.get(0), detailedEventDto.getStartPrice()),
             () -> assertEquals(TOTAL, detailedEventDto.getTotalTicketsSold())
         );
     }

@@ -46,7 +46,7 @@
   padding: 0px;
   text-align: center;
   margin: 50px 0px 20px 0px;
-  border-width: 1px;
+  border: 1px solid black;
 }
 
 .btn {

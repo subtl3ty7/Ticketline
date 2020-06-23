@@ -11,9 +11,9 @@
   </div>
 </div>
 <div class="card-body">
-  <app-error-notification *ngIf="searchShared.error" [error]="searchShared.error"></app-error-notification>
-  <div *ngIf="searchShared.entities && searchShared.entities.length > 0">
-    <div *ngFor="let s of searchShared.entities" style="margin-top: -5px;">
+  <app-error-notification *ngIf="error" [error]="error"></app-error-notification>
+  <div *ngIf="currentPage && currentPage.length > 0">
+    <div *ngFor="let s of currentPage" style="margin-top: -5px;">
       <div class="row" style="margin-top: 20px; height: 220px; box-shadow: 0px 3px 6px #00000029;">
         <div class="show-block">
           <div class="row show-row">
@@ -58,9 +58,27 @@
         </div>
       </div>
     </div>
+    <div class="row" *ngIf="previousPage || nextPage">
+      <nav class="search-navigation">
+        <ul class="pagination">
+          <li class="page-item" *ngIf="previousPage.length !== 0 && currentPageIndex > 0" style="margin-right: auto">
+            <a class="page-link" (click)="loadPreviousPage()">
+              <span aria-hidden="true">&laquo; Zurück</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          <li class="page-item" *ngIf="nextPage.length !== 0" style="margin-left: auto"> <!-- *ngIf="nextPage" -->
+            <a class="page-link" (click)="loadNextPage()">
+              <span aria-hidden="true">Weiter &raquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </div>
-  <p *ngIf="searchShared.entities && searchShared.entities.length == 0" style="font-size: 20px; padding-top: 40px; text-align: center">Es konnten keine Veranstaltungen mit diesen Kriterien gefunden werden.</p>
-  <app-spinner *ngIf="searchShared.entities === undefined" style="margin-top: 500px; margin-bottom: 500px;">
+  <p *ngIf="currentPage && currentPage.length == 0" style="font-size: 20px; padding-top: 40px; text-align: center">Es konnten keine Veranstaltungen mit diesen Kriterien gefunden werden.</p>
+  <app-spinner *ngIf="currentPage === undefined" style="margin-top: 500px; margin-bottom: 500px;">
   </app-spinner>
 </div>
 
