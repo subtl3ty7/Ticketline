@@ -32,7 +32,7 @@ public class TicketEndpoint {
         this.ticketService = ticketService;
     }
 
-    @PostMapping(value = "/purchase")
+    @PostMapping(value = "/purchasing")
     @ApiOperation(
         value = "Purchasing a ticket",
         notes = "Purchasing a ticket",
