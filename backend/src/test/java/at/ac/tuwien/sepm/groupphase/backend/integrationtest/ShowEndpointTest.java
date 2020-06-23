@@ -105,6 +105,7 @@ public class ShowEndpointTest implements TestData {
             .param("endsAt", "")
             .param("duration", "")
             .param("price", "")
+            .param("size", "0")
             .contentType(MediaType.APPLICATION_JSON)
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
             .andDo(print())

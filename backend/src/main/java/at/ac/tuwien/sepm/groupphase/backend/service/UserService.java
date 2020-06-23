@@ -104,7 +104,22 @@ public interface UserService extends UserDetailsService {
      */
     AbstractUser getAuthenticatedUser(Authentication auth);
 
+    /**
+     * Change password for the registered customer.
+     *
+     * @param email - email of the customer
+     * @param newPassword - a new password
+     */
     void changePasswordCustomer(String email, String newPassword);
 
+    /**
+     * Find users based on their userCode, first name, last name and email
+     *
+     * @param userCode - the user code to look for
+     * @param firstName - first name to look for
+     * @param lastName - last name to look for
+     * @param email - email to look for
+     * @return a list of all the users that match the given criteria
+     */
     List<AbstractUser> findUserByParams(String userCode, String firstName, String lastName, String email);
 }
