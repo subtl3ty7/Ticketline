@@ -45,8 +45,8 @@ export class ArtistComponent implements OnInit, DoCheck {
     this.searchTerm = sessionStorage.getItem('searchTerm');
     if (this.searchTerm.includes(' ')) {
       this.searchTermArr = this.searchTerm.split(' ', 2);
-      this.firstName = this.searchTerm[0];
-      this.lastName = this.searchTerm[1];
+      this.firstName = this.searchTermArr[0];
+      this.lastName = this.searchTermArr[1];
     } else {
       this.firstName = this.searchTerm;
       this.lastName = '';
@@ -101,14 +101,7 @@ export class ArtistComponent implements OnInit, DoCheck {
           this.currentPage = this.nextPage;
           this.nextPage = artists;
           this.artists = this.artists.concat(artists);
-          console.log('previousPage: ');
-          console.log(this.previousPage);
-          console.log('currentPage: ');
-          console.log(this.currentPage);
-          console.log('nextPage:');
-          console.log(this.nextPage);
-          console.log('artists');
-          console.log(this.artists);
+          this.printPageStatus();
         },
         (error) => {
           this.error = error.error;
@@ -124,14 +117,7 @@ export class ArtistComponent implements OnInit, DoCheck {
       this.nextPage = this.currentPage;
       this.currentPage = this.previousPage;
       this.previousPage = [];
-      console.log('previousPage: ');
-      console.log(this.previousPage);
-      console.log('currentPage: ');
-      console.log(this.currentPage);
-      console.log('nextPage:');
-      console.log(this.nextPage);
-      console.log('artists');
-      console.log(this.artists);
+      this.printPageStatus();
     } else {
       console.log('current page index: ' + this.currentPageIndex);
       this.artistService.getArtistsByFirstAndLastName(this.firstName, this.lastName, this.pageSize * (this.currentPageIndex - 1)).subscribe(
@@ -141,14 +127,7 @@ export class ArtistComponent implements OnInit, DoCheck {
           this.currentPage = this.previousPage;
           this.previousPage = artists;
           this.artists = this.artists.concat(artists);
-          console.log('previousPage: ');
-          console.log(this.previousPage);
-          console.log('currentPage: ');
-          console.log(this.currentPage);
-          console.log('nextPage:');
-          console.log(this.nextPage);
-          console.log('artists');
-          console.log(this.artists);
+          this.printPageStatus();
         },
         (error) => {
           this.error = error.error;
@@ -173,5 +152,16 @@ export class ArtistComponent implements OnInit, DoCheck {
         });
       }
     }
+  }
+
+  printPageStatus() {
+    console.log('previousPage: ');
+    console.log(this.previousPage);
+    console.log('currentPage: ');
+    console.log(this.currentPage);
+    console.log('nextPage:');
+    console.log(this.nextPage);
+    console.log('artists');
+    console.log(this.artists);
   }
 }

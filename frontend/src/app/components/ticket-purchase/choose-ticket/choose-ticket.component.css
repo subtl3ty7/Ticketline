@@ -58,27 +58,19 @@
 }
 
 .buy-button {
-  color: white;
-  background-color: #2771BB;
   height: 75px;
   width: 350px;
   transition: .2s;
-  padding: 0px;
-  text-align: center;
   margin: 0px 0px 20px;
-  border-width: 1px;
 }
 
 .reserve-button {
-  color: white;
   background-color: #A1A1A1;
   height: 75px;
   width: 350px;
   transition: .2s;
   padding: 0px;
   margin: 0px;
-  text-align: center;
-  border-width: 1px;
 }
 
 .reserve-button:hover {

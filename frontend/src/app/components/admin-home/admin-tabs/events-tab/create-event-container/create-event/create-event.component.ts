@@ -36,7 +36,7 @@ export class CreateEventComponent implements OnInit {
           this.router.navigate(['administration', 'events']);
         },
         (error) => {
-          this.error = error.error;
+          this.error = error;
         }
       );
     }

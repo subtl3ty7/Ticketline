@@ -38,8 +38,12 @@ export class ArtistAdvancedComponent implements OnInit {
     this.firstName = this.advancedArtistSearchForm.controls.firstName.value === null ? '' : this.advancedArtistSearchForm.controls.firstName.value;
     this.lastName = this.advancedArtistSearchForm.controls.lastName.value  === null ? '' : this.advancedArtistSearchForm.controls.lastName.value;
     console.log('advanced searching with first name: ' + this.firstName + ' and last name: ' + this.lastName);
-    sessionStorage.setItem('searchTerm', this.firstName + ' ' + this.lastName);
-    sessionStorage.setItem('searchEntity', 'Artist');
+    if (this.lastName === '') {
+      sessionStorage.setItem('searchTerm', this.firstName);
+    } else {
+      sessionStorage.setItem('searchTerm', this.firstName + ' ' + this.lastName);
+      sessionStorage.setItem('searchEntity', 'Artist');
+    }
     this.router.navigate(['/search']);
   }
 
