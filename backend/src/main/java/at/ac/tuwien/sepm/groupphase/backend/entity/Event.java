@@ -35,9 +35,8 @@ public class Event implements Serializable {
     @Column(nullable = false, length = 100)
     private String name;
 
-    @NotNull
-    @Size(min=1, max=10000)
-    @Column(nullable = false, length = 10000)
+    @Size(max=10000)
+    @Column(length = 10000)
     private String description;
 
     @NotNull
@@ -51,20 +50,19 @@ public class Event implements Serializable {
     @ToString.Exclude
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "event_code", referencedColumnName = "event_code")
-    //@Fetch(FetchMode.SELECT) //only way to fetch more than two collections with type eager ...
     private List<Show> shows;
 
     @ToString.Exclude
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-    //@Fetch(FetchMode.SELECT) //only way to fetch more than two collections with type eager ...
     private List<Artist> artists;
 
     @Column
     private int totalTicketsSold;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SELECT) //only way to fetch more than two collections with type eager ...
-    private List<Integer> prices;
+    @Fetch(FetchMode.SELECT)
+    @Column(columnDefinition = "DECIMAL (10, 2)")
+    private List<Double> prices;
 
     @ToString.Exclude
     @NotNull

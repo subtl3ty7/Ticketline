@@ -18,6 +18,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.List;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -44,7 +46,7 @@ public class UserServiceTest implements TestData {
         .withUpdatedAt(UPD)
         .withIsBlocked(false)
         .withIsLogged(false)
-        .withPoints(POINTS)
+        .withPoints(POINTS_ZERO)
         .build();
 
     private AbstractUser admin = Administrator.AdministratorBuilder.aAdministrator()
@@ -75,7 +77,7 @@ public class UserServiceTest implements TestData {
             .withUpdatedAt(UPD)
             .withIsBlocked(false)
             .withIsLogged(false)
-            .withPoints(POINTS)
+            .withPoints(POINTS_ZERO)
             .build();
 
         admin = Administrator.AdministratorBuilder.aAdministrator()
@@ -129,7 +131,7 @@ public class UserServiceTest implements TestData {
     }
 
     @Test
-    public void givenUnloggedCustomer_saveWithSameEmail_thenError() {
+    public void givenUnloggedCustomer_whenSaveWithSameEmail_thenValidationException() {
         userService.registerNewCustomer((Customer)customer);
 
         assertThrows(ValidationException.class,
@@ -137,7 +139,7 @@ public class UserServiceTest implements TestData {
     }
 
     @Test
-    public void givenAdmin_saveWithSameEmailOrBlock_thenError() {
+    public void givenAdmin_whenSaveWithSameEmailOrBlock_thenValidationException() {
         userService.registerNewAdmin((Administrator)admin);
 
         assertThrows(ValidationException.class,
@@ -155,6 +157,39 @@ public class UserServiceTest implements TestData {
         assertTrue(((Customer)userService.findUserByEmail(customer.getEmail())).isBlocked());
     }
 
+    @Test
+    public void givenUser_whenDeleteNonExitingUser_thenValidationException() {
+        userService.registerNewCustomer((Customer)customer);
+
+        assertThrows(ValidationException.class,
+            () ->   userService.deleteUserByUsercode("wrong"));
+    }
+
+    @Test
+    public void givenUser_whenDeleteAndFindAll_thenListWithNoUserEntities() {
+        userService.registerNewCustomer((Customer)customer);
+
+        userService.deleteUserByUsercode(customer.getUserCode());
+
+        assertEquals(0, userService.loadAllUsers().size());
+    }
+
+    @Test
+    public void givenUser_whenEditNonExitingUser_thenValidationException() {
+        userService.registerNewCustomer((Customer)customer);
+
+        customer.setUserCode("wrong1");
+        assertThrows(ValidationException.class,
+            () ->   userService.updateCustomer((Customer)customer));
+    }
+
+    @Test
+    public void givenUser_whenGetByParams_thenListWith1UserEntity() {
+        userService.registerNewCustomer((Customer)customer);
+
+        List<AbstractUser> abstractUsers = userService.findUserByParams(customer.getUserCode(), customer.getFirstName(), customer.getLastName(), customer.getEmail());
+        assertEquals(1, abstractUsers.size());
+    }
 
 }
 

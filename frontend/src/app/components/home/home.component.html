@@ -8,7 +8,7 @@
 
         <div class="card-body">
           <app-top-events></app-top-events>
-          <app-latest-news></app-latest-news>
+          <app-latest-news *ngIf="this.authService.isLoggedIn()"></app-latest-news>
         </div>
 
       </div>

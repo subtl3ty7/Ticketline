@@ -48,6 +48,10 @@ public interface UserRepository extends JpaRepository<AbstractUser, Long> {
      * @param e - email to look for
      * @return - a list of all the users that contain the given criteria.
      */
+
+    @Query(value = "SELECT * FROM USER u WHERE u.EMAIL = :userCode AND u.IS_DELETED = TRUE", nativeQuery = true)
+    AbstractUser findSoftDeletedAbstractUserByUserCode(@Param("userCode") String userCode);
+
     List<AbstractUser> findAllByUserCodeContainingIgnoreCaseAndFirstNameContainingIgnoreCaseAndLastNameContainingIgnoreCaseAndEmailContainingIgnoreCase(String u, String f, String l, String e);
 
 }

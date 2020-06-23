@@ -1,8 +1,9 @@
 package at.ac.tuwien.sepm.groupphase.backend.repository;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
-import at.ac.tuwien.sepm.groupphase.backend.entity.Event;
 import at.ac.tuwien.sepm.groupphase.backend.entity.News;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -24,13 +25,15 @@ public interface NewsRepository extends JpaRepository<News, Long> {
      * @param customer the customer
      * @return A list of News
      */
-    List<News> findAllBySeenByContainsOrderByPublishedAtDesc(Customer customer);
+    List<News> findAllBySeenByContainsOrderByPublishedAtDesc(Customer customer, Pageable pageable);
+
+    Page<News> findAll(Pageable pageable);
 
     /**
      * Find latest News entries
      * @return A list of News
      */
-    List<News> findAllByOrderByPublishedAtDesc();
+    List<News> findAllByOrderByPublishedAtDesc(Pageable pageable);
 
     /**
      * Find a News entry by newsCode.
@@ -40,19 +43,10 @@ public interface NewsRepository extends JpaRepository<News, Long> {
      */
     News findByNewsCode(String newsCode);
 
-    /**
-     * Find all news by news code, title, author, start and end date, all of them ignoring the Capitalization.
-     *
-     * @param newsCode - news code to look for
-     * @param title - title to look for
-     * @param author - author to look for
-     * @param startRangeDate - start date to look for
-     * @param endRangeDate - end date to look for
-     * @return - a list of news that matches the given criteria.
-     */
-    List<News> findAllByNewsCodeContainingIgnoreCaseAndTitleContainingIgnoreCaseAndAuthorContainingIgnoreCaseAndPublishedAtBetween(String newsCode,
+    Page<News> findAllByNewsCodeContainingIgnoreCaseAndTitleContainingIgnoreCaseAndAuthorContainingIgnoreCaseAndPublishedAtBetween(String newsCode,
                                                                                                                                    String title,
                                                                                                                                    String author,
                                                                                                                                    LocalDateTime startRangeDate,
-                                                                                                                                   LocalDateTime endRangeDate);
+                                                                                                                                   LocalDateTime endRangeDate,
+                                                                                                                                   Pageable pageable);
 }

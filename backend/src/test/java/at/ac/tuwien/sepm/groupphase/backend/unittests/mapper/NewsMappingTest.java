@@ -31,6 +31,7 @@ public class NewsMappingTest implements TestData {
         .summary(TEST_NEWS_SUMMARY)
         .text(TEST_NEWS_TEXT)
         .author(FNAME)
+        .photo(PHOTO)
         .build();
 
     @Autowired

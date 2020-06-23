@@ -4,6 +4,7 @@ import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.DetailedEventDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleEventDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.EventMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventCategoryEnum;
+import at.ac.tuwien.sepm.groupphase.backend.entity.EventLocation;
 import at.ac.tuwien.sepm.groupphase.backend.entity.EventTypeEnum;
 import at.ac.tuwien.sepm.groupphase.backend.service.EventService;
 import io.swagger.annotations.ApiOperation;
@@ -124,7 +125,11 @@ public class EventEndpoint {
     })
     public ResponseEntity<DetailedEventDto> findByEventCode(@PathVariable String eventCode) {
         LOGGER.info("GET /api/v1/events/" + eventCode);
+        LocalDateTime start = LocalDateTime.now();
         DetailedEventDto result = eventMapper.eventToDetailedEventDto(eventService.findByEventCode(eventCode));
+        LocalDateTime end = LocalDateTime.now();
+        float runningTime = Duration.between(start, end).toMillis();
+        LOGGER.info("Getting Event took " + runningTime/1000.0 + " seconds");
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
@@ -139,9 +144,9 @@ public class EventEndpoint {
         @ApiResponse(code = 404, message = "No Event is found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<List<SimpleEventDto>> findAllEvents() {
+    public ResponseEntity<List<SimpleEventDto>> findAllEvents(@RequestParam int size) {
         LOGGER.info("GET /api/v1/events/all");
-        List<SimpleEventDto> result = eventMapper.eventToSimpleEventDto(eventService.findAllEvents());
+        List<SimpleEventDto> result = eventMapper.eventToSimpleEventDto(eventService.findAllEvents(size));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -161,24 +166,25 @@ public class EventEndpoint {
     }
 
     @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
-    @GetMapping(value = "", params = "artistId")
+    @GetMapping(value = "", params = {"artistId", "size"})
     @ApiOperation(
-        value = "Get all events",
-        notes = "Get all events without details",
+        value = "Find Events",
+        notes = "Find Events by artist id",
         authorizations = {@Authorization(value = "apiKey")})
     @ApiResponses({
         @ApiResponse(code = 200, message = "Events are successfully retrieved"),
         @ApiResponse(code = 404, message = "No Event is found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<List<SimpleEventDto>> findEventByArtistId(@Valid @RequestParam Long artistId) {
+    public ResponseEntity<List<SimpleEventDto>> findEventByArtistId(@Valid @RequestParam Long artistId,
+                                                                    @Valid @RequestParam int size) {
         LOGGER.info("GET /api/v1/events?artistId=" + artistId);
-        List<SimpleEventDto> result = eventMapper.eventToSimpleEventDto(eventService.findEventsByArtistId(artistId));
+        List<SimpleEventDto> result = eventMapper.eventToSimpleEventDto(eventService.findEventsByArtistId(artistId, size));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
-    @GetMapping(value = "", params = "name")
+    @GetMapping(value = "", params = {"name", "size"})
     @ApiOperation(
         value = "Get all events by name",
         notes = "Get all events by with details",
@@ -188,14 +194,15 @@ public class EventEndpoint {
         @ApiResponse(code = 404, message = "No Event is found"),
         @ApiResponse(code = 500, message = "Connection Refused"),
     })
-    public ResponseEntity<List<SimpleEventDto>> findEventByName(@Valid @RequestParam String name) {
+    public ResponseEntity<List<SimpleEventDto>> findEventByName(@Valid @RequestParam String name,
+                                                                @Valid @RequestParam int size) {
         LOGGER.info("GET /api/v1/events?name=" + name);
-        List<SimpleEventDto> result = eventMapper.eventToSimpleEventDto(eventService.findEventsByName(name));
+        List<SimpleEventDto> result = eventMapper.eventToSimpleEventDto(eventService.findEventsByName(name, size));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @CrossOrigin(maxAge = 3600, origins = "*", allowedHeaders = "*")
-    @GetMapping(value = "", params = {"eventName", "type", "category", "startsAt", "endsAt", "showDuration"})
+    @GetMapping(value = "", params = {"eventName", "type", "category", "startsAt", "endsAt", "showDuration", "size"})
     @ApiOperation(
         value = "Get all events advanced",
         notes = "Get all events by with details",
@@ -210,9 +217,11 @@ public class EventEndpoint {
                                                                   @Valid @RequestParam String category,
                                                                   @Valid @RequestParam String startsAt,
                                                                   @Valid @RequestParam String endsAt,
-                                                                  @Valid @RequestParam String showDuration
+                                                                  @Valid @RequestParam String showDuration,
+                                                                   @Valid  @RequestParam int size
     ) {
-        LOGGER.info("GET /api/v1/events?eventName=" + eventName + "&type=" + type + "&category=" + category + "&startsAt=" + startsAt + "&endsAt=" + endsAt + "&showDuration=" + showDuration);
+        LOGGER.info("GET /api/v1/events?eventName=" + eventName + "&type=" + type + "&category=" + category + "&startsAt=" + startsAt + "&endsAt=" + endsAt + "&showDuration=" + showDuration
+        + "&size=" + size);
         LocalDateTime startsAtParsed = null;
         if (!startsAt.isEmpty()) {
             startsAtParsed = LocalDateTime.parse(startsAt);
@@ -237,12 +246,12 @@ public class EventEndpoint {
         if (!showDuration.isEmpty()) {
             showDurationParsed = Duration.parse(showDuration);
         }
-        List<SimpleEventDto> result = eventMapper.eventToSimpleEventDto(eventService.findEventsAdvanced(eventName, eventTypeEnumOrdinal, eventCategoryEnumOrdinal, startsAtParsed, endsAtParsed, showDurationParsed));
+        List<SimpleEventDto> result = eventMapper.eventToSimpleEventDto(eventService.findEventsAdvanced(eventName, eventTypeEnumOrdinal, eventCategoryEnumOrdinal, startsAtParsed, endsAtParsed, showDurationParsed, size));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @Secured("ROLE_ADMIN")
-    @GetMapping(value = "", params = {"eventCode", "name", "startRange", "endRange"})
+    @GetMapping(value = "", params = {"eventCode", "name", "startRange", "endRange", "size"})
     @ApiOperation(
         value = "Get simple events",
         notes = "Get simple events by params",
@@ -255,12 +264,14 @@ public class EventEndpoint {
     public ResponseEntity<List<SimpleEventDto>> findSimpleEventsByParam(@RequestParam String eventCode,
                                                                         @RequestParam String name,
                                                                         @RequestParam String startRange,
-                                                                        @RequestParam String endRange
+                                                                        @RequestParam String endRange,
+                                                                        @RequestParam int size
     ) {
-        LOGGER.info("GET /api/v1/events?eventCode=" + eventCode + "&name=" + name +  "&startRange=" + startRange + "&endRange=" + endRange);
+        LOGGER.info("GET /api/v1/events?eventCode=" + eventCode + "&name=" + name +  "&startRange=" + startRange + "&endRange=" + endRange
+            + "&size=" + size);
         LocalDateTime startRangeDate = LocalDate.parse(startRange, DateTimeFormatter.ofPattern("E MMM dd yyyy")).atStartOfDay();
         LocalDateTime endRangeDate = LocalDate.parse(endRange, DateTimeFormatter.ofPattern("E MMM dd yyyy")).atStartOfDay();
-        List<SimpleEventDto> result = eventMapper.eventToSimpleEventDto(eventService.findSimpleEventsByParam(eventCode, name, startRangeDate, endRangeDate));
+        List<SimpleEventDto> result = eventMapper.eventToSimpleEventDto(eventService.findSimpleEventsByParam(eventCode, name, startRangeDate, endRangeDate, size));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

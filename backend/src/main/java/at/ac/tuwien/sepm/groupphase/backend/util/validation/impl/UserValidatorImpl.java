@@ -48,7 +48,11 @@ public class UserValidatorImpl implements UserValidator {
                 constraints.add("points_zero", ((Customer) user).getPoints() == 0);
             }
             if (user.getBirthday() != null) {
-                constraints.add("birthday_16yo", ChronoUnit.YEARS.between(user.getBirthday(), LocalDateTime.now()) > 16);
+                constraints.add("birthday_16yo", ChronoUnit.YEARS.between(user.getBirthday(), LocalDateTime.now()) >= 16);
+
+            }
+            if(constraints.isViolated()) {
+                int debug=0;
             }
         }
         return constraints;
@@ -75,7 +79,7 @@ public class UserValidatorImpl implements UserValidator {
     @Override
     public Constraints validateUserCode(String userCode) {
         Constraints constraints = new Constraints();
-        constraints.add("userCode_unique", userRepository.findAbstractUserByUserCode(userCode) == null);
+        constraints.add("userCode_unique", userRepository.findAbstractUserByUserCode(userCode) == null && userRepository.findSoftDeletedAbstractUserByUserCode(userCode) == null);
         return constraints;
     }
 
@@ -136,6 +140,14 @@ public class UserValidatorImpl implements UserValidator {
         constraints.add("user_isCustomer", user instanceof Customer);
         constraints.add("user_isSelf_or_auth_isAdmin", (user != null && validateUserIdentityWithGivenEmail(user.getEmail())) || validateIdentityIsAdmin());
         constraints.add(validatePasswordEncoded(newPassword));
+        return constraints;
+    }
+
+    @Override
+    public Constraints validateUserIdentityWithGivenUserCode(String userCode) {
+        Constraints constraints = new Constraints();
+        AbstractUser user = userRepository.findAbstractUserByUserCode(userCode);
+        constraints.add("user_isSelf", this.validateUserIdentityWithGivenEmail(user.getEmail()));
         return constraints;
     }
 

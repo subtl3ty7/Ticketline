@@ -24,7 +24,7 @@
 
 .mat-form-field {
   font-family: SansSerif, sans-serif;
-  width: 40%;
+  width: 100%;
   height: 64px;
   font-size: 18px;
   font-weight: normal;
@@ -33,6 +33,7 @@
   line-height: 1.33;
   letter-spacing: normal;
   color: #444444;
+  padding-right: 35px;
 }
 
 .button-wrapper {

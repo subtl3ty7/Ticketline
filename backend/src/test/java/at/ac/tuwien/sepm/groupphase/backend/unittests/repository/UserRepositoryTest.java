@@ -23,25 +23,9 @@ public class UserRepositoryTest implements TestData {
     @Autowired
     UserRepository userRepository;
 
-    private AbstractUser abstractUser = Customer.CustomerBuilder.aCustomer()
-        .withId(ID)
-        .withUserCode(USER_CODE)
-        .withFirstName(FNAME)
-        .withLastName(LNAME)
-        .withEmail(DEFAULT_USER)
-        .withPassword(PASS)
-        .withBirthday(BIRTHDAY)
-        .withCreatedAt(CRE)
-        .withUpdatedAt(UPD)
-        .withIsBlocked(false)
-        .withIsLogged(false)
-        .withPoints(POINTS)
-        .build();
-
-    @BeforeEach
-    public void beforeEach() {
-        userRepository.deleteAll();
-        abstractUser = Customer.CustomerBuilder.aCustomer()
+    @Test
+    public void givenNothing_whenSaveUser_thenFindListWithOneElementAndFindListUserById() {
+        AbstractUser abstractUser = Customer.CustomerBuilder.aCustomer()
             .withId(ID)
             .withUserCode(USER_CODE)
             .withFirstName(FNAME)
@@ -55,27 +39,12 @@ public class UserRepositoryTest implements TestData {
             .withIsLogged(false)
             .withPoints(POINTS)
             .build();
-    }
 
-    @Test
-    public void givenNothing_whenSaveUser_thenFindListWithOneElementAndFindUserByUserCodeAndEmail() {
         userRepository.save(abstractUser);
 
         assertAll(
             () -> assertEquals(1, userRepository.findAll().size()),
-            () -> assertNotNull(userRepository.findAbstractUserByUserCode(abstractUser.getUserCode())),
-            () -> assertNotNull(userRepository.findAbstractUserByEmail(abstractUser.getEmail()))
-        );
-    }
-
-    @Test
-    public void givenNothing_whenSaveUser_thenFindListWithOneElementAndFindListUserByIdAndWrongEmail() {
-        userRepository.save(abstractUser);
-
-        assertAll(
-            () -> assertEquals(1, userRepository.findAll().size()),
-            () -> assertNotNull(userRepository.findById(abstractUser.getId())),
-            () -> assertNull(userRepository.findAbstractUserByEmail(ADMIN_USER))
+            () -> assertNotNull(userRepository.findById(abstractUser.getId()))
         );
     }
 

@@ -32,11 +32,6 @@ label {
   color: white;
 }
 
-.nav-pills > li {
-  padding-right: 10px;
-  margin-right: 10px;
-}
-
 .nav-pills > li > a.active {
   background: rgba(100%, 100%, 100%, 0.25);
   border-bottom-width: 3px;
@@ -46,7 +41,6 @@ label {
 }
 
 .nav-pills > li > a > div > span {
-  border-right: 1px white solid;
   padding-right: 55px;
   padding-left: 55px;
   height: 32px;
@@ -54,7 +48,6 @@ label {
 }
 
 .nav-pills > li > a.active > div > span {
-  border-right: 1px white solid;
   padding-right: 55px;
   padding-left: 55px;
   height: 30px;
@@ -81,6 +74,16 @@ label {
   font-size: 20px;
 }
 
-.nav-item {
-  margin-right: 0px;
+.tab-divider {
+  border-right: 2px white solid;
+}
+
+.search-navigation {
+  width: 100%;
+  margin-top: 25px;
+}
+
+.page-link{
+  font-size: 17px;
+  width: auto;
 }

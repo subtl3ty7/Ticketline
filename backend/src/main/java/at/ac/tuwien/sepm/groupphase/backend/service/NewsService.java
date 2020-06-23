@@ -17,22 +17,9 @@ public interface NewsService {
      */
     List<News> findLatestUnseen(Authentication auth, Integer limit);
 
-    /**
-     * Find all news articles that had been seen by the user
-     *
-     * @param auth - stores user authentication data (for example - email)
-     * @param limit - how many news should be displayed
-     * @return a list of all the seen news
-     */
-    List<News> findSeenNews(Authentication auth, Integer limit);
+    List<News> findSeenNews(Integer page, Integer size, Authentication auth);
 
-    /**
-     * Find the latest news
-     *
-     * @param limit - how many news should be displayed
-     * @return a list of the latest news
-     */
-    List<News> findLatest(Integer limit);
+    List<News> findLatest(Integer page, Integer size);
 
     /**
      * Create a new news entry
@@ -51,23 +38,9 @@ public interface NewsService {
      */
     News findByNewsCode(String eventCode, Authentication auth);
 
-    /**
-     * Find all news entries
-     * @return a list of all news entries
-     */
-    List<News> findAll();
+    List<News> findAll(int size);
 
-    /**
-     * Find news entries by their newsCode, title, author, start and end range date
-     *
-     * @param newsCode - news code to look for
-     * @param title - title to look for
-     * @param author - author to look for
-     * @param startRangeDate - start range date to look for
-     * @param endRangeDate - end range date to look for
-     * @return a list of news entries that match the given criteria
-     */
-    List<News> findSimpleNewsByParam(String newsCode, String title, String author, LocalDateTime startRangeDate, LocalDateTime endRangeDate);
+    List<News> findSimpleNewsByParam(String newsCode, String title, String author, LocalDateTime startRangeDate, LocalDateTime endRangeDate, int size);
 }
 
 

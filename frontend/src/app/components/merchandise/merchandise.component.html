@@ -1,14 +1,17 @@
 <app-header></app-header>
 <app-error-notification *ngIf="error" [error]="error"></app-error-notification>
-<div class="container-fluid justify-content-center" style="padding-left: 5%; padding-right: 5%;">
+
+
+<!-- Container the card is in -->
+<div class="container-fluid" style="padding-left: 5%; padding-right: 5%;">
   <div class="row">
     <div class="mx-auto" style="max-width: 1320px; width: 100%;">
-      <span class="anchor" id="formLogin"></span>
 
-      <div class="card main-body" style="padding-top: 60px">
+      <!-- Page card containing everything -->
+      <div class="card main-body" style="margin: 0; padding-top: 60px; padding-bottom: 10px">
 
         <div class="card-body">
-          <div class="row" style="padding-left: 30px; padding-right: 30px">
+          <div class="row merch-row" style="padding-left: 30px; padding-right: 30px">
 
             <div class="col-5">
               <h1 class="mb-7">Merchandise</h1>
@@ -22,7 +25,7 @@
 
             <div class="col-3">
               <p class="infoAboutPremium" style="margin-top: 5px; margin-bottom: 0px">
-                <i class="fas fa-star"></i>
+                <img src="assets/images/premium_icon.svg" alt="">
                 Prämienpunkte einlösbar
               </p>
             </div>
@@ -30,8 +33,8 @@
 
           <div *ngIf="merchandise">
             <div class="container">
-              <div class="row" style="padding-left: 15px; padding-right: 15px; padding-bottom: 25px; width: 100%">
-                <div class="col-4 col-4-xl col-4-lg col-4-md col-12-sm" *ngFor="let product of merchandise" style="height: 665px; margin-bottom: 30px;">
+              <div class="row merch-row" style="padding-left: 15px; padding-right: 15px; padding-bottom: 25px; width: 100%">
+                <div class="col-4 col-4-xl col-4-lg col-4-md col-12-sm" *ngFor="let product of merchandise" style="height: 710px; margin-bottom: 30px;">
                   <div class="zoom">
 
                     <div class="card-deck h-100">
@@ -53,11 +56,25 @@
                         <div class="card-body">
 
                           <!-- Title -->
-                          <h4 class="card-title"> {{product.merchandiseProductName}}
-                            <div class="premiumIcon" *ngIf="product.premium">
-                              <i class="fas fa-star"></i>
+                          <div class="container" style="padding: 0">
+                            <div class="row merch-row justify-content-end" style="margin-right: -25px; margin-top: -10px" *ngIf="product.premium">
+                              <img src="assets/images/premium_icon.svg" alt="">
                             </div>
-                          </h4>
+                            <div style="margin-top: -15px" *ngIf="product.premium">
+
+                            </div>
+                            <div class = "card-title row merch-row">
+                              <div class="card-title-font " style="margin-left: 0px">
+                                <div class="container" style="padding: 0px">
+                                  <div class="row merch-row" style="padding: 0px; margin-top: -2px">
+                                    <div class="card-title-font">{{product.merchandiseProductName}}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
 
                           <hr>
 

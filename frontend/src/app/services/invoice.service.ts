@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {Globals} from '../global/globals';
 import {Router} from '@angular/router';
 import {Observable, throwError} from 'rxjs';
@@ -31,5 +31,10 @@ export class InvoiceService {
     return this.httpClient.get<Invoice[]>(this.invoiceBaseUri + '/' + userCode).pipe(
       catchError(this.handleError)
     );
+  }
+
+  getInvoiceByTicketCode(ticketCode: string): Observable<Invoice> {
+    console.log('Load invoice by ticketCode ' + ticketCode);
+    return  this.httpClient.get<Invoice>(this.invoiceBaseUri + '?ticketCode=' + ticketCode);
   }
 }

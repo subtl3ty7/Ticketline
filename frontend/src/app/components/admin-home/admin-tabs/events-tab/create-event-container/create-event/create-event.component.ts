@@ -36,7 +36,7 @@ export class CreateEventComponent implements OnInit {
           this.router.navigate(['administration', 'events']);
         },
         (error) => {
-          this.error = error.error;
+          this.error = error;
         }
       );
     }
@@ -45,14 +45,13 @@ export class CreateEventComponent implements OnInit {
   private setPrices() {
     this.wrapper.model.prices = [];
     const prices: number[] = [];
-    const distinctLocations: number[] = [];
     this.wrapper.model.shows.forEach(function(show) {
-      if (!distinctLocations.includes(show.eventLocation.id)) {
-        show.eventLocation.sections.forEach(function (section) {
+      show.eventLocation.sections.forEach(function (section) {
+        const price = show.price + section.price;
+        if (!prices.includes(price)) {
           prices.push(show.price + section.price);
-          distinctLocations.push(show.eventLocation.id);
-        });
-      }
+        }
+      });
     });
     this.wrapper.model.prices = prices.sort();
     this.wrapper.model.startPrice = this.wrapper.model.prices[0];

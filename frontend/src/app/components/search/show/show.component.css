@@ -104,3 +104,12 @@ a:hover {
   padding-top: 18px;
 }
 
+.search-navigation {
+  width: 100%;
+  margin-top: 25px;
+}
+
+.page-link{
+  font-size: 17px;
+  width: auto;
+}

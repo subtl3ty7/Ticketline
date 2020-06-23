@@ -2,34 +2,32 @@
 
 <app-error-notification *ngIf="error" [error]="error"></app-error-notification>
 
-<div *ngIf="events">
+<div *ngIf="events" class="background">
   <div class="row row-headline">
     <div class="rail-select col-2 ml-5">
-      <div class="select-side">
-        <i class="fa fa-chevron-down"></i>
-      </div>
-      <select class="form-control" id="sel1">
-        <option>
+      <select class="form-control" id="sel1" [(ngModel)]="chosenCategory" (ngModelChange)="getTop10Events()">
+        <option [value]="'All'">
           All Events
         </option>
-        <option>
-          Category2
-        </option>
-        <option>
-          Category3
+        <option *ngFor="let category of eventCategories" [value]="category.toString()">
+          {{category.toString()}}
         </option>
       </select>
     </div>
-    <h1 class="title-headline mx-auto">Top Zehn Veranstaltungen im {{currentMonth}}</h1>
-    <div class="col-2"></div>
   </div>
+  <div class="row mt-5">
+    <h1 class="title-headline mx-auto">Top Zehn Veranstaltungen im {{currentMonth}}</h1>
+  </div>
+
 
   <div class="container-fluid" style="padding-left: 0px; padding-right: 0px; padding-top: 50px;">
     <div class="row">
-      <div class="mx-auto" style="max-width: 1400px; width: 100%; padding: 30px 0px 0px 0px; background-color: transparent">
-        <app-chart [events]="events"></app-chart>
-        <app-top-ten-events-list [events]="events"></app-top-ten-events-list>
+      <div class="mx-auto" style="max-width: 1400px; width: 100%; margin: 30px 0px 0px 0px; background-color: transparent">
+        <p *ngIf="events.length === 0 || !hasTicketsSold" style="color: white; font-size: 20px; padding-top: 40px; text-align: center">Es konnten keine Veranstaltungen dieser Kategorie mit Ticketverkäufen gefunden werden.</p>
+        <app-chart *ngIf="events.length > 0 && hasTicketsSold" [events]="events"></app-chart>
+        <app-top-ten-events-list *ngIf="events.length > 0 && hasTicketsSold" [events]="events"></app-top-ten-events-list>
       </div>
     </div>
   </div>
 </div>
+

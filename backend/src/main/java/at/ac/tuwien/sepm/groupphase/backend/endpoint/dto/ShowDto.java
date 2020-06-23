@@ -33,4 +33,5 @@ public class ShowDto {
     private EventLocationDto eventLocation;
     private List<SeatDto> takenSeats;
     private SimpleEventDto event;
+    private long duration;
 }

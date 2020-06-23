@@ -12,6 +12,9 @@ import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,48 +55,86 @@ public class CustomEventService implements EventService {
 
     @Override
     public List<Event> findTop10EventsOfMonthByCategory(String category) {
-        List<Event> top10 = eventRepository.findTop10ByStartsAtAfterAndCategoryOrderByTotalTicketsSoldDesc(LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),1,0,0), category);
+        List<Event> top10 = eventRepository.findTop10ByStartsAtAfterAndCategoryOrderByTotalTicketsSoldDesc(LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),1,0,0), EventCategoryEnum.valueOf(category));
         return top10;
     }
 
     @Override
-    public List<Event> findAllEvents() {
-        List<Event> allEvents = eventRepository.findAll();
-        return allEvents;
+    public List<Event> findAllEvents(int size) {
+        int page = calculateNumberOfPage(size);
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        Page<Event> eventsPage = eventRepository.findAll(pageRequest);
+        return eventsPage.toList();
     }
 
+
+    private int calculateNumberOfPage(int size) {
+        int result = 0;
+        if (size != 0) {
+            result = size / 10;
+        }
+        return result;
+    }
+
+    @Transactional
     @Override
     public Event createNewEvent(Event event){
-        //LocalDateTime startTest = LocalDateTime.now();
         event.setEventCode(getNewEventCode());
-        validator.validate(event).throwIfViolated();
+        //set MIN MAX to allow comparison
+        event.setStartsAt(LocalDateTime.MAX);
+        event.setEndsAt(LocalDateTime.MIN);
+        List<Double> prices = new ArrayList<>();
+        prices.add(Double.MAX_VALUE);
+        event.setPrices(prices);
 
-        List<Artist> artists = new ArrayList<>();
+        //replace artists with artists from repository
+        List<Artist> newArtistList = new ArrayList<>();
         for (Artist a : event.getArtists()) {
-            //if the artist has an id assigned and it exists in the database, then replace it with the one in the database
-            //otherwise, set the id null so that a new artist entity can be created in the database
-            if(a.getId() != null) {
-                Artist artist = artistRepository.findArtistById(a.getId());
-                if(artist == null) {
-                    a.setId(null);
-                    artists.add(a);
-                } else {
-                    artists.add(artist);
-                }
+            if(a.getLastName() == null) {
+                a.setLastName("");
+            }
+            List<Artist> artists = artistRepository.findArtistsByFirstNameAndLastName(a.getFirstName(), a.getLastName());
+            if(artists.isEmpty()) {
+                Artist artist = artistRepository.save(a);
+                //replace with repository object
+                newArtistList.add(artist);
+            } else {
+                //replace with repository object
+                newArtistList.add(artists.get(0));
             }
         }
+        event.setArtists(newArtistList);
 
-        //Give shows new EventLocation Entities (copies of existing ones) to make sure they all can have different seating assignments
         for(Show show: event.getShows()) {
+            //Give shows new EventLocation Entities (copies of existing ones) to make sure they all can have different seating assignments
             EventLocation eventLocation = eventLocationRepository.findEventLocationById(show.getEventLocation().getId());
             show.setEventLocation(eventLocation);
-            show.setPhoto(event.getPhoto());
-        }
 
+            show.setPhoto(event.getPhoto());
+            show.setEventName(event.getName());
+            show.setDescription(event.getDescription());
+            show.setDuration(Duration.between(show.getStartsAt(), show.getEndsAt()));
+            show.setTicketsAvailable(eventLocation.getCapacity());
+            //round price to two decimals
+            show.setPrice(Math.round(show.getPrice()*100.0)/100.0);
+
+            //set category and type for event
+            show.setEventCategory(event.getCategory());
+            show.setEventType(event.getType());
+
+            //set earliest startsAt of all shows and latest endsAt of all shows for the event
+            LocalDateTime startsAt = show.getStartsAt().isBefore(event.getStartsAt()) ? show.getStartsAt() : event.getStartsAt();
+            LocalDateTime endsAt = show.getEndsAt().isAfter(event.getEndsAt()) ? show.getEndsAt() : event.getEndsAt();
+            event.setStartsAt(startsAt);
+            event.setEndsAt(endsAt);
+
+            //set lowest price
+            event.getPrices().set(0, Math.min(event.getPrices().get(0), getMinPrice(show)));
+        }
+        event.setDuration(Duration.between(event.getStartsAt(), event.getEndsAt()));
+
+        validator.validate(event).throwIfViolated();
         Event event1 = eventRepository.save(event);
-        //LocalDateTime endTest = LocalDateTime.now();
-        //this.runningTimeTest += Duration.between(startTest, endTest).toMillis();
-        //LOGGER.info("Test Area took " + runningTimeTest/1000.0 + " seconds");
 
         return event1;
     }
@@ -120,7 +161,7 @@ public class CustomEventService implements EventService {
         validator.validateExists(eventCode).throwIfViolated();
         Event event = eventRepository.findEventByEventCode(eventCode);
         for(Show show: event.getShows()) {
-            Hibernate.initialize(show.getEventLocation().getShows());
+            Hibernate.initialize(show.getEventLocation());
         }
         Hibernate.initialize(event.getArtists());
         return event;
@@ -134,27 +175,56 @@ public class CustomEventService implements EventService {
     }
 
     @Override
-    public List<Event> findEventsByArtistId(Long artistId) {
+    public List<Event> findEventsByArtistId(Long artistId, int size) {
         validator.validateExists(artistId).throwIfViolated();
         Artist artist = artistRepository.findArtistById(artistId);
-        return eventRepository.findEventsByArtistsContaining(artist);
+        int page = calculateNumberOfPage(size);
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        Page<Event> eventsPage = eventRepository.findEventsByArtistsContaining(artist, pageRequest);
+        return eventsPage.toList();
 
     }
 
     @Override
-    public List<Event> findEventsByName(String name) {
-        List<Event> events = eventRepository.findEventsByNameContainingIgnoreCase(name);
-        return events;
+    public List<Event> findEventsByName(String name, int size) {
+        int page = calculateNumberOfPage(size);
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        Page<Event> eventsPage = eventRepository.findEventsByNameContainingIgnoreCase(name, pageRequest);
+        return eventsPage.toList();
     }
 
     @Override
-    public List<Event> findEventsAdvanced(String name, Integer type, Integer category, LocalDateTime startsAt, LocalDateTime endsAt, Duration showDuration) {
-        return eventRepository.findEventsByNameContainingIgnoreCaseAndTypeContainingAndCategoryContainingAndStartsAtIsGreaterThanEqualAndEndsAtIsLessThanEqualAndShowsDurationLessThanEqual(name, type, category, startsAt, endsAt, showDuration);
+    public List<Event> findEventsAdvanced(String name, Integer type, Integer category, LocalDateTime startsAt, LocalDateTime endsAt, Duration showDuration, int size) {
+        int page = calculateNumberOfPage(size);
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        Page<Event> eventsPage = eventRepository.findEventsByNameContainingIgnoreCaseAndTypeContainingAndCategoryContainingAndStartsAtIsGreaterThanEqualAndEndsAtIsLessThanEqualAndShowsDurationLessThanEqual(name, type, category, startsAt, endsAt, showDuration, pageRequest);
+        return eventsPage.toList();
     }
 
     @Override
-    public List<Event> findSimpleEventsByParam(String eventCode, String name, LocalDateTime startRange, LocalDateTime endRange) {
-        List<Event> events =  eventRepository.findAllByEventCodeContainingIgnoreCaseAndNameContainingIgnoreCaseAndStartsAtBetween(eventCode, name, startRange, endRange);
+    public List<Event> findSimpleEventsByParam(String eventCode, String name, LocalDateTime startRange, LocalDateTime endRange, int size) {
+        int page = calculateNumberOfPage(size);
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        Page<Event> eventsPage =  eventRepository.findAllByEventCodeContainingIgnoreCaseAndNameContainingIgnoreCaseAndStartsAtBetween(eventCode, name, startRange, endRange, pageRequest);
+        return eventsPage.toList();
+    }
+
+    private Double getMinPrice(Show show) {
+        double min = Double.MAX_VALUE;
+        for(Section section: show.getEventLocation().getSections()) {
+            min = Math.min(min, show.getPrice() + section.getPrice());
+        }
+        return min;
+    }
+
+    @Transactional
+    @Override
+    public List<Event> findNumberOfEvents(int number) {
+        Pageable pageable = PageRequest.of(0, number);
+        List<Event> events = eventRepository.findAllBy(pageable);
+        for(Event event: events) {
+            Hibernate.initialize(event.getShows());
+        }
         return events;
     }
 }

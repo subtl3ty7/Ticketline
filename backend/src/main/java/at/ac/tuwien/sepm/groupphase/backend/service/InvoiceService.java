@@ -37,4 +37,5 @@ public interface InvoiceService {
      */
     List<Invoice> allInvoicesOfUser(String userCode);
 
+    Invoice findInvoiceByTicket(Ticket ticket);
 }

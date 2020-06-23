@@ -1,6 +1,8 @@
 package at.ac.tuwien.sepm.groupphase.backend.repository;
 
 import at.ac.tuwien.sepm.groupphase.backend.entity.Show;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -37,13 +39,7 @@ public interface ShowRepository extends JpaRepository<Show, Long> {
      */
     List<Show> findShowsByEventCode(String eventCode);
 
-    /**
-     * Find shows by their event location
-     *
-     * @param eventLocationId - id of the event location to look for
-     * @return a list of shows that are taking place at the corresponding event location
-     */
-    List<Show> findShowsByEventLocationId(Long eventLocationId);
+    Page<Show> findShowsByEventLocationId(Long eventLocationId, Pageable pageable);
 
     /**
      * Find all shows by their event name, type, category, start and end time, price and duration
@@ -66,5 +62,8 @@ public interface ShowRepository extends JpaRepository<Show, Long> {
         "AND ((:endsAt IS NULL) OR (:endsAt IS NOT NULL AND s.end_datetime < :endsAt))  " +
         "AND ((:price IS NULL) OR (:price IS NOT NULL AND s.price <= :price))  " +
         "AND ((:duration IS NULL) OR (:duration IS NOT NULL AND s.duration <= :duration))", nativeQuery = true)
-    List<Show> findShowsByEventNameContainingIgnoreCaseAndEventTypeOrEventTypeIsNullAndEventCategoryOrEventCategoryIsNullAndStartsAtIsGreaterThanEqualAndEndsAtIsLessThanEqualAndDurationLessThanEqualAndPriceLessThanEqualOrPriceIsNull(@Param("eventName") String eventName, @Param("type") Integer type, @Param("category") Integer category, @Param("startsAt") LocalDateTime startsAt, @Param("endsAt") LocalDateTime endsAt, @Param("duration") Duration duration, @Param("price") Integer price);
+    Page<Show> findShowsByEventNameContainingIgnoreCaseAndEventTypeOrEventTypeIsNullAndEventCategoryOrEventCategoryIsNullAndStartsAtIsGreaterThanEqualAndEndsAtIsLessThanEqualAndDurationLessThanEqualAndPriceLessThanEqualOrPriceIsNull(@Param("eventName") String eventName, @Param("type") Integer type, @Param("category") Integer category, @Param("startsAt") LocalDateTime startsAt, @Param("endsAt") LocalDateTime endsAt, @Param("duration") Duration duration, @Param("price") Integer price , Pageable pageable);
+
+    @Query(value = "SELECT ID FROM SHOW", nativeQuery = true)
+    List<Long> findAllShowIds();
 }

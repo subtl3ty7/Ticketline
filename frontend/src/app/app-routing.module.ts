@@ -37,6 +37,7 @@ import {CreateNewsContainerComponent} from './components/admin-home/admin-tabs/n
 import {EventAdvancedComponent} from './components/search/event/event-advanced/event-advanced.component';
 import {MyInvoicesTabComponent} from './components/my-profile/my-profile-tabs/my-invoices-tab/my-invoices-tab.component';
 import {InvoiceDetailsComponent} from './components/my-profile/my-profile-tabs/my-invoices-tab/invoice-details/invoice-details.component';
+import {MerchandisePurchaseComponent} from './components/merchandise/merchandise-purchase/merchandise-purchase.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -75,7 +76,8 @@ const routes: Routes = [
   {path: 'my-profile/my-invoices', component: MyInvoicesTabComponent},
   {path: 'my-profile/my-invoices/invoice-details', component: InvoiceDetailsComponent},
   {path: 'merchandise', canActivate: [NotAdminGuard], component: MerchandiseComponent},
-  {path: 'merchandise/:merchandiseProductCode', canActivate: [NotAdminGuard],  component: ProductDetailsComponent}
+  {path: 'merchandise/:merchandiseProductCode', canActivate: [NotAdminGuard],  component: ProductDetailsComponent},
+  {path: 'merchandise-purchase/:merchandiseProductCode', canActivate: [LoggedInGuard], component: MerchandisePurchaseComponent}
   ];
 
 @NgModule({

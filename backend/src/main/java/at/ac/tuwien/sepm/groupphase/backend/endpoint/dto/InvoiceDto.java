@@ -21,6 +21,6 @@ public class InvoiceDto {
     private String payment_method;
     private String invoice_type;
     private String invoice_category;
-    private String invoice_number;
+    private String invoiceNumber;
     private String merchandise_code;
 }

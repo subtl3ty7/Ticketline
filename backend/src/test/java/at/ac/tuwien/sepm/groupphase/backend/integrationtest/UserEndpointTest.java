@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.groupphase.backend.integrationtest;
 import at.ac.tuwien.sepm.groupphase.backend.basetest.TestData;
 import at.ac.tuwien.sepm.groupphase.backend.config.EncoderConfig;
 import at.ac.tuwien.sepm.groupphase.backend.config.properties.SecurityProperties;
+import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.ChangePasswordDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.UserDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.mapper.UserMapper;
 import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
@@ -77,7 +78,7 @@ public class UserEndpointTest implements TestData {
         .withUpdatedAt(UPD)
         .withIsBlocked(false)
         .withIsLogged(false)
-        .withPoints(POINTS)
+        .withPoints(POINTS_ZERO)
         .build();
 
     @BeforeEach
@@ -95,7 +96,7 @@ public class UserEndpointTest implements TestData {
             .withUpdatedAt(UPD)
             .withIsBlocked(false)
             .withIsLogged(false)
-            .withPoints(POINTS)
+            .withPoints(POINTS_ZERO)
             .build();
     }
 
@@ -167,7 +168,7 @@ public class UserEndpointTest implements TestData {
             () -> assertEquals(BIRTHDAY, userDto.getBirthday()),
             () -> assertFalse(userDto.isBlocked()),
             () -> assertFalse(userDto.isLogged()),
-            () -> assertEquals(POINTS, userDto.getPoints())
+            () -> assertEquals(POINTS_ZERO, userDto.getPoints())
         );
     }
 
@@ -192,7 +193,7 @@ public class UserEndpointTest implements TestData {
             () -> assertEquals(BIRTHDAY, userDto.getBirthday()),
             () -> assertFalse(userDto.isBlocked()),
             () -> assertFalse(userDto.isLogged()),
-            () -> assertEquals(POINTS, userDto.getPoints())
+            () -> assertEquals(POINTS_ZERO, userDto.getPoints())
         );
     }
 
@@ -220,7 +221,7 @@ public class UserEndpointTest implements TestData {
             () -> assertEquals(BIRTHDAY, userDto1.getBirthday()),
             () -> assertFalse(userDto1.isBlocked()),
             () -> assertFalse(userDto1.isLogged()),
-            () -> assertEquals(POINTS, userDto1.getPoints())
+            () -> assertEquals(POINTS_ZERO, userDto1.getPoints())
         );
     }
 
@@ -379,8 +380,7 @@ public class UserEndpointTest implements TestData {
         userRepository.save(abstractUser);
         userAttemptsRepository.save(UserAttempts.UserAttemptsBuilder.aAttempts().withId(ID).withEmail(abstractUser.getEmail()).withAttempts(5).build());
 
-
-        MvcResult mvcResult = this.mockMvc.perform(delete(USER_BASE_URI + "/delete/" + abstractUser.getUserCode())
+        MvcResult mvcResult = this.mockMvc.perform(delete(USER_BASE_URI + "/" + abstractUser.getUserCode())
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
             .andDo(print())
             .andReturn();
@@ -403,6 +403,29 @@ public class UserEndpointTest implements TestData {
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         assertFalse(userRepository.findAbstractUserByEmail(abstractUser.getEmail()).isLogged());
+    }
+
+    @Test
+    public void givenUser_whenGetByParams_then200AndListWithOneElement() throws Exception {
+        userRepository.save(abstractUser);
+
+        MvcResult mvcResult = this.mockMvc.perform(get(USER_BASE_URI)
+            .param("userCode", abstractUser.getUserCode())
+            .param("firstName", abstractUser.getFirstName())
+            .param("lastName", abstractUser.getLastName())
+            .param("email", abstractUser.getEmail())
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
+            .andDo(print())
+            .andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals(MediaType.APPLICATION_JSON_VALUE, response.getContentType());
+
+        List<UserDto> userDtos = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
+            UserDto[].class));
+
+        assertEquals(1, userDtos.size());
     }
 
 }

@@ -48,7 +48,7 @@ export class CustomerHeaderComponent implements OnInit {
         this.searchShared.searchEntity = 'Event';
         const eventTerm = searchTerm;
         console.log('event name: ' + eventTerm);
-        this.searchShared.getEventsByName(eventTerm);
+        // this.searchShared.getEventsByName(eventTerm);
         break;
       case SearchEntity.LOCATION:
         this.searchShared.searchEntity = 'Location';

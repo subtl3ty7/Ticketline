@@ -1,7 +1,7 @@
 <div class="news-wrapper">
   <div fxLayout="row" class="news-line">
     <div class="link opacity" (click)="newsNavigate()">
-      <span class="bread-crumps">Users</span>
+      <span class="bread-crumps">News</span>
     </div>
 
     <div class="bread-crumps news-padding">
@@ -15,7 +15,7 @@
     <app-admin-side-menu></app-admin-side-menu>
   </div>
   <div class="center-block">
-    <app-error-notification *ngIf = "error" [error]="error"></app-error-notification>
+    <app-error-notification *ngIf="error" [error]="error" [showStatus]="false"></app-error-notification>
     <div>
       <app-create-news-form [news]="wrapper.model">
         <div fxLayout="row" class="buttons-wrapper">

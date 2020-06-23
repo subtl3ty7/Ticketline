@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.parameters.P;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -21,25 +22,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @ActiveProfiles("test")
 public class NewsRepositoryTest implements TestData {
 
-    private News news = News.builder()
-        .id(ID)
-        .newsCode(USER_CODE)
-        .title(TEST_NEWS_TITLE)
-        .publishedAt(TEST_NEWS_PUBLISHED_AT)
-        .stopsBeingRelevantAt(TEST_NEWS_PUBLISHED_AT)
-        .summary(TEST_NEWS_SUMMARY)
-        .text(TEST_NEWS_TEXT)
-        .author(FNAME)
-        .photo(PHOTO)
-        .build();
-
     @Autowired
     private NewsRepository newsRepository;
 
-    @BeforeEach
-    public void beforeEach() {
-        newsRepository.deleteAll();
-        news = News.builder()
+    @Test
+    public void givenNothing_whenSaveNews_thenFindListWithOneElementAndFindNewsByNewsCode() {
+        News news = News.builder()
             .id(ID)
             .newsCode(USER_CODE)
             .title(TEST_NEWS_TITLE)
@@ -50,10 +38,7 @@ public class NewsRepositoryTest implements TestData {
             .author(FNAME)
             .photo(PHOTO)
             .build();
-    }
 
-    @Test
-    public void givenNothing_whenSaveNews_thenFindListWithOneElementAndFindNewsByNewsCode() {
         newsRepository.save(news);
 
         assertAll(
@@ -61,21 +46,4 @@ public class NewsRepositoryTest implements TestData {
             () -> assertNotNull(newsRepository.findByNewsCode(news.getNewsCode()))
         );
     }
-
-    @Test
-    public void givenNothing_whenSave2News_thenFindListWith2ElementsAndFindAllByPublishedAt() {
-        news.setId(2L);
-        news.setNewsCode("code12");
-        newsRepository.save(news);
-        news.setId(3L);
-        news.setNewsCode("code13");
-        news.setPublishedAt(LocalDateTime.of(2019,5,5, 0, 0, 0));
-        newsRepository.save(news);
-
-        assertAll(
-            () -> assertEquals(2, newsRepository.findAll().size()),
-            () -> assertEquals(TEST_NEWS_PUBLISHED_AT, newsRepository.findAllByOrderByPublishedAtDesc().get(0).getPublishedAt())
-        );
-    }
-
 }

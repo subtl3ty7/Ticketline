@@ -92,11 +92,11 @@ public class NewsEndpoint {
         notes = "Get all News Entries that this customer has already seen",
         authorizations = {@Authorization(value = "apiKey")})
     @ApiResponse(code = 200, message = "Successfully retrieved News Entries")
-    public List<NewsDto> getSeen(Integer limit, Authentication auth ) {
-        LOGGER.info("GET /api/v1/news/seen?limit=" + limit);
+    public List<NewsDto> getSeen(Integer page, Integer size, Authentication auth ) {
+        LOGGER.info("GET /api/v1/news/seen?page=" + page + "&size=" + size);
 
         return newsMapper.newsToNewsDto(
-            newsService.findSeenNews(auth, limit)
+            newsService.findSeenNews(page, size, auth)
         );
     }
 
@@ -107,11 +107,11 @@ public class NewsEndpoint {
         value = "Get the latest News Entries",
         notes = "Get the latest News Entries")
     @ApiResponse(code = 200, message = "Successfully retrieved News Entries")
-    public List<NewsDto> getLatest(Integer limit) {
-        LOGGER.info("GET /api/v1/news/latest?limit=" + limit);
+    public List<NewsDto> getLatest(Integer page, Integer size) {
+        LOGGER.info("GET /api/v1/news/latest?page=" + page + "&size=" + size);
 
         return newsMapper.newsToNewsDto(
-            newsService.findLatest(limit)
+            newsService.findLatest(page, size)
         );
     }
     @Secured("ROLE_ADMIN")
@@ -121,16 +121,16 @@ public class NewsEndpoint {
         value = "Get all Simple News Entries",
         notes = "Get all Simple News Entries")
     @ApiResponse(code = 200, message = "Successfully retrieved News Entries")
-    public List<SimpleNewsDto> getAllSimpleNews() {
-        LOGGER.info("GET /api/v1/news/");
+    public List<SimpleNewsDto> getAllSimpleNews(@RequestParam int size) {
+        LOGGER.info("GET /api/v1/news/?size=" + size);
 
         return newsMapper.newsToSimpleNewsDto(
-            newsService.findAll()
+            newsService.findAll(size)
         );
     }
 
     @Secured("ROLE_ADMIN")
-    @GetMapping(value = "", params = {"newsCode", "title", "author", "startRange", "endRange"})
+    @GetMapping(value = "", params = {"newsCode", "title", "author", "startRange", "endRange", "size"})
     @ApiOperation(
         value = "Get simple news",
         notes = "Get simple news by params",
@@ -144,12 +144,13 @@ public class NewsEndpoint {
                                                                      @RequestParam String title,
                                                                      @RequestParam String author,
                                                                      @RequestParam String startRange,
-                                                                     @RequestParam String endRange
+                                                                     @RequestParam String endRange,
+                                                                     @RequestParam int size
     ) {
-        LOGGER.info("GET /api/v1/news?newsCode=" + newsCode + "&title=" + title + "&author=" + author +  "&startRange=" + startRange + "&endRange=" + endRange);
+        LOGGER.info("GET /api/v1/news?newsCode=" + newsCode + "&title=" + title + "&author=" + author +  "&startRange=" + startRange + "&endRange=" + endRange + "&size=" + size);
         LocalDateTime startRangeDate = LocalDate.parse(startRange, DateTimeFormatter.ofPattern("E MMM dd yyyy")).atStartOfDay();
         LocalDateTime endRangeDate = LocalDate.parse(endRange, DateTimeFormatter.ofPattern("E MMM dd yyyy")).atStartOfDay();
-        List<SimpleNewsDto> result = newsMapper.newsToSimpleNewsDto(newsService.findSimpleNewsByParam(newsCode, title, author, startRangeDate, endRangeDate));
+        List<SimpleNewsDto> result = newsMapper.newsToSimpleNewsDto(newsService.findSimpleNewsByParam(newsCode, title, author, startRangeDate, endRangeDate, size));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

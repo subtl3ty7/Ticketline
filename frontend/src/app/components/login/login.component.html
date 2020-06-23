@@ -1,5 +1,4 @@
 <app-guest-header></app-guest-header>
-<app-error-notification *ngIf="error" [error]="error"></app-error-notification>
 
 <div class="container">
   <div class="row">
@@ -33,11 +32,11 @@
               <a href="/reset-password" class="float-right">Passwort vergessen?</a>
             </div>
             <button type="button" (click)="loginUser()" class="btn default">Einloggen</button>
+            <app-error-notification *ngIf="error" [error]="error" [showStatus]="false"></app-error-notification>
 
           </form>
 
-          <p class="account-lock-info">Sie haben insgesamt 5 Anmeldeversuche. Wenn Ihr Konto gesperrt wird, kontaktieren Sie uns bitte.
-          </p>
+          <p class="account-lock-info">Sie haben insgesamt 5 Anmeldeversuche. Wenn Ihr Konto gesperrt wird, kontaktieren Sie uns bitte. Unsere Kontaktinformationen finden Sie <a routerLink="/faq">hier.</a></p>
           <div class="h-divider"></div>
           <p class="registration-info">Noch kein Konto? <a href="/registration" class="registration-link">Jetzt registrieren</a></p>
         </div>

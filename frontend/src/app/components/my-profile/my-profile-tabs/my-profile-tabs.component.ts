@@ -9,6 +9,7 @@ import {UserService} from '../../../services/user.service';
   styleUrls: ['./my-profile-tabs.component.css']
 })
 export class MyProfileTabsComponent implements OnInit {
+  invoiceId: number;
 
   constructor(public  router: Router,
               private route: ActivatedRoute,
@@ -16,12 +17,18 @@ export class MyProfileTabsComponent implements OnInit {
               private globals: Globals) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe(param => {
+    this.route.params.subscribe((param) => {
       if (!param['tabId']) {
         this.router.navigate(['/my-info', 1]);
       }
       this.globals.setProfileChoosenTab = param['tabId'];
     });
+    this.route.queryParams.subscribe(
+      ( params) => {
+        this.invoiceId = Number(params['invoiceId']);
+        console.log('Invoice-Id: ' + this.invoiceId);
+      }
+    );
   }
 
 }

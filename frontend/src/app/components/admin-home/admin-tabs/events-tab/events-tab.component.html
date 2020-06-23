@@ -24,8 +24,8 @@
     </mat-form-field>
   </div>
   <div>
-    <button mat-raised-button (click)="loadAllEventsByParameters()" style="margin-right:10px"> Suchen</button>
-    <button mat-raised-button (click)="loadAllEvents()" style="margin-right: 40%">Alle Events</button>
+    <button mat-raised-button (click)="searching=true;loadAllEventsByParameters();" style="margin-right:10px"> Suchen</button>
+    <button mat-raised-button (click)="searching=false;loadAllEvents();" style="margin-right: 40%">Alle Events</button>
   </div>
 
   <button mat-raised-button color = "basic" style="margin-left: 80%;margin-bottom: 1%" (click)="createNewEvent()">Event Erstellen</button>
@@ -76,7 +76,10 @@
       <mat-row *matRowDef="let row;
              columns: displayedColumns;"></mat-row>
     </mat-table>
-    <mat-paginator showFirstLastButtons [pageSizeOptions]="[10, 25, 50]"></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[10, 25, 50]"
+                   [pageSize] = "pageSize"
+                   [hidePageSize]="true"
+                   (page) = "pageEvent($event)"></mat-paginator>
   </div>
 </div>
 

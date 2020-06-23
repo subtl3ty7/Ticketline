@@ -17,8 +17,8 @@ import java.util.List;
 @Setter
 @Getter
 @AllArgsConstructor
-@SQLDelete(sql = "UPDATE TICKET SET is_Deleted=true WHERE TICKET_ID = ?", check = ResultCheckStyle.COUNT)
-@Where(clause = "is_Deleted=false")
+//@SQLDelete(sql = "UPDATE TICKET SET is_Deleted=true WHERE TICKET_ID = ?", check = ResultCheckStyle.COUNT)
+//@Where(clause = "is_Deleted=false")
 @Builder(toBuilder = true)
 @ToString
 public class Ticket {
@@ -50,8 +50,8 @@ public class Ticket {
     @OneToOne
     private Seat seat;
 
-    @Column(name="is_Deleted")
-    private boolean isDeleted;
+    @Column(name="is_cancelled")
+    private boolean isCancelled;
 
     @NotNull
     @Size(min = 6, max = 6)
@@ -59,7 +59,7 @@ public class Ticket {
     private String userCode;
 
     @NotNull
-    @Column(nullable = false, name = "price")
+    @Column(nullable = false, name = "price", columnDefinition = "DECIMAL (10, 2)")
     private Double price;
 
     @ToString.Exclude

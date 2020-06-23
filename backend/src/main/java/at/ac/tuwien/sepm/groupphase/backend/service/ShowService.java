@@ -17,27 +17,9 @@ public interface ShowService {
      */
     List<Seat> getAllSeatsByShowId(Long id);
 
-    /**
-     * Get all shows that are taking place on some specific event location
-     *
-     * @param eventLocationId - id of the event location
-     * @return a list of all shows that are taking place on the given EventLocation
-     */
-    List<Show> getShowsByEventLocationId(Long eventLocationId);
+    List<Show> getShowsByEventLocationId(Long eventLocationId, int size);
 
-    /**
-     * Find shows by their name, type, category, start and end date, duration and price
-     *
-     * @param name - name of the show
-     * @param type - type of the show
-     * @param category - category of the show
-     * @param startDate - start date of the show
-     * @param endDate - end date of the show
-     * @param showDuration - duration of the show
-     * @param price - price of the show
-     * @return a list of the shows that match the given criteria
-     */
-    List<Show> findShowsAdvanced(String name, Integer type, Integer category, LocalDateTime startDate, LocalDateTime endDate, Duration showDuration, Integer price);
+    List<Show> findShowsAdvanced(String name, Integer type, Integer category, LocalDateTime startDate, LocalDateTime endDate, Duration showDuration, Integer price, int size);
 
     /**
      *
@@ -55,4 +37,6 @@ public interface ShowService {
      * @return a boolean variable, true if the seat is free, otherwise false
      */
     boolean isSeatFree(Show show, Seat seat);
+
+    public Seat findFreeSeat(Show show);
 }

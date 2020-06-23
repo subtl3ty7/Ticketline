@@ -35,7 +35,7 @@ export class MyTicketsTabComponent implements OnInit {
   public lastName: string;
   invoice = false;
   public selectedTicket: SimpleTicket;
-  public currentUser: User = new User();
+  public currentUser: User;
   /*@ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;*/
 
@@ -43,7 +43,8 @@ export class MyTicketsTabComponent implements OnInit {
               private route: ActivatedRoute,
               private showService: ShowService,
               private eventService: EventService,
-              private userService: UserService) { }
+              private userService: UserService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.loadUser();
@@ -51,7 +52,7 @@ export class MyTicketsTabComponent implements OnInit {
   private loadUser() {
     this.userService.getCurrentUser().subscribe(
       (user: User) => {
-        Object.assign(this.currentUser, user);
+        this.currentUser = user;
         this.loadTickets();
       },
       (error) => {
@@ -78,8 +79,13 @@ export class MyTicketsTabComponent implements OnInit {
     const ticketsToReserve: Array<SimpleTicket> = new Array<SimpleTicket>();
     ticketsToReserve.push(ticket);
     this.ticketService.purchaseReservedTickets(ticketCode, ticketsToReserve).subscribe(
-      o => {  window.location.reload();}
+      o => {
+        this.loadTickets();
+        window.location.reload(); }
     );
+  }
+  public navToInvoice() {
+    this.router.navigate(['/my-invoices']);
   }
  /* public getShowByShowId(showId: number) {
    return this.showService.getShowByShowId(showId).subscribe(

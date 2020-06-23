@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Invoice} from '../../../../dtos/invoice';
 import {UserService} from '../../../../services/user.service';
 import {InvoiceService} from '../../../../services/invoice.service';
@@ -14,12 +14,14 @@ import {MerchandiseService} from '../../../../services/merchandise.service';
   styleUrls: ['./my-invoices-tab.component.css']
 })
 export class MyInvoicesTabComponent implements OnInit {
+  @Input() invoiceId: number;
   public invoices: Array<Invoice>;
   private merchandise: Merchandise;
   public currentUser: User = new User();
   error = false;
   errorMessage = '';
   details = false;
+  loadM = false;
   public selectedInvoice: Invoice;
 
   constructor( private userService: UserService,
@@ -30,6 +32,7 @@ export class MyInvoicesTabComponent implements OnInit {
   ngOnInit(): void {
     this.loadUser();
   }
+
   private loadUser() {
     this.userService.getCurrentUser().subscribe(
       (user: User) => {
@@ -41,61 +44,86 @@ export class MyInvoicesTabComponent implements OnInit {
       }
     );
   }
+
   public loadInvoices(): void {
     this.invoiceService.getInvoicesByUserCode(this.currentUser.userCode).subscribe(
       (invoices: Invoice[]) => {
         this.invoices = invoices;
+        this.loadUrlInvoice();
       },
         (error) => {
         this.error = error.error;
         }
     );
   }
+
+  private loadUrlInvoice() {
+    if (this.invoiceId) {
+      console.log('Invoice-Id: ' + this.invoiceId);
+      for (const inv of this.invoices.entries()) {
+        console.log(inv[1].id);
+        if (inv[1].id === this.invoiceId) {
+          console.log('test');
+          this.showInvoiceDetails(inv[1]);
+        }
+      }
+      console.log(this.selectedInvoice);
+    }
+  }
+
   public showInvoiceDetails(invoice: Invoice) {
     this.details = true;
     this.selectedInvoice = invoice;
+    if (invoice.invoice_category.startsWith('MERCH')) {
+      this.loadMerch(invoice.merchandise_code);
+    }
   }
-  printInvoice(invoice: Invoice) {
+
+  public printInvoice(invoice: Invoice) {
+    if (invoice.invoice_category.startsWith('MERCH')) {
+      this.loadMerch(invoice.merchandise_code);
+    }
     const doc = new jsPDF('p', 'mm', 'a4');
     this.drawForm(doc, invoice);
     doc.autoPrint();
     window.open(doc.output('bloburl'), '_blank');
   }
+
   private drawForm (doc: jsPDF, invoice: Invoice) {
     doc.setFont('Times');
     doc.setFontType('bold');
     doc.setFontSize(30);
-
-    if (invoice.invoice_category === 'Ticket invoice') {
-      if (invoice.invoice_type === 'Kauf Rechnung') {
+    let date;
+    if (invoice.invoice_category.startsWith('TICKET')) {
+      date = invoice.tickets[0].purchaseDate.replace('T', ' ');
+      if (invoice.invoice_type === 'Kaufrechnung') {
         doc.text('Ticket Kaufrechnung ', 15, 20, null, null, 'left');
       } else {
         doc.text('Ticket Stornorechnung ', 15, 20, null, null, 'left');
       }
     } else {
+      date = invoice.generatedAt.replace('T', ' ');
       doc.text('Merchandise Kaufrechnung ', 15, 20, null, null, 'left');
     }
     doc.setFontSize(15);
     doc.text('Ticketline™', 15, 40, null, null, 'left');
-
-    let date = invoice.tickets[0].purchaseDate.replace('T', ' ');
     date = date.substring(0, date.indexOf('.'));
     let date1 = invoice.generatedAt.replace('T', ' ');
     date1 = date1.substring(0, date1.indexOf('.'));
     doc.setFontType('normal');
     doc.setFontSize(11);
     doc.text('Kundenname: ' + this.currentUser.firstName + ' ' + this.currentUser.lastName, 15, 50, null, null, 'left');
-    doc.text('Kundennummer: ' + invoice.tickets[0].userCode, 15, 60, null, null, 'left');
-    doc.text('Rechnungsnummer: ' + invoice.invoice_number, 15, 70, null, null, 'left');
+    doc.text('Kundennummer: ' + this.currentUser.userCode, 15, 60, null, null, 'left');
+    doc.text('Rechnungsnummer: ' + invoice.invoiceNumber, 15, 70, null, null, 'left');
 
-    if (invoice.invoice_type === 'Kauf Rechnung') {
+    if (invoice.invoice_type === 'Kaufrechnung') {
       doc.text('Rechnungsdatum: ' + date1, 130, 70, null, null);
     } else {
       doc.text('Kaufdatum: ' + date, 130, 60, null, null, 'left');
       doc.text('Stornierungsdatum: ' + date1, 130, 70, null, null);
     }
 
-    if (invoice.invoice_category === 'Ticket invoice') {
+    if (invoice.invoice_category.startsWith('TICKET')) {
       doc.setFontType('bold');
       // tslint:disable-next-line:max-line-length
       doc.text('Ticket Code                          Event / Show id                                   Seat id                   Price(€)', 20, 100, null, null, 'left');
@@ -109,7 +137,7 @@ export class MyInvoicesTabComponent implements OnInit {
           doc.addPage();
           j = 0;
           pages++;
-          this.drawTable(invoice.tickets.length + 1 - 17 * pages, doc);
+          this.drawTable(invoice.tickets.length - 17 * pages, doc);
         }
         seat_num = invoice.tickets[i].seatId.toString();
         doc.line(15, 95 + 10 * (j + 2), 180, 95 + 10 * (j + 2));
@@ -127,16 +155,15 @@ export class MyInvoicesTabComponent implements OnInit {
       doc.text('VAT (10%)                    ' + vat.toFixed(2) + '€', 135, 120 + j * 10, null, null);
       doc.line(110, 121 + j * 10, 200, 121 + j * 10);
       doc.setFontType('bold');
-      if (invoice.invoice_type === 'Kauf Rechnung') {
+      if (invoice.invoice_type === 'Kaufrechnung') {
         doc.text('Total                              ' + sum.toFixed(2) + '€', 135, 125 + j * 10, null, null);
       } else {
-        doc.text('Stornierung Betrag                ' + sum.toFixed(2) + '€', 110, 125 + j * 10, null, null);
+        doc.text('Stornierung Betrag                ' + sum.toFixed(2) + '€', 125, 125 + j * 10, null, null);
       }
     } else {
-      this.loadMerch(invoice.merchandise_code);
       doc.setFontType('bold');
       // tslint:disable-next-line:max-line-length
-      doc.text('Merch Code                          Product name                                 Premium price                   Price(€)', 20, 100, null, null, 'left');
+      doc.text('Merch Code                          Product name                                   Premium                   Price(€)', 20, 100, null, null, 'left');
       doc.setFontType('normal');
 
       this.drawTable(2, doc);
@@ -148,14 +175,14 @@ export class MyInvoicesTabComponent implements OnInit {
       doc.text('' + price.toFixed(2), 155, 110, null, null);
       const vat = price * 0.1;
       const netto = price - vat;
-      doc.text('Total vor VAT                ' + netto.toFixed(2) + '€', 135, 115, null, null);
-      doc.text('VAT (10%)                    ' + vat.toFixed(2) + '€', 135, 120, null, null);
-      doc.line(110, 121, 200, 121);
-      doc.setFontType('bold');
-      if (invoice.invoice_type === 'Kauf Rechnung') {
-        doc.text('Total                              ' + price.toFixed(2) + '€', 135, 125, null, null);
+      if (invoice.payment_method === 'premium points') {
+        doc.text('Mit ' + this.merchandise.premiumPrice + ' Punkten bezahlt', 135, 130, null, null);
       } else {
-        doc.text('Stornierung Betrag                ' + price.toFixed(2) + '€', 110, 125, null, null);
+        doc.text('Total vor VAT                ' + netto.toFixed(2) + '€', 135, 125, null, null);
+        doc.text('VAT (10%)                    ' + vat.toFixed(2) + '€', 135, 130, null, null);
+        doc.line(110, 131, 200, 131);
+        doc.setFontType('bold');
+        doc.text('Total                              ' + price.toFixed(2) + '€', 135, 135, null, null);
       }
     }
   }
@@ -177,6 +204,7 @@ export class MyInvoicesTabComponent implements OnInit {
         this.error = error.error;
       }
     );
+    this.loadM = true;
   }
 
 }

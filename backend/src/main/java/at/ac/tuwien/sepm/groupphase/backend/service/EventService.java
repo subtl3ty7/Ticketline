@@ -24,12 +24,7 @@ public interface EventService {
      */
     List<Event> findTop10EventsOfMonthByCategory(String category);
 
-    /**
-     * Find all events
-     *
-     * @return list of all events
-     */
-    List<Event> findAllEvents();
+    List<Event> findAllEvents(int size);
 
     /**
      * Create a new event
@@ -54,43 +49,13 @@ public interface EventService {
      */
     void deletebyEventCode(String eventCode);
 
-    /**
-     * Find all events with the same artistId
-     *
-     * @param artistId id of the artist to look for
-     * @return a list of events that have the same, given artistId
-     */
-    List<Event> findEventsByArtistId(Long artistId);
+    List<Event> findEventsByArtistId(Long artistId, int size);
 
-    /**
-     * Find events with the same name
-     *
-     * @param name - name to look for
-     * @return a list of events that have the same, given name
-     */
-    List<Event> findEventsByName(String name);
+    List<Event> findEventsByName(String name, int size);
 
-    /**
-     * Find events by their name, type, category, start and end time and showDuration
-     *
-     * @param name - name of the event to look for
-     * @param type - type of the event to look for
-     * @param category - category of the event to look for
-     * @param startsAt - start date and time of the event to look for
-     * @param endsAt - end date and time of the event to look for
-     * @param showDuration - duration of the show to look for
-     * @return a list of events that match the given criteria
-     */
-    List<Event> findEventsAdvanced(String name, Integer type, Integer category, LocalDateTime startsAt, LocalDateTime endsAt, Duration showDuration);
+    List<Event> findEventsAdvanced(String name, Integer type, Integer category, LocalDateTime startsAt, LocalDateTime endsAt, Duration showDuration, int size);
 
-    /**
-     * Find events by their eventCode, name, start and end range
-     *
-     * @param eventCode - code of the event to look for
-     * @param name - name of the event to look for
-     * @param startRange - start range to look for
-     * @param endRange - end range to look for
-     * @return a list of events that match the given criteria
-     */
-    List<Event> findSimpleEventsByParam(String eventCode, String name, LocalDateTime startRange, LocalDateTime endRange);
+    List<Event> findSimpleEventsByParam(String eventCode, String name, LocalDateTime startRange, LocalDateTime endRange, int size);
+
+    List<Event> findNumberOfEvents(int number);
 }

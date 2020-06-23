@@ -4,7 +4,6 @@ import {Show} from '../../../dtos/show';
 import {DetailedEvent} from '../../../dtos/detailed-event';
 import {DatePipe} from '@angular/common';
 import {DetailedTicket} from '../../../dtos/detailed-ticket';
-import {Section} from '../../../dtos/section';
 
 @Component({
   selector: 'app-payment-done',

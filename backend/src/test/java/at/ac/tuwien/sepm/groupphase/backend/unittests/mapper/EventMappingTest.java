@@ -41,6 +41,7 @@ public class EventMappingTest implements TestData {
         .prices(PRICES)
         .totalTicketsSold(TOTAL)
         .shows(SHOWS)
+        .photo(PHOTO)
         .build();
 
     @Autowired

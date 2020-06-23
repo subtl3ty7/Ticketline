@@ -46,11 +46,6 @@ ol.carousel-indicators {
   padding: 30px 50px;
 }
 
-.carousel {
-  padding-bottom: 20px;
-}
-
-
 .carousel-visual-button {
   width: 48px;
   height: 48px;
@@ -190,4 +185,17 @@ ol.carousel-indicators {
 
 .card-title {
   margin-bottom: 0px;
+}
+
+.card-title-font {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1; /* number of lines to show */
+  line-height: 40px; /* fallback */
+  height: 40px; /* fallback */
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 28px;
+  font-weight: bold;
+  color: white;
+  padding-bottom: 8px;
 }

@@ -19,6 +19,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.lang.invoke.MethodHandles;
 
 @Component
@@ -30,7 +32,6 @@ public class AuthenticationEventListener implements ApplicationListener<Abstract
     UserRepository userRepository;
     @Autowired
     ResetPasswordRepository resetPasswordRepository;
-
 
     @Override
     public void onApplicationEvent(AbstractAuthenticationEvent event) {
@@ -71,6 +72,7 @@ public class AuthenticationEventListener implements ApplicationListener<Abstract
 
             // IF USER HAS MADE AN UNSUCCESSFUL LOGIN ATTEMPT
             if (event instanceof AuthenticationFailureBadCredentialsEvent) {
+                LOGGER.info("Unsuccessful Login Attempt for User " + email);
                 AbstractUser user = userRepository.findAbstractUserByEmail(email);
                 if (user instanceof Customer) {
                     UserAttempts userAttempts = userAttemptsRepository.findUserAttemptsByEmail(email);
@@ -81,4 +83,5 @@ public class AuthenticationEventListener implements ApplicationListener<Abstract
             }
         }
     }
+
 }
