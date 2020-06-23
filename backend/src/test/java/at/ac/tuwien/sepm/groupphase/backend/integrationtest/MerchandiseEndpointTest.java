@@ -71,10 +71,10 @@ public class MerchandiseEndpointTest implements TestData {
 
     private AbstractUser abstractUser = Customer.CustomerBuilder.aCustomer()
         .withId(ID)
-        .withUserCode(USER_CODE)
+        .withUserCode(USER_CODE_MERCH)
         .withFirstName(FNAME)
         .withLastName(LNAME)
-        .withEmail(DEFAULT_USER)
+        .withEmail(EMAIL_MERCH)
         .withPassword(PASS)
         .withBirthday(BIRTHDAY)
         .withCreatedAt(CRE)
@@ -107,7 +107,7 @@ public class MerchandiseEndpointTest implements TestData {
             + "/purchasingWithPremiumPoints/" + abstractUser.getUserCode())
             .contentType(MediaType.APPLICATION_JSON)
             .content(body)
-            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_MERCH, USER_ROLES)))
             .andDo(print())
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
@@ -137,7 +137,7 @@ public class MerchandiseEndpointTest implements TestData {
             + "/purchasingWithMoney/" + abstractUser.getUserCode())
             .contentType(MediaType.APPLICATION_JSON)
             .content(body)
-            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_MERCH, USER_ROLES)))
             .andDo(print())
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
@@ -161,7 +161,7 @@ public class MerchandiseEndpointTest implements TestData {
     public void givenMerchandise_whenGetAll_then200AndListWith1Element() throws Exception{
 
         MvcResult mvcResult = this.mockMvc.perform(get(MERCHANDISE_BASE_URI + "/all")
-            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_MERCH, USER_ROLES)))
             .andDo(print())
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
@@ -180,7 +180,7 @@ public class MerchandiseEndpointTest implements TestData {
     public void givenMerchandise_whenGetPremium_then200AndListWith1Element() throws Exception{
 
         MvcResult mvcResult = this.mockMvc.perform(get(MERCHANDISE_BASE_URI + "/premium")
-            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_MERCH, USER_ROLES)))
             .andDo(print())
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
@@ -199,7 +199,7 @@ public class MerchandiseEndpointTest implements TestData {
     public void givenMerchandise_whenGetByCode_then200() throws Exception{
 
         MvcResult mvcResult = this.mockMvc.perform(get(MERCHANDISE_BASE_URI + "/" + merchandise.getMerchandiseProductCode())
-            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
+            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(EMAIL_MERCH, USER_ROLES)))
             .andDo(print())
             .andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
