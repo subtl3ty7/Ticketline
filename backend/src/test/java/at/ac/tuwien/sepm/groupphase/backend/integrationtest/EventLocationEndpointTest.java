@@ -142,7 +142,7 @@ public class EventLocationEndpointTest implements TestData {
         eventLocationRepository.save(eventLocation);
 
         MvcResult mvcResult = this.mockMvc.perform(get(LOCATION_BASE_URI)
-            .param("name", eventLocation.getName())
+            .param("name", eventLocation.getName()).param("size", "0")
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
             .andDo(print())
             .andReturn();

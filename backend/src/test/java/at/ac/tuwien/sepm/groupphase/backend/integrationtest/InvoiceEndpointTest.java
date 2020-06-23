@@ -4,9 +4,12 @@ import at.ac.tuwien.sepm.groupphase.backend.basetest.TestData;
 import at.ac.tuwien.sepm.groupphase.backend.config.properties.SecurityProperties;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.InvoiceDto;
 import at.ac.tuwien.sepm.groupphase.backend.endpoint.dto.SimpleTicketDto;
+import at.ac.tuwien.sepm.groupphase.backend.entity.AbstractUser;
+import at.ac.tuwien.sepm.groupphase.backend.entity.Customer;
 import at.ac.tuwien.sepm.groupphase.backend.entity.Invoice;
 import at.ac.tuwien.sepm.groupphase.backend.repository.ArtistRepository;
 import at.ac.tuwien.sepm.groupphase.backend.repository.InvoiceRepository;
+import at.ac.tuwien.sepm.groupphase.backend.repository.UserRepository;
 import at.ac.tuwien.sepm.groupphase.backend.security.JwtTokenizer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,6 +47,9 @@ public class InvoiceEndpointTest implements TestData {
     private InvoiceRepository invoiceRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private ObjectMapper objectMapper;
 
     @Autowired
@@ -52,17 +58,34 @@ public class InvoiceEndpointTest implements TestData {
     @Autowired
     private SecurityProperties securityProperties;
 
+    private Invoice invoice = Invoice.builder()
+        .id(ID)
+        .invoice_type(TYP_I)
+        .userCode(USER_CODE)
+        .payment_method(PAY)
+        .generatedAt(GENERATE)
+        .invoiceNumber(NUM)
+        .invoice_category(CAT_I)
+        .build();
+
+    AbstractUser abstractUser = Customer.CustomerBuilder.aCustomer()
+        .withId(ID)
+        .withUserCode(USER_CODE)
+        .withFirstName(FNAME)
+        .withLastName(LNAME)
+        .withEmail(DEFAULT_USER)
+        .withPassword(PASS)
+        .withBirthday(BIRTHDAY)
+        .withCreatedAt(CRE)
+        .withUpdatedAt(UPD)
+        .withIsBlocked(false)
+        .withIsLogged(false)
+        .withPoints(POINTS)
+        .build();
+
     @Test
     public void givenInvoice_whenGetInvoicesByUserCode_then200AndInvoiceListWith1ElementWithProperties() throws Exception {
-        Invoice invoice = Invoice.builder()
-            .id(ID)
-            .invoice_type(TYP_I)
-            .userCode(USER_CODE)
-            .payment_method(PAY)
-            .generatedAt(GENERATE)
-            .invoiceNumber(NUM)
-            .invoice_category(CAT_I)
-            .build();
+        userRepository.save(abstractUser);
         invoiceRepository.save(invoice);
 
         MvcResult mvcResult = this.mockMvc.perform(get(INVOICE_BASE_URI + "/" + invoice.getUserCode())

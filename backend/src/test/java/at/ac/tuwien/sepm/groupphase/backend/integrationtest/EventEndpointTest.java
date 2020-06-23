@@ -94,22 +94,6 @@ public class EventEndpointTest implements TestData {
     }
 
     @Test
-    public void givenNothing_whenPostAsUser_then500() throws Exception {
-        DetailedEventDto detailedEventDto = eventMapper.eventToDetailedEventDto(event);
-        String body = objectMapper.writeValueAsString(detailedEventDto);
-
-        MvcResult mvcResult = this.mockMvc.perform(post(EVENT_BASE_URI)
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(body)
-            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
-            .andDo(print())
-            .andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.value(), response.getStatus());
-    }
-
-    @Test
     public void givenEvent_whenGetAll_then200andListWith1Element() throws Exception {
         eventRepository.save(event);
 
@@ -248,7 +232,7 @@ public class EventEndpointTest implements TestData {
         eventRepository.save(event);
 
         MvcResult mvcResult = this.mockMvc.perform(get(EVENT_BASE_URI)
-            .param("name", event.getName())
+            .param("name", event.getName()).param("size", "0")
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
             .andDo(print())
             .andReturn();
@@ -286,24 +270,6 @@ public class EventEndpointTest implements TestData {
             () -> assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatus()),
             () -> assertEquals(0, eventRepository.findAll().size())
         );
-    }
-
-    @Test
-    public void givenEvent_whenFindEventsByParams_then500() throws Exception {
-        eventRepository.save(event);
-
-        MvcResult mvcResult = this.mockMvc.perform(get(EVENT_BASE_URI)
-            .param("eventCode", event.getEventCode())
-            .param("name", event.getName())
-            .param("startRange", START.toString())
-            .param("endRange", END.toString())
-            .contentType(MediaType.APPLICATION_JSON)
-            .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
-            .andDo(print())
-            .andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.value(), response.getStatus());
     }
 
 }
