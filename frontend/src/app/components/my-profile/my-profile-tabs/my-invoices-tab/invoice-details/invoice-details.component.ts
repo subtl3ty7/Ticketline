@@ -97,7 +97,7 @@ export class InvoiceDetailsComponent implements OnInit {
       if (invoice.invoice_type === 'Kaufrechnung') {
         doc.text('Total                              ' + sum.toFixed(2) + '€', 135, 125 + j * 10, null, null);
       } else {
-        doc.text('Stornierung Betrag                ' + sum.toFixed(2) + '€', 120, 125 + j * 10, null, null);
+        doc.text('Stornierung Betrag                ' + sum.toFixed(2) + '€', 125, 125 + j * 10, null, null);
       }
     } else {
       doc.setFontType('bold');
@@ -114,14 +114,14 @@ export class InvoiceDetailsComponent implements OnInit {
       doc.text('' + price.toFixed(2), 155, 110, null, null);
       const vat = price * 0.1;
       const netto = price - vat;
-      doc.text('Total vor VAT                ' + netto.toFixed(2) + '€', 135, 125, null, null);
-      doc.text('VAT (10%)                    ' + vat.toFixed(2) + '€', 135, 130, null, null);
-      doc.line(110, 131, 200, 131);
-      doc.setFontType('bold');
-      if (invoice.invoice_type === 'Kaufrechnung') {
-        doc.text('Total                              ' + price.toFixed(2) + '€', 135, 135, null, null);
+      if (invoice.payment_method === 'premium points') {
+        doc.text('Mit ' + this.merchandise.premiumPrice + ' Punkten bezahlt', 135, 130, null, null);
       } else {
-        doc.text('Stornierung Betrag                ' + price.toFixed(2) + '€', 125, 135, null, null);
+        doc.text('Total vor VAT                ' + netto.toFixed(2) + '€', 135, 125, null, null);
+        doc.text('VAT (10%)                    ' + vat.toFixed(2) + '€', 135, 130, null, null);
+        doc.line(110, 131, 200, 131);
+        doc.setFontType('bold');
+        doc.text('Total                              ' + price.toFixed(2) + '€', 135, 135, null, null);
       }
     }
   }

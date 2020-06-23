@@ -28,12 +28,6 @@ public class TicketServiceTest implements TestData {
     @Autowired
     private TicketService ticketService;
 
-    @Autowired
-    private TicketRepository ticketRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
     private Ticket ticket = Ticket.builder()
         .ticketId(ID)
         .ticketCode(USER_CODE)
@@ -42,33 +36,6 @@ public class TicketServiceTest implements TestData {
         .userCode(USER_CODE_TICKET)
         .build();
 
-    @BeforeEach
-    public void beforeEach() {
-        ticketRepository.deleteAll();
-        userRepository.deleteAll();
-        ticket = Ticket.builder()
-            .ticketId(ID)
-            .ticketCode(USER_CODE)
-            .purchaseDate(START)
-            .price(PRICE)
-            .userCode(USER_CODE_TICKET)
-            .build();
-    }
-
-    @Test
-    public void given2Tickets_whenGetAllOfUser_thenListWithTicketsElement() {
-        USER_TICKET.setEmail("new@email.com");
-        USER_TICKET.setUserCode("code22");
-        userRepository.save(USER_TICKET);
-        ticket.setUserCode(USER_TICKET.getUserCode());
-        ticketRepository.save(ticket);
-        ticket.setTicketId(2L);
-        ticket.setTicketCode("code12");
-        ticketRepository.save(ticket);
-
-        assertEquals(2, ticketService.allTicketsOfUser(USER_TICKET.getUserCode()).size());
-
-    }
 
     @Test
     public void whenBuyTicketWithoutSeatAndShow_thenValidationException() {

@@ -136,6 +136,7 @@ public class NewsEndpointTest implements TestData {
     public void givenNews_whenGetAllAsCustomer_then500() throws Exception{
 
         MvcResult mvcResult = this.mockMvc.perform(get(NEWS_BASE_URI + "/all")
+            .param("size", "0")
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
             .andDo(print())
             .andReturn();
@@ -154,6 +155,7 @@ public class NewsEndpointTest implements TestData {
             .param("author", news.getAuthor())
             .param("startRange", news.getPublishedAt().toString())
             .param("endRange", news.getPublishedAt().toString())
+            .param("size", "0")
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(DEFAULT_USER, USER_ROLES)))
             .andDo(print())
             .andReturn();
@@ -167,6 +169,7 @@ public class NewsEndpointTest implements TestData {
     public void givenNews_whenGetAllAsAdmin_then200AndListWith1Element() throws Exception{
 
         MvcResult mvcResult = this.mockMvc.perform(get(NEWS_BASE_URI + "/all")
+            .param("size", "0")
             .header(securityProperties.getAuthHeader(), jwtTokenizer.getAuthToken(ADMIN_USER, ADMIN_ROLES)))
             .andDo(print())
             .andReturn();

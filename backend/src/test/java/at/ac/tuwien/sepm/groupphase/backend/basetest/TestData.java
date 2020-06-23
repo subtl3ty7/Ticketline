@@ -101,6 +101,7 @@ public interface TestData {
 
     String TICKETS_BASE_URI = BASE_URI + "/tickets";
 
+    String USER_CODE_INVOICE = "code99";
     String TYP_I = "Kaufrechnung";
     InvoiceCategoryEnum CAT_I = InvoiceCategoryEnum.MERCHANDISE_INVOICE;
     String PAY = "card";

@@ -192,7 +192,7 @@ public class TicketEndpointTest implements TestData {
 
     @Test
     @Order(3)
-    public void givenReservedTicket_whenCancel_then204AndTicketListWith1Element() throws Exception {
+    public void givenReservedTicket_whenCancel_then204AndTicketNotCancelled() throws Exception {
 
         MvcResult mvcResult = this.mockMvc.perform(delete(TICKETS_BASE_URI + "/cancelReserved/" +
             ticketRepository.findTicketByTicketId(2L).getTicketCode())
@@ -258,7 +258,7 @@ public class TicketEndpointTest implements TestData {
 
     @Test
     @Order(5)
-    public void givenTickets_whenGetTicketsByUserCode_then200AndTicketListWith3Elements() throws Exception{
+    public void givenTickets_whenGetTicketsByUserCode_then200AndTicketListWith2Elements() throws Exception{
 
         MvcResult mvcResult = this.mockMvc.perform(get(TICKETS_BASE_URI + "/" + USER_CODE_TICKET)
             .contentType(MediaType.APPLICATION_JSON)
@@ -274,7 +274,7 @@ public class TicketEndpointTest implements TestData {
 
         List<SimpleTicketDto> ticketDtos1 = Arrays.asList(objectMapper.readValue(response.getContentAsString(),
             SimpleTicketDto[].class));
-        assertEquals(3, ticketDtos1.size());
+        assertEquals(2, ticketDtos1.size());
     }
 
     @Test
@@ -297,13 +297,6 @@ public class TicketEndpointTest implements TestData {
 
         invoiceRepository.deleteAll();
         ticketRepository.deleteAll();
-        /*seatRepository.deleteAll();
-        showRepository.deleteAll();
-        sectionRepository.deleteAll();
-        eventLocationRepository.deleteAll();
-        eventRepository.deleteAll();
-        artistRepository.deleteAll();
-        userRepository.deleteAll();*/
     }
 
 }
