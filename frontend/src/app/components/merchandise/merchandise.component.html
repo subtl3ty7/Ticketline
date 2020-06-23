@@ -1,5 +1,4 @@
 <app-header></app-header>
-<app-error-notification *ngIf="error" [error]="error"></app-error-notification>
 
 
 <!-- Container the card is in -->
@@ -30,6 +29,7 @@
               </p>
             </div>
           </div>
+          <app-error-notification *ngIf="error" [error]="error"></app-error-notification>
 
           <div *ngIf="merchandise">
             <div class="container">
@@ -103,7 +103,7 @@
             </div>
           </div>
           <div style="padding-bottom: 80px;">
-            <app-spinner *ngIf="merchandise === undefined">
+            <app-spinner *ngIf="merchandise === undefined && !error">
             </app-spinner>
           </div>
         </div>

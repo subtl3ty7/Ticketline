@@ -40,14 +40,16 @@ public class CustomInvoiceService implements InvoiceService {
     @Override
     public Invoice createTicketInvoice(List<Ticket> tickets, String type, LocalDateTime generatedAt) {
         if(type.equals("Kauf Stornorechnung")) {
-            invoiceRepository.delete(invoiceRepository.findInvoiceByUserCodeAndGeneratedAt(tickets.get(0).getUserCode(), tickets.get(0).getPurchaseDate()));
+            if(invoiceRepository.findInvoiceByUserCodeAndGeneratedAt(tickets.get(0).getUserCode(), tickets.get(0).getPurchaseDate()) != null) {
+                invoiceRepository.delete(invoiceRepository.findInvoiceByUserCodeAndGeneratedAt(tickets.get(0).getUserCode(), tickets.get(0).getPurchaseDate()));
+            }
         }
 
         Invoice ticketInvoice = Invoice.builder()
             .invoice_type(type)
             .invoice_category(InvoiceCategoryEnum.TICKET_INVOICE)
             .userCode(tickets.get(0).getUserCode())
-            .payment_method("Kreditkarte")
+            .payment_method("Kreditkarte/Paypal")
             .generatedAt(generatedAt)
             .invoiceNumber(getNewInvoiceNumber())
             .tickets(tickets)

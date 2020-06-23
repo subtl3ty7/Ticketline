@@ -48,7 +48,7 @@ public class ShowServiceTest implements TestData {
 
         showRepository.save(show);
 
-        List<Show> shows = showService.findShowsAdvanced(NAME + "a", EventTypeEnum.valueOf(TYP1.toString()).ordinal(), EventCategoryEnum.valueOf(CAT1.toString()).ordinal(), START, END, DURATION, PRICE.intValue(), 10);
+        List<Show> shows = showService.findShowsAdvanced(NAME + "a", EventTypeEnum.valueOf(TYP1.toString()).ordinal(), EventCategoryEnum.valueOf(CAT1.toString()).ordinal(), START, END, DURATION, PRICE.intValue(), 0);
         assertEquals(0, shows.size());
     }
 }

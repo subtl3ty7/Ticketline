@@ -35,27 +35,6 @@ public class EventServiceTest implements TestData {
     }
 
     @Test
-    public void whenSaveEventWithoutShowsAndWithWrongCode_thenValidationException() {
-        Event event = Event.builder()
-            .id(ID)
-            .eventCode("a")
-            .name(NAME)
-            .description(DESC)
-            .category(CAT1)
-            .type(TYP1)
-            .startsAt(START)
-            .endsAt(END)
-            .duration(DURATION)
-            .prices(PRICES)
-            .totalTicketsSold(TOTAL)
-            .photo(PHOTO)
-            .build();
-
-        assertThrows(ValidationException.class,
-            () ->   eventService.createNewEvent(event));
-    }
-
-    @Test
     public void whenFindEventByNonExistingCode_thenValidationException() {
 
         assertThrows(ValidationException.class,
@@ -73,13 +52,13 @@ public class EventServiceTest implements TestData {
     public void whenFindEventsByNonExistingArtistId_thenValidationException() {
 
         assertThrows(ValidationException.class,
-            () ->   eventService.findEventsByArtistId(-1L, 10));
+            () ->   eventService.findEventsByArtistId(-1L, 0));
     }
 
     @Test
     public void whenFindEventsByNameContainingLatterA_thenNonEmptyList() {
 
-        List<Event> events = eventService.findEventsByName("a", 10);
+        List<Event> events = eventService.findEventsByName("a", 0);
         Event event = events.get(0);
         assertNotNull(event.getName());
     }

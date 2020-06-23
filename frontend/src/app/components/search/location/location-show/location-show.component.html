@@ -28,7 +28,7 @@
                             {{s.startsAt | date}}, {{s.startsAt | date:'hh:mm'}}
                           </div>
                           <div class="row" style="font-size: 30px; font-weight: bold; padding-top: 25px; color: #1A1A1A">
-                            <a class="prevent-overflow-inline" style="color: #1A1A1A" style="padding-top: 5px; height: 30px">{{s.eventName}}</a>
+                            <a class="prevent-overflow-inline underline" (click) = "openPurchase(s)" style="color: #1A1A1A; padding-top: 5px; height: 30px">{{s.eventName}}</a>
                           </div>
                           <div class="row" style="padding-top: 30px;">
                             <div class="show-description-font">

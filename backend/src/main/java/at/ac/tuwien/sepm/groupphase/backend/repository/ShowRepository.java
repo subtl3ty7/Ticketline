@@ -24,18 +24,43 @@ public interface ShowRepository extends JpaRepository<Show, Long> {
      */
     Show findShowById(Long id);
 
+    /**
+     * Find all shows
+     *
+     * @return a list that contains all shows
+     */
     ArrayList<Show> findAll();
 
     /**
      * Find all shows which belong to a single event with event code.
      *
-     * @param eventCode
+     * @param eventCode - event code to look for
      * @return a list of shows which belong to corresponding event.
      */
     List<Show> findShowsByEventCode(String eventCode);
 
+    /**
+     * Find x shows by their event location, where x is defined by pageable
+     *
+     * @param eventLocationId - id of the event location to look for
+     * @param pageable -  stores information about which page user wants to retrieve
+     * @return - x shows that match the given criteria
+     */
     Page<Show> findShowsByEventLocationId(Long eventLocationId, Pageable pageable);
 
+    /**
+     * Find x shows by their event name, type, category, start and end time, price and duration, where x is defined by pageable
+     *
+     * @param eventName - name of the event to look for
+     * @param type - type to look for
+     * @param category - category to look for
+     * @param startsAt - start time to look for
+     * @param endsAt - end time to look for
+     * @param duration - duration to look for
+     * @param price - price to look for
+     * @param pageable -  stores information about which page user wants to retrieve
+     * @return - x shows that match the corresponding criteria
+     */
     @Query(value = "" +
         "SELECT * FROM SHOW s " +
         "WHERE ((:eventName IS NULL) OR (:eventName IS NOT NULL AND LOWER(s.event_name) LIKE LOWER(CONCAT('%',:eventName,'%')))) " +
