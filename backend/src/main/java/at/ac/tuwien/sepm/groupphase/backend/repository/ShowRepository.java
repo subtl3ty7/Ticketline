@@ -39,10 +39,17 @@ public interface ShowRepository extends JpaRepository<Show, Long> {
      */
     List<Show> findShowsByEventCode(String eventCode);
 
+    /**
+     * Find x shows by their event location, where x is defined by pageable
+     *
+     * @param eventLocationId - id of the event location to look for
+     * @param pageable -  stores information about which page user wants to retrieve
+     * @return - x shows that match the given criteria
+     */
     Page<Show> findShowsByEventLocationId(Long eventLocationId, Pageable pageable);
 
     /**
-     * Find all shows by their event name, type, category, start and end time, price and duration
+     * Find x shows by their event name, type, category, start and end time, price and duration, where x is defined by pageable
      *
      * @param eventName - name of the event to look for
      * @param type - type to look for
@@ -51,7 +58,8 @@ public interface ShowRepository extends JpaRepository<Show, Long> {
      * @param endsAt - end time to look for
      * @param duration - duration to look for
      * @param price - price to look for
-     * @return - a list of shows that match the corresponding criteria
+     * @param pageable -  stores information about which page user wants to retrieve
+     * @return - x shows that match the corresponding criteria
      */
     @Query(value = "" +
         "SELECT * FROM SHOW s " +

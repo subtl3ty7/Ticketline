@@ -37,5 +37,11 @@ public interface InvoiceService {
      */
     List<Invoice> allInvoicesOfUser(String userCode);
 
+    /**
+     * Find invoice by ticket
+     *
+     * @param ticket - ticket to look for
+     * @return - invoice that matches the given ticket
+     */
     Invoice findInvoiceByTicket(Ticket ticket);
 }

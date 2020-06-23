@@ -29,6 +29,21 @@ public interface EventLocationService {
      * @return a single, newly-created EventLocation
      */
     EventLocation save(EventLocation eventLocation);
+
+    /**
+     *  Find the event location by its id
+     *
+     * @param id - id of the event location to look for
+     * @return the EventLocation with the given id
+     */
     EventLocation getEventLocationById(long id);
+
+    /**
+     * Search event locations by their name, city, street, country, plz and description
+     *
+     * @param searchEventLocation - object that needs to be searched for
+     * @param size - number of event location entities on the same page
+     * @return a list of all the event locations that match the given criteria
+     */
     List<EventLocation> findAllFilteredEventLocations(EventLocation searchEventLocation, int size);
 }

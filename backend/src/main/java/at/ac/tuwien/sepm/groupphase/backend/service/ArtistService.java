@@ -9,7 +9,7 @@ public interface ArtistService {
      * Find artists based on their first and/or last name
      *
      * @param firstName the artist's first name
-     * @param firstName the artist's last name
+     * @param lastName the artist's last name
      * @return a list of artist entities
      */
     List<Artist> findArtistsByFirstAndLastName(String firstName, String lastName, int size);
