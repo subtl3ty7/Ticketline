@@ -23,11 +23,23 @@ public interface EventLocationRepository extends JpaRepository<EventLocation, Lo
     EventLocation findEventLocationById(Long id);
 
     /**
-     * @return a list of event locations with no shows.
+     * @return a list of event locations.
      */
     List<EventLocation> findAll();
 
 
+    /**
+     * Find all the event locations that match the given criteria
+     *
+     * @param name
+     * @param city
+     * @param street
+     * @param country
+     * @param plz
+     * @param description
+     * @param pageable
+     * @return
+     */
     @Query(value = "" +
         "SELECT * FROM EVENT_LOCATION e " +
         "WHERE ((:name IS NULL) OR (:name IS NOT NULL AND LOWER(e.name) LIKE LOWER(CONCAT('%',:name,'%')))) " +
