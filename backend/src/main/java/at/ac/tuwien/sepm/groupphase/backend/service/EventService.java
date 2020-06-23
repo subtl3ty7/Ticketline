@@ -24,6 +24,12 @@ public interface EventService {
      */
     List<Event> findTop10EventsOfMonthByCategory(String category);
 
+    /**
+     * Find all events
+     *
+     * @param size - number of event entries on the same page
+     * @return a list of events that are on the same page
+     */
     List<Event> findAllEvents(int size);
 
     /**
@@ -49,13 +55,55 @@ public interface EventService {
      */
     void deletebyEventCode(String eventCode);
 
+    /**
+     * Find x events by their artist id, x is defined by size
+     *
+     * @param artistId id of the artist to look for
+     * @param size number of event entries on the same page
+     * @return all events for one page that match the given criteria
+     */
     List<Event> findEventsByArtistId(Long artistId, int size);
 
+    /**
+     * Find x events by their name, x is defined by size
+     *
+     * @param name name to look for
+     * @param size number of event entries on the same page
+     * @return all events for one page that match the given criteria
+     */
     List<Event> findEventsByName(String name, int size);
 
+    /**
+     * Find x events by their name, type, category, start and end date and duration, x is defined by size
+     *
+     * @param name - name to look for
+     * @param type - type to look for
+     * @param category - category to look for
+     * @param startsAt - start time to look for
+     * @param endsAt - end time to look for
+     * @param showDuration - duration to look for
+     * @param size - number of event entries on the same page
+     * @return all events for one page that match the given criteria
+     */
     List<Event> findEventsAdvanced(String name, Integer type, Integer category, LocalDateTime startsAt, LocalDateTime endsAt, Duration showDuration, int size);
 
+    /**
+     * Find x events by their code, name, start and end time, where x is defined by size
+     *
+     * @param eventCode - code of the event to look for
+     * @param name - name of the event to look for
+     * @param startRange - start time to look for
+     * @param endRange - end time to look for
+     * @param size - number of news entries on the same page
+     * @return all events for one page that match the given criteria
+     */
     List<Event> findSimpleEventsByParam(String eventCode, String name, LocalDateTime startRange, LocalDateTime endRange, int size);
 
+    /**
+     * Find x events, where x is defined by number
+     *
+     * @param number - number of the events to look for
+     * @return x events
+     */
     List<Event> findNumberOfEvents(int number);
 }
