@@ -18,9 +18,6 @@
                     <button type="button" class="btn btn-outline-dark" style="white-space: nowrap; border-radius: 10px"  (click)="showInvoice(ticket1)">
                       Anzeigen
                     </button>
-                    <button type="button" class="btn btn-outline-primary" style="white-space: nowrap; border-radius: 10px; width: 100px" *ngIf="ticket1?.reserved"
-                            data-toggle="modal" data-target="#purchase-modal" (click)="purchaseTicket(ticket1.ticketCode, ticket1)">
-                      Kaufen </button>
 
                     <!-- Modal (Pop up when clicking purchase) -->
                     <div class="modal fade" id="purchase-modal" role="dialog" aria-labelledby="purchase-modal-label" aria-hidden="true">
