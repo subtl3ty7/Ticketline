@@ -12,9 +12,9 @@
               <div class="container pt-3 pb-3" style="border-bottom: 1px solid #dee2e6">
                 <div class="row">
                   <div class="col-8" style="padding-top: 12px" >
-                    <div style="font-size: 18px">{{ticket1.showTime | date:'medium' }}, {{ ticket1.eventName }}</div>
-                    <a class="text-one" *ngIf="ticket1.purchased"> gekauft am: {{ticket1.purchaseDate | date: 'short'}} </a>
-                    <a class="text-one" *ngIf="ticket1.reserved"> reserviert am: {{ticket1.purchaseDate | date: 'short'}} </a>
+                    <div style="font-size: 18px">{{ticket1.showTime | date:'MMM d, y, h:mm a' }}, {{ ticket1.eventName }}</div>
+                    <a class="text-one" *ngIf="ticket1.purchased"> gekauft am: {{ticket1.purchaseDate | date: 'MMM d, y, h:mm a'}} </a>
+                    <a class="text-one" *ngIf="ticket1.reserved"> reserviert am: {{ticket1.purchaseDate | date: 'MMM d, y, h:mm a'}} </a>
                   </div>
                   <div class="mx-auto">
                     <button type="button" class="btn btn-outline-dark" style="white-space: nowrap; border-radius: 10px"  (click)="showInvoice(ticket1)">
