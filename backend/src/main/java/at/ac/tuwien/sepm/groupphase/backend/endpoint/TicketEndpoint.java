@@ -62,23 +62,7 @@ public class TicketEndpoint {
 
         return new ResponseEntity(ticketMapper.ticketListToSimpleTicketDtoList(tickets), HttpStatus.OK);
     }
-
-    /*public List<SimpleTicketDto> setIdsOfShowAndSeatObjects(List<Ticket> tickets){
-        List<SimpleTicketDto> simpleTickets = ticketMapper.ticketListToSimpleTicketDtoList(tickets);
-
-        // sets simpleTicketDtos ids to the corresponding id of the detailedTicketDto objects
-        int i = 0;
-        for (SimpleTicketDto ticketEntity: simpleTickets
-        ) {
-            ticketEntity.setEventName(tickets.get(i).getEvent().getName());
-            ticketEntity.setShowTime(tickets.get(i).getShow().getStartsAt());
-            ticketEntity.setShowId(tickets.get(i).getShow().getId());
-            ticketEntity.setSeatId(tickets.get(i).getSeat().getId());
-            ++i;
-        }
-        return simpleTickets;
-    }*/
-    @PostMapping(value = "/reserve")
+    @PostMapping(value = "/reserving")
     @ApiOperation(
         value = "Reserving a ticket",
         notes = "Reserving a ticket",
@@ -98,7 +82,7 @@ public class TicketEndpoint {
         return response;
     }
 
-    @DeleteMapping(value = "/cancelPurchased/{ticketCode}")
+    @DeleteMapping(value = "/cancelingP/{ticketCode}")
     @ApiOperation(
         value = "Cancel purchased ticket.",
         notes = "Cancel purchased ticket.",
@@ -114,7 +98,7 @@ public class TicketEndpoint {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping(value = "/purchaseReserved/{ticketCode}")
+    @PostMapping(value = "/purchasingR/{ticketCode}")
     @ApiOperation(
         value = "Purchasing a reserved ticket.",
         notes = "Purchasing a reserved ticket.",
@@ -135,7 +119,7 @@ public class TicketEndpoint {
     }
 
 
-    @DeleteMapping(value = "/cancelReserved/{ticketCode}")
+    @DeleteMapping(value = "/cancelingR/{ticketCode}")
     @ApiOperation(
         value = "Cancel reserved ticket.",
         notes = "Cancel reserved ticket.",
