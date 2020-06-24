@@ -1,15 +1,14 @@
 <app-header></app-header>
-<app-error-notification *ngIf="error" [error]="error"></app-error-notification>
-
 
 <div *ngIf="merchandiseProduct" class="container-fluid" style="padding-left: 5%; padding-right: 5%;">
   <div class="row">
     <div class="mx-auto" style="max-width: 1320px; width: 100%;">
 
     <div class="card main-body">
+      <app-error-notification *ngIf="error" [error]="error"></app-error-notification>
 
       <div class="card-header row align-items-center" style="margin: 0px">
-        <h1 class="page-title">{{merchandiseProduct.merchandiseProductName}}</h1>
+        <h1 class="page-title" style="padding-top: 18px; padding-left: 20px;">{{merchandiseProduct.merchandiseProductName}}</h1>
       </div>
 
 
@@ -24,7 +23,7 @@
 
               <h2 class="mb-0 headline">{{merchandiseProduct.merchandiseProductName}}
               <div *ngIf="merchandiseProduct.premium">
-                <i class="fas fa-star fa-1x"></i>
+                <img src="assets/images/premium_icon.svg" alt="">
                </div>
               </h2><br>
 
@@ -51,8 +50,9 @@
                 <br>
                 <p class="h3" *ngIf="merchandiseProduct.stockCount > 0">
                   <br>
-                  <button type="button" class="btn btn-success btn-sm m-0" (click)="openPurchase(merchandiseProduct)">Kaufen mit Geld</button>
-                  <button type="button" class="btn btn-success btn-sm m-0"  data-toggle="modal" data-target="#purchase-modal" *ngIf="merchandiseProduct.premium && (user.points>merchandiseProduct.premiumPrice)" (click)="purchaseWithPremium(merchandiseProduct)">Kaufen mit Prämien</button>
+
+                  <button type="button" class="btn default btn-sm m-0" style="border: 0" (click)="openPurchase(merchandiseProduct)">Kaufen mit Geld</button>
+                  <button type="button" class="btn default btn-sm"  style="background-color: #ff9800; border: 0; margin-left: 20px;" data-toggle="modal" data-target="#purchase-modal" *ngIf="merchandiseProduct.premium && (user.points>merchandiseProduct.premiumPrice)" (click)="purchaseWithPremium(merchandiseProduct)">Kaufen mit Prämien</button>
                 </p>
 
                 <p class="h3" *ngIf="merchandiseProduct.stockCount == 0">

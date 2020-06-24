@@ -83,7 +83,7 @@ export class InvoiceDetailsComponent implements OnInit {
       const maxLineLength = 65.0;
       const eventName0: string[] = doc.splitTextToSize(invoice.tickets[0].eventName, maxLineLength);
       const numberOfLinesPerTicket = eventName0.length;
-      const pixelsPerTicket = numberOfLinesPerTicket * 5;
+      const pixelsPerTicket = numberOfLinesPerTicket * 5 + 2;
       const pageHeight = 260;
       console.log('EventNameLength: ' + doc.getTextWidth(invoice.tickets[0].eventName));
       console.log('NumberOfLinesPerTicket: '  + numberOfLinesPerTicket);
@@ -144,7 +144,7 @@ export class InvoiceDetailsComponent implements OnInit {
       const maxLineLength = 65.0;
       const merchName: string[] = doc.splitTextToSize(this.merchandise.merchandiseProductName, maxLineLength);
       const numberOfLinesPerMerch = merchName.length;
-      const pixelsPerMerch = numberOfLinesPerMerch * 5;
+      const pixelsPerMerch = numberOfLinesPerMerch * 5 + 2;
 
       this.drawTableHeaderMerch(textOffset, lineOffset, doc);
       this.drawTableCell(lineOffset, 10, doc);

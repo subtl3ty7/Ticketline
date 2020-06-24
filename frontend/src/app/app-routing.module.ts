@@ -76,7 +76,7 @@ const routes: Routes = [
   {path: 'my-profile/my-invoices', component: MyInvoicesTabComponent},
   {path: 'my-profile/my-invoices/invoice-details', component: InvoiceDetailsComponent},
   {path: 'merchandise', canActivate: [NotAdminGuard], component: MerchandiseComponent},
-  {path: 'merchandise/:merchandiseProductCode', canActivate: [NotAdminGuard],  component: ProductDetailsComponent},
+  {path: 'merchandise/:merchandiseProductCode', canActivate: [LoggedInGuard],  component: ProductDetailsComponent},
   {path: 'merchandise-purchase/:merchandiseProductCode', canActivate: [LoggedInGuard], component: MerchandisePurchaseComponent}
   ];
 
