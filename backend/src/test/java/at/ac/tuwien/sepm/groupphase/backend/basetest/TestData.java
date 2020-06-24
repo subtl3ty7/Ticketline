@@ -113,6 +113,8 @@ public interface TestData {
     String ARTIST_BASE_URI = BASE_URI + "/artists";
     String NEWS_BASE_URI = BASE_URI + "/news";
     String MERCHANDISE_BASE_URI = BASE_URI + "/merchandise";
+    String USER_CODE_MERCH = "code90";
+    String EMAIL_MERCH = "merch@email.com";
 
     Event EVENT = Event.builder().id(ID).eventCode(USER_CODE).name(NAME).description(DESC).category(CAT).type(TYP)
         .startsAt(START).endsAt(END).duration(DURATION).prices(PRICES).totalTicketsSold(TOTAL).shows(SHOWS).photo(PHOTO).build();

@@ -96,6 +96,7 @@ public class NewsEndpointTest implements TestData {
     @Order(1)
     @Test
     public void givenNothing_whenPublishNewsAsCustomer_then500() throws Exception{
+        newsRepository.deleteAll();
         NewsDto newsDto = newsMapper.newsToNewsDto(news);
         String body = objectMapper.writeValueAsString(newsDto);
 

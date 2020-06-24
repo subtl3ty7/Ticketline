@@ -83,6 +83,11 @@ public class InvoiceEndpointTest implements TestData {
         .withPoints(POINTS)
         .build();
 
+    @BeforeEach
+    public void beforeEach() {
+        invoiceRepository.deleteAll();
+    }
+
     @Test
     public void givenInvoice_whenGetInvoicesByUserCode_then200AndInvoiceListWith1ElementWithProperties() throws Exception {
         userRepository.save(abstractUser);
@@ -105,7 +110,6 @@ public class InvoiceEndpointTest implements TestData {
         assertEquals(1, invoiceDtos.size());
         InvoiceDto invoiceDto = invoiceDtos.get(0);
         assertAll(
-            () -> assertEquals(ID, invoiceDto.getId()),
             () -> assertEquals(USER_CODE, invoiceDto.getUserCode()),
             () -> assertEquals(PAY, invoiceDto.getPayment_method()),
             () -> assertEquals(GENERATE, invoiceDto.getGeneratedAt()),

@@ -77,7 +77,13 @@ export class SeatingPlanComponent implements OnInit {
       .attr('x', 200)
       .attr('y', 0)
       .attr('width', this.stageSizeX)
-      .attr('height', this.stageSizeY);
+      .attr('height', this.stageSizeY)
+      .attr('fill-opacity', 0.1);
+    const text = this.g.append('text')
+      .attr('x', 255)
+      .attr('y', 45)
+      .attr('font-size', '32px')
+      .text('Stage');
   }
 
   private createSections(layout: number) {
@@ -156,7 +162,6 @@ export class SeatingPlanComponent implements OnInit {
             const seatObject = this.sections[currentSectionIndex].seats[currentSeatIndex];
             const isSeatFree = this.isSeatFree(seatObject);
             let color;
-            console.log(seatObject)
             if (isSeatFree) {
               color = 'lemonchiffon';
             } else {

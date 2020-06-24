@@ -28,13 +28,6 @@ public class EventServiceTest implements TestData {
 
 
     @Test
-    public void givenEvents_whenGetTop10_thenListWith10Elements() {
-
-        List<Event> events = eventService.findTop10EventsOfMonth();
-        assertEquals(10, events.size());
-    }
-
-    @Test
     public void whenFindEventByNonExistingCode_thenValidationException() {
 
         assertThrows(ValidationException.class,
@@ -53,13 +46,5 @@ public class EventServiceTest implements TestData {
 
         assertThrows(ValidationException.class,
             () ->   eventService.findEventsByArtistId(-1L, 0));
-    }
-
-    @Test
-    public void whenFindEventsByNameContainingLatterA_thenNonEmptyList() {
-
-        List<Event> events = eventService.findEventsByName("a", 0);
-        Event event = events.get(0);
-        assertNotNull(event.getName());
     }
 }
